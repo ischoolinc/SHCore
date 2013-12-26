@@ -1,0 +1,9 @@
+D:\TFS2010\ischoolteam\ischool_Senior with FISCA\FiscaRuntime\addmodules\SHSchoolLoader\SmartSchool.Common.dll
+D:\TFS2010\ischoolteam\ischool_Senior with FISCA\FiscaRuntime\addmodules\SHSchoolLoader\SmartSchool.Common.pdb
+D:\TFS2010\ischoolteam\ischool_Senior with FISCA\FiscaRuntime\addmodules\SHSchoolLoader\SmartSchool.Common.xml
+D:\TFS2010\ischoolteam\ischool_Senior with FISCA\SmartSchool.Common\obj\Debug\ResolveAssemblyReference.cache
+D:\TFS2010\ischoolteam\ischool_Senior with FISCA\SmartSchool.Common\obj\Debug\SmartSchool.Common.MessageResource.resources
+D:\TFS2010\ischoolteam\ischool_Senior with FISCA\SmartSchool.Common\obj\Debug\GenerateResource.read.1.tlog
+D:\TFS2010\ischoolteam\ischool_Senior with FISCA\SmartSchool.Common\obj\Debug\GenerateResource.write.1.tlog
+D:\TFS2010\ischoolteam\ischool_Senior with FISCA\SmartSchool.Common\obj\Debug\SmartSchool.Common.dll
+D:\TFS2010\ischoolteam\ischool_Senior with FISCA\SmartSchool.Common\obj\Debug\SmartSchool.Common.pdb

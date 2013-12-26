@@ -1,0 +1,8 @@
+D:\TFS2010\ischoolteam\ischool_Senior with FISCA\FiscaRuntime\addmodules\SHSchoolLoader\SmartSchool.ErrorReporting.dll
+D:\TFS2010\ischoolteam\ischool_Senior with FISCA\FiscaRuntime\addmodules\SHSchoolLoader\SmartSchool.ErrorReporting.pdb
+D:\TFS2010\ischoolteam\ischool_Senior with FISCA\SmartSchool.ErrorReporting\obj\Debug\ResolveAssemblyReference.cache
+D:\TFS2010\ischoolteam\ischool_Senior with FISCA\SmartSchool.ErrorReporting\obj\Debug\SmartSchool.ErrorReporting.SorrySorryForm.resources
+D:\TFS2010\ischoolteam\ischool_Senior with FISCA\SmartSchool.ErrorReporting\obj\Debug\GenerateResource.read.1.tlog
+D:\TFS2010\ischoolteam\ischool_Senior with FISCA\SmartSchool.ErrorReporting\obj\Debug\GenerateResource.write.1.tlog
+D:\TFS2010\ischoolteam\ischool_Senior with FISCA\SmartSchool.ErrorReporting\obj\Debug\SmartSchool.ErrorReporting.dll
+D:\TFS2010\ischoolteam\ischool_Senior with FISCA\SmartSchool.ErrorReporting\obj\Debug\SmartSchool.ErrorReporting.pdb

@@ -1,40 +1,62 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using FISCA.UDT;
+//using FISCA.UDT;
 using System.Xml;
 using System.IO;
+using System.IO.Compression;
 using System.Reflection;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Collections;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Configuration;
+using Amazon.DynamoDBv2.DocumentModel;
+using Amazon.DynamoDBv2;
+using Amazon.SecurityToken;
+using Amazon.Util;
+using Amazon.DynamoDBv2.Model;
 
 namespace SmartSchool.ErrorReporting
 {
-    public class ErrorMessgae : FISCA.UDT.ActiveRecord
+    public class ErrorMessgae //: FISCA.UDT.ActiveRecord
     {
+        public AWSErrMsg _AWSErrMsg;
+        private PutItemResponse Rsp=null;
         public ErrorMessgae()
         {
-            EnvironmentUserName = Environment.UserName;
-            EnvironmentMachineName = Environment.MachineName;
-            EnvironmentOSVersion = Environment.OSVersion.VersionString;
-            EnvironmentServicePack = Environment.OSVersion.ServicePack;
-            EnvironmentPlatform = Environment.OSVersion.Platform.ToString();
-            ImageString = "";
-            ExceptionContent = "";
-            AuthServer = FISCA.Authentication.DSAServices.IsLogined ? FISCA.Authentication.DSAServices.AccessPoint : "NotLogin";
-            AuthLoginAccount = FISCA.Authentication.DSAServices.IsLogined ? FISCA.Authentication.DSAServices.UserAccount : "NotLogin";
-            ComputerTime = DateTime.Now;
-            StackTraceMethods = "";
-            StackTraceAssemblys = "";
-            DeploySources = "";
+            // 儲存錯誤相關訊息
+            _AWSErrMsg = new AWSErrMsg();
+
+            _AWSErrMsg.EnvironmentUserName = Environment.UserName;
+            _AWSErrMsg.EnvironmentMachineName = Environment.MachineName;
+            _AWSErrMsg.EnvironmentOSVersion = Environment.OSVersion.VersionString;
+            _AWSErrMsg.EnvironmentServicePack = Environment.OSVersion.ServicePack;
+            _AWSErrMsg.EnvironmentPlatform = Environment.OSVersion.Platform.ToString();
+
+            _AWSErrMsg.ImageString = null;
+            _AWSErrMsg.ExceptionContent = "";
+            _AWSErrMsg.AuthServer = FISCA.Authentication.DSAServices.IsLogined ? FISCA.Authentication.DSAServices.AccessPoint : "NotLogin";
+            _AWSErrMsg.AuthLoginAccount = FISCA.Authentication.DSAServices.IsLogined ? FISCA.Authentication.DSAServices.UserAccount : "NotLogin";
+            _AWSErrMsg.ComputerTime = DateTime.Now.ToString();
+            _AWSErrMsg.StackTraceMethods = "";
+            _AWSErrMsg.StackTraceAssemblys = "";
+            _AWSErrMsg.DeploySources = "";
         }
         public ErrorMessgae(Exception ex)
             : this()
         {
             SetContent(ex);
+            // Save
+            try
+            {
+                Save();
+            }
+            catch (Exception ex1)
+            { 
+                
+            }
         }
         private void FillInStackTrace(Exception ex)
         {
@@ -45,39 +67,98 @@ namespace SmartSchool.ErrorReporting
             {
                 foreach (StackFrame frame in (st).GetFrames())
                 {
-                    StackTraceMethods += (StackTraceMethods == "" ? "" : "\n") + frame.GetMethod().ToString() + " in " + frame.GetMethod().DeclaringType.FullName;
-                    StackTraceAssemblys += (StackTraceMethods == "" ? "" : "\n") + frame.GetMethod().Module.Assembly.FullName;
+                    _AWSErrMsg.StackTraceMethods += (_AWSErrMsg.StackTraceMethods == "" ? "" : "\n") + frame.GetMethod().ToString() + " in " + frame.GetMethod().DeclaringType.FullName;
+                    _AWSErrMsg.StackTraceAssemblys += (_AWSErrMsg.StackTraceMethods == "" ? "" : "\n") + frame.GetMethod().Module.Assembly.FullName;
                 }
-            }
+            }            
         }
-        [Field]
-        public string EnvironmentUserName { get; set; }
-        [Field]
-        public string EnvironmentMachineName { get; set; }
-        [Field]
-        public string EnvironmentOSVersion { get; set; }
-        [Field]
-        public string EnvironmentServicePack { get; set; }
-        [Field]
-        public string EnvironmentPlatform { get; set; }
-        [Field]
-        public string ExceptionContent { get; set; }
-        [Field]
-        private string ImageString { get; set; }
-        [Field]
-        public string AuthServer { get; set; }
-        [Field]
-        public string AuthLoginAccount { get; set; }
-        [Field]
-        public DateTime ComputerTime { get; set; }
-        [Field]
-        public string StackTraceMethods { get; set; }
-        [Field]
-        public string StackTraceAssemblys { get; set; }
-        [Field]
-        public string DeploySources { get; set; }
-        [Field]
-        public string OperatorMessage { get; set; }
+
+        /// <summary>
+        /// Save to AWS
+        /// </summary>
+        public void Save()
+        {
+            // AWS 連線
+            AmazonDynamoDBClient client;
+            var config = new AmazonDynamoDBConfig();
+            // Login AWS name:ischool_user
+            config.ServiceURL = "http://dynamodb.us-west-2.amazonaws.com";
+            var AWSAccessKey = "AKIAIT7SNOYGBM5HM4KA";
+            var AWSSecretKey = "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";
+
+            client = new AmazonDynamoDBClient(AWSAccessKey, AWSSecretKey, config);
+            _AWSErrMsg.GUID = Guid.NewGuid().ToString();
+
+
+            if (_AWSErrMsg.ImageString == null || _AWSErrMsg.ImageString.Length == 0)
+            {
+                _AWSErrMsg.ImageString = new MemoryStream(Convert.FromBase64String("Null"));                
+            }
+            var Req = new PutItemRequest
+            {
+                TableName = "ischoolErrorReport",
+                Item = new Dictionary<string, AttributeValue>() {
+                {"GUID",new AttributeValue{S=_AWSErrMsg.GUID}},                   
+                {"EnvironmentUserName",new AttributeValue{S=ParseString1(_AWSErrMsg.EnvironmentUserName)}},
+                {"EnvironmentMachineName",new AttributeValue{S=ParseString1(_AWSErrMsg.EnvironmentMachineName)}},
+                {"EnvironmentOSVersion",new AttributeValue{S=ParseString1(_AWSErrMsg.EnvironmentOSVersion)}},
+                {"EnvironmentServicePack",new AttributeValue{S=ParseString1(_AWSErrMsg.EnvironmentServicePack)}},
+                {"EnvironmentPlatform",new AttributeValue{S=ParseString1(_AWSErrMsg.EnvironmentPlatform)}},
+                {"ExceptionContent",new AttributeValue{S=ParseString1(_AWSErrMsg.ExceptionContent)}},
+                {"ImageString",new AttributeValue{B=_AWSErrMsg.ImageString}},
+                {"AuthServer",new AttributeValue{S=ParseString1(_AWSErrMsg.AuthServer)}},
+                {"AuthLoginAccount",new AttributeValue{S=ParseString1(_AWSErrMsg.AuthLoginAccount)}},
+                {"ComputerTime",new AttributeValue{S=ParseString1(_AWSErrMsg.ComputerTime)}},
+                {"StackTraceMethods",new AttributeValue{S=ParseString1(_AWSErrMsg.StackTraceMethods)}},
+                {"StackTraceAssemblys",new AttributeValue{S=ParseString1(_AWSErrMsg.StackTraceAssemblys)}},
+                {"DeploySources",new AttributeValue{S=ParseString1(_AWSErrMsg.DeploySources)}},
+                {"OperatorMessage",new AttributeValue{S=ParseString1(_AWSErrMsg.OperatorMessage)}}
+            }
+            };
+            // 上傳到 AWS
+            Rsp = client.PutItem(Req);
+        }
+        //[Field]
+        //public string EnvironmentUserName { get; set; }
+        //[Field]
+        //public string EnvironmentMachineName { get; set; }
+        //[Field]
+        //public string EnvironmentOSVersion { get; set; }
+        //[Field]
+        //public string EnvironmentServicePack { get; set; }
+        //[Field]
+        //public string EnvironmentPlatform { get; set; }
+        //[Field]
+        //public string ExceptionContent { get; set; }
+        //[Field]
+        //private string ImageString { get; set; }
+        //[Field]
+        //public string AuthServer { get; set; }
+        //[Field]
+        //public string AuthLoginAccount { get; set; }
+        //[Field]
+        //public DateTime ComputerTime { get; set; }
+        //[Field]
+        //public string StackTraceMethods { get; set; }
+        //[Field]
+        //public string StackTraceAssemblys { get; set; }
+        //[Field]
+        //public string DeploySources { get; set; }
+        //[Field]
+        //public string OperatorMessage { get; set; }
+
+        /// <summary>
+        /// 檢查字串內是否是空值或空串，如果是轉成Null，主要讓AWS可以儲存
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public string ParseString1(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                return "Null";
+            else
+                return str;
+        }
 
         public System.Drawing.Image Image
         {
@@ -85,8 +166,8 @@ namespace SmartSchool.ErrorReporting
             {
                 try
                 {
-                    byte[] bs = Convert.FromBase64String(ImageString);
-                    MemoryStream ms = new MemoryStream(bs);
+                    //byte[] bs = Convert.FromBase64String(_AWSErrMsg.ImageString);                    
+                    MemoryStream ms = _AWSErrMsg.ImageString;
                     Bitmap bm = new Bitmap(ms);
                     return bm;
                 }
@@ -105,22 +186,24 @@ namespace SmartSchool.ErrorReporting
                     byte[] bytes = new byte[ms.Length];
                     ms.Seek(0, SeekOrigin.Begin);
                     ms.Read(bytes, 0, (int)ms.Length);
-                    string s = Convert.ToBase64String(bytes);
+//                    string s = Convert.ToBase64String(bytes);
+                    
                     ms.Close();
-                    ImageString = s;
+                    //_AWSErrMsg.ImageString = s;
+                    _AWSErrMsg.ImageString = ms;
                 }
                 catch
                 {
-                    ImageString = "";
+                    _AWSErrMsg.ImageString = null;
                 }
             }
         }
 
         public void SetContent(Exception ex)
         {
-            ExceptionContent = Transform(ex);
-            StackTraceMethods = "";
-            StackTraceAssemblys = "";
+            _AWSErrMsg.ExceptionContent = Transform(ex);
+            _AWSErrMsg.StackTraceMethods = "";
+            _AWSErrMsg.StackTraceAssemblys = "";
             FillInStackTrace(ex);
         }
 
@@ -158,7 +241,7 @@ namespace SmartSchool.ErrorReporting
         {
             try
             {
-                DeploySources = "";
+                _AWSErrMsg.DeploySources = "";
                 FillInDeploySource(Application.StartupPath);
             }
             catch { }
@@ -171,8 +254,8 @@ namespace SmartSchool.ErrorReporting
                 {
                     //# 號前面的是 Url，後面的是其他參數。
                     //2010/2/6 黃耀明。
-                    string rawSource = (DeploySources == "" ? "" : "\n") + new StreamReader(Path.Combine(path, "deploy.source")).ReadLine();
-                    DeploySources += rawSource.Split(new char[] { '#' }, StringSplitOptions.RemoveEmptyEntries)[0];
+                    string rawSource = (_AWSErrMsg.DeploySources == "" ? "" : "\n") + new StreamReader(Path.Combine(path, "deploy.source")).ReadLine();
+                    _AWSErrMsg.DeploySources += rawSource.Split(new char[] { '#' }, StringSplitOptions.RemoveEmptyEntries)[0];
                 }
             }
             catch { }

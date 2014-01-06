@@ -6,3 +6,14 @@ D:\TFS2010\ischoolteam\ischool_Senior with FISCA\SmartSchool.ErrorReporting\obj\
 D:\TFS2010\ischoolteam\ischool_Senior with FISCA\SmartSchool.ErrorReporting\obj\Debug\GenerateResource.write.1.tlog
 D:\TFS2010\ischoolteam\ischool_Senior with FISCA\SmartSchool.ErrorReporting\obj\Debug\SmartSchool.ErrorReporting.dll
 D:\TFS2010\ischoolteam\ischool_Senior with FISCA\SmartSchool.ErrorReporting\obj\Debug\SmartSchool.ErrorReporting.pdb
+D:\GitProjModules\ischoolDesktop\SHCore\SmartSchool.ErrorReporting\obj\Debug\ResolveAssemblyReference.cache
+D:\GitProjModules\ischoolDesktop\SHCore\SmartSchool.ErrorReporting\obj\Debug\SmartSchool.ErrorReporting.SorrySorryForm.resources
+D:\GitProjModules\ischoolDesktop\SHCore\SmartSchool.ErrorReporting\obj\Debug\GenerateResource.read.1.tlog
+D:\GitProjModules\ischoolDesktop\SHCore\SmartSchool.ErrorReporting\obj\Debug\GenerateResource.write.1.tlog
+D:\GitProjModules\ischoolDesktop\SHCore\SmartSchool.ErrorReporting\obj\Debug\SmartSchool.ErrorReporting.pdb
+D:\GitProjModules\ischoolDesktop\SHCore\SmartSchool.ErrorReporting\bin\debug\SmartSchool.ErrorReporting.dll
+D:\GitProjModules\ischoolDesktop\SHCore\SmartSchool.ErrorReporting\bin\debug\SmartSchool.ErrorReporting.pdb
+D:\GitProjModules\ischoolDesktop\SHCore\SmartSchool.ErrorReporting\bin\debug\AWSSDK.dll
+D:\GitProjModules\ischoolDesktop\SHCore\SmartSchool.ErrorReporting\bin\debug\AWSSDK.xml
+D:\GitProjModules\ischoolDesktop\SHCore\SmartSchool.ErrorReporting\obj\Debug\SmartSchool.ErrorReporting.dll
+D:\GitProjModules\ischoolDesktop\SHCore\SmartSchool.ErrorReporting\obj\Debug\SmartSchool.ErrorReporting.Properties.Resources.resources

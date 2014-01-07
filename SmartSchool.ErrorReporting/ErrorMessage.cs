@@ -17,6 +17,8 @@ using Amazon.DynamoDBv2;
 using Amazon.SecurityToken;
 using Amazon.Util;
 using Amazon.DynamoDBv2.Model;
+using Amazon.S3;
+using Amazon.S3.Model;
 
 namespace SmartSchool.ErrorReporting
 {
@@ -35,7 +37,7 @@ namespace SmartSchool.ErrorReporting
             _AWSErrMsg.EnvironmentServicePack = Environment.OSVersion.ServicePack;
             _AWSErrMsg.EnvironmentPlatform = Environment.OSVersion.Platform.ToString();
 
-            _AWSErrMsg.ImageString = null;
+            _AWSErrMsg.ImageStream = null;
             _AWSErrMsg.ExceptionContent = "";
             _AWSErrMsg.AuthServer = FISCA.Authentication.DSAServices.IsLogined ? FISCA.Authentication.DSAServices.AccessPoint : "NotLogin";
             _AWSErrMsg.AuthLoginAccount = FISCA.Authentication.DSAServices.IsLogined ? FISCA.Authentication.DSAServices.UserAccount : "NotLogin";
@@ -73,6 +75,8 @@ namespace SmartSchool.ErrorReporting
             }            
         }
 
+       
+        #region 傳送到AWS DynamoDB, S3
         /// <summary>
         /// Save to AWS
         /// </summary>
@@ -80,7 +84,9 @@ namespace SmartSchool.ErrorReporting
         {
             // AWS 連線
             AmazonDynamoDBClient client;
+            AmazonS3Client clientS3;
             var config = new AmazonDynamoDBConfig();
+
             // Login AWS name:ischool_user
             config.ServiceURL = "http://dynamodb.us-west-2.amazonaws.com";
             var AWSAccessKey = "AKIAIT7SNOYGBM5HM4KA";
@@ -89,11 +95,39 @@ namespace SmartSchool.ErrorReporting
             client = new AmazonDynamoDBClient(AWSAccessKey, AWSSecretKey, config);
             _AWSErrMsg.GUID = Guid.NewGuid().ToString();
 
-
-            if (_AWSErrMsg.ImageString == null || _AWSErrMsg.ImageString.Length == 0)
+            if (_AWSErrMsg.ImageStream == null || _AWSErrMsg.ImageStream.Length == 0)
             {
-                _AWSErrMsg.ImageString = new MemoryStream(Convert.FromBase64String("Null"));                
+                byte[] NullStr = Encoding.UTF8.GetBytes("-");
+                _AWSErrMsg.ImageStream = new MemoryStream(NullStr);
             }
+
+
+            clientS3 = new AmazonS3Client(AWSAccessKey, AWSSecretKey, Amazon.RegionEndpoint.USWest2);
+
+
+            // XML convert Stream
+            byte[] ExceptionContentByte = Encoding.UTF8.GetBytes(_AWSErrMsg.ExceptionContent);
+            MemoryStream ExceptionContentStream = new MemoryStream(ExceptionContentByte);
+
+            PutObjectRequest putRequest1 = new PutObjectRequest
+            {
+                BucketName = "ischool-error-report",
+                Key = _AWSErrMsg.GUID.ToString() + "_xml.xml",
+                InputStream = ExceptionContentStream
+            };
+
+            PutObjectResponse response1 = clientS3.PutObject(putRequest1);
+
+            // 圖片
+            PutObjectRequest putRequest2 = new PutObjectRequest
+            {
+                BucketName = "ischool-error-report",
+                Key = _AWSErrMsg.GUID.ToString() + "_image.png",
+                InputStream = _AWSErrMsg.ImageStream
+            };
+
+            PutObjectResponse response2 = clientS3.PutObject(putRequest2);
+
             var Req = new PutItemRequest
             {
                 TableName = "ischoolErrorReport",
@@ -104,20 +138,22 @@ namespace SmartSchool.ErrorReporting
                 {"EnvironmentOSVersion",new AttributeValue{S=ParseString1(_AWSErrMsg.EnvironmentOSVersion)}},
                 {"EnvironmentServicePack",new AttributeValue{S=ParseString1(_AWSErrMsg.EnvironmentServicePack)}},
                 {"EnvironmentPlatform",new AttributeValue{S=ParseString1(_AWSErrMsg.EnvironmentPlatform)}},
-                {"ExceptionContent",new AttributeValue{S=ParseString1(_AWSErrMsg.ExceptionContent)}},
-                {"ImageString",new AttributeValue{B=_AWSErrMsg.ImageString}},
+//                {"ExceptionContent",new AttributeValue{S=ParseString1(_AWSErrMsg.ExceptionContent)}},
+//                {"ImageString",new AttributeValue{B=_AWSErrMsg.ImageString}},
                 {"AuthServer",new AttributeValue{S=ParseString1(_AWSErrMsg.AuthServer)}},
                 {"AuthLoginAccount",new AttributeValue{S=ParseString1(_AWSErrMsg.AuthLoginAccount)}},
                 {"ComputerTime",new AttributeValue{S=ParseString1(_AWSErrMsg.ComputerTime)}},
                 {"StackTraceMethods",new AttributeValue{S=ParseString1(_AWSErrMsg.StackTraceMethods)}},
                 {"StackTraceAssemblys",new AttributeValue{S=ParseString1(_AWSErrMsg.StackTraceAssemblys)}},
                 {"DeploySources",new AttributeValue{S=ParseString1(_AWSErrMsg.DeploySources)}},
-                {"OperatorMessage",new AttributeValue{S=ParseString1(_AWSErrMsg.OperatorMessage)}}
+                {"OperatorMessage",new AttributeValue{S=ParseString1(_AWSErrMsg.OperatorMessage)}},
+                {"InsertDateTime",new AttributeValue{S=System.DateTime.Now.ToString("yyyyMMddHHmmssFFF")}}
             }
             };
             // 上傳到 AWS
             Rsp = client.PutItem(Req);
         }
+        #endregion        
         //[Field]
         //public string EnvironmentUserName { get; set; }
         //[Field]
@@ -155,7 +191,7 @@ namespace SmartSchool.ErrorReporting
         public string ParseString1(string str)
         {
             if (string.IsNullOrEmpty(str))
-                return "Null";
+                return "-";
             else
                 return str;
         }
@@ -167,7 +203,7 @@ namespace SmartSchool.ErrorReporting
                 try
                 {
                     //byte[] bs = Convert.FromBase64String(_AWSErrMsg.ImageString);                    
-                    MemoryStream ms = _AWSErrMsg.ImageString;
+                    MemoryStream ms = _AWSErrMsg.ImageStream;
                     Bitmap bm = new Bitmap(ms);
                     return bm;
                 }
@@ -190,11 +226,11 @@ namespace SmartSchool.ErrorReporting
                     
                     ms.Close();
                     //_AWSErrMsg.ImageString = s;
-                    _AWSErrMsg.ImageString = ms;
+                    _AWSErrMsg.ImageStream = ms;
                 }
                 catch
                 {
-                    _AWSErrMsg.ImageString = null;
+                    _AWSErrMsg.ImageStream = null;
                 }
             }
         }

@@ -35,7 +35,7 @@ namespace SmartSchool.ErrorReporting
                 try
                 {
                     new ErrorMessgae(new Exception("建置錯誤訊息時發生錯誤。", e)) { 
-                        }.Save();
+                        };
                 }
                 catch { }
                 return false;
@@ -47,9 +47,9 @@ namespace SmartSchool.ErrorReporting
             {
                 ErrorMessgae msg = new ErrorMessgae(ex);
 //                msg.DSConnection = Connection;
-                msg.GetApplicationSnapShot();
-                msg.GetDeploySources();
-                msg.Save();
+                //msg.GetApplicationSnapShot();
+                //msg.GetDeploySources();
+                //msg.Save();
                 
                 return true;
             }
@@ -60,7 +60,7 @@ namespace SmartSchool.ErrorReporting
                     ErrorMessgae msg = new ErrorMessgae(new Exception("建置錯誤訊息時發生錯誤。", e));
 //                    msg.DSConnection = Connection;
                    // msg.Save();
-                    msg.Save();
+                    //msg.Save();
                 }
                 catch { }
                 return false;

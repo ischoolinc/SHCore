@@ -53,7 +53,9 @@ namespace SmartSchool.ErrorReporting
             // Save
             try
             {
-                Save();
+                GetApplicationSnapShot();
+                GetDeploySources();
+                Save();              
             }
             catch (Exception ex1)
             { 
@@ -82,7 +84,7 @@ namespace SmartSchool.ErrorReporting
         /// </summary>
         public void Save()
         {
-            // AWS 連線
+            // AWS 連線，登入 DynamoDB,S3
             AmazonDynamoDBClient client;
             AmazonS3Client clientS3;
             var config = new AmazonDynamoDBConfig();
@@ -92,41 +94,53 @@ namespace SmartSchool.ErrorReporting
             var AWSAccessKey = "AKIAIT7SNOYGBM5HM4KA";
             var AWSSecretKey = "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";
 
+            bool isUploadImage = true;
+            bool isUploadExceptionXML = true;
+
+            // AWS 連線登入 DynamoDB
             client = new AmazonDynamoDBClient(AWSAccessKey, AWSSecretKey, config);
-            _AWSErrMsg.GUID = Guid.NewGuid().ToString();
-
-            if (_AWSErrMsg.ImageStream == null || _AWSErrMsg.ImageStream.Length == 0)
-            {
-                byte[] NullStr = Encoding.UTF8.GetBytes("-");
-                _AWSErrMsg.ImageStream = new MemoryStream(NullStr);
-            }
-
-
+            // AWS 連線登入 S3
             clientS3 = new AmazonS3Client(AWSAccessKey, AWSSecretKey, Amazon.RegionEndpoint.USWest2);
 
+            _AWSErrMsg.GUID = Guid.NewGuid().ToString();
 
-            // XML convert Stream
-            byte[] ExceptionContentByte = Encoding.UTF8.GetBytes(_AWSErrMsg.ExceptionContent);
-            MemoryStream ExceptionContentStream = new MemoryStream(ExceptionContentByte);
+            // 檢查是否有 Exception
+            if (string.IsNullOrEmpty(_AWSErrMsg.ExceptionContent))
+                isUploadExceptionXML = false;
+            
+            // 檢查是否有圖片
+            if (_AWSErrMsg.ImageStream == null || _AWSErrMsg.ImageStream.Length == 0)
+                isUploadImage = false;            
 
-            PutObjectRequest putRequest1 = new PutObjectRequest
+            // 有 Exception 才上傳
+            if (isUploadExceptionXML)
             {
-                BucketName = "ischool-error-report",
-                Key = _AWSErrMsg.GUID.ToString() + "_xml.xml",
-                InputStream = ExceptionContentStream
-            };
+                // XML convert Stream
+                byte[] ExceptionContentByte = Encoding.UTF8.GetBytes(_AWSErrMsg.ExceptionContent);
+                MemoryStream ExceptionContentStream = new MemoryStream(ExceptionContentByte);
 
-            PutObjectResponse response1 = clientS3.PutObject(putRequest1);
+                PutObjectRequest putRequest1 = new PutObjectRequest
+                {
+                    BucketName = "ischool-error-report",
+                    Key = _AWSErrMsg.GUID.ToString() + "_xml.xml",
+                    InputStream = ExceptionContentStream
+                };
 
-            // 圖片
-            PutObjectRequest putRequest2 = new PutObjectRequest
+                PutObjectResponse response1 = clientS3.PutObject(putRequest1);
+            }
+            
+            // 有圖片才上傳
+            if (isUploadImage)
             {
-                BucketName = "ischool-error-report",
-                Key = _AWSErrMsg.GUID.ToString() + "_image.png",
-                InputStream = _AWSErrMsg.ImageStream
-            };
-
-            PutObjectResponse response2 = clientS3.PutObject(putRequest2);
+                // 圖片
+                PutObjectRequest putRequest2 = new PutObjectRequest
+                {
+                    BucketName = "ischool-error-report",
+                    Key = _AWSErrMsg.GUID.ToString() + "_image.png",
+                    InputStream = _AWSErrMsg.ImageStream
+                };
+                PutObjectResponse response2 = clientS3.PutObject(putRequest2);
+            }
 
             var Req = new PutItemRequest
             {
@@ -147,7 +161,7 @@ namespace SmartSchool.ErrorReporting
                 {"StackTraceAssemblys",new AttributeValue{S=ParseString1(_AWSErrMsg.StackTraceAssemblys)}},
                 {"DeploySources",new AttributeValue{S=ParseString1(_AWSErrMsg.DeploySources)}},
                 {"OperatorMessage",new AttributeValue{S=ParseString1(_AWSErrMsg.OperatorMessage)}},
-                {"InsertDateTime",new AttributeValue{S=System.DateTime.Now.ToString("yyyyMMddHHmmssFFF")}}
+                {"InsertDateTime",new AttributeValue{S=System.DateTime.Now.ToString("yyyy-MM-dd-HH:mm:ss:FFF")}}
             }
             };
             // 上傳到 AWS
@@ -222,9 +236,8 @@ namespace SmartSchool.ErrorReporting
                     byte[] bytes = new byte[ms.Length];
                     ms.Seek(0, SeekOrigin.Begin);
                     ms.Read(bytes, 0, (int)ms.Length);
-//                    string s = Convert.ToBase64String(bytes);
-                    
-                    ms.Close();
+//                    string s = Convert.ToBase64String(bytes);                    
+                    //ms.Close();
                     //_AWSErrMsg.ImageString = s;
                     _AWSErrMsg.ImageStream = ms;
                 }
@@ -250,22 +263,38 @@ namespace SmartSchool.ErrorReporting
                 int xOffset = int.MaxValue, yOffset = int.MaxValue, xOffset2 = int.MinValue, yOffset2 = int.MinValue;
                 foreach (Form form in Application.OpenForms)
                 {
-                    if (form.DesktopBounds.Left < xOffset)
-                        xOffset = form.DesktopBounds.Left;
-                    if (form.DesktopBounds.Right > xOffset2)
-                        xOffset2 = form.DesktopBounds.Right;
-                    if (form.DesktopBounds.Top < yOffset)
-                        yOffset = form.DesktopBounds.Top;
-                    if (form.DesktopBounds.Bottom > yOffset2)
-                        yOffset2 = form.DesktopBounds.Bottom;
+                    try
+                    {
+                        if (form.DesktopBounds.Left < xOffset)
+                            xOffset = form.DesktopBounds.Left;
+                        if (form.DesktopBounds.Right > xOffset2)
+                            xOffset2 = form.DesktopBounds.Right;
+                        if (form.DesktopBounds.Top < yOffset)
+                            yOffset = form.DesktopBounds.Top;
+                        if (form.DesktopBounds.Bottom > yOffset2)
+                            yOffset2 = form.DesktopBounds.Bottom;
+                    }
+                    catch (Exception exform1)
+                    { 
+                    
+                    }
                 }
+
                 Bitmap BigImg = new Bitmap(xOffset2 - xOffset, yOffset2 - yOffset);
                 foreach (Form form in Application.OpenForms)
                 {
-                    Size size = new Size(form.DesktopBounds.Right - form.DesktopBounds.Left, form.DesktopBounds.Bottom - form.DesktopBounds.Top);
-                    form.DrawToBitmap(BigImg, new Rectangle(new Point(form.DesktopBounds.Left - xOffset, form.DesktopBounds.Top - yOffset), size));
+                    try
+                    {
+                        Size size = new Size(form.DesktopBounds.Right - form.DesktopBounds.Left, form.DesktopBounds.Bottom - form.DesktopBounds.Top);
+                        form.DrawToBitmap(BigImg, new Rectangle(new Point(form.DesktopBounds.Left - xOffset, form.DesktopBounds.Top - yOffset), size));
+                    }
+                    catch (Exception exform2)
+                    { 
+                    
+                    }
                 }
                 this.Image = BigImg;
+                
             }
             catch
             {

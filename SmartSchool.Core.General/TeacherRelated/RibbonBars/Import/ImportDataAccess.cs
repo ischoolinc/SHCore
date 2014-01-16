@@ -14,12 +14,18 @@ namespace SmartSchool.TeacherRelated.RibbonBars.Import
     {
         public XmlElement GetImportFieldList()
         {
-            return SmartSchool.Feature.Teacher.TeacherBulkProcess.GetImportFieldList();
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(Properties.Resources.SH_T_ImportFieldList);
+            return doc.DocumentElement;
+            //return SmartSchool.Feature.Teacher.TeacherBulkProcess.GetImportFieldList();
         }
 
         public XmlElement GetValidateFieldRule()
         {
-            return SmartSchool.Feature.Teacher.TeacherBulkProcess.GetFieldValidationRule();
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(Properties.Resources.SH_T_FieldValidationRule);
+            return doc.DocumentElement;
+            //return SmartSchool.Feature.Teacher.TeacherBulkProcess.GetFieldValidationRule();
         }
 
         public XmlElement GetUniqueFieldData()

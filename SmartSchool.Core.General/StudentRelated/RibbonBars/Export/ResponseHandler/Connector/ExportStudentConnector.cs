@@ -44,7 +44,12 @@ namespace SmartSchool.StudentRelated.RibbonBars.Export.ResponseHandler.Connector
             XmlElement schoolLocationList = SmartSchool.Feature.Basic.Config.GetSchoolLocationList().GetContent().BaseElement;
 
             // 取得匯出規則描述
-            XmlElement descElement = SmartSchool.Feature.Student.StudentBulkProcess.GetExportDescription();
+            //讀取XML提供的欄位設定
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(Properties.Resources.SH_S_ExportDescription);
+            XmlElement descElement = doc.DocumentElement;
+
+            //XmlElement descElement = SmartSchool.Feature.Student.StudentBulkProcess.GetExportDescription();
             IFieldFormater fieldFormater = new BaseFieldFormater();
             IResponseFormater responseFormater = new ResponseFormater();
 

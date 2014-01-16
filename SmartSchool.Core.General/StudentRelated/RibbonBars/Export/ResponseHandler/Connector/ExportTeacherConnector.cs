@@ -39,7 +39,12 @@ namespace SmartSchool.StudentRelated.RibbonBars.Export.ResponseHandler.Connector
         public ExportTable Export()
         {
             // 取得匯出規則描述
-            XmlElement descElement = SmartSchool.Feature.Teacher.TeacherBulkProcess.GetExportDescription();
+            //XmlElement descElement = SmartSchool.Feature.Teacher.TeacherBulkProcess.GetExportDescription();
+            //讀取XML欄位描述
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(Properties.Resources.SH_T_ExportDescription);
+            XmlElement descElement = doc.DocumentElement;
+
             IFieldFormater fieldFormater = new BaseFieldFormater();
             IResponseFormater responseFormater = new ResponseFormater();
 

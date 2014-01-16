@@ -10,6 +10,7 @@ using SmartSchool.StudentRelated.RibbonBars.Export.RequestHandler.Formater;
 using SmartSchool.StudentRelated.RibbonBars.Export.ResponseHandler;
 using SmartSchool.StudentRelated.RibbonBars.Export.ResponseHandler.Connector;
 using SmartSchool.StudentRelated.RibbonBars.Export.ResponseHandler.Output;
+using System.Collections.Generic;
 
 namespace SmartSchool.StudentRelated.RibbonBars.Import
 {
@@ -141,12 +142,23 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
 
         private void ExportWizard_Load(object sender, EventArgs e)
         {
-            XmlElement element = SmartSchool.Feature.Student.StudentBulkProcess.GetExportDescription();
+            //讀取XML提供的欄位設定
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(Properties.Resources.SH_S_ExportDescription);
+            XmlElement element = doc.DocumentElement;
+
+            //XmlElement element = SmartSchool.Feature.Student.StudentBulkProcess.GetExportDescription();
             BaseFieldFormater formater = new BaseFieldFormater();
             FieldCollection collection = formater.Format(element);
 
+            //需遮蔽的欄位名稱
+            List<string> avoids = new List<string>(new string[] { "帳號類型" });
+
             foreach (Field field in collection)
             {
+                //遮蔽欄位
+                if (avoids.Contains(field.DisplayText)) continue;
+
                 ListViewItem item = listView.Items.Add(field.DisplayText);
                 item.Tag = field;
                 item.Checked = true;

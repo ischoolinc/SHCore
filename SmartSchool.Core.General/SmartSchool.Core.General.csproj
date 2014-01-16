@@ -44,17 +44,17 @@
   <ItemGroup>
     <Reference Include="Aspose.BarCode, Version=2.3.2.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\LibraryProject\Aspose.BarCode.dll</HintPath>
+      <HintPath>Library\Aspose.BarCode.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Aspose.Cells, Version=4.3.0.0, Culture=neutral, PublicKeyToken=9a40d5a4b59e5256, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\LibraryProject\Aspose.Cells.dll</HintPath>
+      <HintPath>Library\Aspose.Cells.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Aspose.Words, Version=4.4.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\LibraryProject\Aspose.Words.dll</HintPath>
+      <HintPath>Library\Aspose.Words.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DevComponents.DotNetBar2, Version=9.5.0.1, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL">
@@ -63,112 +63,116 @@
     </Reference>
     <Reference Include="DocValidate, Version=1.1.3.7, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\LibraryProject\DocValidate.dll</HintPath>
+      <HintPath>Library\DocValidate.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="FISCA">
-      <HintPath>..\FiscaRuntime\kernel\FISCA.dll</HintPath>
+      <HintPath>Library\FISCA.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="FISCA.Authentication, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\FiscaRuntime\kernel\FISCA.Authentication.dll</HintPath>
+      <HintPath>Library\FISCA.Authentication.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="FISCA.Data">
-      <HintPath>..\FiscaRuntime\kernel\FISCA.Data.dll</HintPath>
+      <HintPath>Library\FISCA.Data.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="FISCA.DSAClient">
-      <HintPath>..\FiscaRuntime\kernel\FISCA.DSAClient.dll</HintPath>
+      <HintPath>Library\FISCA.DSAClient.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="FISCA.DSAUtil, Version=3.9.0.9, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\FiscaRuntime\kernel\FISCA.DSAUtil.dll</HintPath>
+      <HintPath>Library\FISCA.DSAUtil.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="FISCA.LogAgent, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\LibraryProject\FISCA.LogAgent.dll</HintPath>
+      <HintPath>Library\FISCA.LogAgent.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="FISCA.Permission">
-      <HintPath>..\LibraryProject\FISCA.Permission.dll</HintPath>
+      <HintPath>Library\FISCA.Permission.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="FISCA.Presentation, Version=1.1.0.11, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\LibraryProject\FISCA.Presentation.dll</HintPath>
+      <HintPath>Library\FISCA.Presentation.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IntelliSchool.DSA.ClientFramework, Version=1.2.2.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\LibraryProject\IntelliSchool.DSA.ClientFramework.dll</HintPath>
+      <HintPath>Library\IntelliSchool.DSA.ClientFramework.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="K12.Data, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\FiscaRuntime\addmodules\SHSchoolLoader\K12.Data.dll</HintPath>
+      <HintPath>Library\K12.Data.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="K12.EduAdminDataMapping">
-      <HintPath>..\LibraryProject\K12.EduAdminDataMapping.dll</HintPath>
+      <HintPath>Library\K12.EduAdminDataMapping.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="K12.Presentation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\LibraryProject\K12.Presentation.dll</HintPath>
+      <HintPath>Library\K12.Presentation.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="OnlineUpdateClient, Version=1.0.0.10, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\LibraryProject\OnlineUpdateClient.dll</HintPath>
+      <HintPath>Library\OnlineUpdateClient.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SHSchool.Data, Version=1.9.0.9, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\LibraryProject\SHSchool.Data.dll</HintPath>
+      <HintPath>Library\SHSchool.Data.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SmartSchool.AccessControl, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\FiscaRuntime\modules\SHSchoolLoader\SmartSchool.AccessControl.dll</HintPath>
+      <HintPath>Library\SmartSchool.AccessControl.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SmartSchool.API.PlugIn, Version=0.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\LibraryProject\SmartSchool.API.PlugIn.dll</HintPath>
+      <HintPath>Library\SmartSchool.API.PlugIn.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SmartSchool.Broadcaster, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\FiscaRuntime\modules\SHSchoolLoader\SmartSchool.Broadcaster.dll</HintPath>
+      <HintPath>Library\SmartSchool.Broadcaster.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SmartSchool.Common, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\FiscaRuntime\modules\SHSchoolLoader_Beta\SmartSchool.Common.dll</HintPath>
+      <HintPath>Library\SmartSchool.Common.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SmartSchool.Common.DotNetBar, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\FiscaRuntime\modules\SHSchoolLoader\SmartSchool.Common.DotNetBar.dll</HintPath>
+      <HintPath>Library\SmartSchool.Common.DotNetBar.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SmartSchool.Core">
+      <HintPath>Library\SmartSchool.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SmartSchool.Customization.Data, Version=1.3.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\LibraryProject\SmartSchool.Customization.Data.dll</HintPath>
+      <HintPath>Library\SmartSchool.Customization.Data.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SmartSchool.Customization.PlugIn, Version=1.1.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\LibraryProject\SmartSchool.Customization.PlugIn.dll</HintPath>
+      <HintPath>Library\SmartSchool.Customization.PlugIn.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SmartSchool.ePaper, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\LibraryProject\SmartSchool.ePaper.dll</HintPath>
+      <HintPath>Library\SmartSchool.ePaper.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SmartSchool.ExceptionHandler, Version=1.9.0.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\FiscaRuntime\modules\SHSchoolLoader\SmartSchool.ExceptionHandler.dll</HintPath>
+      <HintPath>Library\SmartSchool.ExceptionHandler.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -655,6 +659,11 @@
       <DependentUpon>ScoreOpenTime.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="RomanNumeral\IntToRomanConverter\HundredConverter.cs" />
     <Compile Include="RomanNumeral\IntToRomanConverter\IIRConverter.cs" />
     <Compile Include="RomanNumeral\IntToRomanConverter\Less5000Converter.cs" />
@@ -698,11 +707,6 @@
     </Compile>
     <Compile Include="StudentRelated\Photo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="StudentRelated\BriefStudentData.cs" />
     <Compile Include="StudentRelated\ChangeStatusBatch.cs" />
     <Compile Include="StudentRelated\Common.cs" />
@@ -1772,13 +1776,12 @@
     <None Include="Resources\ico_close.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SmartSchool.Core\SmartSchool.Core.csproj">
-      <Project>{69A603E2-3DCE-4BD0-9DD7-5C5F6D5E6602}</Project>
-      <Name>SmartSchool.Core</Name>
-      <Private>False</Private>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="Resources\SH_T_FieldValidationRule.xml" />
+    <None Include="Resources\SH_T_ImportFieldList.xml" />
+    <None Include="Resources\SH_T_ExportDescription.xml" />
+    <None Include="Resources\SH_S_FieldValidationRule.xml" />
+    <None Include="Resources\SH_S_BulkDescription.xml" />
+    <None Include="Resources\SH_S_ExportDescription.xml" />
     <None Include="Resources\tutorial_fav_64.png" />
     <None Include="Resources\subject_64.png" />
     <None Include="Resources\graduated_write_64.png" />

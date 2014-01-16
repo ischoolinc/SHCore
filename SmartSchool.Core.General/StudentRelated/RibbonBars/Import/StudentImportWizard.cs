@@ -130,7 +130,11 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
                 pUser.Visible = false;
                 Application.DoEvents();
 
-                XmlElement bulk = StudentBulkProcess.GetBulkDescription();
+                //XmlElement bulk = StudentBulkProcess.GetBulkDescription();
+                //讀取XML欄位描述
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(Properties.Resources.SH_S_BulkDescription);
+                XmlElement bulk = doc.DocumentElement;
                 Context.BulkDescription = new BulkDescription(bulk);
 
                 Context.RefreshImportSource();
@@ -261,6 +265,10 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
         private void DisplayColumns(Dictionary<string, ImportItem> fields, Dictionary<string, BulkColumnCollection> bfields)
         {
             lvSourceFieldList.Items.Clear();
+
+            //需遮蔽的欄位
+            List<string> avoids = new List<string>(new string[] { "帳號類型", "登入密碼" });
+
             foreach (ImportItem each in fields.Values)
             {
                 bool hide_column = false;
@@ -276,7 +284,11 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
                 }
                 else
                 {//非群欄位時。
-                    if (!Context.AcceptColumns.ContainsKey(each.Text))
+                    if (avoids.Contains(each.Text))
+                    {//遮蔽欄位
+                        hide_column = true;
+                    }
+                    else if (!Context.AcceptColumns.ContainsKey(each.Text))
                     { //不在 AcceptColumns 中時。
                         each.Enabled = false;
                         each.ToolTipText = "系統不提供此欄位匯入。";
@@ -544,7 +556,11 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
                 validator.FieldValidatorList.AddValidatorFactory(new FieldValidatorFactory());
                 validator.AutoCorrect += new DocumentValidate.AutoCorrectEventHandler(Validator_AutoCorrect);
                 validator.ErrorCaptured += new DocumentValidate.ErrorCapturedEventHandler(Validator_ErrorCaptured);
-                XmlElement validRule = StudentBulkProcess.GetFieldValidationRule();
+                //讀取XML驗證規則
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(Properties.Resources.SH_S_FieldValidationRule);
+                XmlElement validRule = doc.DocumentElement;
+                //XmlElement validRule = StudentBulkProcess.GetFieldValidationRule();
                 //validator.RowValidatorList.AddValidatorFactory(new RowValidatorFactory(Context.IdentifyField));
                 validator.InitFromXMLNode(validRule);
 

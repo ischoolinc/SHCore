@@ -37,12 +37,23 @@ namespace SmartSchool.TeacherRelated.RibbonBars
 
         private void ExportTeacher_Load(object sender, EventArgs e)
         {
-            XmlElement element = SmartSchool.Feature.Teacher.TeacherBulkProcess.GetExportDescription();
+            //XmlElement element = SmartSchool.Feature.Teacher.TeacherBulkProcess.GetExportDescription();
+            //讀取XML提供的欄位
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(Properties.Resources.SH_T_ExportDescription);
+            XmlElement element = doc.DocumentElement;
+
             BaseFieldFormater formater = new BaseFieldFormater();
             FieldCollection collection = formater.Format(element);
 
+            //需遮蔽的欄位
+            List<string> avoids = new List<string>(new string[] { "帳號類型" });
+
             foreach (Field field in collection)
             {
+                //遮蔽欄位
+                if (avoids.Contains(field.DisplayText)) continue;
+
                 ListViewItem item = listView.Items.Add(field.DisplayText);
                 item.Tag = field;
                 item.Checked = true;

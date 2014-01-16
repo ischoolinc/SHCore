@@ -64,7 +64,6 @@
             this.txtLoginPwd = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.label3 = new System.Windows.Forms.Label();
             this.cboGender = new SmartSchool.StudentRelated.Palmerworm.ComboBoxAdv();
-            //this.cboNationality = new SmartSchool.StudentRelated.Palmerworm.ComboBoxAdv();
             this.cboNationality = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.cboAccountType = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.comboItem4 = new DevComponents.Editors.ComboItem();
@@ -109,14 +108,15 @@
             // 
             // 
             this.txtSSN.Border.Class = "TextBoxBorder";
+            this.txtSSN.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.txtSSN.Location = new System.Drawing.Point(366, 48);
             this.txtSSN.Margin = new System.Windows.Forms.Padding(4);
             this.txtSSN.MaxLength = 30;
             this.txtSSN.Name = "txtSSN";
             this.txtSSN.Size = new System.Drawing.Size(138, 25);
             this.txtSSN.TabIndex = 2;
-            this.txtSSN.Validating += new System.ComponentModel.CancelEventHandler(this.txtSSN_Validating);
             this.txtSSN.TextChanged += new System.EventHandler(this.txtSSN_TextChanged);
+            this.txtSSN.Validating += new System.ComponentModel.CancelEventHandler(this.txtSSN_Validating);
             // 
             // label78
             // 
@@ -148,6 +148,7 @@
             // 
             // 
             this.txtName.Border.Class = "TextBoxBorder";
+            this.txtName.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.txtName.Location = new System.Drawing.Point(366, 17);
             this.txtName.Margin = new System.Windows.Forms.Padding(4);
             this.txtName.MaxLength = 100;
@@ -174,6 +175,7 @@
             // 
             // 
             this.txtEngName.Border.Class = "TextBoxBorder";
+            this.txtEngName.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.txtEngName.Location = new System.Drawing.Point(97, 137);
             this.txtEngName.Margin = new System.Windows.Forms.Padding(4);
             this.txtEngName.Name = "txtEngName";
@@ -225,7 +227,7 @@
             this.contextMenuBar1.Location = new System.Drawing.Point(65, 69);
             this.contextMenuBar1.Margin = new System.Windows.Forms.Padding(4);
             this.contextMenuBar1.Name = "contextMenuBar1";
-            this.contextMenuBar1.Size = new System.Drawing.Size(239, 25);
+            this.contextMenuBar1.Size = new System.Drawing.Size(239, 26);
             this.contextMenuBar1.Stretch = true;
             this.contextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2003;
             this.contextMenuBar1.TabIndex = 210;
@@ -306,6 +308,7 @@
             // 
             // 
             this.txtBirthPlace.Border.Class = "TextBoxBorder";
+            this.txtBirthPlace.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.txtBirthPlace.Location = new System.Drawing.Point(97, 170);
             this.txtBirthPlace.Margin = new System.Windows.Forms.Padding(4);
             this.txtBirthPlace.MaxLength = 300;
@@ -318,12 +321,12 @@
             // 
             this.label79.AutoSize = true;
             this.label79.BackColor = System.Drawing.Color.Transparent;
-            this.label79.Location = new System.Drawing.Point(30, 204);
+            this.label79.Location = new System.Drawing.Point(294, 172);
             this.label79.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label79.Name = "label79";
-            this.label79.Size = new System.Drawing.Size(63, 17);
+            this.label79.Size = new System.Drawing.Size(60, 17);
             this.label79.TabIndex = 193;
-            this.label79.Text = "國 　　籍";
+            this.label79.Text = "國　　籍";
             this.label79.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // errorProvider1
@@ -337,14 +340,15 @@
             // 
             // 
             this.txtBirthDate.Border.Class = "TextBoxBorder";
+            this.txtBirthDate.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.txtBirthDate.EmptyString = "";
             this.txtBirthDate.Location = new System.Drawing.Point(366, 107);
             this.txtBirthDate.Name = "txtBirthDate";
             this.txtBirthDate.Size = new System.Drawing.Size(138, 25);
             this.txtBirthDate.TabIndex = 5;
             this.txtBirthDate.WatermarkText = "yyyy/mm/dd";
-            this.txtBirthDate.Validated += new System.EventHandler(this.txtBirthDate_Validated_1);
             this.txtBirthDate.TextChanged += new System.EventHandler(this.txtBirthDate_TextChanged);
+            this.txtBirthDate.Validated += new System.EventHandler(this.txtBirthDate_Validated_1);
             // 
             // label1
             // 
@@ -364,25 +368,27 @@
             // 
             // 
             this.txtLoginID.Border.Class = "TextBoxBorder";
+            this.txtLoginID.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.txtLoginID.Location = new System.Drawing.Point(366, 138);
             this.txtLoginID.Margin = new System.Windows.Forms.Padding(4);
             this.txtLoginID.Name = "txtLoginID";
             this.txtLoginID.Size = new System.Drawing.Size(138, 25);
             this.txtLoginID.TabIndex = 7;
-            this.txtLoginID.Validating += new System.ComponentModel.CancelEventHandler(this.txtLoginID_Validating);
             this.txtLoginID.TextChanged += new System.EventHandler(this.txtLoginID_TextChanged);
+            this.txtLoginID.Validating += new System.ComponentModel.CancelEventHandler(this.txtLoginID_Validating);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Location = new System.Drawing.Point(294, 171);
+            this.label2.Location = new System.Drawing.Point(294, 172);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(60, 17);
             this.label2.TabIndex = 191;
             this.label2.Text = "登入密碼";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label2.Visible = false;
             // 
             // txtLoginPwd
             // 
@@ -390,24 +396,27 @@
             // 
             // 
             this.txtLoginPwd.Border.Class = "TextBoxBorder";
-            this.txtLoginPwd.Location = new System.Drawing.Point(366, 169);
+            this.txtLoginPwd.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.txtLoginPwd.Location = new System.Drawing.Point(362, 194);
             this.txtLoginPwd.Margin = new System.Windows.Forms.Padding(4);
             this.txtLoginPwd.Name = "txtLoginPwd";
             this.txtLoginPwd.PasswordChar = '●';
             this.txtLoginPwd.Size = new System.Drawing.Size(138, 25);
             this.txtLoginPwd.TabIndex = 9;
+            this.txtLoginPwd.Visible = false;
             this.txtLoginPwd.TextChanged += new System.EventHandler(this.txtLoginPwd_TextChanged);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Location = new System.Drawing.Point(294, 201);
+            this.label3.Location = new System.Drawing.Point(294, 202);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(60, 17);
             this.label3.TabIndex = 193;
             this.label3.Text = "帳號類型";
+            this.label3.Visible = false;
             // 
             // cboGender
             // 
@@ -430,10 +439,10 @@
             this.cboNationality.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.cboNationality.FormattingEnabled = true;
             this.cboNationality.ItemHeight = 16;
-            this.cboNationality.Location = new System.Drawing.Point(97, 202);
+            this.cboNationality.Location = new System.Drawing.Point(366, 170);
             this.cboNationality.Margin = new System.Windows.Forms.Padding(4);
             this.cboNationality.Name = "cboNationality";
-            this.cboNationality.Size = new System.Drawing.Size(152, 22);
+            this.cboNationality.Size = new System.Drawing.Size(138, 22);
             this.cboNationality.TabIndex = 8;
             this.cboNationality.TextChanged += new System.EventHandler(this.cboNationality_TextChanged);
             // 
@@ -446,10 +455,11 @@
             this.cboAccountType.Items.AddRange(new object[] {
             this.comboItem4,
             this.comboItem5});
-            this.cboAccountType.Location = new System.Drawing.Point(366, 199);
+            this.cboAccountType.Location = new System.Drawing.Point(366, 194);
             this.cboAccountType.Name = "cboAccountType";
             this.cboAccountType.Size = new System.Drawing.Size(138, 25);
             this.cboAccountType.TabIndex = 211;
+            this.cboAccountType.Visible = false;
             this.cboAccountType.TextChanged += new System.EventHandler(this.cboAccountType_TextChanged);
             // 
             // comboItem4
@@ -489,7 +499,7 @@
             this.Controls.Add(this.label80);
             this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.Name = "BaseInfoPalmerwormItem";
-            this.Size = new System.Drawing.Size(550, 236);
+            this.Size = new System.Drawing.Size(550, 204);
             this.Controls.SetChildIndex(this.label80, 0);
             this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.label2, 0);

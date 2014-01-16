@@ -25,6 +25,8 @@ namespace SmartSchool.ErrorReporting
 
         public string ExceptionContent { get; set; }
 
+        public string ExceptionContentHead { get; set; }
+
         public MemoryStream ImageStream { get; set; }
 
         public string AuthServer { get; set; }

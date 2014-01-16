@@ -26,6 +26,7 @@ namespace SmartSchool.ErrorReporting
     {
         public AWSErrMsg _AWSErrMsg;
         private PutItemResponse Rsp=null;
+        private PutItemResponse RspIdx = null;
         public ErrorMessgae()
         {
             // 儲存錯誤相關訊息
@@ -39,6 +40,7 @@ namespace SmartSchool.ErrorReporting
 
             _AWSErrMsg.ImageStream = null;
             _AWSErrMsg.ExceptionContent = "";
+            _AWSErrMsg.ExceptionContentHead = "";
             _AWSErrMsg.AuthServer = FISCA.Authentication.DSAServices.IsLogined ? FISCA.Authentication.DSAServices.AccessPoint : "NotLogin";
             _AWSErrMsg.AuthLoginAccount = FISCA.Authentication.DSAServices.IsLogined ? FISCA.Authentication.DSAServices.UserAccount : "NotLogin";
             _AWSErrMsg.ComputerTime = DateTime.Now.ToString();
@@ -161,11 +163,26 @@ namespace SmartSchool.ErrorReporting
                 {"StackTraceAssemblys",new AttributeValue{S=ParseString1(_AWSErrMsg.StackTraceAssemblys)}},
                 {"DeploySources",new AttributeValue{S=ParseString1(_AWSErrMsg.DeploySources)}},
                 {"OperatorMessage",new AttributeValue{S=ParseString1(_AWSErrMsg.OperatorMessage)}},
+                {"ExceptionContentHead",new AttributeValue{S=ParseString1(_AWSErrMsg.ExceptionContentHead)}},
                 {"InsertDateTime",new AttributeValue{S=System.DateTime.Now.ToString("yyyy-MM-dd-HH:mm:ss:FFF")}}
             }
             };
             // 上傳到 AWS
             Rsp = client.PutItem(Req);
+
+            var ReqIdx = new PutItemRequest
+            {
+                TableName = "ischoolErrorReportIdx",
+                Item = new Dictionary<string, AttributeValue>() {
+                {"GUID",new AttributeValue{S=_AWSErrMsg.GUID}},
+                {"AuthServer",new AttributeValue{S=ParseString1(_AWSErrMsg.AuthServer)}},                
+                {"ComputerTime",new AttributeValue{S=ParseString1(_AWSErrMsg.ComputerTime)}},
+                {"ExceptionContentHead",new AttributeValue{S=ParseString1(_AWSErrMsg.ExceptionContentHead)}},
+                {"DateIdx",new AttributeValue{S=System.DateTime.Now.ToString("yyyy-MM-dd")}}
+            }
+            };
+            // 上傳到 AWS ischoolErrorReportIdx
+            RspIdx = client.PutItem(ReqIdx);
         }
         #endregion        
         //[Field]
@@ -250,6 +267,7 @@ namespace SmartSchool.ErrorReporting
 
         public void SetContent(Exception ex)
         {
+            _AWSErrMsg.ExceptionContentHead = ex.Message;
             _AWSErrMsg.ExceptionContent = Transform(ex);
             _AWSErrMsg.StackTraceMethods = "";
             _AWSErrMsg.StackTraceAssemblys = "";

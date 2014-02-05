@@ -147,9 +147,8 @@ namespace SmartSchool
                 }
             }
 
-            //電子報表相關功能註解,另建立電子報表模組 - dylan 20131218
             //電子報表的提供者。
-            //DispatcherProvider.Register("ischool", new DispatcherImp(), true);
+            DispatcherProvider.Register("ischool", new DispatcherImp(), true);
         }
     }
 }

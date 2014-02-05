@@ -25,6 +25,7 @@ using SmartSchool.Feature;
 using DevComponents.DotNetBar.Rendering;
 using SmartSchool.ExceptionHandler;
 using System.Xml.Linq;
+using FISCA.Data;
 
 namespace SmartSchool.StudentRelated.RibbonBars.Import
 {
@@ -559,6 +560,23 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
                 //讀取XML驗證規則
                 XmlDocument doc = new XmlDocument();
                 doc.LoadXml(Properties.Resources.SH_S_FieldValidationRule);
+
+                foreach(XmlElement elem in doc.SelectNodes("//FieldValidator"))
+                {
+                    if(elem.GetAttribute("Name") == "合法班級")
+                    {
+                        QueryHelper Q = new QueryHelper();
+                        DataTable dt = Q.Select("SELECT class_name FROM class WHERE status=1");
+                        foreach(DataRow row in dt.Rows)
+                        {
+                            XmlElement item = doc.CreateElement("Item");
+                            item.SetAttribute("Value", row["class_name"].ToString());
+                            elem.AppendChild(item);
+                        }
+                        break;
+                    }
+                }
+                
                 XmlElement validRule = doc.DocumentElement;
                 //XmlElement validRule = StudentBulkProcess.GetFieldValidationRule();
                 //validator.RowValidatorList.AddValidatorFactory(new RowValidatorFactory(Context.IdentifyField));

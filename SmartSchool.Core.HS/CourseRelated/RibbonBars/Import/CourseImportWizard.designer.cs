@@ -184,8 +184,8 @@
             this.ImportWizard.FooterStyle.Class = "";
             this.ImportWizard.FooterStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.ImportWizard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(57)))), ((int)(((byte)(129)))));
-            this.ImportWizard.HeaderCaptionFont = new System.Drawing.Font("微軟正黑體", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ImportWizard.HeaderDescriptionFont = new System.Drawing.Font("微軟正黑體", 9.75F);
+            this.ImportWizard.HeaderCaptionFont = new System.Drawing.Font("Microsoft JhengHei", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ImportWizard.HeaderDescriptionFont = new System.Drawing.Font("Microsoft JhengHei", 9.75F);
             this.ImportWizard.HeaderDescriptionIndent = 16;
             this.ImportWizard.HeaderImage = ((System.Drawing.Image)(resources.GetObject("ImportWizard.HeaderImage")));
             this.ImportWizard.HeaderImageSize = new System.Drawing.Size(30, 30);
@@ -307,7 +307,7 @@
             // 
             this.txtSourceFile.Border.Class = "TextBoxBorder";
             this.txtSourceFile.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.txtSourceFile.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtSourceFile.Font = new System.Drawing.Font("Microsoft JhengHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.txtSourceFile.Location = new System.Drawing.Point(18, 32);
             this.txtSourceFile.Name = "txtSourceFile";
             this.txtSourceFile.Size = new System.Drawing.Size(345, 23);
@@ -318,7 +318,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.BackColor = System.Drawing.Color.Transparent;
-            this.label8.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label8.Font = new System.Drawing.Font("Microsoft JhengHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.label8.Location = new System.Drawing.Point(6, 119);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(125, 20);
@@ -329,7 +329,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.label7.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label7.Font = new System.Drawing.Font("Microsoft JhengHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.label7.Location = new System.Drawing.Point(5, 7);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(199, 20);
@@ -340,7 +340,7 @@
             // 
             this.btnSelectFile.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.btnSelectFile.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnSelectFile.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnSelectFile.Font = new System.Drawing.Font("Microsoft JhengHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.btnSelectFile.Location = new System.Drawing.Point(369, 32);
             this.btnSelectFile.Name = "btnSelectFile";
             this.btnSelectFile.Size = new System.Drawing.Size(29, 22);
@@ -471,7 +471,7 @@
             this.cboValidateField.DisplayMember = "Text";
             this.cboValidateField.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cboValidateField.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboValidateField.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.cboValidateField.Font = new System.Drawing.Font("Microsoft JhengHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.cboValidateField.FormattingEnabled = true;
             this.cboValidateField.ItemHeight = 18;
             this.cboValidateField.Location = new System.Drawing.Point(68, 183);
@@ -494,7 +494,7 @@
             this.cboIdField.DisplayMember = "Text";
             this.cboIdField.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cboIdField.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboIdField.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.cboIdField.Font = new System.Drawing.Font("Microsoft JhengHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.cboIdField.FormattingEnabled = true;
             this.cboIdField.ItemHeight = 18;
             this.cboIdField.Location = new System.Drawing.Point(67, 35);
@@ -879,7 +879,7 @@
             // 
             this.lblValidMsg.AutoSize = true;
             this.lblValidMsg.BackColor = System.Drawing.Color.Transparent;
-            this.lblValidMsg.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lblValidMsg.Font = new System.Drawing.Font("Microsoft JhengHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.lblValidMsg.Location = new System.Drawing.Point(98, 37);
             this.lblValidMsg.Name = "lblValidMsg";
             this.lblValidMsg.Size = new System.Drawing.Size(80, 16);
@@ -1005,6 +1005,7 @@
             this.ClientSize = new System.Drawing.Size(542, 423);
             this.ControlBox = false;
             this.Controls.Add(this.ImportWizard);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "CourseImportWizard";
             this.Text = "匯入課程基本資料";

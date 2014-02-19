@@ -91,6 +91,11 @@
       <HintPath>Library\FISCA.Authentication.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="FISCA.Data, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\FISCA.Data.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="FISCA.DSAClient, Version=1.0.1.16, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Library\FISCA.DSAClient.dll</HintPath>
@@ -448,6 +453,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="QueryData.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CourseRelated\DetailPaneItem\BasicInfo.resx">
@@ -612,6 +618,9 @@
     <Content Include="Library\FISCA.Authentication.dll" />
     <Content Include="Library\FISCA.Authentication.pdb" />
     <Content Include="Library\FISCA.Authentication.xml" />
+    <Content Include="Library\FISCA.Data.dll" />
+    <Content Include="Library\FISCA.Data.pdb" />
+    <Content Include="Library\FISCA.Data.xml" />
     <Content Include="Library\FISCA.dll" />
     <Content Include="Library\FISCA.DSAClient.dll" />
     <Content Include="Library\FISCA.DSAClient.pdb" />

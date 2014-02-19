@@ -581,7 +581,7 @@ namespace SmartSchool.CourseRelated.RibbonBars.Import
                 TipStyles styles = new TipStyles(sheet);
 
                 //Console.WriteLine("載入驗證規則時間：{0}", Environment.TickCount - t1);
-
+                
                 validator.ProgressChanged += new ProgressChangedEventHandler(Validator_ProgressChanged);
                 pgValidProgress.Value = 0;
 
@@ -590,6 +590,25 @@ namespace SmartSchool.CourseRelated.RibbonBars.Import
                 lnkCancelValid.Visible = true;
                 _cancel_validate = false;
                 cellManager = validator.Validate(sheet);
+
+                // 讀取資料庫資料驗證學年度、學期、課程名稱是否存在。
+                Dictionary<string, string> CheckCourseNameDict = QueryData.GetCourseNameDictV();
+                // 取得學年度、學期、課程名稱索引
+                int colSchoolYear = sheet.GetFieldIndex("學年度");
+                int colSemester = sheet.GetFieldIndex("學期");
+                int colCourseName = sheet.GetFieldIndex("課程名稱");
+                
+                for (int chkRowIdx = 1; chkRowIdx <= sheet.MaxDataRowIndex; chkRowIdx++)
+                {
+                    string chkKey = sheet.GetValue(chkRowIdx, colSchoolYear) + "_" + sheet.GetValue(chkRowIdx, colSemester) + "_" + sheet.GetValue(chkRowIdx, colCourseName);
+                    // 不存資料內寫錯誤訊息
+                    if (!CheckCourseNameDict.ContainsKey(chkKey))
+                    {
+                        sheet.SetComment(chkRowIdx, colCourseName, "課程不存在系統內");
+                        cellManager.WriteError(chkRowIdx, colCourseName, "課程不存在系統內");
+                    }                
+                }                
+
                 lnkCancelValid.Visible = false;
 
                 //Console.WriteLine("驗證時間：{0}", Environment.TickCount - t1);

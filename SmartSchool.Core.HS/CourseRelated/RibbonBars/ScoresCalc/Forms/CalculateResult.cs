@@ -6,10 +6,11 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using SmartSchool.Common;
+using FISCA.Presentation.Controls;
 
 namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
 {
-    internal partial class CalculateResult : BaseForm
+    internal partial class CalculateResult : FISCA.Presentation.Controls.BaseForm
     {
         private CourseCollection _courses;
 
@@ -86,7 +87,7 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
             }
 
             string message = string.Format("您確定要儲存計算結果？儲存時可能需要較長的時間。(成績筆數：{0})", count);
-            DialogResult dr = MsgBox.Show(message, Application.ProductName, MessageBoxButtons.YesNo);
+            DialogResult dr = FISCA.Presentation.Controls.MsgBox.Show(message, Application.ProductName, MessageBoxButtons.YesNo);
 
             if (dr == DialogResult.Yes)
             {
@@ -94,7 +95,7 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
                 DialogResult dr1 = progress.ShowDialog();
 
                 if (dr1 == DialogResult.OK)
-                    MsgBox.Show(string.Format("儲存完成。", count), Application.ProductName);
+                    FISCA.Presentation.Controls.MsgBox.Show(string.Format("儲存完成。", count), Application.ProductName);
 
                 DialogResult = dr1;
             }

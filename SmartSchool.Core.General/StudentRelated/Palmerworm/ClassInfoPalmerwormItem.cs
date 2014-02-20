@@ -10,6 +10,7 @@ using SmartSchool.Feature;
 using SmartSchool.Feature.Basic;
 using SmartSchool.Feature.Class;
 using SmartSchool.Properties;
+using System.Data;
 
 namespace SmartSchool.StudentRelated.Palmerworm
 {
@@ -184,7 +185,32 @@ namespace SmartSchool.StudentRelated.Palmerworm
         void _getSeatNoBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             string classID = e.Argument as string;
-            seatNoList = Class.ListSeatNo(classID);
+
+            //added by Cloud 2014.2.20
+            if(!string.IsNullOrWhiteSpace(classID))
+            {
+                seatNoList = new List<int>();
+                FISCA.Data.QueryHelper Q = new FISCA.Data.QueryHelper();
+
+                string cmd = string.Format("SELECT seat_no FROM student WHERE ref_class_id={0} AND seat_no IS NOT NULL AND status=1 ORDER BY seat_no", classID);
+
+                DataTable dt = Q.Select(cmd);
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    string no = row["seat_no"].ToString();
+                    int value = 0;
+                    int.TryParse(no, out value);
+
+                    if (!seatNoList.Contains(value) && value != 0)
+                    {
+                        seatNoList.Add(value);
+                    }
+                }
+            }
+
+            //呼叫的service有問題
+            //seatNoList = Class.ListSeatNo(classID);
             e.Result = classID;
         }
 

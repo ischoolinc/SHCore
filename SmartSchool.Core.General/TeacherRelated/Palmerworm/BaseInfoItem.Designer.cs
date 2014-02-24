@@ -55,13 +55,20 @@
             this.cboAccountType = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.comboItem3 = new DevComponents.Editors.ComboItem();
             this.comboItem4 = new DevComponents.Editors.ComboItem();
+            this.contextMenuBar1 = new DevComponents.DotNetBar.ContextMenuBar();
+            this.ctxChange1 = new DevComponents.DotNetBar.ButtonItem();
+            this.buttonItem1 = new DevComponents.DotNetBar.ButtonItem();
+            this.buttonItem2 = new DevComponents.DotNetBar.ButtonItem();
+            this.buttonItem3 = new DevComponents.DotNetBar.ButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.picWaiting)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errors)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.contextMenuBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox
             // 
+            this.contextMenuBar1.SetContextMenuEx(this.pictureBox, this.ctxChange1);
             this.pictureBox.Image = global::SmartSchool.Properties.Resources.studentsPic;
             this.pictureBox.InitialImage = global::SmartSchool.Properties.Resources.studentsPic;
             this.pictureBox.Location = new System.Drawing.Point(108, 17);
@@ -321,9 +328,53 @@
             // 
             this.comboItem4.Text = "自定帳號";
             // 
+            // contextMenuBar1
+            // 
+            this.contextMenuBar1.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.contextMenuBar1.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.ctxChange1});
+            this.contextMenuBar1.Location = new System.Drawing.Point(14, 20);
+            this.contextMenuBar1.Margin = new System.Windows.Forms.Padding(4);
+            this.contextMenuBar1.Name = "contextMenuBar1";
+            this.contextMenuBar1.Size = new System.Drawing.Size(139, 27);
+            this.contextMenuBar1.Stretch = true;
+            this.contextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2003;
+            this.contextMenuBar1.TabIndex = 211;
+            this.contextMenuBar1.TabStop = false;
+            this.contextMenuBar1.Text = "contextMenuBar1";
+            // 
+            // ctxChange1
+            // 
+            this.ctxChange1.AutoExpandOnClick = true;
+            this.ctxChange1.Name = "ctxChange1";
+            this.ctxChange1.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.buttonItem1,
+            this.buttonItem2,
+            this.buttonItem3});
+            this.ctxChange1.Text = "Change 1";
+            // 
+            // buttonItem1
+            // 
+            this.buttonItem1.Name = "buttonItem1";
+            this.buttonItem1.Text = "變更照片";
+            this.buttonItem1.Click += new System.EventHandler(this.buttonItem1_Click);
+            // 
+            // buttonItem2
+            // 
+            this.buttonItem2.Name = "buttonItem2";
+            this.buttonItem2.Text = "另存照片";
+            this.buttonItem2.Click += new System.EventHandler(this.buttonItem2_Click);
+            // 
+            // buttonItem3
+            // 
+            this.buttonItem3.Name = "buttonItem3";
+            this.buttonItem3.Text = "清除照片";
+            this.buttonItem3.Click += new System.EventHandler(this.buttonItem3_Click);
+            // 
             // BaseInfoItem
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.Controls.Add(this.contextMenuBar1);
             this.Controls.Add(this.cboAccountType);
             this.Controls.Add(this.txtCategory);
             this.Controls.Add(this.cboGender);
@@ -369,9 +420,11 @@
             this.Controls.SetChildIndex(this.txtCategory, 0);
             this.Controls.SetChildIndex(this.picWaiting, 0);
             this.Controls.SetChildIndex(this.cboAccountType, 0);
+            this.Controls.SetChildIndex(this.contextMenuBar1, 0);
             ((System.ComponentModel.ISupportInitialize)(this.picWaiting)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errors)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.contextMenuBar1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -405,5 +458,10 @@
         private DevComponents.DotNetBar.Controls.ComboBoxEx cboAccountType;
         private DevComponents.Editors.ComboItem comboItem3;
         private DevComponents.Editors.ComboItem comboItem4;
+        private DevComponents.DotNetBar.ContextMenuBar contextMenuBar1;
+        private DevComponents.DotNetBar.ButtonItem ctxChange1;
+        private DevComponents.DotNetBar.ButtonItem buttonItem1;
+        private DevComponents.DotNetBar.ButtonItem buttonItem2;
+        private DevComponents.DotNetBar.ButtonItem buttonItem3;
     }
 }

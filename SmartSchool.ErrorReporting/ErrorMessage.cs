@@ -27,6 +27,7 @@ namespace SmartSchool.ErrorReporting
         public AWSErrMsg _AWSErrMsg;
         private PutItemResponse Rsp=null;
         private PutItemResponse RspIdx = null;
+        private PutItemResponse RspDateIdx = null;
         public ErrorMessgae()
         {
             // 儲存錯誤相關訊息
@@ -158,13 +159,13 @@ namespace SmartSchool.ErrorReporting
 //                {"ImageString",new AttributeValue{B=_AWSErrMsg.ImageString}},
                 {"AuthServer",new AttributeValue{S=ParseString1(_AWSErrMsg.AuthServer)}},
                 {"AuthLoginAccount",new AttributeValue{S=ParseString1(_AWSErrMsg.AuthLoginAccount)}},
-                {"ComputerTime",new AttributeValue{S=ParseString1(_AWSErrMsg.ComputerTime)}},
+                {"ComputerTime",new AttributeValue{S=ParseDateTime1(_AWSErrMsg.ComputerTime)}},
                 {"StackTraceMethods",new AttributeValue{S=ParseString1(_AWSErrMsg.StackTraceMethods)}},
                 {"StackTraceAssemblys",new AttributeValue{S=ParseString1(_AWSErrMsg.StackTraceAssemblys)}},
                 {"DeploySources",new AttributeValue{S=ParseString1(_AWSErrMsg.DeploySources)}},
                 {"OperatorMessage",new AttributeValue{S=ParseString1(_AWSErrMsg.OperatorMessage)}},
                 {"ExceptionContentHead",new AttributeValue{S=ParseString1(_AWSErrMsg.ExceptionContentHead)}},
-                {"InsertDateTime",new AttributeValue{S=System.DateTime.Now.ToString("yyyy-MM-dd-HH:mm:ss:FFF")}}
+                {"InsertDateTime",new AttributeValue{S=System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:FFF")}}
             }
             };
             // 上傳到 AWS
@@ -176,13 +177,25 @@ namespace SmartSchool.ErrorReporting
                 Item = new Dictionary<string, AttributeValue>() {
                 {"GUID",new AttributeValue{S=_AWSErrMsg.GUID}},
                 {"AuthServer",new AttributeValue{S=ParseString1(_AWSErrMsg.AuthServer)}},                
-                {"ComputerTime",new AttributeValue{S=ParseString1(_AWSErrMsg.ComputerTime)}},
+                {"ComputerTime",new AttributeValue{S=ParseDateTime1( _AWSErrMsg.ComputerTime)}},
                 {"ExceptionContentHead",new AttributeValue{S=ParseString1(_AWSErrMsg.ExceptionContentHead)}},
                 {"DateIdx",new AttributeValue{S=System.DateTime.Now.ToString("yyyy-MM-dd")}}
             }
             };
             // 上傳到 AWS ischoolErrorReportIdx
             RspIdx = client.PutItem(ReqIdx);
+
+
+            // 上傳到 aws ischoolErrorReportDateIdx 主要建學校主機與日期索引，加速查詢用
+            var ReqDateIdx = new PutItemRequest
+            {
+                TableName = "ischoolErrorReportDateIdx",
+                Item = new Dictionary<string, AttributeValue>() {
+                {"AuthServer",new AttributeValue{S=ParseString1(_AWSErrMsg.AuthServer)}},
+                {"ComputerTime",new AttributeValue{S=ParseDateTime1( _AWSErrMsg.ComputerTime)}},
+                {"GUID",new AttributeValue{S=_AWSErrMsg.GUID}}}
+            };
+            RspDateIdx = client.PutItem(ReqDateIdx);
         }
         #endregion        
         //[Field]
@@ -225,6 +238,27 @@ namespace SmartSchool.ErrorReporting
                 return "-";
             else
                 return str;
+        }
+
+        /// <summary>
+        /// 轉換日期格式為 24小時制
+        /// </summary>
+        /// <param name="?"></param>
+        /// <returns></returns>
+        public string ParseDateTime1(string str)
+        {
+            string retVal = "-";
+            if (!string.IsNullOrEmpty(str))
+            {
+                DateTime dt;
+                if (DateTime.TryParse(str, out dt))
+                {
+                    retVal=dt.ToString("yyyy-MM-dd HH:mm:ss");
+                }
+                else 
+                    return retVal;
+            }
+            return retVal;
         }
 
         public System.Drawing.Image Image

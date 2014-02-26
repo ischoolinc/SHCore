@@ -5,6 +5,7 @@ using SmartSchool.Customization.Data;
 using SmartSchool.API.PlugIn;
 using SmartSchool.AccessControl;
 using System.Xml;
+using System.Text.RegularExpressions;
 
 namespace SmartSchool.StudentRelated.RibbonBars.Import
 {
@@ -30,6 +31,7 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
             wizard.LoadSource += delegate(object sender, SmartSchool.API.PlugIn.Import.LoadSourceEventArgs e)
             {
                 List<string> _StudentFields = new List<string>(new string[] { "學生系統編號", "學號", "班級", "座號", "科別", "姓名" });
+                
                 #region 設訂匯入欄位
                 wizard.ImportableFields.Clear();
                 foreach ( string field in e.Fields )
@@ -46,6 +48,24 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
             wizard.ValidateStart += delegate { validatedID.Clear(); };
             wizard.ValidateRow += delegate(object sender, SmartSchool.API.PlugIn.Import.ValidateRowEventArgs e)
                 {
+                    foreach(string str in e.SelectFields)
+                    {
+                        int x = 0;
+                        if (str.Contains(":") || int.TryParse(str.Substring(0, 1), out x) || str.Contains(" "))
+                        {
+                            e.ErrorFields.Add(str, "此欄位包含不合法字元");
+                        }
+                        else if(str != Regex.Replace(str, @"[\W_]+", ""))
+                        {
+                            e.ErrorFields.Add(str, "此欄位包含不合法字元");
+                        }
+                        else if (str.Length >= 3)
+                        {
+                            if (str.Substring(0, 3).ToUpper() == "XML")
+                                e.ErrorFields.Add(str, "此欄位包含不合法字元");
+                        }
+                    }
+
                     if(validatedID.Contains(e.Data.ID))
                         e.ErrorMessage="此學生重複匯入。";
                     else

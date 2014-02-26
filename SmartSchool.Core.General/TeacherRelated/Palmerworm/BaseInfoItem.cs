@@ -14,7 +14,8 @@ using SmartSchool.ApplicationLog;
 using SmartSchool.AccessControl;
 using System.Linq;
 using SHSchool.Data;
-
+using SmartSchool.StudentRelated;
+using System.Drawing.Imaging;
 
 namespace SmartSchool.TeacherRelated.Palmerworm
 {
@@ -24,6 +25,9 @@ namespace SmartSchool.TeacherRelated.Palmerworm
         ErrorProvider epName = new ErrorProvider();
         ErrorProvider epNick = new ErrorProvider();
         ErrorProvider epGender = new ErrorProvider();
+
+        private SHTeacherRecord _TeacherRec;
+        PermRecLogProcess prlp;
 
         public BaseInfoItem()
         {
@@ -170,6 +174,12 @@ namespace SmartSchool.TeacherRelated.Palmerworm
             DSResponse dsrsp = result as DSResponse;
             DSXmlHelper helper = dsrsp.GetContent();
 
+            // 讀取教師資料
+            string id = helper.GetElement("Teacher").GetAttribute("ID");
+            _TeacherRec = SHTeacher.SelectByID(id);
+            prlp = new PermRecLogProcess();
+
+
             txtCategory.Text = helper.GetText("Teacher/Category");
             txtEmail.Text = helper.GetText("Teacher/Email");
             txtIDNumber.Text = helper.GetText("Teacher/IDNumber");
@@ -182,13 +192,22 @@ namespace SmartSchool.TeacherRelated.Palmerworm
             cboGender.Text = helper.GetText("Teacher/Gender");
 
             string picString = helper.GetText("Teacher/Photo");
-            byte[] bs = Convert.FromBase64String(picString);
-            MemoryStream ms = new MemoryStream(bs);
-            try
+            //byte[] bs = Convert.FromBase64String(picString);
+            //MemoryStream ms = new MemoryStream(bs);
+            //try
+            //{
+            //    pictureBox.Image = Bitmap.FromStream(ms);
+            //}
+            //catch (Exception)
+            //{
+            //    pictureBox.Image = Properties.Resources.studentsPic;
+            //}
+
+            if (!string.IsNullOrWhiteSpace(picString))
             {
-                pictureBox.Image = Bitmap.FromStream(ms);
+                pictureBox.Image = Photo.ConvertFromBase64Encoding(picString, pictureBox.Width, pictureBox.Height);
             }
-            catch (Exception)
+            else
             {
                 pictureBox.Image = Properties.Resources.studentsPic;
             }
@@ -362,6 +381,93 @@ namespace SmartSchool.TeacherRelated.Palmerworm
             {
                 errors.SetError(txtSTLoginAccount, "檢查帳號重覆失敗");
             }
+        }
+
+        private void buttonItem1_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog od = new OpenFileDialog();
+            od.Filter = "所有影像(*.jpg,*.jpeg,*.gif,*.png)|*.jpg;*.jpeg;*.gif;*.png;";
+            if (od.ShowDialog() == DialogResult.OK)
+            {
+                FileStream fs = null;
+                try
+                {
+                    fs = new FileStream(od.FileName, FileMode.Open);
+                    Bitmap orgBmp = new Bitmap(fs);
+                    fs.Close();
+
+                    Bitmap newBmp = new Bitmap(orgBmp, pictureBox.Size);
+                    pictureBox.Image = newBmp;
+
+                    _TeacherRec.Photo = ToBase64String(Photo.Resize(new Bitmap(orgBmp)));
+                    SHTeacher.Update(_TeacherRec);
+                    prlp.SaveLog("學籍系統-教師基本資料", "變更教師照片", "teacher", _TeacherRec.ID, "變更教師:" + _TeacherRec.Name + "的照片");
+                }
+                catch (Exception ex)
+                {
+                    FISCA.Presentation.Controls.MsgBox.Show(ex.Message);
+                }
+            }
+        }
+
+        private void buttonItem2_Click(object sender, EventArgs e)
+        {
+            SavePicture(_TeacherRec.Photo);
+        }
+
+        private void buttonItem3_Click(object sender, EventArgs e)
+        {
+            if (FISCA.Presentation.Controls.MsgBox.Show("您確定要清除此教師的照片嗎？", "", MessageBoxButtons.YesNo) == DialogResult.No) return;
+
+            try
+            {
+                _TeacherRec.Photo = string.Empty;
+                pictureBox.Image = pictureBox.InitialImage;
+                SHTeacher.Update(_TeacherRec);
+                prlp.SaveLog("學籍系統-教師基本資料", "變更教師照片", "teacher", _TeacherRec.ID, "變更教師:" + _TeacherRec.Name + "的照片");
+            }
+            catch (Exception ex)
+            {
+                FISCA.Presentation.Controls.MsgBox.Show(ex.Message);
+            }
+        }
+
+        private void SavePicture(string imageString)
+        {
+            if (imageString == string.Empty)
+                return;
+
+            SaveFileDialog sd = new SaveFileDialog();
+            sd.Filter = "PNG 影像|*.png;";
+            string filename = string.IsNullOrWhiteSpace(txtIDNumber.Text) ? txtName.Text : txtIDNumber.Text;
+            sd.FileName = filename + ".png";
+
+            if (sd.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    FileStream fs = new FileStream(sd.FileName, FileMode.Create);
+                    byte[] imageData = Convert.FromBase64String(imageString);
+                    fs.Write(imageData, 0, imageData.Length);
+                    fs.Close();
+                }
+                catch (Exception ex)
+                {
+                    FISCA.Presentation.Controls.MsgBox.Show(ex.Message);
+                }
+            }
+        }
+
+        private static string ToBase64String(Bitmap newBmp)
+        {
+            MemoryStream ms = new MemoryStream();
+            newBmp.Save(ms, ImageFormat.Jpeg);
+            ms.Seek(0, SeekOrigin.Begin);
+            byte[] bytes = new byte[ms.Length];
+            ms.Read(bytes, 0, (int)ms.Length);
+            ms.Close();
+
+            return Convert.ToBase64String(bytes);
         }
     }
 

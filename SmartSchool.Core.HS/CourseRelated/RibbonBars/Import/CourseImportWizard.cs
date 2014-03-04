@@ -591,67 +591,71 @@ namespace SmartSchool.CourseRelated.RibbonBars.Import
                 _cancel_validate = false;
                 cellManager = validator.Validate(sheet);
 
-                #region 選擇學年度+學期+課程名稱檢查 by ChenCT
+                #region 選擇學年度+學期+課程名稱檢查 by ChenCT              
 
-                // 讀取資料庫資料驗證學年度、學期、課程名稱是否存在。
-                Dictionary<string, string> CheckCourseNameDict = QueryData.GetCourseNameDictV();
-
-                // 新增
-                if (Context.CurrentMode == ImportMode.Insert)
+                // 當使用者選擇課程名稱+學年度+學期才檢查
+                if (Context.IdentifyField.Name == "課程名稱+學年度+學期")
                 {
-                    // 取得學年度、學期、課程名稱索引
-                    int colSchoolYear = sheet.GetFieldIndex("學年度");
-                    int colSemester = sheet.GetFieldIndex("學期");
-                    int colCourseName = sheet.GetFieldIndex("課程名稱");
+                    // 讀取資料庫資料驗證學年度、學期、課程名稱是否存在。
+                    Dictionary<string, string> CheckCourseNameDict = QueryData.GetCourseNameDictV();
 
-                    string errMsg = "欄位：「課程名稱+學年度+學期」為識別欄位，值已存在資料庫中。";
-                    for (int chkRowIdx = 1; chkRowIdx <= sheet.MaxDataRowIndex; chkRowIdx++)
+                    // 新增
+                    if (Context.CurrentMode == ImportMode.Insert)
                     {
-                        string chkKey = sheet.GetValue(chkRowIdx, colSchoolYear) + "_" + sheet.GetValue(chkRowIdx, colSemester) + "_" + sheet.GetValue(chkRowIdx, colCourseName);
-                        // 不存資料內寫錯誤訊息
-                        if (CheckCourseNameDict.ContainsKey(chkKey))
+                        // 取得學年度、學期、課程名稱索引
+                        int colSchoolYear = sheet.GetFieldIndex("學年度");
+                        int colSemester = sheet.GetFieldIndex("學期");
+                        int colCourseName = sheet.GetFieldIndex("課程名稱");
+
+                        string errMsg = "欄位：「課程名稱+學年度+學期」為識別欄位，值已存在資料庫中。";
+                        for (int chkRowIdx = 1; chkRowIdx <= sheet.MaxDataRowIndex; chkRowIdx++)
                         {
-                            // 學年度
-                            sheet.SetComment(chkRowIdx, colSchoolYear, errMsg);
-                            cellManager.WriteError(chkRowIdx, colSchoolYear, errMsg);
+                            string chkKey = sheet.GetValue(chkRowIdx, colSchoolYear) + "_" + sheet.GetValue(chkRowIdx, colSemester) + "_" + sheet.GetValue(chkRowIdx, colCourseName);
+                            // 不存資料內寫錯誤訊息
+                            if (CheckCourseNameDict.ContainsKey(chkKey))
+                            {
+                                // 學年度
+                                sheet.SetComment(chkRowIdx, colSchoolYear, errMsg);
+                                cellManager.WriteError(chkRowIdx, colSchoolYear, errMsg);
 
-                            // 學期
-                            sheet.SetComment(chkRowIdx, colSemester, errMsg);
-                            cellManager.WriteError(chkRowIdx, colSemester, errMsg);
+                                // 學期
+                                sheet.SetComment(chkRowIdx, colSemester, errMsg);
+                                cellManager.WriteError(chkRowIdx, colSemester, errMsg);
 
-                            // 課程名稱
-                            sheet.SetComment(chkRowIdx, colCourseName, errMsg);
-                            cellManager.WriteError(chkRowIdx, colCourseName, errMsg);
+                                // 課程名稱
+                                sheet.SetComment(chkRowIdx, colCourseName, errMsg);
+                                cellManager.WriteError(chkRowIdx, colCourseName, errMsg);
+                            }
                         }
                     }
-                }
 
-                // 更新
-                if (Context.CurrentMode == ImportMode.Update)
-                {
-                    // 取得學年度、學期、課程名稱索引
-                    int colSchoolYear = sheet.GetFieldIndex("學年度");
-                    int colSemester = sheet.GetFieldIndex("學期");
-                    int colCourseName = sheet.GetFieldIndex("課程名稱");
-
-                    string errMsg = "欄位：「課程名稱+學年度+學期」為識別欄位，值必須存在資料庫中。";
-                    for (int chkRowIdx = 1; chkRowIdx <= sheet.MaxDataRowIndex; chkRowIdx++)
+                    // 更新
+                    if (Context.CurrentMode == ImportMode.Update)
                     {
-                        string chkKey = sheet.GetValue(chkRowIdx, colSchoolYear) + "_" + sheet.GetValue(chkRowIdx, colSemester) + "_" + sheet.GetValue(chkRowIdx, colCourseName);
-                        // 不存資料內寫錯誤訊息
-                        if (!CheckCourseNameDict.ContainsKey(chkKey))
+                        // 取得學年度、學期、課程名稱索引
+                        int colSchoolYear = sheet.GetFieldIndex("學年度");
+                        int colSemester = sheet.GetFieldIndex("學期");
+                        int colCourseName = sheet.GetFieldIndex("課程名稱");
+
+                        string errMsg = "欄位：「課程名稱+學年度+學期」為識別欄位，值必須存在資料庫中。";
+                        for (int chkRowIdx = 1; chkRowIdx <= sheet.MaxDataRowIndex; chkRowIdx++)
                         {
-                            // 學年度
-                            sheet.SetComment(chkRowIdx, colSchoolYear, errMsg);
-                            cellManager.WriteError(chkRowIdx, colSchoolYear, errMsg);
+                            string chkKey = sheet.GetValue(chkRowIdx, colSchoolYear) + "_" + sheet.GetValue(chkRowIdx, colSemester) + "_" + sheet.GetValue(chkRowIdx, colCourseName);
+                            // 不存資料內寫錯誤訊息
+                            if (!CheckCourseNameDict.ContainsKey(chkKey))
+                            {
+                                // 學年度
+                                sheet.SetComment(chkRowIdx, colSchoolYear, errMsg);
+                                cellManager.WriteError(chkRowIdx, colSchoolYear, errMsg);
 
-                            // 學期
-                            sheet.SetComment(chkRowIdx, colSemester, errMsg);
-                            cellManager.WriteError(chkRowIdx, colSemester, errMsg);
+                                // 學期
+                                sheet.SetComment(chkRowIdx, colSemester, errMsg);
+                                cellManager.WriteError(chkRowIdx, colSemester, errMsg);
 
-                            // 課程名稱
-                            sheet.SetComment(chkRowIdx, colCourseName, errMsg);
-                            cellManager.WriteError(chkRowIdx, colCourseName, errMsg);
+                                // 課程名稱
+                                sheet.SetComment(chkRowIdx, colCourseName, errMsg);
+                                cellManager.WriteError(chkRowIdx, colCourseName, errMsg);
+                            }
                         }
                     }
                 }

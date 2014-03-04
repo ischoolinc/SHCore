@@ -94,8 +94,7 @@ namespace SmartSchool.ErrorReporting
 
             // Login AWS name:ischool_user
             config.ServiceURL = "http://dynamodb.us-west-2.amazonaws.com";
-            var AWSAccessKey = "AKIAIT7SNOYGBM5HM4KA";
-            var AWSSecretKey = "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";
+            
 
             bool isUploadImage = true;
             bool isUploadExceptionXML = true;

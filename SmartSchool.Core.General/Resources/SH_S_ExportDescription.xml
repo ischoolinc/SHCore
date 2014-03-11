@@ -99,7 +99,7 @@
       <Field DisplayText="班級" Name="ClassName"/>
       <Field DisplayText="座號" Name="SeatNo"/>
       <Field DisplayText="備註" Name="Memo"/>
-      <Field DisplayText="國中畢業年度" Name="GraduateSchoolYear"/>
+      <Field DisplayText="國中畢業學年度" Name="GraduateSchoolYear"/>
     </Element>
   </XmlField>
   <Field DisplayText="畢結業證書字號" Name="DiplomaNumber" ShiftCheckable="True"/>

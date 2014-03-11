@@ -143,7 +143,7 @@
     <Field DataType="String" Name="前級:班級"/>
     <Field DataType="String" Name="前級:座號"/>
     <Field DataType="String" Name="前級:備註"/>
-    <Field DataType="String" Name="前級:國中畢業年度"/>
+    <Field DataType="String" Name="前級:國中畢業學年度"/>
   </FieldList>
   <!--
 

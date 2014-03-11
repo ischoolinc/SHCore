@@ -1779,9 +1779,15 @@
     <None Include="Resources\SH_T_FieldValidationRule.xml" />
     <None Include="Resources\SH_T_ImportFieldList.xml" />
     <None Include="Resources\SH_T_ExportDescription.xml" />
-    <None Include="Resources\SH_S_FieldValidationRule.xml" />
-    <None Include="Resources\SH_S_BulkDescription.xml" />
-    <None Include="Resources\SH_S_ExportDescription.xml" />
+    <None Include="Resources\SH_S_FieldValidationRule.xml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resources\SH_S_BulkDescription.xml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resources\SH_S_ExportDescription.xml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Resources\tutorial_fav_64.png" />
     <None Include="Resources\subject_64.png" />
     <None Include="Resources\graduated_write_64.png" />

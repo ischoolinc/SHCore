@@ -1030,9 +1030,7 @@
     <Compile Include="StudentRelated\RibbonBars\Discipline\InsertEditor.Designer.cs">
       <DependentUpon>InsertEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="StudentRelated\RibbonBars\Export\ExportAbsence.cs" />
     <Compile Include="StudentRelated\RibbonBars\Export\ExportCategory.cs" />
-    <Compile Include="StudentRelated\RibbonBars\Export\ExportDiscipline.cs" />
     <Compile Include="StudentRelated\RibbonBars\Export\ExportExtandField.cs" />
     <Compile Include="StudentRelated\RibbonBars\Export\ExportLeaveInfo.cs" />
     <Compile Include="StudentRelated\RibbonBars\Export\ExportUpdateRecord.cs" />
@@ -1118,9 +1116,7 @@
     <Compile Include="StudentRelated\RibbonBars\Import\ExportWizard.Designer.cs">
       <DependentUpon>ExportWizard.cs</DependentUpon>
     </Compile>
-    <Compile Include="StudentRelated\RibbonBars\Import\ImportAbsence.cs" />
     <Compile Include="StudentRelated\RibbonBars\Import\ImportCategory.cs" />
-    <Compile Include="StudentRelated\RibbonBars\Import\ImportDiscipline.cs" />
     <Compile Include="StudentRelated\RibbonBars\Import\ImportExport.cs">
       <SubType>UserControl</SubType>
     </Compile>

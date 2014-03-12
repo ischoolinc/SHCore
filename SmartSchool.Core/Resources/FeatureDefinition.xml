@@ -23,8 +23,8 @@
     <ButtonItem FeatureCode="Button0160" Title="匯出學年科目成績"/>
     <ButtonItem FeatureCode="Button0170" Title="匯出學年分項成績"/>
     <ButtonItem FeatureCode="Button0175" Title="匯出畢業成績"/>
-    <ButtonItem FeatureCode="Button0190" Title="匯出獎懲紀錄"/>
-    <ButtonItem FeatureCode="Button0180" Title="匯出缺曠紀錄"/>
+    <!--<ButtonItem FeatureCode="Button0190" Title="匯出獎懲紀錄"/>
+    <ButtonItem FeatureCode="Button0180" Title="匯出缺曠紀錄"/> 20140312 dylan-->
     <!--<ButtonItem FeatureCode="Button0200" Title="匯出異動紀錄(新生、畢業、學籍、轉入)"/>-->
     <!--<ButtonItem FeatureCode="Button0205" Title="匯出學生類別"/>-->
     <!--<ButtonItem FeatureCode="Button0290.5" Title="匯出學生照片"/> 20131216 - dylan 註解-->
@@ -33,8 +33,8 @@
     <ButtonItem FeatureCode="Button0230" Title="匯入學期分項成績"/>
     <ButtonItem FeatureCode="Button0240" Title="匯入學年科目成績"/>
     <ButtonItem FeatureCode="Button0250" Title="匯入學年分項成績"/>
-    <ButtonItem FeatureCode="Button0260" Title="匯入缺曠紀錄"/>
-    <ButtonItem FeatureCode="Button0270" Title="匯入獎懲紀錄"/>
+    <!--<ButtonItem FeatureCode="Button0260" Title="匯入缺曠紀錄"/>
+    <ButtonItem FeatureCode="Button0270" Title="匯入獎懲紀錄"/> 20140312 dylan-->
     <!--<ButtonItem FeatureCode="Button0280" Title="匯入異動紀錄(新生、畢業、學籍、轉入)"/>-->
     <!--<ButtonItem FeatureCode="Button0285" Title="匯入學生類別"/>-->
     <!--<ButtonItem FeatureCode="Button0290" Title="匯入學生照片"/> 20131216 - dylan 註解-->

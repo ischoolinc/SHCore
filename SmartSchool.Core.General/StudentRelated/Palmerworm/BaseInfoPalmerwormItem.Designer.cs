@@ -114,7 +114,7 @@
             this.txtSSN.MaxLength = 30;
             this.txtSSN.Name = "txtSSN";
             this.txtSSN.Size = new System.Drawing.Size(138, 25);
-            this.txtSSN.TabIndex = 2;
+            this.txtSSN.TabIndex = 1;
             this.txtSSN.TextChanged += new System.EventHandler(this.txtSSN_TextChanged);
             this.txtSSN.Validating += new System.ComponentModel.CancelEventHandler(this.txtSSN_Validating);
             // 
@@ -154,7 +154,7 @@
             this.txtName.MaxLength = 100;
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(138, 25);
-            this.txtName.TabIndex = 1;
+            this.txtName.TabIndex = 0;
             this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
             // label81
@@ -180,7 +180,7 @@
             this.txtEngName.Margin = new System.Windows.Forms.Padding(4);
             this.txtEngName.Name = "txtEngName";
             this.txtEngName.Size = new System.Drawing.Size(152, 25);
-            this.txtEngName.TabIndex = 4;
+            this.txtEngName.TabIndex = 6;
             this.txtEngName.TextChanged += new System.EventHandler(this.txtEngName_TextChanged);
             // 
             // label80
@@ -314,7 +314,7 @@
             this.txtBirthPlace.MaxLength = 300;
             this.txtBirthPlace.Name = "txtBirthPlace";
             this.txtBirthPlace.Size = new System.Drawing.Size(152, 25);
-            this.txtBirthPlace.TabIndex = 6;
+            this.txtBirthPlace.TabIndex = 7;
             this.txtBirthPlace.TextChanged += new System.EventHandler(this.txtBirthPlace_TextChanged);
             // 
             // label79
@@ -345,7 +345,7 @@
             this.txtBirthDate.Location = new System.Drawing.Point(366, 107);
             this.txtBirthDate.Name = "txtBirthDate";
             this.txtBirthDate.Size = new System.Drawing.Size(138, 25);
-            this.txtBirthDate.TabIndex = 5;
+            this.txtBirthDate.TabIndex = 3;
             this.txtBirthDate.WatermarkText = "yyyy/mm/dd";
             this.txtBirthDate.TextChanged += new System.EventHandler(this.txtBirthDate_TextChanged);
             this.txtBirthDate.Validated += new System.EventHandler(this.txtBirthDate_Validated_1);
@@ -373,7 +373,7 @@
             this.txtLoginID.Margin = new System.Windows.Forms.Padding(4);
             this.txtLoginID.Name = "txtLoginID";
             this.txtLoginID.Size = new System.Drawing.Size(138, 25);
-            this.txtLoginID.TabIndex = 7;
+            this.txtLoginID.TabIndex = 4;
             this.txtLoginID.TextChanged += new System.EventHandler(this.txtLoginID_TextChanged);
             this.txtLoginID.Validating += new System.ComponentModel.CancelEventHandler(this.txtLoginID_Validating);
             // 
@@ -429,7 +429,7 @@
             this.cboGender.Location = new System.Drawing.Point(366, 79);
             this.cboGender.Name = "cboGender";
             this.cboGender.Size = new System.Drawing.Size(138, 22);
-            this.cboGender.TabIndex = 3;
+            this.cboGender.TabIndex = 2;
             this.cboGender.SelectedIndexChanged += new System.EventHandler(this.cboGender_SelectedIndexChanged);
             // 
             // cboNationality
@@ -443,7 +443,7 @@
             this.cboNationality.Margin = new System.Windows.Forms.Padding(4);
             this.cboNationality.Name = "cboNationality";
             this.cboNationality.Size = new System.Drawing.Size(138, 22);
-            this.cboNationality.TabIndex = 8;
+            this.cboNationality.TabIndex = 5;
             this.cboNationality.TextChanged += new System.EventHandler(this.cboNationality_TextChanged);
             // 
             // cboAccountType

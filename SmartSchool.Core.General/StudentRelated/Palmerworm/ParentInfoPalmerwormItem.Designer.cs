@@ -120,7 +120,7 @@
             this.txtParentName.Margin = new System.Windows.Forms.Padding(4);
             this.txtParentName.Name = "txtParentName";
             this.txtParentName.Size = new System.Drawing.Size(156, 25);
-            this.txtParentName.TabIndex = 4;
+            this.txtParentName.TabIndex = 1;
             this.txtParentName.TextChanged += new System.EventHandler(this.txtParentName_TextChanged);
             // 
             // label27
@@ -165,7 +165,7 @@
             this.btnGuardian,
             this.btnFather,
             this.btnMother});
-            this.btnParentType.TabIndex = 1;
+            this.btnParentType.TabIndex = 0;
             // 
             // btnGuardian
             // 
@@ -196,7 +196,7 @@
             this.lnkCopyGuardian.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkCopyGuardian.Name = "lnkCopyGuardian";
             this.lnkCopyGuardian.Size = new System.Drawing.Size(92, 16);
-            this.lnkCopyGuardian.TabIndex = 3;
+            this.lnkCopyGuardian.TabIndex = 9;
             this.lnkCopyGuardian.TabStop = true;
             this.lnkCopyGuardian.Text = "複製監護人資料";
             this.lnkCopyGuardian.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkCopyGuardian_LinkClicked);
@@ -209,7 +209,7 @@
             this.lnkCopyFather.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkCopyFather.Name = "lnkCopyFather";
             this.lnkCopyFather.Size = new System.Drawing.Size(80, 16);
-            this.lnkCopyFather.TabIndex = 2;
+            this.lnkCopyFather.TabIndex = 7;
             this.lnkCopyFather.TabStop = true;
             this.lnkCopyFather.Text = "複製父親資料";
             this.lnkCopyFather.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkCopyFather_LinkClicked);
@@ -222,7 +222,7 @@
             this.lnkCopyMother.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkCopyMother.Name = "lnkCopyMother";
             this.lnkCopyMother.Size = new System.Drawing.Size(80, 16);
-            this.lnkCopyMother.TabIndex = 3;
+            this.lnkCopyMother.TabIndex = 8;
             this.lnkCopyMother.TabStop = true;
             this.lnkCopyMother.Text = "複製母親資料";
             this.lnkCopyMother.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkCopyMother_LinkClicked);
@@ -240,7 +240,7 @@
             this.txtIDNumber.MaxLength = 20;
             this.txtIDNumber.Name = "txtIDNumber";
             this.txtIDNumber.Size = new System.Drawing.Size(110, 25);
-            this.txtIDNumber.TabIndex = 4;
+            this.txtIDNumber.TabIndex = 6;
             this.txtIDNumber.TextChanged += new System.EventHandler(this.txtIDNumber_TextChanged);
             // 
             // label1
@@ -268,7 +268,7 @@
             this.cboJob.Margin = new System.Windows.Forms.Padding(4);
             this.cboJob.Name = "cboJob";
             this.cboJob.Size = new System.Drawing.Size(154, 24);
-            this.cboJob.TabIndex = 6;
+            this.cboJob.TabIndex = 2;
             this.cboJob.SelectedIndexChanged += new System.EventHandler(this.cboJob_SelectedIndexChanged_1);
             this.cboJob.TextChanged += new System.EventHandler(this.cboJob_SelectedIndexChanged_1);
             // 
@@ -283,7 +283,7 @@
             this.cboEduDegree.Margin = new System.Windows.Forms.Padding(4);
             this.cboEduDegree.Name = "cboEduDegree";
             this.cboEduDegree.Size = new System.Drawing.Size(154, 24);
-            this.cboEduDegree.TabIndex = 8;
+            this.cboEduDegree.TabIndex = 3;
             this.cboEduDegree.SelectedIndexChanged += new System.EventHandler(this.cboEduDegree_SelectedIndexChanged_1);
             this.cboEduDegree.TextChanged += new System.EventHandler(this.cboEduDegree_SelectedIndexChanged_1);
             // 
@@ -298,7 +298,7 @@
             this.cboNationality.Margin = new System.Windows.Forms.Padding(4);
             this.cboNationality.Name = "cboNationality";
             this.cboNationality.Size = new System.Drawing.Size(110, 24);
-            this.cboNationality.TabIndex = 7;
+            this.cboNationality.TabIndex = 5;
             this.cboNationality.SelectedIndexChanged += new System.EventHandler(this.cboNationality_SelectedIndexChanged_1);
             this.cboNationality.TextChanged += new System.EventHandler(this.cboNationality_SelectedIndexChanged_1);
             // 
@@ -313,7 +313,7 @@
             this.cboRelationship.Margin = new System.Windows.Forms.Padding(4);
             this.cboRelationship.Name = "cboRelationship";
             this.cboRelationship.Size = new System.Drawing.Size(110, 24);
-            this.cboRelationship.TabIndex = 5;
+            this.cboRelationship.TabIndex = 4;
             this.cboRelationship.SelectedIndexChanged += new System.EventHandler(this.cboRelationship_SelectedIndexChanged_1);
             this.cboRelationship.TextChanged += new System.EventHandler(this.cboRelationship_SelectedIndexChanged_1);
             // 
@@ -328,7 +328,7 @@
             this.cboAlive.Margin = new System.Windows.Forms.Padding(4);
             this.cboAlive.Name = "cboAlive";
             this.cboAlive.Size = new System.Drawing.Size(110, 24);
-            this.cboAlive.TabIndex = 5;
+            this.cboAlive.TabIndex = 4;
             this.cboAlive.SelectedIndexChanged += new System.EventHandler(this.cboAlive_SelectedIndexChanged_1);
             // 
             // ParentInfoPalmerwormItem

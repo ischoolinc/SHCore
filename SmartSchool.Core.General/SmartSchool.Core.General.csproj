@@ -1030,9 +1030,7 @@
     <Compile Include="StudentRelated\RibbonBars\Discipline\InsertEditor.Designer.cs">
       <DependentUpon>InsertEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="StudentRelated\RibbonBars\Export\ExportAbsence.cs" />
     <Compile Include="StudentRelated\RibbonBars\Export\ExportCategory.cs" />
-    <Compile Include="StudentRelated\RibbonBars\Export\ExportDiscipline.cs" />
     <Compile Include="StudentRelated\RibbonBars\Export\ExportExtandField.cs" />
     <Compile Include="StudentRelated\RibbonBars\Export\ExportLeaveInfo.cs" />
     <Compile Include="StudentRelated\RibbonBars\Export\ExportUpdateRecord.cs" />
@@ -1118,9 +1116,7 @@
     <Compile Include="StudentRelated\RibbonBars\Import\ExportWizard.Designer.cs">
       <DependentUpon>ExportWizard.cs</DependentUpon>
     </Compile>
-    <Compile Include="StudentRelated\RibbonBars\Import\ImportAbsence.cs" />
     <Compile Include="StudentRelated\RibbonBars\Import\ImportCategory.cs" />
-    <Compile Include="StudentRelated\RibbonBars\Import\ImportDiscipline.cs" />
     <Compile Include="StudentRelated\RibbonBars\Import\ImportExport.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -1779,9 +1775,15 @@
     <None Include="Resources\SH_T_FieldValidationRule.xml" />
     <None Include="Resources\SH_T_ImportFieldList.xml" />
     <None Include="Resources\SH_T_ExportDescription.xml" />
-    <None Include="Resources\SH_S_FieldValidationRule.xml" />
-    <None Include="Resources\SH_S_BulkDescription.xml" />
-    <None Include="Resources\SH_S_ExportDescription.xml" />
+    <None Include="Resources\SH_S_FieldValidationRule.xml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resources\SH_S_BulkDescription.xml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resources\SH_S_ExportDescription.xml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Resources\tutorial_fav_64.png" />
     <None Include="Resources\subject_64.png" />
     <None Include="Resources\graduated_write_64.png" />

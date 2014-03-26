@@ -111,7 +111,7 @@
             this.txtZipcode.Margin = new System.Windows.Forms.Padding(4);
             this.txtZipcode.Name = "txtZipcode";
             this.txtZipcode.Size = new System.Drawing.Size(52, 25);
-            this.txtZipcode.TabIndex = 2;
+            this.txtZipcode.TabIndex = 1;
             this.txtZipcode.TextChanged += new System.EventHandler(this.txtZipcode_TextChanged);
             this.txtZipcode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtZipcode_KeyDown);
             this.txtZipcode.Validated += new System.EventHandler(this.txtZipcode_Validated);
@@ -127,7 +127,7 @@
             this.txtAddress.Margin = new System.Windows.Forms.Padding(4);
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(382, 25);
-            this.txtAddress.TabIndex = 5;
+            this.txtAddress.TabIndex = 4;
             this.txtAddress.TextChanged += new System.EventHandler(this.txtAddress_TextChanged);
             // 
             // btnAddressType
@@ -143,7 +143,7 @@
             this.btnPAddress,
             this.btnFAddress,
             this.btnOAddress});
-            this.btnAddressType.TabIndex = 1;
+            this.btnAddressType.TabIndex = 0;
             this.btnAddressType.Text = "戶籍地址";
             // 
             // btnPAddress
@@ -198,7 +198,7 @@
             this.txtLongtitude.Margin = new System.Windows.Forms.Padding(4);
             this.txtLongtitude.Name = "txtLongtitude";
             this.txtLongtitude.Size = new System.Drawing.Size(120, 25);
-            this.txtLongtitude.TabIndex = 6;
+            this.txtLongtitude.TabIndex = 5;
             this.txtLongtitude.TextChanged += new System.EventHandler(this.txtLongtitude_TextChanged);
             // 
             // txtLatitude
@@ -212,7 +212,7 @@
             this.txtLatitude.Margin = new System.Windows.Forms.Padding(4);
             this.txtLatitude.Name = "txtLatitude";
             this.txtLatitude.Size = new System.Drawing.Size(120, 25);
-            this.txtLatitude.TabIndex = 7;
+            this.txtLatitude.TabIndex = 6;
             this.txtLatitude.TextChanged += new System.EventHandler(this.txtLatitude_TextChanged);
             // 
             // btnMap
@@ -238,7 +238,7 @@
             this.cboTown.Margin = new System.Windows.Forms.Padding(4);
             this.cboTown.Name = "cboTown";
             this.cboTown.Size = new System.Drawing.Size(89, 22);
-            this.cboTown.TabIndex = 4;
+            this.cboTown.TabIndex = 3;
             this.cboTown.TextChanged += new System.EventHandler(this.cboTown_TextChanged);
             // 
             // cboCounty
@@ -252,7 +252,7 @@
             this.cboCounty.Margin = new System.Windows.Forms.Padding(4);
             this.cboCounty.Name = "cboCounty";
             this.cboCounty.Size = new System.Drawing.Size(103, 22);
-            this.cboCounty.TabIndex = 3;
+            this.cboCounty.TabIndex = 2;
             this.cboCounty.TextChanged += new System.EventHandler(this.cboCounty_TextChanged);
             // 
             // btnQueryPoint
@@ -263,7 +263,7 @@
             this.btnQueryPoint.Location = new System.Drawing.Point(483, 83);
             this.btnQueryPoint.Name = "btnQueryPoint";
             this.btnQueryPoint.Size = new System.Drawing.Size(26, 23);
-            this.btnQueryPoint.TabIndex = 13;
+            this.btnQueryPoint.TabIndex = 7;
             this.btnQueryPoint.Tooltip = "查詢此地址座標";
             this.btnQueryPoint.Click += new System.EventHandler(this.btnQueryPoint_Click);
             // 

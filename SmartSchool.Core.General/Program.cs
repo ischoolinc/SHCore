@@ -92,17 +92,18 @@ namespace SmartSchool
             //    wizard.ShowDialog();
             //};
 
-            rbItemExport["學務相關匯出"]["匯出缺曠紀錄"].Enable = CurrentUser.Acl["Button0180"].Executable;
-            rbItemExport["學務相關匯出"]["匯出缺曠紀錄"].Click += delegate
-            {
-                new ExportStudent(new ExportAbsence()).ShowDialog();
-            };
+            //將匯出匯入缺曠獎懲,移至高中學務模組 - 20140312(dylan)
+            //rbItemExport["學務相關匯出"]["匯出缺曠紀錄"].Enable = CurrentUser.Acl["Button0180"].Executable;
+            //rbItemExport["學務相關匯出"]["匯出缺曠紀錄"].Click += delegate
+            //{
+            //    new ExportStudent(new ExportAbsence()).ShowDialog();
+            //};
 
-            rbItemExport["學務相關匯出"]["匯出獎懲紀錄"].Enable = CurrentUser.Acl["Button0190"].Executable;
-            rbItemExport["學務相關匯出"]["匯出獎懲紀錄"].Click += delegate
-            {
-                new ExportStudent(new ExportDiscipline()).ShowDialog();
-            };
+            //rbItemExport["學務相關匯出"]["匯出獎懲紀錄"].Enable = CurrentUser.Acl["Button0190"].Executable;
+            //rbItemExport["學務相關匯出"]["匯出獎懲紀錄"].Click += delegate
+            //{
+            //    new ExportStudent(new ExportDiscipline()).ShowDialog();
+            //};
 
             rbItemExport["其它相關匯出"]["匯出自訂欄位"].Click += delegate
             {
@@ -143,20 +144,21 @@ namespace SmartSchool
             //    wizard.ShowDialog();
             //};
 
-            rbItemImport["學務相關匯入"]["匯入獎懲紀錄"].Enable = CurrentUser.Acl["Button0270"].Executable;
-            rbItemImport["學務相關匯入"]["匯入獎懲紀錄"].Click += delegate
-            {
-                SmartSchool.API.PlugIn.Import.Importer importer = new ImportDiscipline();
-                ImportStudentV2 wizard = new ImportStudentV2(importer.Text, importer.Image);
-                importer.InitializeImport(wizard);
-                wizard.ShowDialog();
-            };
+            //將匯出匯入缺曠獎懲,移至高中學務模組 - 20140312(dylan)
+            //rbItemImport["學務相關匯入"]["匯入獎懲紀錄"].Enable = CurrentUser.Acl["Button0270"].Executable;
+            //rbItemImport["學務相關匯入"]["匯入獎懲紀錄"].Click += delegate
+            //{
+            //    SmartSchool.API.PlugIn.Import.Importer importer = new ImportDiscipline();
+            //    ImportStudentV2 wizard = new ImportStudentV2(importer.Text, importer.Image);
+            //    importer.InitializeImport(wizard);
+            //    wizard.ShowDialog();
+            //};
 
-            rbItemImport["學務相關匯入"]["匯入缺曠紀錄"].Enable = CurrentUser.Acl["Button0260"].Executable;
-            rbItemImport["學務相關匯入"]["匯入缺曠紀錄"].Click += delegate
-            {
-                new ImportStudent(new ImportAbsence()).ShowDialog();
-            };
+            //rbItemImport["學務相關匯入"]["匯入缺曠紀錄"].Enable = CurrentUser.Acl["Button0260"].Executable;
+            //rbItemImport["學務相關匯入"]["匯入缺曠紀錄"].Click += delegate
+            //{
+            //    new ImportStudent(new ImportAbsence()).ShowDialog();
+            //};
 
             rbItemImport["其它相關匯入"]["匯入自訂欄位"].Click += delegate
             {

@@ -154,3 +154,7 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+/SmartSchool.Common/bin
+/SmartSchool.Common/obj
+/SmartSchool.Core.General/obj
+/SmartSchool.Core.General/obj

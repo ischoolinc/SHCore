@@ -591,15 +591,13 @@ namespace SmartSchool.CourseRelated.RibbonBars.Import
                 _cancel_validate = false;
                 cellManager = validator.Validate(sheet);
 
-                #region 選擇學年度+學期+課程名稱檢查 by ChenCT              
+                #region 選擇學年度+學期+課程名稱檢查 by ChenCT
 
-                // 當使用者選擇課程名稱+學年度+學期才檢查
-                if (Context.IdentifyField.Name == "課程名稱+學年度+學期")
+                // 讀取資料庫資料驗證學年度、學期、課程名稱是否存在。
+                Dictionary<string, string> CheckCourseNameDict = QueryData.GetCourseNameDictV();
+                // 新增模式
+                if (Context.CurrentMode == ImportMode.Insert)
                 {
-                    // 讀取資料庫資料驗證學年度、學期、課程名稱是否存在。
-                    Dictionary<string, string> CheckCourseNameDict = QueryData.GetCourseNameDictV();
-
-                    // 新增
                     if (Context.CurrentMode == ImportMode.Insert)
                     {
                         // 取得學年度、學期、課程名稱索引
@@ -628,9 +626,11 @@ namespace SmartSchool.CourseRelated.RibbonBars.Import
                             }
                         }
                     }
-
-                    // 更新
-                    if (Context.CurrentMode == ImportMode.Update)
+                }
+                else
+                { 
+                    // 更新模式
+                    if (Context.IdentifyField != null && Context.IdentifyField.Name == "課程名稱+學年度+學期")
                     {
                         // 取得學年度、學期、課程名稱索引
                         int colSchoolYear = sheet.GetFieldIndex("學年度");
@@ -718,6 +718,7 @@ namespace SmartSchool.CourseRelated.RibbonBars.Import
             }
             catch (Exception ex)
             {
+                SmartSchool.ExceptionHandler.BugReporter.ReportException(ex, false);
                 MsgBox.Show(ex.Message);
                 wpValidation.NextButtonEnabled = eWizardButtonState.False;
             }

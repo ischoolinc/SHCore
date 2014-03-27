@@ -104,7 +104,6 @@ namespace SmartSchool.StudentRelated.Divider
             #endregion
 
             #region 將SourcePorvider放進TreeView
-
             foreach (ClassInfo var in Class.Instance.Items)
             {
                 int a;
@@ -153,6 +152,26 @@ namespace SmartSchool.StudentRelated.Divider
 
             int Nodeindex = _TargetTreeView.Nodes.Add(_AllStudentSourceProvider);
             TreeNode AllNode = _TargetTreeView.Nodes[Nodeindex];
+
+            //排序年級 Cloud
+            List<string> keys = new List<string>();
+            foreach (string key in _DictGradeStudentSourceProvider.Keys)
+            {
+                if (!keys.Contains(key))
+                {
+                    keys.Add(key);
+                }
+            }
+
+            keys.Sort(GradeYearSort);
+
+            Dictionary<string, GradeStudentSourceProvider> tmp = new Dictionary<string, GradeStudentSourceProvider>();
+            foreach (string key in keys)
+            {
+                tmp.Add(key, _DictGradeStudentSourceProvider[key]);
+            }
+
+            _DictGradeStudentSourceProvider = tmp;
 
             //處理年級目錄
             foreach (TreeNode var in _DictGradeStudentSourceProvider.Values)
@@ -287,6 +306,14 @@ namespace SmartSchool.StudentRelated.Divider
             _TargetTreeView.ResumeLayout();
         }
 
+        private int GradeYearSort(string x, string y)
+        {
+            string xx = x.PadLeft(20, '0');
+            string yy = y.PadLeft(20, '0');
+
+            return xx.CompareTo(yy);
+        }
+
         #endregion
 
         #region IDenominated 成員
@@ -328,5 +355,6 @@ namespace SmartSchool.StudentRelated.Divider
             }
         }
         #endregion
+
     }
 }

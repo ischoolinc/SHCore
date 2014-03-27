@@ -67,6 +67,7 @@ namespace SmartSchool.ClassRelated.NavView
                     _AllClassNode.Nodes.Add(_NoGradeNode);
                 order.Add(_NoGradeNode);
             }
+
             _AllClassNode.Nodes.Sort(new MoveTargetsButtonSorter(order));
             for ( int i = 0 ; i < _AllClassNode.Nodes.Count - grades.Count - ( nog.Count > 0 ? 1 : 0 ) ; i++ )
             {
@@ -76,6 +77,7 @@ namespace SmartSchool.ClassRelated.NavView
             }
             advTree1_AfterNodeSelect(null, new DevComponents.AdvTree.AdvTreeNodeEventArgs(DevComponents.AdvTree.eTreeAction.Mouse, advTree1.SelectedNode));
         }
+
         class MoveTargetsButtonSorter : System.Collections.IComparer
         {
             private List<SourceTreeNode> _Target;

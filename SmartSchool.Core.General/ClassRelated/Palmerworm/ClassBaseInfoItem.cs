@@ -75,9 +75,20 @@ namespace SmartSchool.ClassRelated.Palmerworm
                 if (!gList.Contains(gradeYear))
                 {
                     gList.Add(gradeYear);
-                    cboGradeYear.Items.Add(gradeYear);
+                    //cboGradeYear.Items.Add(gradeYear);
                 }
             }
+
+            gList.Sort(GradeYearSort);
+            cboGradeYear.Items.AddRange(gList.ToArray());
+        }
+
+        private int GradeYearSort(string x, string y)
+        {
+            string xx = x.PadLeft(10, '0');
+            string yy = y.PadLeft(10, '0');
+
+            return xx.CompareTo(yy);
         }
 
         private void InitializeTeacherList()
@@ -434,7 +445,10 @@ namespace SmartSchool.ClassRelated.Palmerworm
             helper.AddElement("Class", "Field");
             Dictionary<string, string> items = _valueManager.GetDirtyItems();
             foreach (string key in items.Keys)
+            {
                 helper.AddElement("Class/Field", key, items[key]);
+            }
+                
             helper.AddElement("Class", "Condition");
             helper.AddElement("Class/Condition", "ID", RunningID);
             EditClass.Update(new DSRequest(helper));

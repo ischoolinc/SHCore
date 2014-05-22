@@ -75,6 +75,8 @@ namespace SmartSchool
             //    new K12.Form.Photo.PhotosBatchExportForm().ShowDialog();
             //};
 
+            
+            rbItemExport["學籍相關匯出"]["匯出離校資訊"].Enable = CurrentUser.Acl["SHSchool.Student.Ribbon0171"].Executable;
             rbItemExport["學籍相關匯出"]["匯出離校資訊"].Click += delegate
             {
                 Exporter exporter = new ExportLeaveInfo();
@@ -218,8 +220,8 @@ namespace SmartSchool
 
             Catalog ribbon = RoleAclSource.Instance["學生"]["功能按鈕"];
             ribbon.Add(new RibbonFeature("SHSchool.Student.Ribbon0169", "匯出學期對照表"));
-
             ribbon.Add(new RibbonFeature("SHSchool.Student.Ribbon0170", "匯入學期對照表"));
+            ribbon.Add(new RibbonFeature("SHSchool.Student.Ribbon0171", "匯出離校資訊"));
 
             #endregion
         }

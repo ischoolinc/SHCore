@@ -49,6 +49,8 @@
             this.cboNationality = new SmartSchool.StudentRelated.Palmerworm.ComboBoxAdv();
             this.cboRelationship = new SmartSchool.StudentRelated.Palmerworm.ComboBoxAdv();
             this.cboAlive = new SmartSchool.StudentRelated.Palmerworm.ComboBoxAdv();
+            this.txtPhone = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picWaiting)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,7 +60,7 @@
             this.label6.BackColor = System.Drawing.Color.Transparent;
             this.label6.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(31, 81);
+            this.label6.Location = new System.Drawing.Point(31, 120);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(60, 17);
@@ -129,7 +131,7 @@
             this.label27.BackColor = System.Drawing.Color.Transparent;
             this.label27.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.label27.ForeColor = System.Drawing.Color.Black;
-            this.label27.Location = new System.Drawing.Point(31, 117);
+            this.label27.Location = new System.Drawing.Point(31, 156);
             this.label27.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(60, 17);
@@ -209,7 +211,7 @@
             this.lnkCopyFather.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkCopyFather.Name = "lnkCopyFather";
             this.lnkCopyFather.Size = new System.Drawing.Size(80, 16);
-            this.lnkCopyFather.TabIndex = 7;
+            this.lnkCopyFather.TabIndex = 8;
             this.lnkCopyFather.TabStop = true;
             this.lnkCopyFather.Text = "複製父親資料";
             this.lnkCopyFather.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkCopyFather_LinkClicked);
@@ -240,7 +242,7 @@
             this.txtIDNumber.MaxLength = 20;
             this.txtIDNumber.Name = "txtIDNumber";
             this.txtIDNumber.Size = new System.Drawing.Size(110, 25);
-            this.txtIDNumber.TabIndex = 6;
+            this.txtIDNumber.TabIndex = 7;
             this.txtIDNumber.TextChanged += new System.EventHandler(this.txtIDNumber_TextChanged);
             // 
             // label1
@@ -264,11 +266,11 @@
             this.cboJob.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.cboJob.FormattingEnabled = true;
             this.cboJob.ItemHeight = 18;
-            this.cboJob.Location = new System.Drawing.Point(110, 77);
+            this.cboJob.Location = new System.Drawing.Point(109, 116);
             this.cboJob.Margin = new System.Windows.Forms.Padding(4);
             this.cboJob.Name = "cboJob";
             this.cboJob.Size = new System.Drawing.Size(154, 24);
-            this.cboJob.TabIndex = 2;
+            this.cboJob.TabIndex = 3;
             this.cboJob.SelectedIndexChanged += new System.EventHandler(this.cboJob_SelectedIndexChanged_1);
             this.cboJob.TextChanged += new System.EventHandler(this.cboJob_SelectedIndexChanged_1);
             // 
@@ -279,11 +281,11 @@
             this.cboEduDegree.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.cboEduDegree.FormattingEnabled = true;
             this.cboEduDegree.ItemHeight = 18;
-            this.cboEduDegree.Location = new System.Drawing.Point(110, 113);
+            this.cboEduDegree.Location = new System.Drawing.Point(109, 152);
             this.cboEduDegree.Margin = new System.Windows.Forms.Padding(4);
             this.cboEduDegree.Name = "cboEduDegree";
             this.cboEduDegree.Size = new System.Drawing.Size(154, 24);
-            this.cboEduDegree.TabIndex = 3;
+            this.cboEduDegree.TabIndex = 4;
             this.cboEduDegree.SelectedIndexChanged += new System.EventHandler(this.cboEduDegree_SelectedIndexChanged_1);
             this.cboEduDegree.TextChanged += new System.EventHandler(this.cboEduDegree_SelectedIndexChanged_1);
             // 
@@ -298,7 +300,7 @@
             this.cboNationality.Margin = new System.Windows.Forms.Padding(4);
             this.cboNationality.Name = "cboNationality";
             this.cboNationality.Size = new System.Drawing.Size(110, 24);
-            this.cboNationality.TabIndex = 5;
+            this.cboNationality.TabIndex = 6;
             this.cboNationality.SelectedIndexChanged += new System.EventHandler(this.cboNationality_SelectedIndexChanged_1);
             this.cboNationality.TextChanged += new System.EventHandler(this.cboNationality_SelectedIndexChanged_1);
             // 
@@ -313,7 +315,7 @@
             this.cboRelationship.Margin = new System.Windows.Forms.Padding(4);
             this.cboRelationship.Name = "cboRelationship";
             this.cboRelationship.Size = new System.Drawing.Size(110, 24);
-            this.cboRelationship.TabIndex = 4;
+            this.cboRelationship.TabIndex = 5;
             this.cboRelationship.SelectedIndexChanged += new System.EventHandler(this.cboRelationship_SelectedIndexChanged_1);
             this.cboRelationship.TextChanged += new System.EventHandler(this.cboRelationship_SelectedIndexChanged_1);
             // 
@@ -331,10 +333,41 @@
             this.cboAlive.TabIndex = 4;
             this.cboAlive.SelectedIndexChanged += new System.EventHandler(this.cboAlive_SelectedIndexChanged_1);
             // 
+            // txtPhone
+            // 
+            // 
+            // 
+            // 
+            this.txtPhone.Border.Class = "TextBoxBorder";
+            this.txtPhone.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.txtPhone.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtPhone.Location = new System.Drawing.Point(109, 79);
+            this.txtPhone.Margin = new System.Windows.Forms.Padding(4);
+            this.txtPhone.Name = "txtPhone";
+            this.txtPhone.Size = new System.Drawing.Size(156, 25);
+            this.txtPhone.TabIndex = 2;
+            this.txtPhone.TextChanged += new System.EventHandler(this.txtPhone_TextChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label2.ForeColor = System.Drawing.Color.Black;
+            this.label2.Location = new System.Drawing.Point(31, 87);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(60, 17);
+            this.label2.TabIndex = 224;
+            this.label2.Text = "電　　話";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // ParentInfoPalmerwormItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.txtPhone);
             this.Controls.Add(this.cboJob);
             this.Controls.Add(this.cboEduDegree);
             this.Controls.Add(this.lnkCopyFather);
@@ -355,7 +388,7 @@
             this.Controls.Add(this.cboAlive);
             this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.Name = "ParentInfoPalmerwormItem";
-            this.Size = new System.Drawing.Size(550, 150);
+            this.Size = new System.Drawing.Size(550, 206);
             this.Controls.SetChildIndex(this.cboAlive, 0);
             this.Controls.SetChildIndex(this.lnkCopyMother, 0);
             this.Controls.SetChildIndex(this.lnkCopyGuardian, 0);
@@ -375,6 +408,8 @@
             this.Controls.SetChildIndex(this.lnkCopyFather, 0);
             this.Controls.SetChildIndex(this.cboEduDegree, 0);
             this.Controls.SetChildIndex(this.cboJob, 0);
+            this.Controls.SetChildIndex(this.txtPhone, 0);
+            this.Controls.SetChildIndex(this.label2, 0);
             ((System.ComponentModel.ISupportInitialize)(this.picWaiting)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -404,5 +439,7 @@
         private ComboBoxAdv cboJob;
         private DevComponents.DotNetBar.Controls.TextBoxX txtIDNumber;
         private System.Windows.Forms.Label label1;
+        private DevComponents.DotNetBar.Controls.TextBoxX txtPhone;
+        private System.Windows.Forms.Label label2;
     }
 }

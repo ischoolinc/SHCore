@@ -26,7 +26,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\FiscaRuntime\addmodules\SHSchoolLoader\</OutputPath>
+    <OutputPath>bin\debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -1766,6 +1766,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Library\README.md" />
     <None Include="Resources\ico_close.gif" />
   </ItemGroup>
   <ItemGroup>
@@ -1802,6 +1803,34 @@
     <None Include="Resources\administrator_remove_64.png" />
     <None Include="Resources\btndeleteteacher.image.png" />
     <None Include="Resources\btnaddteacher.image.png" />
+    <Content Include="Library\Aspose.BarCode.dll" />
+    <Content Include="Library\Aspose.Cells.dll" />
+    <Content Include="Library\Aspose.Words.dll" />
+    <Content Include="Library\DocValidate.dll" />
+    <Content Include="Library\FISCA.Authentication.dll" />
+    <Content Include="Library\FISCA.Data.dll" />
+    <Content Include="Library\FISCA.dll" />
+    <Content Include="Library\FISCA.DSAClient.dll" />
+    <Content Include="Library\FISCA.DSAUtil.dll" />
+    <Content Include="Library\FISCA.LogAgent.dll" />
+    <Content Include="Library\FISCA.Permission.dll" />
+    <Content Include="Library\FISCA.Presentation.dll" />
+    <Content Include="Library\IntelliSchool.DSA.ClientFramework.dll" />
+    <Content Include="Library\K12.Data.dll" />
+    <Content Include="Library\K12.EduAdminDataMapping.dll" />
+    <Content Include="Library\K12.Presentation.dll" />
+    <Content Include="Library\OnlineUpdateClient.dll" />
+    <Content Include="Library\SHSchool.Data.dll" />
+    <Content Include="Library\SmartSchool.AccessControl.dll" />
+    <Content Include="Library\SmartSchool.API.PlugIn.dll" />
+    <Content Include="Library\SmartSchool.Broadcaster.dll" />
+    <Content Include="Library\SmartSchool.Common.dll" />
+    <Content Include="Library\SmartSchool.Common.DotNetBar.dll" />
+    <Content Include="Library\SmartSchool.Core.dll" />
+    <Content Include="Library\SmartSchool.Customization.Data.dll" />
+    <Content Include="Library\SmartSchool.Customization.PlugIn.dll" />
+    <Content Include="Library\SmartSchool.ePaper.dll" />
+    <Content Include="Library\SmartSchool.ExceptionHandler.dll" />
     <Content Include="Resources\classroom_64.ico" />
     <None Include="Resources\college_write_64.png" />
     <None Include="Resources\ctxTag.Image.png" />

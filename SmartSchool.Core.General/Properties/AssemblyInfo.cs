@@ -31,5 +31,10 @@ using System.Runtime.InteropServices;
 //
 // 您可以指定所有的值，也可以依照以下的方式，使用 '*' 將修訂和組建編號
 // 指定為預設值:
+<<<<<<< HEAD
 [assembly: AssemblyVersion("1.0.8.14")]
 [assembly: AssemblyFileVersion("1.0.8.14")]
+=======
+[assembly: AssemblyVersion("1.0.8.13")]
+[assembly: AssemblyFileVersion("1.0.8.13")]
+>>>>>>> 8589690... 修改學生>班級資訊，年級無法正確顯示問題。

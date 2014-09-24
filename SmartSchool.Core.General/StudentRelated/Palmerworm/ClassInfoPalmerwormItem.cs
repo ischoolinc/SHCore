@@ -100,6 +100,14 @@ namespace SmartSchool.StudentRelated.Palmerworm
             cboGradeYear.AddItem("2", "二年級");
             cboGradeYear.AddItem("3", "三年級");
             cboGradeYear.AddItem("4", "四年級");
+            cboGradeYear.AddItem("5", "五年級");
+            cboGradeYear.AddItem("6", "六年級");
+            cboGradeYear.AddItem("7", "七年級");
+            cboGradeYear.AddItem("8", "八年級");
+            cboGradeYear.AddItem("9", "九年級");
+            cboGradeYear.AddItem("10", "十年級");
+            cboGradeYear.AddItem("11", "十一年級");
+            cboGradeYear.AddItem("12", "十二年級");
 
             if (_isInitialized) return;
 

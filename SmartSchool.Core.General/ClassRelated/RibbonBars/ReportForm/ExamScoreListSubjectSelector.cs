@@ -385,13 +385,13 @@ namespace SmartSchool.ClassRelated.RibbonBars.Reports
             //本次列印同個班要印的最多科目數
             int maxSubject = 0;
             //學生加權平均
-            Dictionary<string, double> studentAVGScore = new Dictionary<string, double>();
+            Dictionary<string, decimal> studentAVGScore = new Dictionary<string, decimal>();
             //學生是否排名
             Dictionary<string, bool> studentCanRank = new Dictionary<string, bool>();
             //學生的排名
             Dictionary<BriefStudentData, string> studentRank = new Dictionary<BriefStudentData, string>();
             //總分
-            Dictionary<string, double> studentSum = new Dictionary<string, double>();
+            Dictionary<string, decimal> studentSum = new Dictionary<string, decimal>();
 
             #region 整理每一個班級需要印的科目及班級學生
             foreach (ClassInfo classinfo in selectedClasses)
@@ -442,17 +442,17 @@ namespace SmartSchool.ClassRelated.RibbonBars.Reports
             #region 計算平均及是否排名
             foreach (string studentid in _StudentAttends.Keys)
             {
-                double scoreCount = 0;
+                 decimal scoreCount = 0;
                 bool canRank = true;
-                int CreditCount = 0;
-                double score;
-                int Credit;
-                double sum = 0;
+                decimal CreditCount = 0;
+                decimal score;
+                decimal Credit;
+                decimal sum = 0;
                 foreach (XmlElement attendInfo in _StudentAttends[studentid])
                 {
                     if (printSubjects.Contains(attendInfo.SelectSingleNode("Course/Subject").InnerText))
                     {
-                        if (attendInfo.HasAttribute("Score") && double.TryParse(attendInfo.GetAttribute("Score"), out score) && int.TryParse(attendInfo.SelectSingleNode("Course/Credit").InnerText, out Credit))
+                         if (attendInfo.HasAttribute("Score") && decimal.TryParse(attendInfo.GetAttribute("Score"), out score) && decimal.TryParse(attendInfo.SelectSingleNode("Course/Credit").InnerText, out Credit))
                         {
                             scoreCount += score*Credit;
                             CreditCount += Credit;
@@ -466,7 +466,7 @@ namespace SmartSchool.ClassRelated.RibbonBars.Reports
                 if (CreditCount > 0)
                 {
                     //加權平均算到小數第二位
-                    studentAVGScore.Add(studentid, double.Parse(( scoreCount / CreditCount).ToString(".00")));
+                     studentAVGScore.Add(studentid, decimal.Parse((scoreCount / CreditCount).ToString(".00")));
                 }
                 else
                     canRank = false;
@@ -476,7 +476,7 @@ namespace SmartSchool.ClassRelated.RibbonBars.Reports
             #region 班級成績排序
             foreach (ClassInfo classinfo in classPrintList.Keys)
             {
-                List<double> sortedScore = new List<double>();
+                 List<decimal> sortedScore = new List<decimal>();
                 foreach (BriefStudentData studentInfo in classStudentList[classinfo])
                 {
                     if (studentCanRank.ContainsKey(studentInfo.ID) && studentCanRank[studentInfo.ID] && studentAVGScore.ContainsKey(studentInfo.ID))

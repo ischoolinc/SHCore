@@ -999,8 +999,8 @@ namespace SmartSchool.API.Provider
                         //XmlElement element = (XmlElement)scoreNode;
                         string subject = element.GetAttribute("科目");
                         string level = element.GetAttribute("科目級別");
-                        int credit = 0;
-                        int.TryParse(element.GetAttribute("開課學分數"), out credit);
+                        decimal credit = 0;
+                        decimal.TryParse(element.GetAttribute("開課學分數"), out credit);
                         bool require = element.GetAttribute("修課必選修") == "必修";
                         bool pass = element.GetAttribute("是否取得學分") == "是";
                         XmlElement detail = element;
@@ -1074,13 +1074,13 @@ namespace SmartSchool.API.Provider
                             }
                             //如果成績資料的年級學年度不在清單中就移掉
                             List<Customization.Data.StudentExtension.SemesterSubjectScoreInfo> removeList = new List<Customization.Data.StudentExtension.SemesterSubjectScoreInfo>();
-                            foreach ( Customization.Data.StudentExtension.SemesterSubjectScoreInfo scoreInfo in scoreList )
+                            foreach (Customization.Data.StudentExtension.SemesterSubjectScoreInfo scoreInfo in scoreList)
                             {
                                 //成績年級比現在大或成績的學年度部是最新的
                                 if ( !ApplySemesterSchoolYear.ContainsKey(scoreInfo.GradeYear) || !ApplySemesterSchoolYear[scoreInfo.GradeYear].ContainsKey(scoreInfo.Semester) || ApplySemesterSchoolYear[scoreInfo.GradeYear][scoreInfo.Semester] != scoreInfo.SchoolYear )
                                     removeList.Add(scoreInfo);
                             }
-                            foreach ( SemesterSubjectScoreInfo scoreInfo in removeList )
+                            foreach (SemesterSubjectScoreInfo scoreInfo in removeList)
                             {
                                 scoreList.Remove(scoreInfo);
                             }
@@ -1808,5 +1808,6 @@ namespace SmartSchool.API.Provider
         }
 
         #endregion
+
     }
 }

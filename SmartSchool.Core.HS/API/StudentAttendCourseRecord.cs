@@ -5,7 +5,7 @@ using System.Xml;
 
 namespace SmartSchool.API
 {
-    internal class StudentAttendCourseRecord : Customization.Data.StudentAttendCourseRecord
+    internal class StudentAttendCourseRecord : Customization.Data.StudentAttendCourseRecord,Customization.Data.CourseRecord_New
     {
         private Customization.Data.StudentRecord _StudentRecord;
 
@@ -298,5 +298,10 @@ namespace SmartSchool.API
         }
         #endregion
         #endregion
+
+        public decimal CreditDec
+        {
+             get { return _CourseRecord.CreditDec(); }
+        }
     }
 }

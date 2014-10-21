@@ -666,27 +666,27 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
 
                 if (strCreditPeriods.Length == 1)
                 {
-                    int a;
+                    decimal a;
 
-                    if (!(int.TryParse(strCreditPeriod, out a)))
+                    if (!(decimal.TryParse(strCreditPeriod, out a)))
                     {
-                        _errors.SetError(txtCredit, "學分數/節數只能輸入整數！");
+                        _errors.SetError(txtCredit, "學分數不可輸入非數字！");
                         return;
                     }
                 }
                 else if (strCreditPeriods.Length >= 2)
                 {
-                    int a;
-
-                    if (!(int.TryParse(strCreditPeriods[0], out a)))
+                    decimal a;
+                    int b;
+                    if (!(decimal.TryParse(strCreditPeriods[0], out a)))
                     {
-                        _errors.SetError(txtCredit, "學分數/節數只能輸入整數！");
+                        _errors.SetError(txtCredit, "學分數不可輸入非數字！");
                         return;
                     }
 
-                    if (!(int.TryParse(strCreditPeriods[1], out a)))
+                    if (!(int.TryParse(strCreditPeriods[1], out b)))
                     {
-                        _errors.SetError(txtCredit, "學分數/節數只能輸入整數！");
+                        _errors.SetError(txtCredit, "節數只能輸入整數！");
                         return;
                     }
                 }

@@ -9,7 +9,13 @@ namespace SmartSchool.CourseRelated
     [Serializable()]
     public class CourseInformation : IComparable<CourseInformation>
     {
-        private int _identity, _class_id, _school_year, _semester, _credit, _teacher_id;
+        private int _identity, _class_id, _school_year, _semester, _teacher_id;
+
+        /// <summary>
+        /// 2014/9/29 - 改為Decimal型態
+        /// </summary>
+        private decimal _credit;
+
         private int _class_grade_year, _class_display_order, _ref_exam_template_id;
         private string _subj_level, _course_name, _subject, _class_name, _taught_by, _taught_nickname;
         private string _teacher_category, _exam_template, _required, _requiredby;
@@ -24,7 +30,7 @@ namespace SmartSchool.CourseRelated
             _class_id = GetIntValue(rawData, "RefClassID");
             _school_year = GetIntValue(rawData, "SchoolYear");
             _semester = GetIntValue(rawData, "Semester");
-            _credit = GetIntValue(rawData, "Credit");
+            _credit = GetDecimalValue(rawData, "Credit"); //2014/9/29 - 改為Decimal型態
             _course_name = GetStringValue(rawData, "CourseName");
             _subject = GetStringValue(rawData, "Subject");
             _class_name = GetStringValue(rawData, "ClassName");
@@ -37,11 +43,11 @@ namespace SmartSchool.CourseRelated
             _required = GetStringValue(rawData, "IsRequired");
             _requiredby = GetStringValue(rawData, "RequiredBy");
             _ref_exam_template_id = GetIntValue(rawData, "RefExamTemplateID");
-            _notIncludedInCalc = ( GetStringValue(rawData, "NotIncludedInCalc") == "是" );
-            _notIncludedInCredit = ( GetStringValue(rawData, "NotIncludedInCredit") == "是" );
+            _notIncludedInCalc = (GetStringValue(rawData, "NotIncludedInCalc") == "是");
+            _notIncludedInCredit = (GetStringValue(rawData, "NotIncludedInCredit") == "是");
             _entry = GetStringValue(rawData, "ScoreType");
             _teachers = new List<Teacher>();
-            foreach ( XmlElement each in rawData.SelectNodes("Teachers/Teacher") )
+            foreach (XmlElement each in rawData.SelectNodes("Teachers/Teacher"))
                 _teachers.Add(new Teacher(each));
             _teachers.Sort(sortBySequence);
         }
@@ -115,7 +121,13 @@ namespace SmartSchool.CourseRelated
             get { return _semester; }
         }
 
+        [Obsolete("2014/9/29 已過時,請改用CreditDec")]
         public int Credit
+        {
+            get { return (Int32)CreditDec; }
+        }
+
+        public decimal CreditDec
         {
             get { return _credit; }
         }
@@ -164,9 +176,9 @@ namespace SmartSchool.CourseRelated
         {
             CourseInformation course = obj as CourseInformation;
 
-            if ( course == null ) return false;
+            if (course == null) return false;
 
-            return ( course._identity == _identity );
+            return (course._identity == _identity);
         }
 
         public override int GetHashCode()
@@ -188,7 +200,27 @@ namespace SmartSchool.CourseRelated
                 return 0;
 
             int result;
-            if ( int.TryParse(value.InnerText, out result) )
+            if (int.TryParse(value.InnerText, out result))
+                return result;
+            else
+                throw new ArgumentException("課程欄位資料型態不正確，XPath 路徑：" + xpath);
+        }
+
+        private decimal GetDecimalValue(XmlElement rawData, string xpath)
+        {
+            XmlNode value = rawData.SelectSingleNode(xpath);
+
+            ThrowResultNullException(xpath, value);
+
+            //if (string.IsNullOrEmpty(value.InnerText))
+            //    return -1;
+
+            //2011/2/23 由騉翔修改，若是空白則傳回0，因為若是傳回-1會造成學分數顯示及計算錯誤
+            if (string.IsNullOrEmpty(value.InnerText))
+                return 0;
+
+            decimal result;
+            if (decimal.TryParse(value.InnerText, out result))
                 return result;
             else
                 throw new ArgumentException("課程欄位資料型態不正確，XPath 路徑：" + xpath);
@@ -205,7 +237,7 @@ namespace SmartSchool.CourseRelated
 
         private static void ThrowResultNullException(string xpath, XmlNode value)
         {
-            if ( value == null )
+            if (value == null)
                 throw new ArgumentException("課程欄位資料不存在，XPath 路徑：" + xpath);
         }
 
@@ -237,7 +269,7 @@ namespace SmartSchool.CourseRelated
             {
                 get
                 {
-                    if ( string.IsNullOrEmpty(Nickname) )
+                    if (string.IsNullOrEmpty(Nickname))
                         return TeacherName;
                     else
                         return string.Format("{0} ({1})", TeacherName, Nickname);
@@ -284,18 +316,18 @@ namespace SmartSchool.CourseRelated
             //    if ( other.RefClassID == "" ) return 1;
             //    return ClassRelated.Class.Instance.Items[this.RefClassID].CompareTo(ClassRelated.Class.Instance.Items[other.RefClassID]);
             //}
-            if ( this.SchoolYear == other.SchoolYear )
+            if (this.SchoolYear == other.SchoolYear)
             {
-                if ( this.Semester == other.Semester )
+                if (this.Semester == other.Semester)
                 {
-                    if ( this.ClassName == other.ClassName )
+                    if (this.ClassName == other.ClassName)
                     {
-                        return SmartSchool.Common.StringComparer.Comparer(this.Subject, other.Subject, "國文","英文","數學","物理","化學","歷史","地理","公民","基礎","進階");
+                        return SmartSchool.Common.StringComparer.Comparer(this.Subject, other.Subject, "國文", "英文", "數學", "物理", "化學", "歷史", "地理", "公民", "基礎", "進階");
                     }
                     else
                     {
-                        if ( !ClassRelated.Class.Instance.Items.ContainsKey("" + this.ClassID) ) return -1;
-                        if ( !ClassRelated.Class.Instance.Items.ContainsKey("" + other.ClassID) ) return 1;
+                        if (!ClassRelated.Class.Instance.Items.ContainsKey("" + this.ClassID)) return -1;
+                        if (!ClassRelated.Class.Instance.Items.ContainsKey("" + other.ClassID)) return 1;
                         return ClassRelated.Class.Instance["" + this.ClassID].CompareTo(ClassRelated.Class.Instance["" + other.ClassID]);
                     }
                 }

@@ -360,7 +360,7 @@ namespace SmartSchool.ClassRelated.RibbonBars.Reports
                         //參加排名
                         bool canRank = true;
                         //總學分數
-                        int CreditCount = 0;
+                        decimal CreditCount = 0;
                         //總分
                         decimal sum = 0;
 
@@ -369,12 +369,12 @@ namespace SmartSchool.ClassRelated.RibbonBars.Reports
                             if (printSubjects.Contains(attendRec.Subject) && attendRec.ExamList.Contains(printExam))
                             {
                                 //把科目、級別、學分數兜成 "_科目_級別_學分數_"的字串，這個字串在不同科目級別學分數會成為唯一值
-                                string key = attendRec.Subject + "^_^" + attendRec.SubjectLevel + "^_^" + attendRec.Credit;
+                                string key = attendRec.Subject + "^_^" + attendRec.SubjectLevel + "^_^" + attendRec.CreditDec();
                                 bool hasScore = false;
                                 #region 檢查這個KEY有沒有評分同時計算總分平均及是否可排名
                                 foreach (ExamScoreInfo examScore in studentRec.ExamScoreList)
                                 {
-                                    if (examScore.ExamName == printExam && key == examScore.Subject + "^_^" + examScore.SubjectLevel + "^_^" + examScore.Credit)
+                                    if (examScore.ExamName == printExam && key == examScore.Subject + "^_^" + examScore.SubjectLevel + "^_^" + examScore.CreditDec())
                                     {
                                         //是要列印的科目
                                         if (!groups.Contains(key))
@@ -387,9 +387,9 @@ namespace SmartSchool.ClassRelated.RibbonBars.Reports
                                             else
                                                 classExamScoreTable[studentRec][key] = examScore.ExamScore.ToString();
                                             //加權總分
-                                            scoreCount += examScore.ExamScore * examScore.Credit;
+                                            scoreCount += examScore.ExamScore * examScore.CreditDec();
                                             //學分
-                                            CreditCount += examScore.Credit;
+                                            CreditCount += examScore.CreditDec();
                                             //總分
                                             sum += examScore.ExamScore;
                                         }

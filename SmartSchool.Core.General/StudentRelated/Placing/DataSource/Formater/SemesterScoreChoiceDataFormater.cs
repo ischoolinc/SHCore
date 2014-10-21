@@ -68,8 +68,8 @@ namespace SmartSchool.StudentRelated.Placing.DataSource.Formater
                     if(_arg.HasType(ChoiceScoreType.­«­×¦¨ÁZ))
                         bestScore = Math.Max(bestScore,score3);
 
-                    int cd;
-                    if (!int.TryParse(credit, out cd))
+                    decimal cd;
+                    if (!decimal.TryParse(credit, out cd))
                         cd = 0;
 
                     ISubjectScore ss = new SuperSubjectScore(subjectName, bestScore, cd);

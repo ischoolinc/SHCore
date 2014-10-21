@@ -228,6 +228,7 @@
       <DependentUpon>ConfigurationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Configure\ConfigurationManager.cs" />
+    <Compile Include="Credit\CreditConvertHelper.cs" />
     <Compile Include="CurrentUser.cs" />
     <Compile Include="DataValueManager.cs" />
     <Compile Include="ElectronicPaperImp\DispatcherImp.cs" />
@@ -796,6 +797,7 @@
     <Content Include="Library\SmartSchool.Common.pdb" />
     <Content Include="Library\SmartSchool.Common.xml" />
     <Content Include="Library\SmartSchool.Customization.Data.dll" />
+    <Content Include="Library\SmartSchool.Customization.Data.pdb" />
     <Content Include="Library\SmartSchool.Customization.Data.xml" />
     <Content Include="Library\SmartSchool.Customization.PlugIn.dll" />
     <Content Include="Library\SmartSchool.Customization.PlugIn.xml" />

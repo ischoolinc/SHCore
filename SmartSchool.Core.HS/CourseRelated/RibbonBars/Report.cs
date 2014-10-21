@@ -271,7 +271,7 @@ namespace SmartSchool.CourseRelated.RibbonBars
 
                         currentWorksheet.Cells[sheetRowIndex, 0].PutValue(var.SchoolYear + " 學年度 第 " + var.Semester + " 學期 課程修課學生清單");
                         currentWorksheet.Cells[sheetRowIndex + 1, 1].PutValue(var.CourseName);
-                        currentWorksheet.Cells[sheetRowIndex + 1, 5].PutValue(var.Credit);
+                        currentWorksheet.Cells[sheetRowIndex + 1, 5].PutValue(var.CreditDec);
                         currentWorksheet.Cells[sheetRowIndex + 1, 7].PutValue(var.MajorTeacherName);
                         currentWorksheet.Cells[sheetRowIndex + 2, 1].PutValue(var.Subject);
                         currentWorksheet.Cells[sheetRowIndex + 2, 5].PutValue(var.SubjectLevel);
@@ -309,7 +309,7 @@ namespace SmartSchool.CourseRelated.RibbonBars
 
                     currentWorksheet.Cells[sheetRowIndex, 0].PutValue(var.SchoolYear + " 學年度 第 " + var.Semester + " 學期 課程修課學生清單");
                     currentWorksheet.Cells[sheetRowIndex + 1, 1].PutValue(var.CourseName);
-                    currentWorksheet.Cells[sheetRowIndex + 1, 5].PutValue(var.Credit);
+                    currentWorksheet.Cells[sheetRowIndex + 1, 5].PutValue(var.CreditDec);
                     currentWorksheet.Cells[sheetRowIndex + 1, 7].PutValue(var.MajorTeacherName);
                     currentWorksheet.Cells[sheetRowIndex + 2, 1].PutValue(var.Subject);
                     currentWorksheet.Cells[sheetRowIndex + 2, 5].PutValue(var.SubjectLevel);

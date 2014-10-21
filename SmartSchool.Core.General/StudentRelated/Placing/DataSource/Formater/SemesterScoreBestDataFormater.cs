@@ -42,8 +42,8 @@ namespace SmartSchool.StudentRelated.Placing.DataSource.Formater
                     if (!decimal.TryParse(ds, out score))
                         score = 0;
 
-                    int cd;
-                    if (!int.TryParse(credit, out cd))
+                    decimal cd;
+                    if (!decimal.TryParse(credit, out cd))
                         cd = 0;
 
                     ISubjectScore ss = new SuperSubjectScore(subjectName, score, cd);

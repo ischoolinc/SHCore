@@ -100,7 +100,7 @@ namespace SmartSchool.CourseRelated
             creditField.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
                 if (Items[e.Key] != null)
-                    e.Value = Items[e.Key].Credit;
+                    e.Value = Items[e.Key].CreditDec;
             };
             K12.Presentation.NLDPanels.Course.AddListPaneField(creditField);
 

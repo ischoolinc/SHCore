@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SmartSchool.API
 {
-    internal class CourseRecord : Customization.Data.CourseRecord
+    internal class CourseRecord : Customization.Data.CourseRecord_New
     {
         private List<SmartSchool.Customization.Data.CategoryInfo> _CourseCategorys=new List<SmartSchool.Customization.Data.CategoryInfo>();
 
@@ -12,7 +12,7 @@ namespace SmartSchool.API
 
         private string _CourseName;
 
-        private int _Credit;
+        private decimal _Credit;
 
         private string _Entry;
 
@@ -44,7 +44,7 @@ namespace SmartSchool.API
         {
             _CourseID = course.Identity;
             _CourseName = course.CourseName;
-            _Credit = course.Credit;
+            _Credit = course.CreditDec;
             _Entry=course.Entry;
             _NotIncludedInCalc = course.NotIncludedInCalc;
             _NotIncludedInCredit = course.NotIncludedInCredit;
@@ -73,7 +73,13 @@ namespace SmartSchool.API
             get { return _CourseName; }
         }
 
+        [Obsolete("2014/9/29 已過時,請改用CreditDec")]
         public int Credit
+        {
+            get { return (Int32)CreditDec; }
+        }
+
+        public decimal CreditDec
         {
             get { return _Credit; }
         }

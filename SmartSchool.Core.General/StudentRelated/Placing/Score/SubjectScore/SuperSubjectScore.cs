@@ -6,15 +6,15 @@ namespace SmartSchool.StudentRelated.Placing.Score.SubjectScore
 {
     public class SuperSubjectScore : AbstractSubjectScore
     {
-        private int _credit;
-        public SuperSubjectScore(string subjectName, decimal score, int credit)
+         private decimal _credit;
+        public SuperSubjectScore(string subjectName, decimal score, decimal credit)
         {
             SetSubjectName(subjectName);
             SetScore(score);
             _credit = credit;
         }
 
-        public int Credit
+        public decimal Credit
         {
             get { return _credit; }
         }

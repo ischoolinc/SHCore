@@ -33,7 +33,7 @@ namespace SmartSchool.CourseRelated.NavViews
                 decimal? creditCount = 0;
                 foreach ( var item in _Courses )
                 {
-                    creditCount += Course.Instance[item].Credit;
+                    creditCount += Course.Instance[item].CreditDec;
                 }
                 base.Text = _Text + "{" + creditCount + "學分}(" + _Courses.Count + ")";
             }
@@ -46,7 +46,7 @@ namespace SmartSchool.CourseRelated.NavViews
                 decimal? creditCount = 0;
                 foreach ( var item in _Courses )
                 {
-                    creditCount += Course.Instance[item].Credit;
+                    creditCount += Course.Instance[item].CreditDec;
                 }
                 base.Text = _Text + "(共" + creditCount + "學分)";
             }

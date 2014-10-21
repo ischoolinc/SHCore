@@ -154,11 +154,13 @@
       <HintPath>Library\SmartSchool.Common.DotNetBar.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="SmartSchool.Core">
+    <Reference Include="SmartSchool.Core, Version=1.0.4.6, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>Library\SmartSchool.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="SmartSchool.Customization.Data, Version=1.3.0.1, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SmartSchool.Customization.Data, Version=1.3.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>Library\SmartSchool.Customization.Data.dll</HintPath>
       <Private>False</Private>
     </Reference>
@@ -1827,7 +1829,14 @@
     <Content Include="Library\SmartSchool.Common.dll" />
     <Content Include="Library\SmartSchool.Common.DotNetBar.dll" />
     <Content Include="Library\SmartSchool.Core.dll" />
+    <Content Include="Library\SmartSchool.Core.General.dll" />
+    <Content Include="Library\SmartSchool.Core.General.pdb" />
+    <Content Include="Library\SmartSchool.Core.pdb" />
     <Content Include="Library\SmartSchool.Customization.Data.dll" />
+    <Content Include="Library\SmartSchool.Customization.Data.pdb" />
+    <Content Include="Library\SmartSchool.Customization.Data.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Library\SmartSchool.Customization.PlugIn.dll" />
     <Content Include="Library\SmartSchool.ePaper.dll" />
     <Content Include="Library\SmartSchool.ExceptionHandler.dll" />

@@ -230,7 +230,7 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
                                     case "科目級別": report.Worksheets[0].Cells[RowIndex, i].PutValue(subjectScore.Level); break;
                                     case "學年度": report.Worksheets[0].Cells[RowIndex, i].PutValue(subjectScore.SchoolYear); break;
                                     case "學期": report.Worksheets[0].Cells[RowIndex, i].PutValue(subjectScore.Semester); break;
-                                    case "學分數": report.Worksheets[0].Cells[RowIndex, i].PutValue(subjectScore.Credit); break;
+                                    case "學分數": report.Worksheets[0].Cells[RowIndex, i].PutValue(subjectScore.CreditDec()); break;
                                     case "分項類別": report.Worksheets[0].Cells[RowIndex, i].PutValue(subjectScore.Detail.GetAttribute("開課分項類別")); break;
                                     case "成績年級": report.Worksheets[0].Cells[RowIndex, i].PutValue(subjectScore.GradeYear); break;
                                     case "必選修": report.Worksheets[0].Cells[RowIndex, i].PutValue(subjectScore.Require ? "必修" : "選修"); break;

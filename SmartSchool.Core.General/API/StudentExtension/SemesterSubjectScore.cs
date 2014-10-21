@@ -5,14 +5,14 @@ using System.Xml;
 
 namespace SmartSchool.API.StudentExtension
 {
-    internal class SemesterSubjectScore:Customization.Data.StudentExtension.SemesterSubjectScoreInfo
+    internal class SemesterSubjectScore : Customization.Data.StudentExtension.SemesterSubjectScoreInfo_New
     {
         private readonly int _SchoolYear;
         private readonly int _Semester;
         private readonly int _GradeYear;
         private readonly string _Subject;
         private readonly string _Level;
-        private readonly int _Credit;
+        private readonly decimal _CreditDec;
         private readonly bool _Require;
         private readonly decimal _Score;
         private readonly XmlElement _Detail;
@@ -79,7 +79,18 @@ namespace SmartSchool.API.StudentExtension
         {
             get
             {
-                return _Credit;
+                return (Int32)_CreditDec;
+            }
+        }
+
+        /// <summary>
+        /// 學分數
+        /// </summary>
+        public decimal CreditDec
+        {
+            get
+            {
+                return _CreditDec;
             }
         }
 
@@ -130,7 +141,7 @@ namespace SmartSchool.API.StudentExtension
          int gradeYear,
          string subject,
          string level,
-         int credit,
+         decimal creditDec,
          bool require,
          decimal score,
          XmlElement detail,
@@ -143,7 +154,7 @@ namespace SmartSchool.API.StudentExtension
             _GradeYear = gradeYear;
             _Subject = subject;
             _Level = level;
-            _Credit = credit;
+            _CreditDec = creditDec;
             _Require = require;
             _Score = score;
             _Detail = detail;

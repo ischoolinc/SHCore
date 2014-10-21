@@ -41,7 +41,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>debug\</OutputPath>
+    <OutputPath>obj\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -658,7 +658,10 @@
     <Content Include="Library\SmartSchool.Core.General.pdb" />
     <Content Include="Library\SmartSchool.Core.pdb" />
     <Content Include="Library\SmartSchool.Customization.Data.dll" />
-    <Content Include="Library\SmartSchool.Customization.Data.xml" />
+    <Content Include="Library\SmartSchool.Customization.Data.pdb" />
+    <Content Include="Library\SmartSchool.Customization.Data.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Library\SmartSchool.Customization.PlugIn.dll" />
     <Content Include="Library\SmartSchool.Customization.PlugIn.xml" />
     <Content Include="Library\SmartSchool.ExceptionHandler.dll" />

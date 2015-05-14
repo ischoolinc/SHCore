@@ -64,7 +64,10 @@ namespace SmartSchool.StudentRelated.RibbonBars
             var btnR1 = btnR["學務相關報表"];
             //var btnR11 = btnR1["學生個人缺曠明細"];
             //var btnR12 = btnR1["學生個人獎懲明細"];
-            var btnR13 = btnR1["歷年功過及出席統計表"];
+
+            //2015/5/13 - 功能移至學務延申模組
+            //var btnR13 = btnR1["歷年功過及出席統計表"];
+
             #region 設定為學生的報表外掛處理者
             reportManager = new ButtonAdapterPlugInToMenuButton(btnR);
             SmartSchool.Customization.PlugIn.GeneralizationPluhgInManager<ButtonAdapter>.Instance.Add("學生/資料統計/報表", reportManager);
@@ -89,17 +92,24 @@ namespace SmartSchool.StudentRelated.RibbonBars
             //buttonItem2Ctrl = new FeatureAccessControl("Report0010");
             //學生個人獎懲明細	Report0020
             //buttonItem3Ctrl = new FeatureAccessControl("Report0020");
+
+            //2015/5/13 - 功能移至學務延申模組
             //歷年功過及出席統計表	Report0030
-            buttonItem1Ctrl = new FeatureAccessControl("Report0030");
+            //buttonItem1Ctrl = new FeatureAccessControl("Report0030");
 
             btnR.Enable = ( SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0 );
             //btnS.Enable = false;
             //btnR11.Enable = buttonItem2Ctrl.Executable();
             //btnR12.Enable = buttonItem3Ctrl.Executable();
-            btnR13.Enable = buttonItem1Ctrl.Executable();
+
+            //2015/5/13 - 功能移至學務延申模組
+            //btnR13.Enable = buttonItem1Ctrl.Executable();
+
             //btnR11.Click += new System.EventHandler(this.buttonItem2_Click);
             //btnR12.Click += new System.EventHandler(this.buttonItem3_Click);
-            btnR13.Click += new System.EventHandler(this.buttonItem1_Click);
+
+            //2015/5/13 - 功能移至學務延申模組
+            //btnR13.Click += new System.EventHandler(this.buttonItem1_Click);
 
             SmartSchool.Broadcaster.Events.Items["學生/選取變更"].Handler += delegate
             {
@@ -1007,21 +1017,22 @@ namespace SmartSchool.StudentRelated.RibbonBars
         #endregion
 
         #region 歷年功過及出席統計
-        private void buttonItem1_Click(object sender, EventArgs e)
-        {
-            if ( SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count == 0 )
-                return;
+        //2015/5/13 - 功能移至學務延申模組
+        //private void buttonItem1_Click(object sender, EventArgs e)
+        //{
+        //    if ( SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count == 0 )
+        //        return;
 
-            ////警告使用者別做傻事
-            //if (SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 1500)
-            //{
-            //    MsgBox.Show("您選取的學生超過 1500 個，可能會發生意想不到的錯誤，請減少選取的學生。");
-            //    return;
-            //}
+        //    ////警告使用者別做傻事
+        //    //if (SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 1500)
+        //    //{
+        //    //    MsgBox.Show("您選取的學生超過 1500 個，可能會發生意想不到的錯誤，請減少選取的學生。");
+        //    //    return;
+        //    //}
 
-            OverTheYearsStatisticsForm form = new OverTheYearsStatisticsForm();
-            form.ShowDialog();
-        }
+        //    OverTheYearsStatisticsForm form = new OverTheYearsStatisticsForm();
+        //    form.ShowDialog();
+        //}
         #endregion
 
     }

@@ -32,15 +32,15 @@
             this.btnCancel = new DevComponents.DotNetBar.ButtonX();
             this.checkBoxX1 = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.SuspendLayout();
             // 
             // btnPrint
             // 
             this.btnPrint.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnPrint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnPrint.BackColor = System.Drawing.Color.Transparent;
             this.btnPrint.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnPrint.Location = new System.Drawing.Point(83, 49);
+            this.btnPrint.Location = new System.Drawing.Point(189, 116);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(70, 23);
             this.btnPrint.TabIndex = 0;
@@ -50,10 +50,9 @@
             // btnCancel
             // 
             this.btnCancel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.BackColor = System.Drawing.Color.Transparent;
             this.btnCancel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnCancel.Location = new System.Drawing.Point(158, 49);
+            this.btnCancel.Location = new System.Drawing.Point(270, 116);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(70, 23);
             this.btnCancel.TabIndex = 0;
@@ -64,18 +63,22 @@
             // 
             this.checkBoxX1.AutoSize = true;
             this.checkBoxX1.BackColor = System.Drawing.Color.Transparent;
-            this.checkBoxX1.Location = new System.Drawing.Point(10, 11);
+            // 
+            // 
+            // 
+            this.checkBoxX1.BackgroundStyle.Class = "";
+            this.checkBoxX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.checkBoxX1.Location = new System.Drawing.Point(26, 24);
             this.checkBoxX1.Name = "checkBoxX1";
-            this.checkBoxX1.Size = new System.Drawing.Size(186, 21);
+            this.checkBoxX1.Size = new System.Drawing.Size(209, 21);
             this.checkBoxX1.TabIndex = 1;
-            this.checkBoxX1.Text = "是否將已銷過紀錄納入統計";
+            this.checkBoxX1.Text = "已銷過之[懲戒紀錄]也納入統計";
             // 
             // linkLabel1
             // 
-            this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.linkLabel1.Location = new System.Drawing.Point(2, 55);
+            this.linkLabel1.Location = new System.Drawing.Point(23, 122);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(60, 17);
             this.linkLabel1.TabIndex = 2;
@@ -83,17 +86,34 @@
             this.linkLabel1.Text = "假別設定";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
+            // labelX1
+            // 
+            this.labelX1.AutoSize = true;
+            this.labelX1.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX1.BackgroundStyle.Class = "";
+            this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX1.Location = new System.Drawing.Point(26, 62);
+            this.labelX1.Name = "labelX1";
+            this.labelX1.Size = new System.Drawing.Size(294, 39);
+            this.labelX1.TabIndex = 3;
+            this.labelX1.Text = "說明 ：勾選此項目,已銷過之資料也列印統計出來\r\n並於明細文字後方加註(已銷過)字樣";
+            // 
             // OverTheYearsStatisticsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(232, 76);
+            this.ClientSize = new System.Drawing.Size(352, 151);
+            this.Controls.Add(this.labelX1);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.checkBoxX1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnPrint);
-            this.MaximumSize = new System.Drawing.Size(240, 110);
-            this.MinimumSize = new System.Drawing.Size(240, 110);
+            this.DoubleBuffered = true;
+            this.MaximumSize = new System.Drawing.Size(368, 190);
+            this.MinimumSize = new System.Drawing.Size(368, 190);
             this.Name = "OverTheYearsStatisticsForm";
             this.Text = "歷年功過及出席統計";
             this.ResumeLayout(false);
@@ -107,5 +127,6 @@
         private DevComponents.DotNetBar.ButtonX btnCancel;
         private DevComponents.DotNetBar.Controls.CheckBoxX checkBoxX1;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private DevComponents.DotNetBar.LabelX labelX1;
     }
 }

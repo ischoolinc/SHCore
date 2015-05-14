@@ -88,13 +88,6 @@
             this.buttonItem3.Text = "學生個人獎懲明細";
             this.buttonItem3.Click += new System.EventHandler(this.buttonItem3_Click);
             // 
-            // buttonItem1
-            // 
-            this.buttonItem1.ImagePaddingHorizontal = 8;
-            this.buttonItem1.Name = "buttonItem1";
-            this.buttonItem1.Text = "歷年功過及出席統計表";
-            this.buttonItem1.Click += new System.EventHandler(this.buttonItem1_Click);
-            // 
             // btnStatistics
             // 
             this.btnStatistics.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText;

@@ -58,6 +58,7 @@ namespace SmartSchool.StudentRelated.RibbonBars.Reports
                 newCol.ValueType=typeof(bool);
                 this.dataGridViewX1.Columns.Add(newCol);
             }
+
             foreach (string type in typeList)
             {
                 DataGridViewRow row = new DataGridViewRow();
@@ -233,6 +234,20 @@ namespace SmartSchool.StudentRelated.RibbonBars.Reports
         private void dataGridViewX1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
 
+        }
+
+        private void checkBoxX1_CheckedChanged(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dataGridViewX1.Rows)
+            {
+                foreach(DataGridViewCell cell in row.Cells)
+                {
+                    if (cell.ColumnIndex == 0)
+                        continue;
+
+                    cell.Value = checkBoxX1.Checked;
+                }
+            }
         }
 
         //private void dataGridViewX1_CellValueChanged(object sender, DataGridViewCellEventArgs e)

@@ -41,7 +41,7 @@ namespace SmartSchool.StudentRelated.RibbonBars.Reports
 
         private void Check()
         {
-            foreach(SHSchool.Data.SHPeriodMappingInfo info in SHSchool.Data.SHPeriodMapping.SelectAll())
+            foreach (SHSchool.Data.SHPeriodMappingInfo info in SHSchool.Data.SHPeriodMapping.SelectAll())
             {
                 if (!PrintDic.ContainsKey(info.Name))
                 {
@@ -146,7 +146,7 @@ namespace SmartSchool.StudentRelated.RibbonBars.Reports
                     }
 
                     rewardDict.Clear();
-                    
+
                     data.AddItem(schoolyear, semester, "大功", (decimal)info.AwardA);
                     data.AddItem(schoolyear, semester, "小功", (decimal)info.AwardB);
                     data.AddItem(schoolyear, semester, "嘉獎", (decimal)info.AwardC);
@@ -175,9 +175,27 @@ namespace SmartSchool.StudentRelated.RibbonBars.Reports
                         }
                     }
 
-                    string all = CDATE(info.OccurDate.ToShortDateString()) + " " + info.OccurReason + " " + rewardStat;
-                    if (_print_cleared == true || info.Cleared == false)
+                    //兩個條件可加入明細清單
+                    //1.如果勾選消過也列印
+                    //2.資料未消過
+                    if (_print_cleared == true)
+                    {
+                        string all = "";
+                        if (info.Cleared)
+                        {
+                            all = CDATE(info.OccurDate.ToShortDateString()) + " " + info.OccurReason + " " + rewardStat + " (已銷過)";
+                        }
+                        else
+                        {
+                            all = CDATE(info.OccurDate.ToShortDateString()) + " " + info.OccurReason + " " + rewardStat;
+                        }
                         list.Add(all);
+                    }
+                    else if (info.Cleared == false)
+                    {
+                        string all = CDATE(info.OccurDate.ToShortDateString()) + " " + info.OccurReason + " " + rewardStat;
+                        list.Add(all);
+                    }
 
                     #region 註解掉了
                     //if (((info.OccurReason + " " + rewardStat) as string).Length >= 20)
@@ -246,6 +264,17 @@ namespace SmartSchool.StudentRelated.RibbonBars.Reports
 
             #region 產生範本
 
+            foreach (StudentRecord each in students)
+            {
+                if (detailRow < detailList[each.StudentID].Count / 2 + 1)
+                {
+                    detailRow = detailList[each.StudentID].Count / 2 + 1;
+
+                    totalRow = detailRow + 11;
+                }
+            }
+
+
             Workbook pt1 = GetTemplate(6);
             Workbook pt2 = GetTemplate(8);
             Workbook pt3 = GetTemplate(10);
@@ -293,6 +322,8 @@ namespace SmartSchool.StudentRelated.RibbonBars.Reports
             int studentCount = 0;
             int allStudentCount = students.Count;
 
+            int Count特殊 = 0;
+
             foreach (StudentRecord each in students)
             {
                 StatisticsData data = stat[each.StudentID];
@@ -318,9 +349,11 @@ namespace SmartSchool.StudentRelated.RibbonBars.Reports
                     {
                         int new_ws_index = wb.Worksheets.Add();
                         wb.Worksheets[new_ws_index].Copy(pt3.Worksheets[0]);
-                        wb.Worksheets[new_ws_index].Name = "特殊";
+                        wb.Worksheets[new_ws_index].Name = "特殊" + Count特殊;
                         sheets.Add(10, wb.Worksheets[new_ws_index]);
                         sheetIndex.Add(10, 0);
+
+                        Count特殊++;
                     }
                     ws = sheets[10];
                     index = sheetIndex[10];
@@ -358,8 +391,11 @@ namespace SmartSchool.StudentRelated.RibbonBars.Reports
                         int detailColIndex = 2;
                         int detailIndex = index + rowIndexTable["明細"];
                         int detailCount = 0;
+
                         foreach (string var in detailList[each.StudentID])
                         {
+
+
                             detailCount++;
                             if (detailCount > detailRow)
                             {
@@ -716,10 +752,10 @@ namespace SmartSchool.StudentRelated.RibbonBars.Reports
 
             rowIndexTable.Add("明細", index);
 
-            if ((index + detailRow) > totalRow)
-            {
-                detailRow = totalRow - index;
-            }
+            //if ((index + detailRow) > totalRow)
+            //{
+            //    detailRow = totalRow - index;
+            //}
 
             for (int j = index; j < index + detailRow; j++)
             {

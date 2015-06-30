@@ -38,6 +38,8 @@ namespace SmartSchool.StudentRelated.Palmerworm
 
         private BackgroundWorker _getCountyBackgroundWorker;
 
+        private CountyTown _CountyTown;
+
         //Town -> ZipCode
         private Dictionary<string, string> _zip_code_mapping = new Dictionary<string, string>();
 
@@ -46,7 +48,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
         {
             InitializeComponent();
             Title = "地址資料";
-
+            _CountyTown = new CountyTown();
             _errors = new EnhancedErrorProvider();
             _errors.Icon = Resources.error;
             _warnings = new EnhancedErrorProvider();
@@ -76,7 +78,8 @@ namespace SmartSchool.StudentRelated.Palmerworm
 
         void _getCountyBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            e.Result = Config.GetCountyList();
+            //e.Result = Config.GetCountyList();
+            e.Result = _CountyTown.GetCountyList();
         }
 
         private void Initialize()
@@ -257,17 +260,21 @@ namespace SmartSchool.StudentRelated.Palmerworm
             cboTown.Items.Clear();
             if (cboCounty.GetText() != "")
             {
-                XmlElement[] townList = Config.GetTownList(cboCounty.GetText());
-                _zip_code_mapping = new Dictionary<string, string>();
-                foreach (XmlElement each in townList)
-                {
-                    string name = each.GetAttribute("Name");
+                //XmlElement[] townList = Config.GetTownList(cboCounty.GetText());
+                //_zip_code_mapping = new Dictionary<string, string>();
+                //foreach (XmlElement each in townList)
+                //{
+                //    string name = each.GetAttribute("Name");
 
-                    if (!_zip_code_mapping.ContainsKey(name))
-                        _zip_code_mapping.Add(name, each.GetAttribute("Code"));
+                //    if (!_zip_code_mapping.ContainsKey(name))
+                //        _zip_code_mapping.Add(name, each.GetAttribute("Code"));
 
-                    cboTown.AddItem(name);
-                }
+                //    cboTown.AddItem(name);
+                //}
+
+                _zip_code_mapping = _CountyTown.GetTownZipCodeDict(cboCounty.GetText());
+                foreach (string key in _zip_code_mapping.Keys)
+                    cboTown.AddItem(key);
             }
 
             Address addr = GetCurrentAddress();
@@ -297,16 +304,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
             if (!string.IsNullOrEmpty(value))
             {
                 if (_zip_code_mapping.ContainsKey(value))
-                {
-                    if (txtZipcode.Text.Length > 3)
-                    {
-                        txtZipcode.Text = _zip_code_mapping[value] + txtZipcode.Text.Substring(3, txtZipcode.Text.Length - 3);
-                    }
-                    else
-                    {
-                        txtZipcode.Text = _zip_code_mapping[value];
-                    }
-                }
+                    txtZipcode.Text = _zip_code_mapping[value];
             }
 
             Address addr = GetCurrentAddress();
@@ -462,7 +460,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
             else
                 throw new Exception("沒有此種 Address Type。");
 
-            
+
         }
 
         private void txtZipcode_KeyDown(object sender, KeyEventArgs e)
@@ -488,13 +486,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
 
         private void CheckZipCode()
         {
-            string zipcode = "";
-            if (txtZipcode.Text.Length > 3)
-                zipcode = txtZipcode.Text.Remove(3);
-            else
-                zipcode = txtZipcode.Text;
-
-            KeyValuePair<string, string> ctPair = Config.FindTownByZipCode(zipcode);
+            KeyValuePair<string, string> ctPair = Config.FindTownByZipCode(txtZipcode.Text);
             if (ctPair.Key == null)
                 _warnings.SetError(txtZipcode, "查無此郵遞區號對應縣市鄉鎮資料。");
             else

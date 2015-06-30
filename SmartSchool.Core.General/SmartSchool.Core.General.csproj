@@ -675,6 +675,7 @@
     <Compile Include="RomanNumeral\RomanToIntConverter\RomanNumeralConverter.cs" />
     <Compile Include="RomanNumeral\Symbol.cs" />
     <Compile Include="RomanNumeral\Util.cs" />
+    <Compile Include="StudentRelated\CountyTown.cs" />
     <Compile Include="StudentRelated\Palmerworm\StudentDescriptionPane.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -1843,6 +1844,7 @@
     <Content Include="Resources\classroom_64.ico" />
     <None Include="Resources\college_write_64.png" />
     <None Include="Resources\ctxTag.Image.png" />
+    <Content Include="Resources\CountyTownBelong.xml" />
     <Content Include="Resources\elementary_school_64.ico" />
     <Content Include="Resources\executive_64.ico" />
     <None Include="Resources\Import.Image.png" />

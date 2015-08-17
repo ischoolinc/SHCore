@@ -46,6 +46,15 @@ namespace SmartSchool.Feature.Student
             CallService("SmartSchool.Student.BulkProcess.UpdateImportStudent", new DSRequest(request));
         }
 
+        /// <summary>
+        /// 國中
+        /// </summary>
+        /// <param name="request"></param>
+        public static void UpdateImportStudentJH(XmlElement request)
+        {
+            CallService("SmartSchool.Student.BulkProcessJH.UpdateImportStudent", new DSRequest(request));
+        }
+
         public static void SyncEnrollmentInfoToUpdateRecord()
         {
             CallService("SmartSchool.Student.BulkProcess.SyncEnrollmentInfoToUpdateRecord",null);

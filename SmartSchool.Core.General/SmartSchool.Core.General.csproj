@@ -1830,8 +1830,6 @@
     <Content Include="Library\SmartSchool.Common.dll" />
     <Content Include="Library\SmartSchool.Common.DotNetBar.dll" />
     <Content Include="Library\SmartSchool.Core.dll" />
-    <Content Include="Library\SmartSchool.Core.General.dll" />
-    <Content Include="Library\SmartSchool.Core.General.pdb" />
     <Content Include="Library\SmartSchool.Core.pdb" />
     <Content Include="Library\SmartSchool.Customization.Data.dll" />
     <Content Include="Library\SmartSchool.Customization.Data.pdb" />

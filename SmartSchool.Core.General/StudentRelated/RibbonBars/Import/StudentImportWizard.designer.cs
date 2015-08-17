@@ -178,10 +178,13 @@
             this.ImportWizard.FooterStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid;
             this.ImportWizard.FooterStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemHotText;
             this.ImportWizard.FooterStyle.BorderTopWidth = 1;
+            this.ImportWizard.FooterStyle.Class = "";
+            this.ImportWizard.FooterStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.ImportWizard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(57)))), ((int)(((byte)(129)))));
-            this.ImportWizard.HeaderCaptionFont = new System.Drawing.Font(SmartSchool.Common.FontStyles.GeneralFontFamily, 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ImportWizard.HeaderCaptionFont = new System.Drawing.Font("微軟正黑體", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ImportWizard.HeaderDescriptionFont = new System.Drawing.Font("微軟正黑體", 9.75F);
+            this.ImportWizard.HeaderDescriptionIndent = 16;
             this.ImportWizard.HeaderImage = ((System.Drawing.Image)(resources.GetObject("ImportWizard.HeaderImage")));
-            this.ImportWizard.HeaderImageSize = new System.Drawing.Size(48, 48);
             // 
             // 
             // 
@@ -195,6 +198,8 @@
             this.ImportWizard.HeaderStyle.BorderLeftWidth = 1;
             this.ImportWizard.HeaderStyle.BorderRightWidth = 1;
             this.ImportWizard.HeaderStyle.BorderTopWidth = 1;
+            this.ImportWizard.HeaderStyle.Class = "";
+            this.ImportWizard.HeaderStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.ImportWizard.HeaderStyle.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center;
             this.ImportWizard.HeaderStyle.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
             this.ImportWizard.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
@@ -209,14 +214,14 @@
             this.wpSelectField,
             this.wpValidation,
             this.wpImport});
-            this.ImportWizard.CancelButtonClick += new System.ComponentModel.CancelEventHandler(this.ImportWizard_CancelButtonClick);
             this.ImportWizard.FinishButtonClick += new System.ComponentModel.CancelEventHandler(this.ImportWizard_FinishButtonClick);
+            this.ImportWizard.CancelButtonClick += new System.ComponentModel.CancelEventHandler(this.ImportWizard_CancelButtonClick);
             // 
             // wpSelectFileAndAction
             // 
-            this.wpSelectFileAndAction.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.wpSelectFileAndAction.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.wpSelectFileAndAction.AntiAlias = false;
             this.wpSelectFileAndAction.BackColor = System.Drawing.Color.Transparent;
             this.wpSelectFileAndAction.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
@@ -228,6 +233,21 @@
             this.wpSelectFileAndAction.PageDescription = "選擇檔案與決定要用何種方式匯入資料。";
             this.wpSelectFileAndAction.PageTitle = "選擇檔案與匯入方式";
             this.wpSelectFileAndAction.Size = new System.Drawing.Size(528, 293);
+            // 
+            // 
+            // 
+            this.wpSelectFileAndAction.Style.Class = "";
+            this.wpSelectFileAndAction.Style.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.wpSelectFileAndAction.StyleMouseDown.Class = "";
+            this.wpSelectFileAndAction.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.wpSelectFileAndAction.StyleMouseOver.Class = "";
+            this.wpSelectFileAndAction.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.wpSelectFileAndAction.TabIndex = 0;
             this.wpSelectFileAndAction.NextButtonClick += new System.ComponentModel.CancelEventHandler(this.wpSelectFileAndAction_NextButtonClick);
             // 
@@ -252,10 +272,15 @@
             // 
             this.chkInsert.AutoSize = true;
             this.chkInsert.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.chkInsert.BackgroundStyle.Class = "";
+            this.chkInsert.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.chkInsert.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton;
             this.chkInsert.Location = new System.Drawing.Point(15, 142);
             this.chkInsert.Name = "chkInsert";
-            this.chkInsert.Size = new System.Drawing.Size(106, 21);
+            this.chkInsert.Size = new System.Drawing.Size(107, 21);
             this.chkInsert.TabIndex = 28;
             this.chkInsert.Text = "新增學生資料";
             this.chkInsert.CheckedChanged += new System.EventHandler(this.chkInsert_CheckedChanged);
@@ -263,7 +288,7 @@
             // label4
             // 
             this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Font = new System.Drawing.Font(SmartSchool.Common.FontStyles.GeneralFontFamily, 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label4.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.label4.Location = new System.Drawing.Point(15, 56);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(310, 38);
@@ -278,7 +303,8 @@
             // 
             // 
             this.txtSourceFile.Border.Class = "TextBoxBorder";
-            this.txtSourceFile.Font = new System.Drawing.Font(SmartSchool.Common.FontStyles.GeneralFontFamily, 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtSourceFile.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.txtSourceFile.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.txtSourceFile.Location = new System.Drawing.Point(18, 32);
             this.txtSourceFile.Name = "txtSourceFile";
             this.txtSourceFile.Size = new System.Drawing.Size(345, 23);
@@ -290,10 +316,10 @@
             // 
             this.label8.AutoSize = true;
             this.label8.BackColor = System.Drawing.Color.Transparent;
-            this.label8.Font = new System.Drawing.Font(SmartSchool.Common.FontStyles.GeneralFontFamily, 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label8.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.label8.Location = new System.Drawing.Point(6, 119);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(123, 20);
+            this.label8.Size = new System.Drawing.Size(125, 20);
             this.label8.TabIndex = 3;
             this.label8.Text = "● 選擇匯入方式";
             // 
@@ -301,17 +327,17 @@
             // 
             this.label7.AutoSize = true;
             this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.label7.Font = new System.Drawing.Font(SmartSchool.Common.FontStyles.GeneralFontFamily, 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label7.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.label7.Location = new System.Drawing.Point(5, 7);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(197, 20);
+            this.label7.Size = new System.Drawing.Size(199, 20);
             this.label7.TabIndex = 0;
             this.label7.Text = "● 選擇來源檔案(匯入來源)";
             // 
             // btnSelectFile
             // 
             this.btnSelectFile.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.btnSelectFile.Font = new System.Drawing.Font(SmartSchool.Common.FontStyles.GeneralFontFamily, 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnSelectFile.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.btnSelectFile.Location = new System.Drawing.Point(369, 32);
             this.btnSelectFile.Name = "btnSelectFile";
             this.btnSelectFile.Size = new System.Drawing.Size(29, 22);
@@ -323,10 +349,15 @@
             // 
             this.chkUpdate.AutoSize = true;
             this.chkUpdate.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.chkUpdate.BackgroundStyle.Class = "";
+            this.chkUpdate.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.chkUpdate.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton;
             this.chkUpdate.Location = new System.Drawing.Point(15, 211);
             this.chkUpdate.Name = "chkUpdate";
-            this.chkUpdate.Size = new System.Drawing.Size(106, 21);
+            this.chkUpdate.Size = new System.Drawing.Size(107, 21);
             this.chkUpdate.TabIndex = 29;
             this.chkUpdate.Text = "更新學生資料";
             this.chkUpdate.CheckedChanged += new System.EventHandler(this.chkUpdate_CheckedChanged);
@@ -334,7 +365,7 @@
             // lblInserDesc
             // 
             this.lblInserDesc.BackColor = System.Drawing.Color.Transparent;
-            this.lblInserDesc.Font = new System.Drawing.Font(SmartSchool.Common.FontStyles.GeneralFontFamily, 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lblInserDesc.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.lblInserDesc.Location = new System.Drawing.Point(34, 162);
             this.lblInserDesc.Name = "lblInserDesc";
             this.lblInserDesc.Size = new System.Drawing.Size(338, 37);
@@ -345,7 +376,7 @@
             // lblUpdateDesc
             // 
             this.lblUpdateDesc.BackColor = System.Drawing.Color.Transparent;
-            this.lblUpdateDesc.Font = new System.Drawing.Font(SmartSchool.Common.FontStyles.GeneralFontFamily, 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lblUpdateDesc.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.lblUpdateDesc.Location = new System.Drawing.Point(34, 232);
             this.lblUpdateDesc.Name = "lblUpdateDesc";
             this.lblUpdateDesc.Size = new System.Drawing.Size(338, 40);
@@ -365,6 +396,11 @@
             // 
             // lblCollectMsg
             // 
+            // 
+            // 
+            // 
+            this.lblCollectMsg.BackgroundStyle.Class = "";
+            this.lblCollectMsg.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.lblCollectMsg.Location = new System.Drawing.Point(40, 89);
             this.lblCollectMsg.Name = "lblCollectMsg";
             this.lblCollectMsg.Size = new System.Drawing.Size(343, 99);
@@ -373,9 +409,9 @@
             // 
             // wpCollectKeyInfo
             // 
-            this.wpCollectKeyInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.wpCollectKeyInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.wpCollectKeyInfo.AntiAlias = false;
             this.wpCollectKeyInfo.BackColor = System.Drawing.Color.Transparent;
             this.wpCollectKeyInfo.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
@@ -391,15 +427,30 @@
             this.wpCollectKeyInfo.PageDescription = "識別欄是更新資料的依據，驗證欄則是幫助檢查資料合理性。";
             this.wpCollectKeyInfo.PageTitle = "選擇識別欄與驗證欄";
             this.wpCollectKeyInfo.Size = new System.Drawing.Size(528, 293);
+            // 
+            // 
+            // 
+            this.wpCollectKeyInfo.Style.Class = "";
+            this.wpCollectKeyInfo.Style.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.wpCollectKeyInfo.StyleMouseDown.Class = "";
+            this.wpCollectKeyInfo.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.wpCollectKeyInfo.StyleMouseOver.Class = "";
+            this.wpCollectKeyInfo.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.wpCollectKeyInfo.TabIndex = 8;
             this.wpCollectKeyInfo.BeforePageDisplayed += new DevComponents.DotNetBar.WizardCancelPageChangeEventHandler(this.wpCollectKeyInfo_BeforePageDisplayed);
-            this.wpCollectKeyInfo.NextButtonClick += new System.ComponentModel.CancelEventHandler(this.wpCollectKeyInfo_NextButtonClick);
             this.wpCollectKeyInfo.AfterPageDisplayed += new DevComponents.DotNetBar.WizardPageChangeEventHandler(this.wpCollectKeyInfo_AfterPageDisplayed);
+            this.wpCollectKeyInfo.NextButtonClick += new System.ComponentModel.CancelEventHandler(this.wpCollectKeyInfo_NextButtonClick);
             // 
             // lblValidDesc
             // 
             this.lblValidDesc.BackColor = System.Drawing.Color.Transparent;
-            this.lblValidDesc.Font = new System.Drawing.Font(SmartSchool.Common.FontStyles.GeneralFontFamily, 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lblValidDesc.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.lblValidDesc.Location = new System.Drawing.Point(64, 214);
             this.lblValidDesc.Name = "lblValidDesc";
             this.lblValidDesc.Size = new System.Drawing.Size(396, 41);
@@ -409,7 +460,7 @@
             // label9
             // 
             this.label9.BackColor = System.Drawing.Color.Transparent;
-            this.label9.Font = new System.Drawing.Font(SmartSchool.Common.FontStyles.GeneralFontFamily, 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label9.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.label9.Location = new System.Drawing.Point(63, 65);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(397, 58);
@@ -421,7 +472,7 @@
             this.cboValidateField.DisplayMember = "Text";
             this.cboValidateField.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cboValidateField.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboValidateField.Font = new System.Drawing.Font(SmartSchool.Common.FontStyles.GeneralFontFamily, 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.cboValidateField.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.cboValidateField.FormattingEnabled = true;
             this.cboValidateField.ItemHeight = 18;
             this.cboValidateField.Location = new System.Drawing.Point(68, 183);
@@ -433,7 +484,7 @@
             // 
             this.lblValid.AutoSize = true;
             this.lblValid.BackColor = System.Drawing.Color.Transparent;
-            this.lblValid.Font = new System.Drawing.Font(SmartSchool.Common.FontStyles.GeneralFontFamily, 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lblValid.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.lblValid.Location = new System.Drawing.Point(64, 162);
             this.lblValid.Name = "lblValid";
             this.lblValid.Size = new System.Drawing.Size(56, 16);
@@ -445,7 +496,7 @@
             this.cboIdField.DisplayMember = "Text";
             this.cboIdField.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cboIdField.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboIdField.Font = new System.Drawing.Font(SmartSchool.Common.FontStyles.GeneralFontFamily, 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.cboIdField.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.cboIdField.FormattingEnabled = true;
             this.cboIdField.ItemHeight = 18;
             this.cboIdField.Location = new System.Drawing.Point(67, 35);
@@ -457,7 +508,7 @@
             // 
             this.lblIdField.AutoSize = true;
             this.lblIdField.BackColor = System.Drawing.Color.Transparent;
-            this.lblIdField.Font = new System.Drawing.Font(SmartSchool.Common.FontStyles.GeneralFontFamily, 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lblIdField.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.lblIdField.Location = new System.Drawing.Point(63, 14);
             this.lblIdField.Name = "lblIdField";
             this.lblIdField.Size = new System.Drawing.Size(56, 16);
@@ -466,9 +517,9 @@
             // 
             // wpSelectField
             // 
-            this.wpSelectField.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.wpSelectField.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.wpSelectField.AntiAlias = false;
             this.wpSelectField.BackColor = System.Drawing.Color.Transparent;
             this.wpSelectField.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
@@ -481,9 +532,24 @@
             this.wpSelectField.PageDescription = "灰色欄位代表無法匯入的欄位，欄位上有提示文字說明為何無法匯入。";
             this.wpSelectField.PageTitle = "選擇要匯入的欄位";
             this.wpSelectField.Size = new System.Drawing.Size(528, 293);
+            // 
+            // 
+            // 
+            this.wpSelectField.Style.Class = "";
+            this.wpSelectField.Style.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.wpSelectField.StyleMouseDown.Class = "";
+            this.wpSelectField.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.wpSelectField.StyleMouseOver.Class = "";
+            this.wpSelectField.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.wpSelectField.TabIndex = 9;
-            this.wpSelectField.NextButtonClick += new System.ComponentModel.CancelEventHandler(this.wpSelectField_NextButtonClick);
             this.wpSelectField.AfterPageDisplayed += new DevComponents.DotNetBar.WizardPageChangeEventHandler(this.wpSelectField_AfterPageDisplayed);
+            this.wpSelectField.NextButtonClick += new System.ComponentModel.CancelEventHandler(this.wpSelectField_NextButtonClick);
             // 
             // chkSelectAll
             // 
@@ -513,8 +579,10 @@
             // 
             // 
             this.lvSourceFieldList.Border.Class = "ListViewBorder";
+            this.lvSourceFieldList.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.lvSourceFieldList.CheckBoxes = true;
             this.lvSourceFieldList.FullRowSelect = true;
+            this.lvSourceFieldList.HideSelection = false;
             listViewItem1.StateImageIndex = 0;
             listViewItem2.StateImageIndex = 0;
             listViewItem3.StateImageIndex = 0;
@@ -593,9 +661,9 @@
             // 
             // wpValidation
             // 
-            this.wpValidation.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.wpValidation.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.wpValidation.AntiAlias = false;
             this.wpValidation.BackColor = System.Drawing.Color.Transparent;
             this.wpValidation.Controls.Add(this.buttonX1);
@@ -619,9 +687,24 @@
             this.wpValidation.PageDescription = "程式會修改檔案內容，如果您要保存原來資料，請備份原始檔案。";
             this.wpValidation.PageTitle = "檢查資料正確性";
             this.wpValidation.Size = new System.Drawing.Size(528, 293);
+            // 
+            // 
+            // 
+            this.wpValidation.Style.Class = "";
+            this.wpValidation.Style.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.wpValidation.StyleMouseDown.Class = "";
+            this.wpValidation.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.wpValidation.StyleMouseOver.Class = "";
+            this.wpValidation.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.wpValidation.TabIndex = 10;
-            this.wpValidation.NextButtonClick += new System.ComponentModel.CancelEventHandler(this.wizardPage2_NextButtonClick);
             this.wpValidation.AfterPageDisplayed += new DevComponents.DotNetBar.WizardPageChangeEventHandler(this.wizardPage2_AfterPageDisplayed);
+            this.wpValidation.NextButtonClick += new System.ComponentModel.CancelEventHandler(this.wizardPage2_NextButtonClick);
             // 
             // buttonX1
             // 
@@ -636,6 +719,11 @@
             // 
             // chkSepErrors
             // 
+            // 
+            // 
+            // 
+            this.chkSepErrors.BackgroundStyle.Class = "";
+            this.chkSepErrors.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.chkSepErrors.Location = new System.Drawing.Point(95, 228);
             this.chkSepErrors.Name = "chkSepErrors";
             this.chkSepErrors.Size = new System.Drawing.Size(242, 23);
@@ -646,9 +734,14 @@
             // 
             this.lblCorrectCount.AutoSize = true;
             this.lblCorrectCount.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.lblCorrectCount.BackgroundStyle.Class = "";
+            this.lblCorrectCount.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.lblCorrectCount.Location = new System.Drawing.Point(166, 162);
             this.lblCorrectCount.Name = "lblCorrectCount";
-            this.lblCorrectCount.Size = new System.Drawing.Size(15, 19);
+            this.lblCorrectCount.Size = new System.Drawing.Size(15, 21);
             this.lblCorrectCount.TabIndex = 21;
             this.lblCorrectCount.Text = "0";
             // 
@@ -656,9 +749,14 @@
             // 
             this.lblWarningCount.AutoSize = true;
             this.lblWarningCount.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.lblWarningCount.BackgroundStyle.Class = "";
+            this.lblWarningCount.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.lblWarningCount.Location = new System.Drawing.Point(166, 125);
             this.lblWarningCount.Name = "lblWarningCount";
-            this.lblWarningCount.Size = new System.Drawing.Size(15, 19);
+            this.lblWarningCount.Size = new System.Drawing.Size(15, 21);
             this.lblWarningCount.TabIndex = 20;
             this.lblWarningCount.Text = "0";
             // 
@@ -666,15 +764,25 @@
             // 
             this.lblErrorCount.AutoSize = true;
             this.lblErrorCount.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.lblErrorCount.BackgroundStyle.Class = "";
+            this.lblErrorCount.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.lblErrorCount.Location = new System.Drawing.Point(166, 88);
             this.lblErrorCount.Name = "lblErrorCount";
-            this.lblErrorCount.Size = new System.Drawing.Size(15, 19);
+            this.lblErrorCount.Size = new System.Drawing.Size(15, 21);
             this.lblErrorCount.TabIndex = 19;
             this.lblErrorCount.Text = "0";
             // 
             // lblCorrect
             // 
             this.lblCorrect.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.lblCorrect.BackgroundStyle.Class = "";
+            this.lblCorrect.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.lblCorrect.Location = new System.Drawing.Point(95, 159);
             this.lblCorrect.Name = "lblCorrect";
             this.lblCorrect.Size = new System.Drawing.Size(78, 23);
@@ -684,6 +792,11 @@
             // lblContinueMsg
             // 
             this.lblContinueMsg.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.lblContinueMsg.BackgroundStyle.Class = "";
+            this.lblContinueMsg.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.lblContinueMsg.Location = new System.Drawing.Point(115, 260);
             this.lblContinueMsg.Name = "lblContinueMsg";
             this.lblContinueMsg.Size = new System.Drawing.Size(147, 23);
@@ -695,6 +808,11 @@
             // chkContinue
             // 
             this.chkContinue.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.chkContinue.BackgroundStyle.Class = "";
+            this.chkContinue.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.chkContinue.Location = new System.Drawing.Point(95, 260);
             this.chkContinue.Name = "chkContinue";
             this.chkContinue.Size = new System.Drawing.Size(21, 23);
@@ -705,6 +823,11 @@
             // lblWarning
             // 
             this.lblWarning.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.lblWarning.BackgroundStyle.Class = "";
+            this.lblWarning.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.lblWarning.Location = new System.Drawing.Point(96, 122);
             this.lblWarning.Name = "lblWarning";
             this.lblWarning.Size = new System.Drawing.Size(78, 23);
@@ -714,6 +837,11 @@
             // lblError
             // 
             this.lblError.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.lblError.BackgroundStyle.Class = "";
+            this.lblError.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.lblError.Location = new System.Drawing.Point(96, 85);
             this.lblError.Name = "lblError";
             this.lblError.Size = new System.Drawing.Size(78, 23);
@@ -758,7 +886,7 @@
             // 
             this.lblValidMsg.AutoSize = true;
             this.lblValidMsg.BackColor = System.Drawing.Color.Transparent;
-            this.lblValidMsg.Font = new System.Drawing.Font(SmartSchool.Common.FontStyles.GeneralFontFamily, 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lblValidMsg.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.lblValidMsg.Location = new System.Drawing.Point(98, 37);
             this.lblValidMsg.Name = "lblValidMsg";
             this.lblValidMsg.Size = new System.Drawing.Size(80, 16);
@@ -773,6 +901,8 @@
             // 
             // 
             this.pgValidProgress.BackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.DockSiteBackColor;
+            this.pgValidProgress.BackgroundStyle.Class = "";
+            this.pgValidProgress.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.pgValidProgress.Location = new System.Drawing.Point(96, 56);
             this.pgValidProgress.Name = "pgValidProgress";
             this.pgValidProgress.Size = new System.Drawing.Size(336, 23);
@@ -781,9 +911,9 @@
             // 
             // wpImport
             // 
-            this.wpImport.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.wpImport.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.wpImport.AntiAlias = false;
             this.wpImport.BackColor = System.Drawing.Color.Transparent;
             this.wpImport.Controls.Add(this.btnImport);
@@ -798,6 +928,21 @@
             this.wpImport.PageDescription = "將資料匯入到資料庫中";
             this.wpImport.PageTitle = "匯入資料";
             this.wpImport.Size = new System.Drawing.Size(528, 293);
+            // 
+            // 
+            // 
+            this.wpImport.Style.Class = "";
+            this.wpImport.Style.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.wpImport.StyleMouseDown.Class = "";
+            this.wpImport.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.wpImport.StyleMouseOver.Class = "";
+            this.wpImport.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.wpImport.TabIndex = 11;
             this.wpImport.AfterPageDisplayed += new DevComponents.DotNetBar.WizardPageChangeEventHandler(this.wpImport_AfterPageDisplayed);
             // 
@@ -830,7 +975,7 @@
             // 
             this.lblImportProgress.AutoSize = true;
             this.lblImportProgress.BackColor = System.Drawing.Color.Transparent;
-            this.lblImportProgress.Font = new System.Drawing.Font(SmartSchool.Common.FontStyles.GeneralFontFamily, 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lblImportProgress.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.lblImportProgress.Location = new System.Drawing.Point(98, 82);
             this.lblImportProgress.Name = "lblImportProgress";
             this.lblImportProgress.Size = new System.Drawing.Size(80, 16);
@@ -845,6 +990,8 @@
             // 
             // 
             this.pgImport.BackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.DockSiteBackColor;
+            this.pgImport.BackgroundStyle.Class = "";
+            this.pgImport.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.pgImport.Location = new System.Drawing.Point(96, 101);
             this.pgImport.Name = "pgImport";
             this.pgImport.Size = new System.Drawing.Size(336, 23);
@@ -857,6 +1004,7 @@
             this.ClientSize = new System.Drawing.Size(542, 423);
             this.ControlBox = false;
             this.Controls.Add(this.ImportWizard);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "StudentImportWizard";
             this.Text = "匯入學生基本資料";

@@ -820,6 +820,8 @@ namespace SmartSchool.StudentRelated
         internal void ReloadData()
         {
             this.SyncAllBackground();
+            SHSchool.Data.SHStudent.RemoveAll();
+            SHSchool.Data.SHStudent.SelectAll();
         }
 
         private TagManager _tag_manager;

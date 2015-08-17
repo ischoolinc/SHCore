@@ -13,13 +13,24 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
         private string _id_number;
         private string _student_number;
         private string _login_name;
+        private string _StudentStatus;
 
-        public ImportRecord(XmlElement record)
+        // 舊寫法
+        //public ImportRecord(XmlElement record)
+        //{
+        //    _identity = record.GetAttribute("ID");
+        //    _id_number = record.GetAttribute("IDNumber");
+        //    _student_number = record.GetAttribute("StudentNumber");
+        //    _login_name = record.GetAttribute("SALoginName");
+        //}
+
+        public ImportRecord(SHSchool.Data.SHStudentRecord record)
         {
-            _identity = record.GetAttribute("ID");
-            _id_number = record.GetAttribute("IDNumber");
-            _student_number = record.GetAttribute("StudentNumber");
-            _login_name = record.GetAttribute("SALoginName");
+            _identity = record.ID;
+            _id_number = record.IDNumber;
+            _student_number = record.StudentNumber;
+            _login_name = record.SALoginName;
+            _StudentStatus = record.StatusStr;
         }
 
         public string Identity
@@ -55,6 +66,12 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
         {
             get { return _relatively_row_index; }
             set { _relatively_row_index = value; }
+        }
+
+        public string StudentStatus
+        {
+            get { return _StudentStatus; }
+            set { _StudentStatus = value; }
         }
     }
 }

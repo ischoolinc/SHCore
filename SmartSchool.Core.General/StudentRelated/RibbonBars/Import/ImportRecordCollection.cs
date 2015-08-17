@@ -21,16 +21,21 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
 
         public void Add(ImportRecord record)
         {
+            // 學生系統編號可以各種都可以
             _by_identity.Add(record.Identity, record);
 
-            if (!string.IsNullOrEmpty(record.IDNumber))
-                _by_id_number.Add(record.IDNumber, record);
+            // 這三類目前只支援學生狀態唯一般。
+            if(record.StudentStatus=="一般")
+            {
+                if (!string.IsNullOrEmpty(record.IDNumber))
+                    _by_id_number.Add(record.IDNumber, record);
 
-            if (!string.IsNullOrEmpty(record.StudentNumber))
-                _by_student_number.Add(record.StudentNumber, record);
+                if (!string.IsNullOrEmpty(record.StudentNumber))
+                    _by_student_number.Add(record.StudentNumber, record);
 
-            if (!string.IsNullOrEmpty(record.SALoginName))
-                _by_login_name.Add(record.SALoginName, record);
+                if (!string.IsNullOrEmpty(record.SALoginName))
+                    _by_login_name.Add(record.SALoginName, record);
+            }
         }
 
         public ImportRecord GetByIdentity(string key)

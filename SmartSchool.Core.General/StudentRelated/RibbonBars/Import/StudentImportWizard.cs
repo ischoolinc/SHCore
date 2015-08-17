@@ -583,10 +583,33 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
                 validator.InitFromXMLNode(validRule);
 
                 ProgressMessage("載入識別欄驗證資訊…");
-                XmlElement primaryKeys = StudentBulkProcess.GetPrimaryKeyList();
+
+                // 舊寫法有問題先註解，Service 只會回傳一般生
+                //XmlElement primaryKeys = StudentBulkProcess.GetPrimaryKeyList();
                 ImportRecordCollection importRecords = new ImportRecordCollection();
-                foreach (XmlElement each in primaryKeys.SelectNodes("Item"))
-                    importRecords.Add(new ImportRecord(each));
+                //foreach (XmlElement each in primaryKeys.SelectNodes("Item"))
+                //    importRecords.Add(new ImportRecord(each));
+
+                // 讀取所有學生資料
+                List<SHSchool.Data.SHStudentRecord> tempStudRecList = SHSchool.Data.SHStudent.SelectAll();
+                // 檢查是否重複登入
+                Dictionary<string, bool> checkIDKeyDict = new Dictionary<string, bool>();
+                foreach (SHSchool.Data.SHStudentRecord studRec in tempStudRecList)
+                    if(!checkIDKeyDict.ContainsKey(studRec.ID))
+                    {
+                        try
+                        {
+                            checkIDKeyDict.Add(studRec.ID, true);
+                            importRecords.Add(new ImportRecord(studRec));
+
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message + "," + studRec.Name);
+                        }
+                        
+                    }                    
+
 
                 ShiftCheckList checkList = null;
                 bool isShiftCheck = false;
@@ -1097,7 +1120,10 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
                 }
                 else
                 {
-                    StudentBulkProcess.UpdateImportStudent(output);
+                    // 因為高中原本 Service 有問題，只能更新學生狀態 status=1，所以改用國中
+                    //StudentBulkProcess.UpdateImportStudent(output);
+
+                    StudentBulkProcess.UpdateImportStudentJH(output);
                     log.ActionName = "更新匯入";
                     log.Description = "更新匯入 " + reader.RowCount + " 筆學生資料。";
                 }

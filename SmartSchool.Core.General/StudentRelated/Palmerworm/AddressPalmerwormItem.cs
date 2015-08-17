@@ -38,7 +38,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
 
         private BackgroundWorker _getCountyBackgroundWorker;
 
-        private CountyTown _CountyTown;
+        private CountyTown _CountyTown=new CountyTown ();
 
         //Town -> ZipCode
         private Dictionary<string, string> _zip_code_mapping = new Dictionary<string, string>();
@@ -47,8 +47,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
         public AddressPalmerwormItem()
         {
             InitializeComponent();
-            Title = "地址資料";
-            _CountyTown = new CountyTown();
+            Title = "地址資料";            
             _errors = new EnhancedErrorProvider();
             _errors.Icon = Resources.error;
             _warnings = new EnhancedErrorProvider();

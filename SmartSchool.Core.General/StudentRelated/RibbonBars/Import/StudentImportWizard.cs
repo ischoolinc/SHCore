@@ -1204,7 +1204,11 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
                         string identity = each.SelectSingleNode("Condition/" + dnlook.ExportName).InnerText.Trim();
                         XmlElement diplomaDB = dnlook.GetDiplomaElement(identity);
                         XmlElement diplomaNew = each.SelectSingleNode("DiplomaNumberRaw") as XmlElement;
-
+                        if (diplomaDB == null)
+                        {
+                            XmlDocument xDoc = new XmlDocument();
+                            diplomaDB = xDoc.CreateElement("DiplomaNumber");
+                        }
                         if (diplomaDB.SelectSingleNode("DiplomaNumber") == null)
                         {
                             XmlElement dnNew = each.OwnerDocument.CreateElement("DiplomaNumber");

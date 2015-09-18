@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace SmartSchool.StudentRelated.RibbonBars.Import
 {
@@ -78,83 +79,179 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
             return _by_login_name.ContainsKey(key);
         }
 
-        public List<ImportRecord> GetDuplicateIdNumberList()
+        public List<ImportRecord> GetDuplicateIdNumberList(bool chkID)
         {
-            Dictionary<string, ImportRecord> duplicateList = new Dictionary<string, ImportRecord>();
-            Dictionary<string, ImportRecord> checkList = new Dictionary<string, ImportRecord>();
+            // 檢查身分證號有2筆以上回傳
+            List<ImportRecord> Values = new List<ImportRecord>();
 
-            foreach (ImportRecord each in _by_identity.Values)
+            Dictionary<string, List<ImportRecord>> checkDict = new Dictionary<string, List<ImportRecord>>();
+
+            List<ImportRecord> CheckDataList = new List<ImportRecord>();
+
+            if (chkID)
+                CheckDataList = _by_identity.Values.ToList();
+            else
+                CheckDataList=_by_id_number.Values.ToList();
+
+            foreach (ImportRecord each in CheckDataList)
             {
-                if (string.IsNullOrEmpty(each.IDNumber)) continue;
+                if (!checkDict.ContainsKey(each.IDNumber))
+                    checkDict.Add(each.IDNumber, new List<ImportRecord>());
 
-                if (checkList.ContainsKey(each.IDNumber))
-                    duplicateList.Add(each.Identity, each);
-                else
-                    checkList.Add(each.IDNumber, each);
+                checkDict[each.IDNumber].Add(each);
             }
 
-            //將重覆資料的第一筆也加入到 Duplicate 清單中，因為在檢查時會略過第一筆(因為出現第二筆才當重覆)。
-            List<ImportRecord> copyList = new List<ImportRecord>(duplicateList.Values);
-            foreach (ImportRecord each in copyList)
+            foreach (string key in checkDict.Keys)
             {
-                ImportRecord origin = checkList[each.IDNumber];
-                duplicateList.Add(origin.Identity, origin);
+                if (checkDict[key].Count > 1)
+                {
+                    foreach (ImportRecord each in checkDict[key])
+                        Values.Add(each);
+                }
             }
 
-            return new List<ImportRecord>(duplicateList.Values);
+            return Values;
+            //Dictionary<string, ImportRecord> duplicateList = new Dictionary<string, ImportRecord>();
+            //Dictionary<string, ImportRecord> checkList = new Dictionary<string, ImportRecord>();
+
+            //foreach (ImportRecord each in _by_identity.Values)
+            //{
+                
+            //    if (string.IsNullOrEmpty(each.IDNumber)) continue;
+
+            //    if (checkList.ContainsKey(each.IDNumber))
+            //        duplicateList.Add(each.Identity, each);
+            //    else
+            //        checkList.Add(each.IDNumber, each);
+            //}
+
+            ////將重覆資料的第一筆也加入到 Duplicate 清單中，因為在檢查時會略過第一筆(因為出現第二筆才當重覆)。
+            //List<ImportRecord> copyList = new List<ImportRecord>(duplicateList.Values);
+            //foreach (ImportRecord each in copyList)
+            //{
+            //    ImportRecord origin = checkList[each.IDNumber];
+                
+
+
+            //    duplicateList.Add(origin.Identity, origin);
+            //}
+            //return new List<ImportRecord>(duplicateList.Values);
         }
 
-        public List<ImportRecord> GetDuplicateStudentNumberList()
+        public List<ImportRecord> GetDuplicateStudentNumberList(bool chkID)
         {
-            Dictionary<string, ImportRecord> duplicateList = new Dictionary<string, ImportRecord>();
-            Dictionary<string, ImportRecord> checkList = new Dictionary<string, ImportRecord>();
+            // 檢查學號有2筆以上回傳
+            List<ImportRecord> Values = new List<ImportRecord>();
 
-            foreach (ImportRecord each in _by_identity.Values)
+            Dictionary<string, List<ImportRecord>> checkDict = new Dictionary<string, List<ImportRecord>>();
+
+            List<ImportRecord> CheckDataList = new List<ImportRecord>();
+
+            if (chkID)
+                CheckDataList = _by_identity.Values.ToList();
+            else
+                CheckDataList = _by_student_number.Values.ToList();
+
+            foreach (ImportRecord each in CheckDataList)
             {
-                if (string.IsNullOrEmpty(each.StudentNumber)) continue;
+                if (!checkDict.ContainsKey(each.StudentNumber))
+                    checkDict.Add(each.StudentNumber, new List<ImportRecord>());
 
-                if (checkList.ContainsKey(each.StudentNumber))
-                    duplicateList.Add(each.Identity, each);
-                else
-                    checkList.Add(each.StudentNumber, each);
+                checkDict[each.StudentNumber].Add(each);
             }
 
-            //將重覆資料的第一筆也加入到 Duplicate 清單中，因為在檢查時會略過第一筆(因為出現第二筆才當重覆)。
-            List<ImportRecord> copyList = new List<ImportRecord>(duplicateList.Values);
-            foreach (ImportRecord each in copyList)
+            foreach (string key in checkDict.Keys)
             {
-                ImportRecord origin = checkList[each.StudentNumber];
-                duplicateList.Add(origin.Identity, origin);
+                if (checkDict[key].Count > 1)
+                {
+                    foreach (ImportRecord each in checkDict[key])
+                        Values.Add(each);
+                }
             }
 
-            return new List<ImportRecord>(duplicateList.Values);
+            return Values;
+
+
+            //Dictionary<string, ImportRecord> duplicateList = new Dictionary<string, ImportRecord>();
+            //Dictionary<string, ImportRecord> checkList = new Dictionary<string, ImportRecord>();
+
+            //foreach (ImportRecord each in _by_identity.Values)
+            //{
+            //    if (string.IsNullOrEmpty(each.StudentNumber)) continue;
+
+            //    if (checkList.ContainsKey(each.StudentNumber))
+            //        duplicateList.Add(each.Identity, each);
+            //    else
+            //        checkList.Add(each.StudentNumber, each);
+            //}
+
+            ////將重覆資料的第一筆也加入到 Duplicate 清單中，因為在檢查時會略過第一筆(因為出現第二筆才當重覆)。
+            //List<ImportRecord> copyList = new List<ImportRecord>(duplicateList.Values);
+            //foreach (ImportRecord each in copyList)
+            //{
+            //    ImportRecord origin = checkList[each.StudentNumber];
+            //    duplicateList.Add(origin.Identity, origin);
+            //}
+
+            //return new List<ImportRecord>(duplicateList.Values);
 
         }
 
-        public List<ImportRecord> GetDuplicateSALoginNameList()
+        public List<ImportRecord> GetDuplicateSALoginNameList(bool chkID)
         {
-            Dictionary<string, ImportRecord> duplicateList = new Dictionary<string, ImportRecord>();
-            Dictionary<string, ImportRecord> checkList = new Dictionary<string, ImportRecord>();
+            // 檢查學號有2筆以上回傳
+            List<ImportRecord> Values = new List<ImportRecord>();
 
-            foreach (ImportRecord each in _by_identity.Values)
+            Dictionary<string, List<ImportRecord>> checkDict = new Dictionary<string, List<ImportRecord>>();
+
+            List<ImportRecord> CheckDataList = new List<ImportRecord>();
+
+            if (chkID)
+                CheckDataList = _by_identity.Values.ToList();
+            else
+                CheckDataList = _by_login_name.Values.ToList();
+
+            foreach (ImportRecord each in CheckDataList)
             {
-                if (string.IsNullOrEmpty(each.SALoginName)) continue;
+                if (!checkDict.ContainsKey(each.SALoginName))
+                    checkDict.Add(each.SALoginName, new List<ImportRecord>());
 
-                if (checkList.ContainsKey(each.SALoginName))
-                    duplicateList.Add(each.Identity, each);
-                else
-                    checkList.Add(each.SALoginName, each);
+                checkDict[each.SALoginName].Add(each);
             }
 
-            //將重覆資料的第一筆也加入到 Duplicate 清單中，因為在檢查時會略過第一筆(因為出現第二筆才當重覆)。
-            List<ImportRecord> copyList = new List<ImportRecord>(duplicateList.Values);
-            foreach (ImportRecord each in copyList)
+            foreach (string key in checkDict.Keys)
             {
-                ImportRecord origin = checkList[each.SALoginName];
-                duplicateList.Add(origin.Identity, origin);
+                if (checkDict[key].Count > 1)
+                {
+                    foreach (ImportRecord each in checkDict[key])
+                        Values.Add(each);
+                }
             }
 
-            return new List<ImportRecord>(duplicateList.Values);
+            return Values;
+
+            //Dictionary<string, ImportRecord> duplicateList = new Dictionary<string, ImportRecord>();
+            //Dictionary<string, ImportRecord> checkList = new Dictionary<string, ImportRecord>();
+
+            //foreach (ImportRecord each in _by_identity.Values)
+            //{
+            //    if (string.IsNullOrEmpty(each.SALoginName)) continue;
+
+            //    if (checkList.ContainsKey(each.SALoginName))
+            //        duplicateList.Add(each.Identity, each);
+            //    else
+            //        checkList.Add(each.SALoginName, each);
+            //}
+
+            ////將重覆資料的第一筆也加入到 Duplicate 清單中，因為在檢查時會略過第一筆(因為出現第二筆才當重覆)。
+            //List<ImportRecord> copyList = new List<ImportRecord>(duplicateList.Values);
+            //foreach (ImportRecord each in copyList)
+            //{
+            //    ImportRecord origin = checkList[each.SALoginName];
+            //    duplicateList.Add(origin.Identity, origin);
+            //}
+
+            //return new List<ImportRecord>(duplicateList.Values);
 
         }
     }

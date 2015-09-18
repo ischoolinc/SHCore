@@ -809,7 +809,7 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
                         if (!importRecords.ContainStudentNumber(reader.GetValue(snum)))
                         {
                             rowMessages[reader.RelativelyIndex].ReportMessage(snum, MessageType.Error,
-                                "此資料並不存在於資料庫中，無法更新此筆資料。");
+                                "此資料學生狀態非一般，無法更新此筆資料，請使用學生系統編號更新。");
                             _error_count++;
                         }
                     }
@@ -818,12 +818,12 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
                         if (!importRecords.ContainIdNumber(reader.GetValue(ssn)))
                         {
                             rowMessages[reader.RelativelyIndex].ReportMessage(ssn, MessageType.Error,
-                                "此資料並不存在於資料庫中，無法更新此筆資料。");
+                                "此資料學生狀態非一般，無法更新此筆資料，請使用學生系統編號更新。");
                             _error_count++;
                         }
                     }
                 }
-
+                                
                 if (_error_count <= 0) //當所有資料都正確時，才進行此檢查。
                 {
                     ProgressMessage("檢查資料與識別欄正確性…");
@@ -859,9 +859,16 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
                         record.RelativelyRowIndex = reader.RelativelyIndex;
                     }
 
-                    if (Context.IdentifyField != ssn)
+                    // 是否用學生系統編號驗證
+                    bool chkID = false;
+
+                    if (Context.IdentifyField == id)
+                        chkID = true;
+
+                    // 檢查身分證號
+                    if (Context.SelectedFields.ContainsKey(ssn))
                     {
-                        List<ImportRecord> dupSSN = importRecords.GetDuplicateIdNumberList();
+                        List<ImportRecord> dupSSN = importRecords.GetDuplicateIdNumberList(chkID);
                         foreach (ImportRecord each in dupSSN)
                         {
                             if (each.RelativelyRowIndex != -1)
@@ -872,9 +879,10 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
                         }
                     }
 
-                    if (Context.IdentifyField != snum)
+                    // 檢查學號
+                    if (Context.SelectedFields.ContainsKey(snum))
                     {
-                        List<ImportRecord> dupSNum = importRecords.GetDuplicateStudentNumberList();
+                        List<ImportRecord> dupSNum = importRecords.GetDuplicateStudentNumberList(chkID);
                         foreach (ImportRecord each in dupSNum)
                         {
                             if (each.RelativelyRowIndex != -1)
@@ -884,17 +892,23 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
                             }
                         }
                     }
-
-                    List<ImportRecord> dupLogin = importRecords.GetDuplicateSALoginNameList();
-                    foreach (ImportRecord each in dupLogin)
+                    
+                    // 檢查登入帳號重複
+                    if (Context.SelectedFields.ContainsKey(login))
                     {
-                        if (each.RelativelyRowIndex != -1)
+                        List<ImportRecord> dupLogin = importRecords.GetDuplicateSALoginNameList(chkID);
+                        foreach (ImportRecord each in dupLogin)
                         {
-                            rowMessages[each.RelativelyRowIndex].ReportMessage(login, MessageType.Error, "更新資料後，會造成此欄位資料重複(可能是與資料庫中資料重覆)。");
-                            _error_count++;
+                            if (each.RelativelyRowIndex != -1)
+                            {
+                                rowMessages[each.RelativelyRowIndex].ReportMessage(login, MessageType.Error, "更新資料後，會造成此欄位資料重複(可能是與資料庫中資料重覆)。");
+                                _error_count++;
+                            }
                         }
                     }
                 }
+               
+
             }
         }
 

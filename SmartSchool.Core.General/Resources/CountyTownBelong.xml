@@ -43,6 +43,7 @@
   <Town Code="238" County="新北市" Name="樹林區" />
   <Town Code="239" County="新北市" Name="鶯歌區" />
   <Town Code="241" County="新北市" Name="三重區" />
+  <Town Code="242" County="新北市" Name="新莊區" />
   <Town Code="243" County="新北市" Name="泰山區" />
   <Town Code="244" County="新北市" Name="林口區" />
   <Town Code="247" County="新北市" Name="蘆洲區" />
@@ -53,6 +54,7 @@
   <Town Code="252" County="新北市" Name="三芝區" />
   <Town Code="253" County="新北市" Name="石門區" />
   <Town Code="260" County="宜蘭縣" Name="宜蘭市" />
+  <Town Code="260" County="宜蘭縣" Name="壯圍鄉" />
   <Town Code="261" County="宜蘭縣" Name="頭城鎮" />
   <Town Code="262" County="宜蘭縣" Name="礁溪鄉" />
   <Town Code="263" County="宜蘭縣" Name="壯圍鄉" />
@@ -66,9 +68,10 @@
   <Town Code="272" County="宜蘭縣" Name="南澳鄉" />
   <Town Code="290" County="宜蘭縣" Name="釣魚臺" />
   <Town Code="290" County="釣魚臺" Name="釣魚臺" />
-  <Town Code="300" County="新竹市" Name="北區" />
   <Town Code="300" County="新竹市" Name="東區" />
+  <Town Code="300" County="新竹市" Name="北區" />
   <Town Code="300" County="新竹市" Name="香山區" />
+  <Town Code="300" County="新竹縣" Name="寶山鄉" />
   <Town Code="302" County="新竹縣" Name="竹北市" />
   <Town Code="303" County="新竹縣" Name="湖口鄉" />
   <Town Code="304" County="新竹縣" Name="新豐鄉" />
@@ -151,7 +154,7 @@
   <Town Code="507" County="彰化縣" Name="線西鄉" />
   <Town Code="508" County="彰化縣" Name="和美鎮" />
   <Town Code="509" County="彰化縣" Name="伸港鄉" />
-  <Town Code="510" County="彰化縣" Name="員林鎮" />
+  <Town Code="510" County="彰化縣" Name="員林市" />
   <Town Code="511" County="彰化縣" Name="社頭鄉" />
   <Town Code="512" County="彰化縣" Name="永靖鄉" />
   <Town Code="513" County="彰化縣" Name="埔心鄉" />
@@ -254,6 +257,7 @@
   <Town Code="736" County="臺南市" Name="柳營區" />
   <Town Code="737" County="臺南市" Name="鹽水區" />
   <Town Code="741" County="臺南市" Name="善化區" />
+  <Town Code="741" County="臺南市" Name="新市區" />
   <Town Code="742" County="臺南市" Name="大內區" />
   <Town Code="743" County="臺南市" Name="山上區" />
   <Town Code="744" County="臺南市" Name="新市區" />
@@ -271,10 +275,10 @@
   <Town Code="813" County="高雄市" Name="左營區" />
   <Town Code="814" County="高雄市" Name="仁武區" />
   <Town Code="815" County="高雄市" Name="大社區" />
-  <Town Code="817" County="南海島" Name="東沙群島" />
   <Town Code="817" County="高雄市" Name="東沙群島" />
-  <Town Code="819" County="南海島" Name="南沙群島" />
+  <Town Code="817" County="南海島" Name="東沙群島" />
   <Town Code="819" County="高雄市" Name="南沙群島" />
+  <Town Code="819" County="南海島" Name="南沙群島" />
   <Town Code="820" County="高雄市" Name="岡山區" />
   <Town Code="821" County="高雄市" Name="路竹區" />
   <Town Code="822" County="高雄市" Name="阿蓮區" />

@@ -221,7 +221,7 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
 
             foreach (string key in checkDict.Keys)
             {
-                if (checkDict[key].Count > 1)
+                if (checkDict[key].Count > 1 &&key!="" )
                 {
                     foreach (ImportRecord each in checkDict[key])
                         Values.Add(each);

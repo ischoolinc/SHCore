@@ -55,7 +55,12 @@
     <Element DisplayText="監護人" Name="CustodianOtherInfo">
       <Field DisplayText="學歷" Name="EducationDegree"/>
       <Field DisplayText="職業" Name="Job"/>
+
+      <Field DisplayText="電話" Name="Phone" /> 
+
       <!-- <Field DisplayText="電話" Name="Phone" /> -->
+      
+      
     </Element>
   </XmlField>
   <Field DisplayText="父親姓名" Name="FatherName" ShiftCheckable="True"/>
@@ -66,7 +71,12 @@
     <Element DisplayText="父親" Name="FatherOtherInfo">
       <Field DisplayText="學歷" Name="FatherEducationDegree"/>
       <Field DisplayText="職業" Name="FatherJob"/>
+
+       <Field DisplayText="電話" Name="Phone" /> 
+      
       <!-- <Field DisplayText="電話" Name="FatherPhone" /> -->
+      
+      
     </Element>
   </XmlField>
   <Field DisplayText="母親姓名" Name="MotherName" ShiftCheckable="True"/>
@@ -77,7 +87,12 @@
     <Element DisplayText="母親" Name="MotherOtherInfo">
       <Field DisplayText="學歷" Name="MotherEducationDegree"/>
       <Field DisplayText="職業" Name="MotherJob"/>
+
+       <Field DisplayText="電話" Name="Phone" /> 
+      
       <!-- <Field DisplayText="電話" Name="MotherPhone" /> -->
+      
+      
     </Element>
   </XmlField>
   <!--

@@ -107,7 +107,14 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
             get { return _contains_lack; }
         }
 
-        public void CalculateScore()
+        public void CalculateScore() 
+        {
+            CalculateScore(false);
+        
+        
+        }
+
+        public void CalculateScore(bool absentEqualZero)
         {
             if (Course.ExamTemplate == null)
                 return;
@@ -120,21 +127,64 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
                 return;
 
             decimal total = 0;
-            foreach (TEInclude exam in Course.RefExams)
-            {
-                decimal score = 0;
-                if (SCETakes.ContainsKey(exam.ExamId))
-                {
-                    SCETake take = SCETakes[exam.ExamId];
-                    if (!decimal.TryParse(take.Score, out score)) //如果缺考會 0 分處理。
-                        _contains_lack = true;
-                }
-                else
-                    _contains_lack = true;
 
-                total += (score * ((decimal)exam.Weight / 100m));
+
+
+            if (absentEqualZero)
+            {
+
+                foreach (TEInclude exam in Course.RefExams)
+                {
+                    decimal score = 0;
+                    if (SCETakes.ContainsKey(exam.ExamId))
+                    {
+                        SCETake take = SCETakes[exam.ExamId];
+                        if (!decimal.TryParse(take.Score, out score)) //如果缺考會 0 分處理。
+                            _contains_lack = true;
+                    }
+                    else
+                        _contains_lack = true;
+
+                    total += (score * ((decimal)exam.Weight / 100m));
+                }
+
             }
 
+            //缺考不當0分處理
+            else                             
+            {
+                decimal weight = 0;
+
+                foreach (TEInclude exam in Course.RefExams)
+                {
+                    decimal score = 0;
+                    
+                    if (SCETakes.ContainsKey(exam.ExamId))
+                    {
+                        SCETake take = SCETakes[exam.ExamId];
+                        if (!decimal.TryParse(take.Score, out score))
+                        {
+                            _contains_lack = true;
+                        }
+                        else
+                        {
+                            total += (score * (decimal)exam.Weight );
+                            weight += (decimal)exam.Weight;
+                        }
+
+                    }
+                    else
+                    {
+                        _contains_lack = true;
+                    }                                        
+                }
+                if (weight != 0) 
+                {
+                    total = total / weight;
+                }                                    
+            }
+
+     
             //SetScore(Math.Round(total, 2).ToString());
             SetScore(total.ToString());
         }

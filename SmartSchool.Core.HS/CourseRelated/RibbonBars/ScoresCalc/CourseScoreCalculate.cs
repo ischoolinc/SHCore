@@ -13,12 +13,18 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
             _courses = courses;
         }
 
-        public void Calculate()
+        public void Calculate() 
+        {
+            Calculate(false);
+        }
+
+
+        public void Calculate(bool absentEqualZero)
         {
             foreach (Course course in _courses.Values)
             {
                 foreach (SCAttend attend in course.SCAttends.Values)
-                    attend.CalculateScore();
+                    attend.CalculateScore(absentEqualZero);
             }
         }
     }

@@ -14,14 +14,25 @@ using FISCA.Presentation;
 
 namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
 {
+            
+
     public partial class CalculateWizard : BaseForm, IProgressUI
     {
         private BackgroundWorker _calc_worker, _export_worker;
         private CourseDataLoader _raw_data;
 
+        private Boolean Is_AbsentEqualZero { get; set; }
+
+    
+        public bool _Is_AbsentEqualZero
+        {
+            get { return Is_AbsentEqualZero; }
+        }
+
         public CalculateWizard()
         {
             InitializeComponent();
+
             InitializeBackgroundWorker();
 
             lblTitle.Font = new Font(FontStyles.GeneralFontFamily, 20);
@@ -33,7 +44,7 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
             _raw_data.LoadCalculationData(this);
 
             CourseScoreCalculate calculate = new CourseScoreCalculate(_raw_data.Courses);
-            calculate.Calculate();
+            calculate.Calculate(Is_AbsentEqualZero);
         }
 
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -59,6 +70,10 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
             }
             else
                 MsgBox.Show("取得課程成績相關資料錯誤。", Application.ProductName);
+
+            CalculateResult result = new CalculateResult(_raw_data.Courses);
+            result.ShowDialog();
+
         }
 
         private void ExportWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -85,8 +100,14 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
 
         private void btnCalcuate_Click(object sender, EventArgs e)
         {
-            CalculateResult result = new CalculateResult(_raw_data.Courses);
-            result.ShowDialog();
+
+            lblCourseCount.Text = "建立課程總覽資料，請稍後...";
+            btnExport.Enabled = false;
+            btnCalcuate.Enabled = false;
+            _calc_worker.RunWorkerAsync();
+                                    
+            //CalculateResult result = new CalculateResult(_raw_data.Courses);
+            //result.ShowDialog();
         }
 
         private void btnExport_Click(object sender, EventArgs e)
@@ -172,6 +193,20 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
             }
 
             #endregion
+        }
+
+
+        private void AbsentEqualZero_CheckedChanged(object sender, EventArgs e)
+        {
+            if (AbsentEqualZero.Checked)
+            {
+                Is_AbsentEqualZero = true;
+            }
+            else
+            {
+                Is_AbsentEqualZero = false;
+            }
+
         }
     }
 }

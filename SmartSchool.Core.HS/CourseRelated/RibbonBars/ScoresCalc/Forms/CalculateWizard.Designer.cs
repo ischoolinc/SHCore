@@ -34,31 +34,45 @@
             this.btnExit = new DevComponents.DotNetBar.ButtonX();
             this.lblCourseCount = new DevComponents.DotNetBar.LabelX();
             this.btnExport = new DevComponents.DotNetBar.ButtonX();
+            this.AbsentEqualZero = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.SuspendLayout();
             // 
             // lblTitle
             // 
             this.lblTitle.AutoSize = true;
+            this.lblTitle.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.lblTitle.BackgroundStyle.Class = "";
+            this.lblTitle.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.lblTitle.Location = new System.Drawing.Point(12, 12);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(98, 17);
+            this.lblTitle.Size = new System.Drawing.Size(87, 21);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "計算課程成績";
             // 
             // lblDescription
             // 
+            this.lblDescription.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.lblDescription.BackgroundStyle.Class = "";
+            this.lblDescription.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.lblDescription.Location = new System.Drawing.Point(12, 58);
             this.lblDescription.Name = "lblDescription";
             this.lblDescription.Size = new System.Drawing.Size(373, 77);
             this.lblDescription.TabIndex = 1;
             this.lblDescription.Text = "提醒您：學生於各次評量中若成績空白或為缺考狀況者，若您確定進行計算，則均以0分進行課程成績計算。若課程「未設定評分樣版」或「不需評分」，則系統不進行課程成績計算。" +
-                "";
+    "";
             this.lblDescription.TextLineAlignment = System.Drawing.StringAlignment.Near;
             this.lblDescription.WordWrap = true;
             // 
             // btnCalcuate
             // 
             this.btnCalcuate.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnCalcuate.BackColor = System.Drawing.Color.Transparent;
             this.btnCalcuate.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnCalcuate.Location = new System.Drawing.Point(225, 252);
             this.btnCalcuate.Name = "btnCalcuate";
@@ -70,6 +84,7 @@
             // btnExit
             // 
             this.btnExit.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnExit.BackColor = System.Drawing.Color.Transparent;
             this.btnExit.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnExit.Location = new System.Drawing.Point(310, 252);
@@ -82,9 +97,15 @@
             // lblCourseCount
             // 
             this.lblCourseCount.AutoSize = true;
+            this.lblCourseCount.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.lblCourseCount.BackgroundStyle.Class = "";
+            this.lblCourseCount.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.lblCourseCount.Location = new System.Drawing.Point(12, 146);
             this.lblCourseCount.Name = "lblCourseCount";
-            this.lblCourseCount.Size = new System.Drawing.Size(211, 93);
+            this.lblCourseCount.Size = new System.Drawing.Size(189, 108);
             this.lblCourseCount.TabIndex = 1;
             this.lblCourseCount.Text = "已選擇課程總數：10\r\n不需評分之課程數：3\r\n未設定評分樣版課程數：3\r\n含有「不強制繳交」課程數：8\r\n含有「成績缺漏」之課程數：3\r\n\r\n";
             this.lblCourseCount.TextLineAlignment = System.Drawing.StringAlignment.Near;
@@ -93,6 +114,7 @@
             // btnExport
             // 
             this.btnExport.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnExport.BackColor = System.Drawing.Color.Transparent;
             this.btnExport.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnExport.Location = new System.Drawing.Point(12, 252);
             this.btnExport.Name = "btnExport";
@@ -101,24 +123,40 @@
             this.btnExport.Text = "匯出選取課程總覽明細";
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
+            // AbsentEqualZero
+            // 
+            this.AbsentEqualZero.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.AbsentEqualZero.BackgroundStyle.Class = "";
+            this.AbsentEqualZero.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.AbsentEqualZero.Location = new System.Drawing.Point(225, 213);
+            this.AbsentEqualZero.Name = "AbsentEqualZero";
+            this.AbsentEqualZero.Size = new System.Drawing.Size(160, 23);
+            this.AbsentEqualZero.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.AbsentEqualZero.TabIndex = 5;
+            this.AbsentEqualZero.Text = "缺考以零分計算";
+            this.AbsentEqualZero.CheckedChanged += new System.EventHandler(this.AbsentEqualZero_CheckedChanged);
+            // 
             // CalculateWizard
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(399, 288);
+            this.Controls.Add(this.AbsentEqualZero);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnCalcuate);
             this.Controls.Add(this.btnExport);
             this.Controls.Add(this.lblCourseCount);
             this.Controls.Add(this.lblDescription);
             this.Controls.Add(this.lblTitle);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(405, 249);
             this.Name = "CalculateWizard";
             this.Text = "計算課程成績";
-            this.Load += new System.EventHandler(this.CalculateWizard_Load);
+            //this.Load += new System.EventHandler(this.CalculateWizard_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -132,5 +170,6 @@
         private DevComponents.DotNetBar.ButtonX btnExit;
         private DevComponents.DotNetBar.LabelX lblCourseCount;
         private DevComponents.DotNetBar.ButtonX btnExport;
+        private DevComponents.DotNetBar.Controls.CheckBoxX AbsentEqualZero;
     }
 }

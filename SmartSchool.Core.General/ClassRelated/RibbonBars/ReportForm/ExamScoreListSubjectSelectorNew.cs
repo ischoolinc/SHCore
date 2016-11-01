@@ -975,6 +975,19 @@ namespace SmartSchool.ClassRelated.RibbonBars.Reports
             //SmartSchool.Customization.Data.SystemInformation.Configuration["班級考試成績單"] = config;
             #endregion
         }
+
+        
+
+        private void Warning(object sender, EventArgs e) 
+        {
+            if (checkBoxStudent.Checked) 
+            {
+                MsgBox.Show("提醒:如果勾選此選項將會上傳成績電子報表");
+            }
+                    
+        }
+
+
     }
 }
 

@@ -105,7 +105,6 @@ namespace SmartSchool.ClassRelated.RibbonBars.Reports
             this.checkBoxClass.Text = "電子報表(班級)";
             this.toolTip1.SetToolTip(this.checkBoxClass, "傳送成績單電子報表給班導師。");
             this.checkBoxClass.UseVisualStyleBackColor = true;
-            this.checkBoxClass.Visible = false;
             this.checkBoxClass.CheckedChanged += new System.EventHandler(this.summaryChanged);
             // 
             // checkBoxStudent

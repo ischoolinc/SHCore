@@ -9,7 +9,7 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
 {
     class SCAttend
     {
-        private string _identity, _student_identity, _course_id;
+        private string _identity, _RefStudentID, _course_id;
         private string _class_name, _student_number, _stu_name, _seat_number;
         private ExamScoreCollection _scetakes;
         private Course _course;
@@ -20,7 +20,7 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
         {
             DSXmlHelper objData = new DSXmlHelper(data);
             _identity = objData.GetText("@ID");
-            _student_identity = objData.GetText("RefStudentID");
+            _RefStudentID = objData.GetText("RefStudentID");
             _course_id = objData.GetText("RefCourseID");
             _class_name = objData.GetText("ClassName");
             _student_number = objData.GetText("StudentNumber");
@@ -38,7 +38,7 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
 
         public string StudentIdentity
         {
-            get { return _student_identity; }
+            get { return _RefStudentID; }
         }
 
         public string CourseIdentity
@@ -107,13 +107,45 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
             get { return _contains_lack; }
         }
 
-        public void CalculateScore() 
+        public void CalculateScore()
         {
             CalculateScore(false);
-        
-        
-        }
 
+
+        }
+        /// <summary>
+        /// 進位方式
+        /// </summary>
+        private enum RoundMode { 四捨五入, 無條件進位, 無條件捨去 }
+        private static decimal GetRoundScore(decimal score, int decimals, RoundMode mode)
+        {
+            decimal seed = Convert.ToDecimal(Math.Pow(0.1, Convert.ToDouble(decimals)));
+            switch (mode)
+            {
+                default:
+                case RoundMode.四捨五入:
+                    score = decimal.Round(score, decimals, MidpointRounding.AwayFromZero);
+                    break;
+                case RoundMode.無條件捨去:
+                    score /= seed;
+                    score = decimal.Floor(score);
+                    score *= seed;
+                    break;
+                case RoundMode.無條件進位:
+                    decimal d2 = GetRoundScore(score, decimals, RoundMode.無條件捨去);
+                    if (d2 != score)
+                        score = d2 + seed;
+                    else
+                        score = d2;
+                    break;
+            }
+            string ss = "0.";
+            for (int i = 0; i < decimals; i++)
+            {
+                ss += "0";
+            }
+            return Convert.ToDecimal(Math.Round(score, decimals).ToString(ss));
+        }
         public void CalculateScore(bool absentEqualZero)
         {
             if (Course.ExamTemplate == null)
@@ -151,14 +183,14 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
             }
 
             //缺考不當0分處理
-            else                             
+            else
             {
                 decimal weight = 0;
 
                 foreach (TEInclude exam in Course.RefExams)
                 {
                     decimal score = 0;
-                    
+
                     if (SCETakes.ContainsKey(exam.ExamId))
                     {
                         SCETake take = SCETakes[exam.ExamId];
@@ -168,7 +200,7 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
                         }
                         else
                         {
-                            total += (score * (decimal)exam.Weight );
+                            total += (score * (decimal)exam.Weight);
                             weight += (decimal)exam.Weight;
                         }
 
@@ -176,15 +208,44 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
                     else
                     {
                         _contains_lack = true;
-                    }                                        
+                    }
                 }
-                if (weight != 0) 
+                if (weight != 0)
                 {
                     total = total / weight;
-                }                                    
+                }
             }
+            #region 處理小數點位數
+            //精準位數
+            int decimals = 2;
+            //進位模式
+            RoundMode mode = RoundMode.四捨五入;
+            #region 抓成績計算規則
+            SmartSchool.Customization.Data.AccessHelper accessHelper = new Customization.Data.AccessHelper();
+            var studentRec = accessHelper.StudentHelper.GetStudent(_RefStudentID);
+            accessHelper.StudentHelper.FillField("成績計算規則", new SmartSchool.Customization.Data.StudentRecord[] { studentRec });
+            if (studentRec.Fields.ContainsKey("成績計算規則"))
+            {
+                XmlElement scoreCalcRule = studentRec.Fields["成績計算規則"] as XmlElement;
+                DSXmlHelper helper = new DSXmlHelper(scoreCalcRule);
+                bool tryParsebool;
+                int tryParseint;
+                if (scoreCalcRule.SelectSingleNode("各項成績計算位數/科目成績計算位數") != null)
+                {
+                    if (int.TryParse(helper.GetText("各項成績計算位數/科目成績計算位數/@位數"), out tryParseint))
+                        decimals = tryParseint;
+                    if (bool.TryParse(helper.GetText("各項成績計算位數/科目成績計算位數/@四捨五入"), out tryParsebool) && tryParsebool)
+                        mode = RoundMode.四捨五入;
+                    if (bool.TryParse(helper.GetText("各項成績計算位數/科目成績計算位數/@無條件捨去"), out tryParsebool) && tryParsebool)
+                        mode = RoundMode.無條件捨去;
+                    if (bool.TryParse(helper.GetText("各項成績計算位數/科目成績計算位數/@無條件進位"), out tryParsebool) && tryParsebool)
+                        mode = RoundMode.無條件進位;
+                }
+            }
+            #endregion
+            total = GetRoundScore(total, decimals, mode);
+            #endregion
 
-     
             //SetScore(Math.Round(total, 2).ToString());
             SetScore(total.ToString());
         }

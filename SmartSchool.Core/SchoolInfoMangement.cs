@@ -16,10 +16,39 @@ namespace SmartSchool
     public partial class SchoolInfoMangement : BaseForm
     {
         SchoolInfoEntity SchoolInfoEnt;
+
+        List<string> CountyList = new List<string>();
+
+        
+
         public SchoolInfoMangement()
         {
             InitializeComponent();
 
+            CountyList.Add("臺北市");
+            CountyList.Add("新北市");
+            CountyList.Add("桃園市");
+            CountyList.Add("臺中市");
+            CountyList.Add("臺南市");
+            CountyList.Add("高雄市");
+            CountyList.Add("基隆市");
+            CountyList.Add("新竹市");
+            CountyList.Add("嘉義市");
+            CountyList.Add("新竹縣");
+            CountyList.Add("苗栗縣");
+            CountyList.Add("彰化縣");
+            CountyList.Add("南投縣");
+            CountyList.Add("雲林縣");
+            CountyList.Add("嘉義縣");
+            CountyList.Add("屏東縣");
+            CountyList.Add("宜蘭縣");
+            CountyList.Add("花蓮縣");
+            CountyList.Add("臺東縣");
+            CountyList.Add("澎湖縣");
+            CountyList.Add("連江縣");
+            CountyList.Add("金門縣");
+        
+            
         }
 
         // 以後交給 DAL
@@ -32,6 +61,7 @@ namespace SmartSchool
             sie.ChinsesName = getNodeData("ChineseName", Element, "SchoolInformation");
             sie.EnglishName = getNodeData("EnglishName", Element, "SchoolInformation");
             sie.ChineseAddress = getNodeData("Address", Element, "SchoolInformation");
+            sie.County = getNodeData("County", Element, "SchoolInformation");
             sie.EnglishAddress = getNodeData("EnglishAddress", Element, "SchoolInformation");
             sie.Code = getNodeData("Code", Element, "SchoolInformation");
             sie.Fax = getNodeData("Fax", Element,"SchoolInformation");
@@ -89,6 +119,7 @@ namespace SmartSchool
             helper.AddElement("SchoolInformation", "ChineseName", ScInfoEntity.ChinsesName);
             helper.AddElement("SchoolInformation", "EnglishName", ScInfoEntity.EnglishName);
             helper.AddElement("SchoolInformation", "Address", ScInfoEntity.ChineseAddress );
+            helper.AddElement("SchoolInformation", "County", ScInfoEntity.County);
             helper.AddElement("SchoolInformation", "EnglishAddress", ScInfoEntity.EnglishAddress );
             helper.AddElement("SchoolInformation", "Code", ScInfoEntity.Code );
             helper.AddElement("SchoolInformation", "Fax", ScInfoEntity.Fax );
@@ -131,7 +162,16 @@ namespace SmartSchool
         private void btnSave_Click(object sender, EventArgs e)
         {
 
+            if (txtSchoolCounty.Text != "" && !CountyList.Contains(txtSchoolCounty.Text)) 
+            {
+                if (MsgBox.Show("所輸入學校地址非標準命名台灣縣市名，請問是否繼續儲存?", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) 
+                {
+                    return;                
+                };                                    
+            }
+
             SchoolInfoEnt.ChineseAddress = txtSchoolChsAddress.Text;
+            SchoolInfoEnt.County = txtSchoolCounty.Text;
             SchoolInfoEnt.ChinsesName = txtSchoolChsName.Text;
             SchoolInfoEnt.Code = txtSchoolCode.Text; //學校代碼
 
@@ -207,6 +247,7 @@ namespace SmartSchool
             txtFax.Text = SchoolInfoEnt.Fax;
             txtPhone.Text = SchoolInfoEnt.Telephone;
             txtSchoolChsAddress.Text = SchoolInfoEnt.ChineseAddress;
+            txtSchoolCounty.Text = SchoolInfoEnt.County;
             txtSchoolChsName.Text = SchoolInfoEnt.ChinsesName;
             txtSchoolCode.Text = SchoolInfoEnt.Code;
             txtSchoolEngAddess.Text = SchoolInfoEnt.EnglishAddress;
@@ -249,6 +290,11 @@ namespace SmartSchool
          /// 學校地址
          /// </summary>
          public string ChineseAddress { get; set; }
+
+         /// <summary>
+         /// 學校所在縣市
+         /// </summary>
+         public string County { get; set; }
 
          /// <summary>
          /// 學校英文地址

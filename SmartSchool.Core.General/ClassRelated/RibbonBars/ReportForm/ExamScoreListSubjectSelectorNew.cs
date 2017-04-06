@@ -84,7 +84,11 @@ namespace SmartSchool.ClassRelated.RibbonBars.Reports
                 if (bool.TryParse(config.GetAttribute("加權平均"), out check)) checkBox4.Checked = check;
                 if (bool.TryParse(config.GetAttribute("加權平均排名"), out check)) checkBox5.Checked = check;
                 if (bool.TryParse(config.GetAttribute("加權總分排名"), out check)) checkBox6.Checked = check;
-                if (bool.TryParse(config.GetAttribute("電子報表學生"), out check)) checkBoxStudent.Checked = check;
+
+                //2017/4/6 穎驊更動，經過與韻如、國志的討論後，將"上傳學生電子報表" 功能移至進階選項，
+                //預設為不上傳，且也不會有config 的記憶，每次如要上傳，都必須手動勾選進階 手動勾選上傳，也會有跳出提醒視窗，避免誤觸。
+                //if (bool.TryParse(config.GetAttribute("電子報表學生"), out check)) checkBoxStudent.Checked = check;
+
                 if (bool.TryParse(config.GetAttribute("電子報表班級"), out check)) checkBoxClass.Checked = check;
                 summaryFieldsChanging = false;
                 #endregion
@@ -982,12 +986,24 @@ namespace SmartSchool.ClassRelated.RibbonBars.Reports
         {
             if (checkBoxStudent.Checked) 
             {
-                MsgBox.Show("提醒:如果勾選此選項將會上傳成績電子報表");
+                MsgBox.Show("提醒:如果勾選此選項將會上傳成績電子報表至學生");
             }
                     
         }
 
+        private void checkBoxAdvance_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxAdvance.Checked)
+            {
+                checkBoxStudent.Visible = true;
+            }
+            else 
+            {
+                checkBoxStudent.Visible = false;
 
+                checkBoxStudent.Checked = false;                        
+            }
+        }
     }
 }
 

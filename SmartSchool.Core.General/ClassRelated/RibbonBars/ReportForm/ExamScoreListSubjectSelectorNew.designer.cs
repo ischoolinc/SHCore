@@ -60,6 +60,7 @@ namespace SmartSchool.ClassRelated.RibbonBars.Reports
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.comboBoxProxy1 = new IntelliSchool.DSA.ClientFramework.XMLProxy.ComboBoxProxy();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.checkBoxAdvance = new System.Windows.Forms.CheckBox();
             this.panelEx1.SuspendLayout();
             this.panelEx3.SuspendLayout();
             this.panelEx2.SuspendLayout();
@@ -70,6 +71,7 @@ namespace SmartSchool.ClassRelated.RibbonBars.Reports
             // 
             this.panelEx1.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.panelEx1.Controls.Add(this.checkBoxAdvance);
             this.panelEx1.Controls.Add(this.checkBoxClass);
             this.panelEx1.Controls.Add(this.checkBoxStudent);
             this.panelEx1.Controls.Add(this.panelEx3);
@@ -84,7 +86,7 @@ namespace SmartSchool.ClassRelated.RibbonBars.Reports
             this.panelEx1.Location = new System.Drawing.Point(0, 0);
             this.panelEx1.Margin = new System.Windows.Forms.Padding(4);
             this.panelEx1.Name = "panelEx1";
-            this.panelEx1.Size = new System.Drawing.Size(394, 293);
+            this.panelEx1.Size = new System.Drawing.Size(432, 293);
             this.panelEx1.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx1.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -98,7 +100,7 @@ namespace SmartSchool.ClassRelated.RibbonBars.Reports
             this.checkBoxClass.AutoSize = true;
             this.checkBoxClass.Checked = true;
             this.checkBoxClass.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxClass.Location = new System.Drawing.Point(272, 25);
+            this.checkBoxClass.Location = new System.Drawing.Point(273, 14);
             this.checkBoxClass.Name = "checkBoxClass";
             this.checkBoxClass.Size = new System.Drawing.Size(113, 21);
             this.checkBoxClass.TabIndex = 7;
@@ -109,10 +111,9 @@ namespace SmartSchool.ClassRelated.RibbonBars.Reports
             // 
             // checkBoxStudent
             // 
+            this.checkBoxStudent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxStudent.AutoSize = true;
-            this.checkBoxStudent.Checked = true;
-            this.checkBoxStudent.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxStudent.Location = new System.Drawing.Point(272, 6);
+            this.checkBoxStudent.Location = new System.Drawing.Point(231, 269);
             this.checkBoxStudent.Name = "checkBoxStudent";
             this.checkBoxStudent.Size = new System.Drawing.Size(113, 21);
             this.checkBoxStudent.TabIndex = 7;
@@ -379,7 +380,7 @@ namespace SmartSchool.ClassRelated.RibbonBars.Reports
             this.buttonX1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.buttonX1.Enabled = false;
-            this.buttonX1.Location = new System.Drawing.Point(315, 267);
+            this.buttonX1.Location = new System.Drawing.Point(353, 267);
             this.buttonX1.Name = "buttonX1";
             this.buttonX1.Size = new System.Drawing.Size(67, 23);
             this.buttonX1.TabIndex = 3;
@@ -397,7 +398,7 @@ namespace SmartSchool.ClassRelated.RibbonBars.Reports
             this.groupPanel1.DrawTitleBox = false;
             this.groupPanel1.Location = new System.Drawing.Point(5, 37);
             this.groupPanel1.Name = "groupPanel1";
-            this.groupPanel1.Size = new System.Drawing.Size(385, 226);
+            this.groupPanel1.Size = new System.Drawing.Size(423, 226);
             // 
             // 
             // 
@@ -444,7 +445,7 @@ namespace SmartSchool.ClassRelated.RibbonBars.Reports
             this.listView1.CheckBoxes = true;
             this.listView1.Location = new System.Drawing.Point(2, 0);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(381, 223);
+            this.listView1.Size = new System.Drawing.Size(419, 223);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.List;
@@ -490,11 +491,24 @@ namespace SmartSchool.ClassRelated.RibbonBars.Reports
             this.comboBoxProxy1.TextField = "ExamName";
             this.comboBoxProxy1.ValueField = "@ID";
             // 
+            // checkBoxAdvance
+            // 
+            this.checkBoxAdvance.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxAdvance.AutoSize = true;
+            this.checkBoxAdvance.Location = new System.Drawing.Point(172, 269);
+            this.checkBoxAdvance.Name = "checkBoxAdvance";
+            this.checkBoxAdvance.Size = new System.Drawing.Size(53, 21);
+            this.checkBoxAdvance.TabIndex = 8;
+            this.checkBoxAdvance.Text = "進階";
+            this.toolTip1.SetToolTip(this.checkBoxAdvance, "傳送成績單電子報表給班上的每位學生。");
+            this.checkBoxAdvance.UseVisualStyleBackColor = true;
+            this.checkBoxAdvance.CheckedChanged += new System.EventHandler(this.checkBoxAdvance_CheckedChanged);
+            // 
             // ExamScoreListSubjectSelectorNew
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(394, 293);
+            this.ClientSize = new System.Drawing.Size(432, 293);
             this.Controls.Add(this.panelEx1);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
@@ -544,5 +558,6 @@ namespace SmartSchool.ClassRelated.RibbonBars.Reports
         private System.Windows.Forms.CheckBox checkBoxStudent;
         private System.Windows.Forms.CheckBox checkBoxClass;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.CheckBox checkBoxAdvance;
     }
 }

@@ -120,6 +120,7 @@
             this.txtParentName.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.txtParentName.Location = new System.Drawing.Point(109, 46);
             this.txtParentName.Margin = new System.Windows.Forms.Padding(4);
+            this.txtParentName.MaxLength = 100;
             this.txtParentName.Name = "txtParentName";
             this.txtParentName.Size = new System.Drawing.Size(156, 25);
             this.txtParentName.TabIndex = 1;
@@ -239,7 +240,7 @@
             this.txtIDNumber.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.txtIDNumber.Location = new System.Drawing.Point(397, 112);
             this.txtIDNumber.Margin = new System.Windows.Forms.Padding(4);
-            this.txtIDNumber.MaxLength = 20;
+            this.txtIDNumber.MaxLength = 100;
             this.txtIDNumber.Name = "txtIDNumber";
             this.txtIDNumber.Size = new System.Drawing.Size(110, 25);
             this.txtIDNumber.TabIndex = 7;

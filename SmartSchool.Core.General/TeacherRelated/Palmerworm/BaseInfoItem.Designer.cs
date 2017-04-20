@@ -112,6 +112,7 @@
             this.txtName.Border.Class = "TextBoxBorder";
             this.txtName.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.txtName.Location = new System.Drawing.Point(363, 16);
+            this.txtName.MaxLength = 100;
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(140, 25);
             this.txtName.TabIndex = 4;
@@ -126,6 +127,7 @@
             this.txtIDNumber.Border.Class = "TextBoxBorder";
             this.txtIDNumber.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.txtIDNumber.Location = new System.Drawing.Point(363, 104);
+            this.txtIDNumber.MaxLength = 100;
             this.txtIDNumber.Name = "txtIDNumber";
             this.txtIDNumber.Size = new System.Drawing.Size(140, 25);
             this.txtIDNumber.TabIndex = 8;
@@ -139,6 +141,7 @@
             this.txtPhone.Border.Class = "TextBoxBorder";
             this.txtPhone.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.txtPhone.Location = new System.Drawing.Point(108, 134);
+            this.txtPhone.MaxLength = 100;
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.Size = new System.Drawing.Size(140, 25);
             this.txtPhone.TabIndex = 5;
@@ -161,6 +164,7 @@
             this.txtEmail.Border.Class = "TextBoxBorder";
             this.txtEmail.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.txtEmail.Location = new System.Drawing.Point(108, 163);
+            this.txtEmail.MaxLength = 100;
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(140, 25);
             this.txtEmail.TabIndex = 7;
@@ -183,6 +187,7 @@
             this.txtCategory.Border.Class = "TextBoxBorder";
             this.txtCategory.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.txtCategory.Location = new System.Drawing.Point(363, 162);
+            this.txtCategory.MaxLength = 100;
             this.txtCategory.Name = "txtCategory";
             this.txtCategory.Size = new System.Drawing.Size(140, 25);
             this.txtCategory.TabIndex = 9;
@@ -205,6 +210,7 @@
             this.txtSTLoginAccount.Border.Class = "TextBoxBorder";
             this.txtSTLoginAccount.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.txtSTLoginAccount.Location = new System.Drawing.Point(363, 133);
+            this.txtSTLoginAccount.MaxLength = 100;
             this.txtSTLoginAccount.Name = "txtSTLoginAccount";
             this.txtSTLoginAccount.Size = new System.Drawing.Size(140, 25);
             this.txtSTLoginAccount.TabIndex = 1;
@@ -290,6 +296,7 @@
             this.txtNickname.Border.Class = "TextBoxBorder";
             this.txtNickname.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.txtNickname.Location = new System.Drawing.Point(363, 45);
+            this.txtNickname.MaxLength = 100;
             this.txtNickname.Name = "txtNickname";
             this.txtNickname.Size = new System.Drawing.Size(140, 25);
             this.txtNickname.TabIndex = 4;

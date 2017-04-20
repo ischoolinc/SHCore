@@ -111,7 +111,7 @@
             this.txtSSN.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.txtSSN.Location = new System.Drawing.Point(366, 48);
             this.txtSSN.Margin = new System.Windows.Forms.Padding(4);
-            this.txtSSN.MaxLength = 30;
+            this.txtSSN.MaxLength = 100;
             this.txtSSN.Name = "txtSSN";
             this.txtSSN.Size = new System.Drawing.Size(138, 25);
             this.txtSSN.TabIndex = 1;
@@ -178,6 +178,7 @@
             this.txtEngName.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.txtEngName.Location = new System.Drawing.Point(97, 137);
             this.txtEngName.Margin = new System.Windows.Forms.Padding(4);
+            this.txtEngName.MaxLength = 100;
             this.txtEngName.Name = "txtEngName";
             this.txtEngName.Size = new System.Drawing.Size(152, 25);
             this.txtEngName.TabIndex = 6;
@@ -311,7 +312,7 @@
             this.txtBirthPlace.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.txtBirthPlace.Location = new System.Drawing.Point(97, 170);
             this.txtBirthPlace.Margin = new System.Windows.Forms.Padding(4);
-            this.txtBirthPlace.MaxLength = 300;
+            this.txtBirthPlace.MaxLength = 100;
             this.txtBirthPlace.Name = "txtBirthPlace";
             this.txtBirthPlace.Size = new System.Drawing.Size(152, 25);
             this.txtBirthPlace.TabIndex = 7;
@@ -371,6 +372,7 @@
             this.txtLoginID.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.txtLoginID.Location = new System.Drawing.Point(366, 138);
             this.txtLoginID.Margin = new System.Windows.Forms.Padding(4);
+            this.txtLoginID.MaxLength = 100;
             this.txtLoginID.Name = "txtLoginID";
             this.txtLoginID.Size = new System.Drawing.Size(138, 25);
             this.txtLoginID.TabIndex = 4;
@@ -441,6 +443,7 @@
             this.cboNationality.ItemHeight = 16;
             this.cboNationality.Location = new System.Drawing.Point(366, 170);
             this.cboNationality.Margin = new System.Windows.Forms.Padding(4);
+            this.cboNationality.MaxLength = 100;
             this.cboNationality.Name = "cboNationality";
             this.cboNationality.Size = new System.Drawing.Size(138, 22);
             this.cboNationality.TabIndex = 5;

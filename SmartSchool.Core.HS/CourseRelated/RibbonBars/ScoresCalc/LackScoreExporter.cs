@@ -44,13 +44,13 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
                 }
             }
 
-            _progress.ReportProgress("儲存檔案中…", 0);
+            //_progress.ReportProgress("儲存檔案中…", 0);  // 2018/6/5 穎驊註解 ，在這邊動到UI，會有錯誤訊息，此時的執行序與建立控制項的執行序不同。 因此統一由母form 處理
 
             string fileName = GetFileName();
             book.Save(fileName);
             Process.Start(fileName);
 
-            _progress.ReportProgress("儲存完成…", 0);
+            //_progress.ReportProgress("儲存完成…", 0);
         }
 
         private void OutputLackScoreToWorkbook(List<LackScoresCategory> lacks, Workbook book)

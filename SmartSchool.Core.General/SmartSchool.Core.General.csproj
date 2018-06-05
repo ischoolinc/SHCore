@@ -566,9 +566,7 @@
     <Compile Include="Others\Configuration\PeriodMapping\PeriodForm.Designer.cs">
       <DependentUpon>PeriodForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Others\Configuration\Setup\DataGridViewComboBoxExColumn.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Others\Configuration\Setup\DataGridViewComboBoxExColumn.cs" />
     <Compile Include="Others\Configuration\Setup\DeptChineseToEnglishForm.cs">
       <SubType>Form</SubType>
     </Compile>

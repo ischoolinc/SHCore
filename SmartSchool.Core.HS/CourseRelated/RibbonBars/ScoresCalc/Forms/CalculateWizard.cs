@@ -35,6 +35,9 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
 
             InitializeBackgroundWorker();
 
+            lblCourseCount.Text = ""; // 2018/6/5 穎驊修改，根據佳樺的反應優化項目，[H成績][01]計算課程成績，功能選取後畫面上顯示的資料非選取的課程資訊。 這邊一開始先不帶資料。
+            btnExport.Visible = false; // 這個匯出功能一開始也不先給使用者按，因為在計算完之前按，會當掉
+
             lblTitle.Font = new Font(FontStyles.GeneralFontFamily, 20);
         }
 
@@ -61,6 +64,7 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
 
             if (e.Error == null)
             {
+                btnExport.Visible = true; // 給按了。
                 btnExport.Enabled = true;
                 btnCalcuate.Enabled = true;
 
@@ -78,6 +82,7 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
 
         private void ExportWorker_DoWork(object sender, DoWorkEventArgs e)
         {
+            MotherForm.SetStatusBarMessage("儲存檔案中…", 0);
             LackScoreExporter exporter = new LackScoreExporter(_raw_data.Courses, new BarMessageProgress(this));
             exporter.Export();
         }
@@ -88,6 +93,7 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
                 MsgBox.Show(e.Error.Message, Application.ProductName);
 
             btnExport.Enabled = true;
+            MotherForm.SetStatusBarMessage("儲存完畢");
         }
 
         private void CalculateWizard_Load(object sender, EventArgs e)
@@ -111,7 +117,7 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
         }
 
         private void btnExport_Click(object sender, EventArgs e)
-        {
+        {            
             _export_worker.RunWorkerAsync();
             btnExport.Enabled = false;
         }
@@ -151,6 +157,7 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
 
             _export_worker = new BackgroundWorker();
             _export_worker.DoWork += new DoWorkEventHandler(ExportWorker_DoWork);
+            _export_worker.WorkerReportsProgress = true;
             _export_worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ExportWorker_RunWorkerCompleted);
         }
 

@@ -46,7 +46,8 @@ namespace SmartSchool.ImportExport.Student
                 string examName = node.SelectSingleNode("ExamName").InnerText;
                 exams.Add(examName, id);
             }
-            List<string> fieldList = new List<string>(new string[] { "學年度", "學期", "課程名稱", "總成績" });
+            // 2018.09.06 [ischoolKingdom] Vicky依據 [12-01][01] 多學期成績排名 項目，增加 "分項類別", "科目", "學分" 項目資料。
+            List<string> fieldList = new List<string>(new string[] { "學年度", "學期", "課程名稱", "分項類別", "科目", "學分", "總成績" });
             fieldList.AddRange(exams.Keys);
             wizard.ExportableFields.AddRange(fieldList);
             bool courseCkecked = false;
@@ -157,13 +158,28 @@ namespace SmartSchool.ImportExport.Student
                                     }
                                     if (e.ExportFields.Contains("課程名稱"))
                                     {
-                                        row.Add("課程名稱", cinfo.CourseName);
+                                        row.Add("課程名稱", cinfo.CourseName);                                     
+                                    }
+                                    // 2018.09.06 [ischoolKingdom] Vicky依據 [12-01][01] 多學期成績排名 項目，增加 "分項類別", "科目", "學分" 項目資料。
+                                    if (e.ExportFields.Contains("分項類別"))
+                                    {
+                                        row.Add("分項類別", cinfo.Entry);
+                                    }
+                                    if (e.ExportFields.Contains("科目"))
+                                    {
+                                        row.Add("科目", cinfo.Subject);
+                                    }
+                                    if (e.ExportFields.Contains("學分"))
+                                    {
+                                        row.Add("學分", "" + cinfo.CreditDec);
                                     }
                                     if (e.ExportFields.Contains("總成績"))
                                     {
                                         XmlElement scoreElement = (XmlElement)scElement.SelectSingleNode("Score");
                                         row.Add("總成績", scoreElement == null ? "" : scoreElement.InnerText);
                                     }
+                                    
+
                                 }
                                 #endregion
                             }

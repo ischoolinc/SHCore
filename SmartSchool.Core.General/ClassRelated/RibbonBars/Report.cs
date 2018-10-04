@@ -53,8 +53,8 @@ namespace SmartSchool.ClassRelated.RibbonBars
         //FeatureAccessControl buttonItem10Ctrl;
         //班級學生缺曠明細	Report0220
         FeatureAccessControl buttonItem9Ctrl;
-        //班級學生獎懲明細	Report0230
-        //FeatureAccessControl buttonItem11Ctrl;
+        //班級學生獎懲明細	Report0230  
+        FeatureAccessControl buttonItem11Ctrl;  // 2018.09.27 [ischoolKingdom] Vicky依據 [H成績][H學務][06] 功能沒有設定權限管理 項目，將各功能按鈕註冊時Enable設定與系統權限綁定，權限Code使用GUID。
         //缺曠週報表 (依缺曠別統計)	Report0240
         //FeatureAccessControl buttonItem4Ctrl;
         //缺曠週報表 (依節次統計)	Report0250
@@ -171,6 +171,9 @@ namespace SmartSchool.ClassRelated.RibbonBars
             //班級學生獎懲明細	Report0230
             //buttonItem11Ctrl = new FeatureAccessControl("Report0230");
 
+            // 2018.09.27 [ischoolKingdom] Vicky依據 [H成績][H學務][06] 功能沒有設定權限管理 項目，將各功能按鈕註冊時Enable設定與系統權限綁定，權限Code使用GUID。
+            buttonItem11Ctrl = new FeatureAccessControl("625B8AE1-C581-4214-8E18-426DEF81D4DE");
+
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Report));
             var Bar = K12.Presentation.NLDPanels.Class.RibbonBarItems["資料統計"];
 
@@ -249,7 +252,7 @@ namespace SmartSchool.ClassRelated.RibbonBars
             buttonItem9.Enable = buttonItem9Ctrl.Executable();
             var buttonItem11 = buttonItem16["班級學生獎懲明細"];
             buttonItem11.Click += new System.EventHandler(this.buttonItem11_Click);
-
+            buttonItem11.Enable = buttonItem11Ctrl.Executable(); // 2018.09.27 [ischoolKingdom] Vicky依據 [H成績][H學務][06] 功能沒有設定權限管理 項目，將各功能按鈕註冊時Enable設定與系統權限綁定，權限Code使用GUID。
         }
 
         #region IReportManager 成員

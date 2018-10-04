@@ -107,6 +107,8 @@ namespace SmartSchool
             //    new ExportStudent(new ExportDiscipline()).ShowDialog();
             //};
 
+            // 2018.09.27 [ischoolKingdom] Vicky依據 [H成績][H學務][06] 功能沒有設定權限管理 項目，將各功能按鈕註冊時Enable設定與系統權限綁定，權限Code使用GUID。
+            rbItemExport["其它相關匯出"]["匯出自訂欄位"].Enable = CurrentUser.Acl["B2B63AFC-2019-4596-823A-BA044C8203F1"].Executable;
             rbItemExport["其它相關匯出"]["匯出自訂欄位"].Click += delegate
             {
                 Exporter exporter = new ExportExtandField();
@@ -162,6 +164,8 @@ namespace SmartSchool
             //    new ImportStudent(new ImportAbsence()).ShowDialog();
             //};
 
+            // 2018.09.27 [ischoolKingdom] Vicky依據 [H成績][H學務][06] 功能沒有設定權限管理 項目，將各功能按鈕註冊時Enable設定與系統權限綁定，權限Code使用GUID。
+            rbItemImport["其它相關匯入"]["匯入自訂欄位"].Enable = CurrentUser.Acl["F1D8F0DD-AC8B-442A-88DB-75A4E4208156"].Executable;
             rbItemImport["其它相關匯入"]["匯入自訂欄位"].Click += delegate
             {
                 SmartSchool.API.PlugIn.Import.Importer importer = new ImportExtandField();
@@ -222,7 +226,10 @@ namespace SmartSchool
             ribbon.Add(new RibbonFeature("SHSchool.Student.Ribbon0169", "匯出學期對照表"));
             ribbon.Add(new RibbonFeature("SHSchool.Student.Ribbon0170", "匯入學期對照表"));
             ribbon.Add(new RibbonFeature("SHSchool.Student.Ribbon0171", "匯出離校資訊"));
-
+            // 2018.09.27 [ischoolKingdom] Vicky依據 [H成績][H學務][06] 功能沒有設定權限管理 項目，將各功能按鈕註冊時Enable設定與系統權限綁定，權限Code使用GUID。
+            ribbon.Add(new RibbonFeature("B2B63AFC-2019-4596-823A-BA044C8203F1", "匯出自訂欄位"));
+            ribbon.Add(new RibbonFeature("F1D8F0DD-AC8B-442A-88DB-75A4E4208156", "匯入自訂欄位"));
+            
             #endregion
         }
 

@@ -122,7 +122,10 @@ namespace SmartSchool.StudentRelated.Palmerworm
                     desc.AppendLine("移除欄位 「" + removeKey + "」(原值為「" + _Values[removeKey] + "」)");
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                MessageBox.Show("系統錯誤:"+ ex.Message);
+            }
             CurrentUser.Instance.AppLog.Write(EntityType.Student, "修改自訂資料", _CurrentID, desc.ToString(), "", "");
             LoadContent(_CurrentID);
         }

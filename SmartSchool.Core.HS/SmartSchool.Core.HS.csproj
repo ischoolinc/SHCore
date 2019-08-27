@@ -121,6 +121,11 @@
       <HintPath>Library\IntelliSchool.DSA.ClientFramework.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="K12.Data, Version=2.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\K12.Data.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="K12.Presentation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Library\K12.Presentation.dll</HintPath>
@@ -209,6 +214,12 @@
     </Compile>
     <Compile Include="CourseRelated\DetailPaneItem\DataGridViewItem.Designer.cs">
       <DependentUpon>DataGridViewItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CourseRelated\DetailPaneItem\editPassMakupScoreForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CourseRelated\DetailPaneItem\editPassMakupScoreForm.Designer.cs">
+      <DependentUpon>editPassMakupScoreForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CourseRelated\DetailPaneItem\ElectronicPaperPalmerworm.cs">
       <SubType>UserControl</SubType>
@@ -383,6 +394,7 @@
     <Compile Include="CourseRelated\ScoreDataGridView\IExamCell.cs" />
     <Compile Include="CourseRelated\ScoreDataGridView\IStandard.cs" />
     <Compile Include="CourseRelated\ScoreDataGridView\IStudentCell.cs" />
+    <Compile Include="CourseRelated\ScoreDataGridView\ITextCell.cs" />
     <Compile Include="CourseRelated\ScoreDataGridView\RowCollection.cs" />
     <Compile Include="CourseRelated\ScoreDataGridView\RowEntity.cs" />
     <Compile Include="CourseRelated\ScoreDataGridView\StandardFactory.cs" />
@@ -463,6 +475,9 @@
     <EmbeddedResource Include="CourseRelated\DetailPaneItem\DataGridViewItem.resx">
       <DependentUpon>DataGridViewItem.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CourseRelated\DetailPaneItem\editPassMakupScoreForm.resx">
+      <DependentUpon>editPassMakupScoreForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CourseRelated\DetailPaneItem\ElectronicPaperPalmerworm.resx">
       <DependentUpon>ElectronicPaperPalmerworm.cs</DependentUpon>
@@ -637,6 +652,9 @@
     <Content Include="Library\FISCA.Presentation.xml" />
     <Content Include="Library\IntelliSchool.DSA.ClientFramework.dll" />
     <Content Include="Library\IntelliSchool.DSA.ClientFramework.xml" />
+    <Content Include="Library\K12.Data.dll" />
+    <Content Include="Library\K12.Data.pdb" />
+    <Content Include="Library\K12.Data.xml" />
     <Content Include="Library\K12.Presentation.dll" />
     <Content Include="Library\K12.Presentation.xml" />
     <Content Include="Library\SmartSchool.AccessControl.dll" />

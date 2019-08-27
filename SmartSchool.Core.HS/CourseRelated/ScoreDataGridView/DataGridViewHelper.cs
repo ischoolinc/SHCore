@@ -61,7 +61,7 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
             int startRowIndex = int.MaxValue;
             int startColumnIndex = int.MaxValue;
             int rowLength = 0, columnLength = 0;
-            
+
             foreach (DataGridViewCell cell in _dgv.SelectedCells)
             {
                 if (cell.ColumnIndex <= startColumnIndex && cell.RowIndex <= startRowIndex)
@@ -139,7 +139,7 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
                 comparer.Initialize(_asc, e.ColumnIndex);
                 _dgv.Sort(comparer);
                 return;
-            }   
+            }
         }
 
         void _dgv_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -150,9 +150,9 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
             CellEdited(cell, icell);
         }
 
-        private void CellEdited(DataGridViewCell cell , IExamCell icell)
+        private void CellEdited(DataGridViewCell cell, IExamCell icell)
         {
-            DataGridViewCellStyle style = cell.DataGridView.Rows[cell.RowIndex].Cells[0].Style;          
+            DataGridViewCellStyle style = cell.DataGridView.Rows[cell.RowIndex].Cells[0].Style;
             Color defaultBackColor = style.BackColor;
             Color defaultForeColor = style.ForeColor;
 
@@ -182,7 +182,7 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
                     cell.ToolTipText = "錯誤!!此欄位必須為數字";
                 }
             }
-            
+
             if (DirtyChanged != null)
                 DirtyChanged.Invoke(this, new DirtyChangedEventArgs(IsDirty()));
         }
@@ -197,7 +197,7 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
                 int columnIndex = _dgv.Columns.Add(setting.ColumnName, setting.ColumnName);
                 DataGridViewColumn col = _dgv.Columns[columnIndex];
                 col.Width = setting.ColumnWidth;
-                col.Tag = setting;           
+                col.Tag = setting;
             }
 
             try
@@ -210,22 +210,31 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
 
                     foreach (DataGridViewColumn column in _dgv.Columns)
                     {
-                        ICell valueCell = row.Cells[column.Name];
-                        string value = valueCell.GetValue();
-                        DataGridViewCell currentCell = currentRow.Cells[column.Name];
-                        currentCell.Value = value;
-                        currentCell.Tag = valueCell;
+                        if (row.Cells.ContainsKey(column.Name))
+                        {
+                            ICell valueCell = row.Cells[column.Name];
+                            string value = valueCell.GetValue();
+                            DataGridViewCell currentCell = currentRow.Cells[column.Name];
+                            currentCell.Value = value;
+                            currentCell.Tag = valueCell;
 
-                        if (valueCell is StudentCell)
+                            if (valueCell is StudentCell)
+                            {
+                                column.Frozen = true;
+                                column.ReadOnly = true;
+                            }
+                            else if (valueCell is TextCell)
+                            {
+                            }
+                            else
+                            {
+                                IExamCell examCell = valueCell as IExamCell;
+                                if (!string.IsNullOrEmpty(value))
+                                    examCell.Standard.Judge(currentCell);
+                            }
+                        } else
                         {
-                            column.Frozen = true;
-                            column.ReadOnly = true;
-                        }
-                        else
-                        {
-                            IExamCell examCell = valueCell as IExamCell;
-                            if (!string.IsNullOrEmpty(value))
-                                examCell.Standard.Judge(currentCell);
+                            Console.WriteLine(column.Name);
                         }
                     }
                 }
@@ -247,7 +256,7 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
         public void ResetDisplayColumn()
         {
             foreach (DataGridViewColumn column in _dgv.Columns)
-                column.Visible = _displayColumns.Contains(column.Name);            
+                column.Visible = _displayColumns.Contains(column.Name);
         }
 
         public void ResetValue()

@@ -35,6 +35,8 @@
             this.chSNum = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chIsRequired = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chRequiredBy = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chPassingStandard = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chMakeupStandard = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnRemove = new DevComponents.DotNetBar.ButtonX();
             this.contextMenuBar1 = new DevComponents.DotNetBar.ContextMenuBar();
             this.MainMenu = new DevComponents.DotNetBar.ButtonItem();
@@ -48,10 +50,12 @@
             this.buttonItem2 = new DevComponents.DotNetBar.ButtonItem();
             this.buttonItem3 = new DevComponents.DotNetBar.ButtonItem();
             this.buttonItem5 = new DevComponents.DotNetBar.ButtonItem();
+            this.btnEditPMScore = new DevComponents.DotNetBar.ButtonItem();
             this.btnAdd = new DevComponents.DotNetBar.ButtonX();
             this.buttonItem1 = new DevComponents.DotNetBar.ButtonItem();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.chSubjectCode = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.picWaiting)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.contextMenuBar1)).BeginInit();
             this.SuspendLayout();
@@ -70,7 +74,10 @@
             this.chName,
             this.chSNum,
             this.chIsRequired,
-            this.chRequiredBy});
+            this.chRequiredBy,
+            this.chPassingStandard,
+            this.chMakeupStandard,
+            this.chSubjectCode});
             this.contextMenuBar1.SetContextMenuEx(this.lvStudents, this.MainMenu);
             this.lvStudents.FullRowSelect = true;
             this.lvStudents.HideSelection = false;
@@ -113,6 +120,18 @@
             this.chRequiredBy.Text = "校部訂";
             this.chRequiredBy.Width = 75;
             // 
+            // chPassingStandard
+            // 
+            this.chPassingStandard.Text = "及格標準";
+            this.chPassingStandard.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.chPassingStandard.Width = 80;
+            // 
+            // chMakeupStandard
+            // 
+            this.chMakeupStandard.Text = "補考標準";
+            this.chMakeupStandard.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.chMakeupStandard.Width = 80;
+            // 
             // btnRemove
             // 
             this.btnRemove.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
@@ -130,7 +149,7 @@
             this.MainMenu});
             this.contextMenuBar1.Location = new System.Drawing.Point(41, 54);
             this.contextMenuBar1.Name = "contextMenuBar1";
-            this.contextMenuBar1.Size = new System.Drawing.Size(160, 25);
+            this.contextMenuBar1.Size = new System.Drawing.Size(160, 26);
             this.contextMenuBar1.Stretch = true;
             this.contextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
             this.contextMenuBar1.TabIndex = 5;
@@ -218,7 +237,8 @@
             this.itemContainer2.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.buttonItem2,
             this.buttonItem3,
-            this.buttonItem5});
+            this.buttonItem5,
+            this.btnEditPMScore});
             // 
             // buttonItem2
             // 
@@ -237,6 +257,12 @@
             this.buttonItem5.Name = "buttonItem5";
             this.buttonItem5.Text = "不指定校部訂";
             this.buttonItem5.Click += new System.EventHandler(this.buttonItem5_Click);
+            // 
+            // btnEditPMScore
+            // 
+            this.btnEditPMScore.Name = "btnEditPMScore";
+            this.btnEditPMScore.Text = "變更及格補考標準";
+            this.btnEditPMScore.Click += new System.EventHandler(this.btnEditPMScore_Click);
             // 
             // btnAdd
             // 
@@ -274,6 +300,12 @@
             this.label2.Size = new System.Drawing.Size(21, 17);
             this.label2.TabIndex = 8;
             this.label2.Text = "　";
+            // 
+            // chSubjectCode
+            // 
+            this.chSubjectCode.Text = "科目代碼";
+            this.chSubjectCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.chSubjectCode.Width = 100;
             // 
             // SCAttendInfo
             // 
@@ -328,6 +360,9 @@
         private DevComponents.DotNetBar.ButtonItem buttonItem5;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-
+        private System.Windows.Forms.ColumnHeader chPassingStandard;
+        private System.Windows.Forms.ColumnHeader chMakeupStandard;
+        private DevComponents.DotNetBar.ButtonItem btnEditPMScore;
+        private System.Windows.Forms.ColumnHeader chSubjectCode;
     }
 }

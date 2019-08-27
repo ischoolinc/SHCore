@@ -10,6 +10,7 @@ using SmartSchool.CourseRelated.ScoreDataGridView;
 using DevComponents.DotNetBar;
 using FISCA.DSAUtil;
 using SmartSchool.Feature.Course;
+using K12.Data;
 
 namespace SmartSchool.CourseRelated.DetailPaneItem
 {
@@ -17,6 +18,10 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
     {
         private DataGridViewHelper _helper;
         private Dictionary<string, bool> _showItems;
+        private List<string> colSCList = new List<string>();
+        private List<string> colSCEList = new List<string>();
+        Dictionary<string, Dictionary<string, string>> oldLogDataDict = new Dictionary<string, Dictionary<string, string>>();
+        Dictionary<string, Dictionary<string, string>> newLogDataDict = new Dictionary<string, Dictionary<string, string>>();
 
         public DataGridViewItem()
         {
@@ -31,69 +36,323 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
 
         public override void Save()
         {
-            // 產生新增成績 Request
-            int insertStudentCount = 0;
-            int updateStudentCount = 0;
-            int deleteStudentCount = 0;
-            int usCount = 0;
-            
-            DSXmlHelper insertHelper = new DSXmlHelper("Request");
-            DSXmlHelper updateHelper = new DSXmlHelper("Request");
-            DSXmlHelper deleteHelper = new DSXmlHelper("Request");
-            DSXmlHelper usHelper = new DSXmlHelper("Request");
+            colSCList.Clear();
+            colSCEList.Clear();
+            colSCList.Add("課程成績");
+            colSCList.Add("及格標準");
+            colSCList.Add("補考標準");
+            colSCList.Add("直接指定總成績");
+            colSCList.Add("備註");
 
-            insertHelper.AddElement("ScoreSheetList");
-            updateHelper.AddElement("ScoreSheetList");
-            deleteHelper.AddElement("ScoreSheet");
+            // 取得段考欄位
+            for (int col = 5; col < dataGridView1.ColumnCount; col++)
+            {
+                string colName = dataGridView1.Columns[col].Name;
+                if (!colSCList.Contains(colName))
+                    colSCEList.Add(colName);
+            }
+
+            // 舊存取寫法
+            // 產生新增成績 Request
+            //int insertStudentCount = 0;
+            //int updateStudentCount = 0;
+            //int deleteStudentCount = 0;
+            //int usCount = 0;
+
+            //DSXmlHelper insertHelper = new DSXmlHelper("Request");
+            //DSXmlHelper updateHelper = new DSXmlHelper("Request");
+            //DSXmlHelper deleteHelper = new DSXmlHelper("Request");
+            //DSXmlHelper usHelper = new DSXmlHelper("Request");
+
+            //insertHelper.AddElement("ScoreSheetList");
+            //updateHelper.AddElement("ScoreSheetList");
+            //deleteHelper.AddElement("ScoreSheet");
+
+            UpdateHelper insertSCETake = new UpdateHelper();
+            UpdateHelper updateSCETake = new UpdateHelper();
+            UpdateHelper deleteSCETake = new UpdateHelper();
+            List<string> insertSQLList = new List<string>();
+            List<string> updateSQLList = new List<string>();
+            List<string> deleteSQLList = new List<string>();
+
+
+            newLogDataDict.Clear();
+
+            DataTable newScAttend = new DataTable();
+            newScAttend.Columns.Add("sc_attend_id");
+            newScAttend.Columns.Add("passing_standard");
+            newScAttend.Columns.Add("makeup_standard");
+            newScAttend.Columns.Add("remark");
+            newScAttend.Columns.Add("designate_final_score");
+            newScAttend.Columns.Add("score");
+
+            // 處理新增欄位更新
+            Dictionary<string, int> newColIdxDict = new Dictionary<string, int>();
+            foreach (DataGridViewColumn dgc in dataGridView1.Columns)
+            {
+                if (!newColIdxDict.ContainsKey(dgc.Name))
+                    newColIdxDict.Add(dgc.Name, dgc.Index);
+            }
+
+
+            newLogDataDict.Clear();
+            foreach (DataGridViewRow drv in dataGridView1.Rows)
+            {
+                Dictionary<string, string> value = new Dictionary<string, string>();
+                foreach (string str in newColIdxDict.Keys)
+                {
+                    string val = "";
+                    if (drv.Cells[str].Value != null)
+                        val = drv.Cells[str].Value.ToString();
+                    value.Add(str, val);
+                }
+
+                string key = drv.Cells["學生系統編號"].Value.ToString();
+                if (!newLogDataDict.ContainsKey(key))
+                    newLogDataDict.Add(key, value);
+            }
+
+
+            insertSQLList.Clear(); updateSQLList.Clear(); deleteSQLList.Clear();
 
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 string attendid = row.Tag.ToString();
 
+                // 處理新增欄位
+                DataRow dr = newScAttend.NewRow();
+
+                dr["sc_attend_id"] = attendid;
+
+
+
                 foreach (DataGridViewCell cell in row.Cells)
                 {
+                    // 原本課程成績
+                    if (newColIdxDict.ContainsKey("課程成績"))
+                    {
+                        if (cell.ColumnIndex == newColIdxDict["課程成績"])
+                        {
+                            if (cell.Value == null)
+                                dr["score"] = "";
+                            else
+                                dr["score"] = cell.Value.ToString();
+                        }
+                    }
+
+                    // 處理新增資料欄位
+                    if (newColIdxDict.ContainsKey("及格標準"))
+                    {
+                        if (cell.ColumnIndex == newColIdxDict["及格標準"])
+                        {
+                            if (cell.Value == null)
+                                dr["passing_standard"] = "";
+                            else
+                                dr["passing_standard"] = cell.Value.ToString();
+                        }
+                    }
+                    if (newColIdxDict.ContainsKey("補考標準"))
+                    {
+                        if (cell.ColumnIndex == newColIdxDict["補考標準"])
+                        {
+                            if (cell.Value == null)
+                                dr["makeup_standard"] = "";
+                            else
+                                dr["makeup_standard"] = cell.Value.ToString();
+                        }
+                    }
+                    if (newColIdxDict.ContainsKey("直接指定總成績"))
+                    {
+                        if (cell.ColumnIndex == newColIdxDict["直接指定總成績"])
+                        {
+                            if (cell.Value == null)
+                                dr["designate_final_score"] = "";
+                            else
+                                dr["designate_final_score"] = cell.Value.ToString();
+                        }
+                    }
+                    if (newColIdxDict.ContainsKey("備註"))
+                    {
+                        if (cell.ColumnIndex == newColIdxDict["備註"])
+                        {
+                            if (cell.Value == null)
+                                dr["remark"] = "";
+                            else
+                                dr["remark"] = cell.Value.ToString();
+                        }
+                    }
+
+
                     IExamCell ic = cell.Tag as IExamCell;
                     if (ic == null) continue;
                     ColumnSetting setting = dataGridView1.Columns[cell.ColumnIndex].Tag as ColumnSetting;
                     string examid = setting.Key;
                     if (ic is ScoreExamCell && ic.IsDirty)
                     {
-                        usCount++;
-                        usHelper.AddElement("Attend");
-                        usHelper.AddElement("Attend", "Score", ic.GetValue());
-                        usHelper.AddElement("Attend", "ID", attendid);
+                        //usCount++;
+                        //usHelper.AddElement("Attend");
+                        //usHelper.AddElement("Attend", "Score", ic.GetValue());
+                        //usHelper.AddElement("Attend", "ID", attendid);
+                        // 在課程統一處理
                     }
                     else if (string.IsNullOrEmpty(ic.Key) && ic.IsDirty)
                     {
-                        insertStudentCount++;
-                        insertHelper.AddElement("ScoreSheetList", "ScoreSheet");
-                        insertHelper.AddElement("ScoreSheetList/ScoreSheet", "ExamID", examid);
-                        insertHelper.AddElement("ScoreSheetList/ScoreSheet", "AttendID", attendid);
-                        insertHelper.AddElement("ScoreSheetList/ScoreSheet", "Score", ic.GetValue());
+                        //insertStudentCount++;
+                        //insertHelper.AddElement("ScoreSheetList", "ScoreSheet");
+                        //insertHelper.AddElement("ScoreSheetList/ScoreSheet", "ExamID", examid);
+                        //insertHelper.AddElement("ScoreSheetList/ScoreSheet", "AttendID", attendid);
+                        //insertHelper.AddElement("ScoreSheetList/ScoreSheet", "Score", ic.GetValue());
+                        string insertSQL = "INSERT INTO sce_take(" +
+                            "ref_exam_id" +
+                            ",ref_sc_attend_id" +
+                            ",score) " +
+                            "VALUES(" +
+                            "" + examid + "" +
+                            "," + attendid + "" +
+                            "," + ic.GetValue() + ");";
+                        insertSQLList.Add(insertSQL);
                     }
                     else if (!string.IsNullOrEmpty(ic.Key) && ic.IsDirty && !string.IsNullOrEmpty(ic.GetValue()))
                     {
-                        updateStudentCount++;
-                        updateHelper.AddElement("ScoreSheetList", "ScoreSheet");
-                        updateHelper.AddElement("ScoreSheetList/ScoreSheet", "Score", ic.GetValue());
-                        updateHelper.AddElement("ScoreSheetList/ScoreSheet", "ID", ic.Key);
+                        //updateStudentCount++;
+                        //updateHelper.AddElement("ScoreSheetList", "ScoreSheet");
+                        //updateHelper.AddElement("ScoreSheetList/ScoreSheet", "Score", ic.GetValue());
+                        //updateHelper.AddElement("ScoreSheetList/ScoreSheet", "ID", ic.Key);
+                        string updateSQL = "UPDATE sce_take SET score=" + ic.GetValue() + " WHERE ID = " + ic.Key + ";";
+                        updateSQLList.Add(updateSQL);
                     }
                     else if (!string.IsNullOrEmpty(ic.Key) && ic.IsDirty && string.IsNullOrEmpty(ic.GetValue()))
                     {
-                        deleteStudentCount++;
-                        deleteHelper.AddElement("ScoreSheet", "ID", ic.Key);
+                        //deleteStudentCount++;
+                        //deleteHelper.AddElement("ScoreSheet", "ID", ic.Key);
+                        string deleteSQL = "DELETE FROM sce_take WHERE ID = " + ic.Key + ";";
+                        deleteSQLList.Add(deleteSQL);
                     }
+                }
+
+                newScAttend.Rows.Add(dr);
+
+            }
+
+            //if (insertStudentCount > 0)
+            //    EditCourse.InsertSCEScore(new DSRequest(insertHelper));
+            //if (updateStudentCount > 0)
+            //    EditCourse.UpdateSCEScore(new DSRequest(updateHelper));
+            //if (deleteStudentCount > 0)
+            //    EditCourse.DeleteSCEScore(new DSRequest(deleteHelper));
+            //if (usCount > 0)
+            //    EditCourse.UpdateAttend(usHelper);
+
+            if (insertSQLList.Count > 0)
+            {
+                try
+                {
+                    insertSCETake.Execute(insertSQLList);
+
+                    CurrentUser.Instance.AppLog.Write(SmartSchool.ApplicationLog.EntityType.Course, "課程成績輸入", RunningID, "新增" + insertSQLList.Count + "筆評量成績", "課程", "");
+
+                }
+                catch (Exception ex)
+                {
+                    MsgBox.Show(ex.Message);
                 }
             }
 
-            if (insertStudentCount > 0)
-                EditCourse.InsertSCEScore(new DSRequest(insertHelper));
-            if (updateStudentCount > 0)
-                EditCourse.UpdateSCEScore(new DSRequest(updateHelper));
-            if (deleteStudentCount > 0)
-                EditCourse.DeleteSCEScore(new DSRequest(deleteHelper));
-            if (usCount > 0)
-                EditCourse.UpdateAttend(usHelper);
+            if (updateSQLList.Count > 0)
+            {
+                try
+                {
+                    updateSCETake.Execute(updateSQLList);
+                    CurrentUser.Instance.AppLog.Write(SmartSchool.ApplicationLog.EntityType.Course, "課程成績輸入", RunningID, "更新" + updateSQLList.Count + "筆評量成績", "課程", "");
+                }
+                catch (Exception ex)
+                {
+                    MsgBox.Show(ex.Message);
+                }
+            }
+
+            if (deleteSQLList.Count > 0)
+            {
+                try
+                {
+                    deleteSCETake.Execute(deleteSQLList);
+                    CurrentUser.Instance.AppLog.Write(SmartSchool.ApplicationLog.EntityType.Course, "課程成績輸入", RunningID, "刪除" + deleteSQLList.Count + "筆評量成績", "課程", "");
+                }
+                catch (Exception ex)
+                {
+                    MsgBox.Show(ex.Message);
+                }
+            }
+
+            if (newScAttend.Rows.Count > 0)
+            {
+                K12.Data.UpdateHelper upSCattend = new K12.Data.UpdateHelper();
+                List<string> updateList = new List<string>();
+                foreach (DataRow dr in newScAttend.Rows)
+                {
+                    string passing_standard = "null", makeup_standard = "null", designate_final_score = "null";
+
+                    if (dr["passing_standard"].ToString() != "")
+                        passing_standard = dr["passing_standard"].ToString();
+
+                    if (dr["makeup_standard"].ToString() != "")
+                        makeup_standard = dr["makeup_standard"].ToString();
+
+                    if (dr["designate_final_score"].ToString() != "")
+                        designate_final_score = dr["designate_final_score"].ToString();
+
+                    string qry = "UPDATE " +
+                        "sc_attend " +
+                        "SET " +
+                        "passing_standard=" + passing_standard +
+                        ",makeup_standard=" + makeup_standard +
+                        ",remark='" + dr["remark"].ToString() + "'" +
+                        ",designate_final_score=" + designate_final_score + " " +
+                        "WHERE " +
+                        "id = " + dr["sc_attend_id"].ToString() + ";";
+                    updateList.Add(qry);
+                }
+
+
+                //CurrentUser.Instance.AppLog.Write()
+
+                if (updateList.Count > 0)
+                {
+                    // 處理課程成績有更新
+                    StringBuilder sbLog = new StringBuilder();
+
+                    List<string> msgList = new List<string>();
+                    foreach (string skey in oldLogDataDict.Keys)
+                    {
+                        msgList.Clear();
+                        string class_name = oldLogDataDict[skey]["班級"].ToString();
+                        string seat_no = oldLogDataDict[skey]["座號"].ToString();
+                        string name = oldLogDataDict[skey]["姓名"].ToString();
+                        if (newLogDataDict.ContainsKey(skey))
+                        {
+                            foreach (string colKey in colSCList)
+                            {
+                                if (oldLogDataDict[skey].ContainsKey(colKey) && newLogDataDict[skey].ContainsKey(colKey))
+                                {
+                                    if (oldLogDataDict[skey][colKey] != newLogDataDict[skey][colKey])
+                                    {
+                                        string msg = "欄位「" + colKey + "」由「" + oldLogDataDict[skey][colKey] + "」變更為「" + newLogDataDict[skey][colKey] + "」";
+                                        msgList.Add(msg);
+                                    }
+                                }
+                            }
+                        }
+                        if (msgList.Count > 0)
+                        {
+                            sbLog.AppendLine("班級：" + class_name + "，座號：" + seat_no + "，姓名：" + name + "," + string.Join(",", msgList.ToArray()));
+                        }
+                    }
+                    CurrentUser.Instance.AppLog.Write(SmartSchool.ApplicationLog.EntityType.Course, "課程成績輸入", RunningID, sbLog.ToString(), "課程", "");
+
+
+                    upSCattend.Execute(updateList);
+                }
+            }
 
             SaveButtonVisible = false;
             LoadContent(RunningID);
@@ -116,19 +375,27 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
             _helper.Fill();
 
             if (_showItems == null)
-            {                
+            {
                 _showItems = new Dictionary<string, bool>();
                 foreach (DataGridViewColumn column in dataGridView1.Columns)
                 {
-                    _showItems.Add(column.Name, true);
-                }                
+                    if (column.Name == "學生系統編號")
+                        _showItems.Add(column.Name, false);
+                    else
+                        _showItems.Add(column.Name, true);
+                }
             }
             // 設定顯示項目
             btnShowItems.SubItems.Clear();
             btnShowItems.AutoExpandOnClick = true;
             List<string> displayItem = new List<string>();
+            Dictionary<string, int> colIdxDict = new Dictionary<string, int>();
+
             foreach (DataGridViewColumn column in dataGridView1.Columns)
             {
+                if (!colIdxDict.ContainsKey(column.Name))
+                    colIdxDict.Add(column.Name, column.Index);
+
                 bool visible = _showItems[column.Name];
                 CheckBoxItem item = new CheckBoxItem(column.Name, column.Name);
                 btnShowItems.SubItems.Add(item);
@@ -136,6 +403,24 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 item.Checked = visible;
                 item.CheckedChanged += new CheckBoxChangeEventHandler(item_CheckedChanged);
                 if (visible) displayItem.Add(column.Name);
+            }
+
+            // log 使用
+            oldLogDataDict.Clear();
+            foreach (DataGridViewRow drv in dataGridView1.Rows)
+            {
+                Dictionary<string, string> value = new Dictionary<string, string>();
+                foreach (string str in colIdxDict.Keys)
+                {
+                    string val = "";
+                    if (drv.Cells[str].Value != null)
+                        val = drv.Cells[str].Value.ToString();
+                    value.Add(str, val);
+                }
+
+                string key = drv.Cells["學生系統編號"].Value.ToString();
+                if (!oldLogDataDict.ContainsKey(key))
+                    oldLogDataDict.Add(key, value);
             }
             _helper.ResetDisplayColumn(displayItem);
         }

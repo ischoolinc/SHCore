@@ -16,6 +16,7 @@ using SmartSchool.Common.Validate;
 using SmartSchool.ApplicationLog;
 using SmartSchool.AccessControl;
 using SmartSchool.ExceptionHandler;
+using FISCA.Data;
 
 namespace SmartSchool.CourseRelated.DetailPaneItem
 {
@@ -23,6 +24,8 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
     internal partial class SCAttendInfo : PalmerwormItem
     {
         private List<AttendInfo> _delete_list;
+        private Dictionary<string, Dictionary<string, string>> oldLogValueDict = new Dictionary<string, Dictionary<string, string>>();
+        private Dictionary<string, Dictionary<string, string>> newLogValueDict = new Dictionary<string, Dictionary<string, string>>();
         private DSXmlHelper _current_response;
 
         public SCAttendInfo()
@@ -54,7 +57,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
         }
         private void SCAttendInfo_Handler(object sender, SmartSchool.Broadcaster.EventArguments e)
         {
-            
+
             foreach (CourseInformation info in e.Items)
             {
                 if (info.Identity.ToString() == RunningID)
@@ -69,12 +72,52 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
         {
             try
             {
-                List<AttendInfo> attends = new List<AttendInfo>();
-                DSResponse rsp = QueryCourse.GetSCAttend(RunningID);
-                _current_response = rsp.GetContent();
 
-                foreach (XmlElement each in rsp.GetContent().GetElements("Student"))
-                    attends.Add(new AttendInfo(each));
+                List<AttendInfo> attends = new List<AttendInfo>();
+
+
+                // --- 舊寫法
+                //DSResponse rsp = QueryCourse.GetSCAttend(RunningID);
+                //_current_response = rsp.GetContent();
+
+                //foreach (XmlElement each in rsp.GetContent().GetElements("Student"))                                  
+                //    attends.Add(new AttendInfo(each));
+                // --- 舊寫法
+
+
+                // 取得學生修課紀錄
+                QueryHelper qhScattend = new QueryHelper();
+                string qryScattend = "SELECT sc_attend.id AS sc_attend_id" +
+                    ",student.name AS student_name" +
+                    ",(CASE sc_attend.required_by  WHEN 1 THEN '部定' WHEN 2 THEN '校訂' ELSE  '' END) AS required_by" +
+                    ",(CASE sc_attend.is_required  WHEN '1' THEN '必修' WHEN '0' THEN '選修' ELSE  '' END) AS is_required" +
+                    ",class.class_name" +
+                    ",student.student_number" +
+                    ",student.seat_no" +
+                    ",student.id AS student_id" +
+                    ",class.grade_year" +
+                    ",sc_attend.passing_standard" +
+                    ",sc_attend.makeup_standard" +
+                    ",sc_attend.remark" +
+                    ",sc_attend.designate_final_score" +
+                    ",sc_attend.score" +
+                    ",sc_attend.subject_code " +
+                    "FROM " +
+                    "course INNER JOIN sc_attend " +
+                    "ON course.id = sc_attend.ref_course_id " +
+                    "INNER JOIN student " +
+                    "ON sc_attend.ref_student_id = student.id " +
+                    "LEFT JOIN class " +
+                    "ON student.ref_class_id = class.id " +
+                    "WHERE course.id = " + RunningID + " " +
+                    "ORDER BY class.class_name,student.seat_no,student.student_number;";
+
+                DataTable dtScattend = qhScattend.Select(qryScattend);
+
+                foreach (DataRow dr in dtScattend.Rows)
+                {
+                    attends.Add(new AttendInfo(dr));
+                }
 
                 return attends;
             }
@@ -90,6 +133,30 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
             {
                 List<AttendInfo> attends = result as List<AttendInfo>;
                 _delete_list = new List<AttendInfo>();
+
+                oldLogValueDict.Clear();
+                newLogValueDict.Clear();
+
+                foreach (AttendInfo ai in attends)
+                {
+                    if (!oldLogValueDict.ContainsKey(ai.RefStudentID))
+                    {
+                        Dictionary<string, string> value = new Dictionary<string, string>();
+                        value.Add("必選修", ai.IsRequired);
+                        value.Add("校部訂", ai.RequiredBy);
+                        if (ai.PassingStandard == null)
+                            value.Add("及格標準", "");
+                        else
+                            value.Add("及格標準", ai.PassingStandard);
+
+                        if (ai.MakeupStandard == null)
+                            value.Add("補考標準", "");
+                        else
+                            value.Add("補考標準", ai.MakeupStandard);
+
+                        oldLogValueDict.Add(ai.RefStudentID, value);
+                    }
+                }
 
                 lvStudents.Items.Clear();
                 lvStudents.Items.AddRange(attends.ToArray());
@@ -158,6 +225,86 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 AttendInfo info = each as AttendInfo;
                 info.RequiredBy = value;
             }
+        }
+
+        private void ChangeSelectedItemsPassingStandard()
+        {
+
+            DataTable dtSc = new DataTable();
+            DataColumn dc1 = new DataColumn();
+            dc1.ColumnName = "sc_attend_id";
+            dc1.Caption = "sc_attend_id";
+            dc1.ReadOnly = true;
+            dtSc.Columns.Add(dc1);
+            DataColumn dc2 = new DataColumn();
+            dc2.ColumnName = "class_name";
+            dc2.Caption = "班級";
+            dc2.ReadOnly = true;
+            dtSc.Columns.Add(dc2);
+            DataColumn dc3 = new DataColumn();
+            dc3.ColumnName = "seat_no";
+            dc3.Caption = "座號";
+            dc3.ReadOnly = true;
+            dtSc.Columns.Add(dc3);
+            DataColumn dc4 = new DataColumn();
+            dc4.ColumnName = "student_name";
+            dc4.Caption = "姓名";
+            dc4.ReadOnly = true;
+            dtSc.Columns.Add(dc4);
+            DataColumn dc5 = new DataColumn();
+            dc5.ColumnName = "passing_standard";
+            dc5.Caption = "及格標準";
+            dtSc.Columns.Add(dc5);
+            DataColumn dc6 = new DataColumn();
+            dc6.ColumnName = "makeup_standard";
+            dc6.Caption = "補考標準";
+            dtSc.Columns.Add(dc6);
+            DataColumn dc7 = new DataColumn();
+            dc7.ColumnName = "subject_code";
+            dc7.Caption = "科目代碼";
+            dc7.ReadOnly = true;
+            dtSc.Columns.Add(dc7);
+
+            foreach (ListViewItem each in lvStudents.SelectedItems)
+            {
+                AttendInfo info = each as AttendInfo;
+                //                info.RequiredBy = value;
+                DataRow dr = dtSc.NewRow();
+                dr["sc_attend_id"] = info.Identity;
+                dr["class_name"] = info.Class;
+                dr["seat_no"] = info.SeatNumber;
+                dr["student_name"] = info.StudentName;
+                dr["passing_standard"] = info.PassingStandard;
+                dr["makeup_standard"] = info.MakeupStandard;
+                dr["subject_code"] = info.SubjectCode;
+                dtSc.Rows.Add(dr);
+            }
+
+            editPassMakupScoreForm pmsf = new editPassMakupScoreForm();
+            pmsf.SetAttendInfoData(dtSc);
+            if (pmsf.ShowDialog() == DialogResult.OK)
+            {
+                OnValueChanged("IsDirty", "True");
+
+                DataTable newDt = pmsf.GetAttendInfoData();
+                // 處理及格與補考
+                foreach (DataRow dr in newDt.Rows)
+                {
+                    int sc_id = int.Parse(dr["sc_attend_id"].ToString());
+                    foreach (ListViewItem each in lvStudents.SelectedItems)
+                    {
+                        AttendInfo info = each as AttendInfo;
+                        if (sc_id == info.Identity)
+                        {
+                            info.PassingStandard = dr["passing_standard"].ToString();
+                            info.MakeupStandard = dr["makeup_standard"].ToString();
+                            break;
+                        }
+
+                    }
+                }
+            }
+
         }
 
         private void ChangeSelectedItemsRequired(string value)
@@ -329,7 +476,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 //    viewer.Show();
                 //}
                 //else
-                    AddAddend(student);
+                AddAddend(student);
             }
         }
 
@@ -376,7 +523,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
 
         private void buttonItem3_Click(object sender, EventArgs e)
         {
-            ChangeSelectedItemsRequiredBy("部訂");
+            ChangeSelectedItemsRequiredBy("部定");
         }
 
         private void buttonItem5_Click(object sender, EventArgs e)
@@ -392,50 +539,208 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
 
             GetList(insertList, updateList, deleteList);
 
+
             try
             {
-                DSXmlHelper helper = new DSXmlHelper("InsertSCAttend");
-                foreach (AttendInfo each in insertList)
-                {
-                    XmlElement attend = helper.AddElement("Attend");
-                    DSXmlHelper.AppendChild(attend, "<RefStudentID>" + each.RefStudentID.ToString() + "</RefStudentID>");
-                    DSXmlHelper.AppendChild(attend, "<RefCourseID>" + RunningID + "</RefCourseID>");
-                    DSXmlHelper.AppendChild(attend, "<IsRequired>" + each.IsRequired + "</IsRequired>");
-                    DSXmlHelper.AppendChild(attend, "<RequiredBy>" + each.RequiredBy + "</RequiredBy>");
-                    //DSXmlHelper.AppendChild(attend, "<GradeYear>" + each.GradeYear + "</GradeYear>");
-                    helper.AddElement(".", attend);
-                }
                 if (insertList.Count > 0)
-                    AddCourse.AttendCourse(helper);
-
-                helper = new DSXmlHelper("UpdateSCAttend");
-                foreach (AttendInfo each in updateList)
                 {
-                    XmlElement attend = helper.AddElement("Attend");
-                    DSXmlHelper.AppendChild(attend, "<ID>" + each.Identity + "</ID>");
-                    DSXmlHelper.AppendChild(attend, "<IsRequired>" + each.IsRequired + "</IsRequired>");
-                    DSXmlHelper.AppendChild(attend, "<RequiredBy>" + each.RequiredBy + "</RequiredBy>");
+                    List<string> insertSc_atttendList = new List<string>();
+                    foreach (AttendInfo ai in insertList)
+                    {
+                        string is_required = "null", required_by = "null", grade_year = "null", passing_standard = "null", makeup_standard = "null";
 
-                    helper.AddElement(".", attend);
+                        if (ai.IsRequired != "")
+                        {
+                            if (ai.IsRequired == "必修")
+                                is_required = "'1'";
+                            else
+                                is_required = "'0'";
+                        }
+                        if (ai.RequiredBy != "")
+                        {
+                            if (ai.RequiredBy == "部定")
+                                required_by = "1";
+
+                            if (ai.RequiredBy == "校訂")
+                                required_by = "2";
+
+                        }
+                        if (ai.GradeYear != "")
+                            grade_year = ai.GradeYear;
+
+                        if (ai.PassingStandard != null && ai.PassingStandard != "")
+                            passing_standard = ai.PassingStandard;
+
+                        if (ai.MakeupStandard != null && ai.MakeupStandard != "")
+                            makeup_standard = ai.MakeupStandard;
+
+                        string cmd = "INSERT INTO " +
+                            "sc_attend(ref_student_id" +
+                            ",ref_course_id" +
+                            ",is_required" +
+                            ",required_by" +
+                            ",grade_year" +
+                            ",passing_standard" +
+                            ",makeup_standard) " +
+                            "VALUES(" + ai.RefStudentID + "" +
+                            "," + RunningID + "" +
+                            "," + is_required +
+                            "," + required_by + "" +
+                            "," + grade_year + "" +
+                            "," + passing_standard + "" +
+                            "," + makeup_standard + ");";
+                        insertSc_atttendList.Add(cmd);
+                    }
+
+                    if (insertSc_atttendList.Count > 0)
+                    {
+                        K12.Data.UpdateHelper insertUh = new K12.Data.UpdateHelper();
+                        insertUh.Execute(insertSc_atttendList);
+                    }
+
                 }
+
                 if (updateList.Count > 0)
-                    EditCourse.UpdateAttend(helper);
-
-                helper = new DSXmlHelper("DeleteSCAttendRequest");
-                foreach (AttendInfo each in deleteList)
                 {
-                    XmlElement attend = helper.AddElement("Attend");
-                    DSXmlHelper.AppendChild(attend, "<ID>" + each.Identity + "</ID>");
+                    newLogValueDict.Clear();
+                    // 處理更新log
+                    foreach (AttendInfo ai in updateList)
+                    {
+                        if (!newLogValueDict.ContainsKey(ai.RefStudentID))
+                        {
+                            Dictionary<string, string> value = new Dictionary<string, string>();
+                            value.Add("必選修", ai.IsRequired);
+                            value.Add("校部訂", ai.RequiredBy);
+                            if (ai.PassingStandard == null)
+                                value.Add("及格標準", "");
+                            else
+                                value.Add("及格標準", ai.PassingStandard);
 
-                    helper.AddElement(".", attend);
+                            if (ai.MakeupStandard == null)
+                                value.Add("補考標準", "");
+                            else
+                                value.Add("補考標準", ai.MakeupStandard);
+
+                            newLogValueDict.Add(ai.RefStudentID, value);
+                        }
+                    }
+
+                    List<string> updateSc_atttendList = new List<string>();
+                    foreach (AttendInfo ai in updateList)
+                    {
+                        string is_required = "null", required_by = "null", grade_year = "null", passing_standard = "null", makeup_standard = "null";
+
+                        if (ai.IsRequired != "")
+                        {
+                            if (ai.IsRequired == "必修")
+                                is_required = "'1'";
+                            else
+                                is_required = "'0'";
+                        }
+                        if (ai.RequiredBy != "")
+                        {
+                            if (ai.RequiredBy == "部定")
+                                required_by = "1";
+
+                            if (ai.RequiredBy == "校訂")
+                                required_by = "2";
+
+                        }
+                        if (ai.GradeYear != "")
+                            grade_year = ai.GradeYear;
+
+                        if (ai.PassingStandard != "")
+                            passing_standard = ai.PassingStandard;
+
+                        if (ai.MakeupStandard != "")
+                            makeup_standard = ai.MakeupStandard;
+
+                        string cmd = "UPDATE " +
+                            "sc_attend " +
+                            "SET " +
+                            "ref_student_id = " + ai.RefStudentID +
+                            ",ref_course_id = " + RunningID +
+                            ",is_required = " + is_required +
+                            ",required_by = " + required_by +
+                            ",grade_year = " + grade_year +
+                            ",passing_standard = " + passing_standard +
+                            ",makeup_standard = " + makeup_standard +
+                            " WHERE id = " + ai.Identity;
+
+                        updateSc_atttendList.Add(cmd);
+                    }
+
+                    if (updateSc_atttendList.Count > 0)
+                    {
+                        K12.Data.UpdateHelper updateUh = new K12.Data.UpdateHelper();
+                        updateUh.Execute(updateSc_atttendList);
+                    }
+
                 }
+
                 if (deleteList.Count > 0)
-                    EditCourse.DeleteAttend(helper);
+                {
+                    List<int> sc_attend_idList = new List<int>();
+                    foreach (AttendInfo ai in deleteList)
+                        sc_attend_idList.Add(ai.Identity);
+                    if (sc_attend_idList.Count > 0)
+                    {
+                        string delCmd = "DELETE FROM sc_attend WHERE id IN(" + string.Join(",", sc_attend_idList.ToArray()) + ");";
+                        K12.Data.UpdateHelper delUh = new K12.Data.UpdateHelper();
+                        delUh.Execute(delCmd);
+                    }
+
+                }
+
+
+                // 舊寫法 ---
+                //DSXmlHelper helper = new DSXmlHelper("InsertSCAttend");
+                //foreach (AttendInfo each in insertList)
+                //{
+                //    XmlElement attend = helper.AddElement("Attend");
+                //    DSXmlHelper.AppendChild(attend, "<RefStudentID>" + each.RefStudentID.ToString() + "</RefStudentID>");
+                //    DSXmlHelper.AppendChild(attend, "<RefCourseID>" + RunningID + "</RefCourseID>");
+                //    DSXmlHelper.AppendChild(attend, "<IsRequired>" + each.IsRequired + "</IsRequired>");
+                //    DSXmlHelper.AppendChild(attend, "<RequiredBy>" + each.RequiredBy + "</RequiredBy>");
+                //    //DSXmlHelper.AppendChild(attend, "<GradeYear>" + each.GradeYear + "</GradeYear>");
+                //    helper.AddElement(".", attend);
+                //}
+                //if (insertList.Count > 0)
+                //    AddCourse.AttendCourse(helper);
+
+                //helper = new DSXmlHelper("UpdateSCAttend");
+                //foreach (AttendInfo each in updateList)
+                //{
+                //    XmlElement attend = helper.AddElement("Attend");
+                //    DSXmlHelper.AppendChild(attend, "<ID>" + each.Identity + "</ID>");
+                //    DSXmlHelper.AppendChild(attend, "<IsRequired>" + each.IsRequired + "</IsRequired>");
+                //    DSXmlHelper.AppendChild(attend, "<RequiredBy>" + each.RequiredBy + "</RequiredBy>");
+
+                //    helper.AddElement(".", attend);
+                //}
+                //if (updateList.Count > 0)
+                //    EditCourse.UpdateAttend(helper);
+
+                //helper = new DSXmlHelper("DeleteSCAttendRequest");
+                //foreach (AttendInfo each in deleteList)
+                //{
+                //    XmlElement attend = helper.AddElement("Attend");
+                //    DSXmlHelper.AppendChild(attend, "<ID>" + each.Identity + "</ID>");
+
+                //    helper.AddElement(".", attend);
+                //}
+                //if (deleteList.Count > 0)
+                //    EditCourse.DeleteAttend(helper);
+                // 舊寫法 ---
+
+
+
 
                 #region Log
 
                 StringBuilder desc = new StringBuilder("");
-                desc.AppendLine("課程名稱：" + ((CourseInformation)Course.Instance.Items[RunningID]).CourseName+" ");
+                List<string> desc_msgList = new List<string>();
+                desc.AppendLine("課程名稱：" + ((CourseInformation)Course.Instance.Items[RunningID]).CourseName + " ");
                 if (insertList.Count > 0)
                     desc.AppendLine("加入修課學生：");
                 foreach (AttendInfo info in insertList)
@@ -447,7 +752,22 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 if (updateList.Count > 0)
                     desc.AppendLine("課程修課學生修課資訊調整：");
                 foreach (AttendInfo info in updateList)
-                    desc.AppendLine("- " + info.Class + " " + info.StudentNumber + " " + info.StudentName + " ");
+                {
+                    desc_msgList.Clear();
+                    if (newLogValueDict.ContainsKey(info.RefStudentID) && oldLogValueDict.ContainsKey(info.RefStudentID))
+                    {
+                        foreach (string key in newLogValueDict[info.RefStudentID].Keys)
+                        {
+                            if (newLogValueDict[info.RefStudentID][key] != oldLogValueDict[info.RefStudentID][key])
+                            {
+                                string msg = "欄位「" + key + "」由「" + oldLogValueDict[info.RefStudentID][key] + "」變更為「" + newLogValueDict[info.RefStudentID][key] + "」";
+                                desc_msgList.Add(msg);
+                            }
+                        }
+                    }
+
+                    desc.AppendLine("- " + info.Class + " " + info.StudentNumber + " " + info.StudentName + "  " + string.Join(",", desc_msgList.ToArray()));
+                }
 
                 CurrentUser.Instance.AppLog.Write(EntityType.Course, "修改課程修課學生", RunningID, desc.ToString(), "課程", "");
 
@@ -498,6 +818,38 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
             private bool _is_dirty;
             private string _gradeyear;
 
+            private string _passing_standard;
+            private string _makeup_standard;
+            private string _subject_code;
+            //remark
+            //designate_final_score
+            //score
+            //subject_code
+
+            public AttendInfo(DataRow attend)
+            {
+                int sc_attend_id = -1;
+                int.TryParse(attend["sc_attend_id"].ToString(), out sc_attend_id);
+
+                _identity = sc_attend_id;
+                _name = attend["student_name"].ToString();
+                _is_required = attend["is_required"].ToString();
+                _requiredby = attend["required_by"].ToString();
+                _class = attend["class_name"].ToString();
+                _snum = attend["student_number"].ToString();
+                _seatno = attend["seat_no"].ToString();
+                _ref_studentid = attend["student_id"].ToString();
+                _gradeyear = attend["grade_year"].ToString();
+                _passing_standard = attend["passing_standard"].ToString();
+                _makeup_standard = attend["makeup_standard"].ToString();
+                _subject_code = attend["subject_code"].ToString();
+                Text = Class;
+                CreateSubItem();
+
+                _is_dirty = false;
+            }
+
+
             public AttendInfo(XmlElement attend)
             {
                 _identity = GetIntValue(attend, "@ID");
@@ -542,6 +894,10 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 AddSubItem("StudentNumber", _snum);
                 AddSubItem("IsRequired", _is_required);
                 AddSubItem("RequiredBy", _requiredby);
+                AddSubItem("PassingStandard", _passing_standard);
+                AddSubItem("MakeupStandard", _makeup_standard);
+                AddSubItem("SubjectCode", _subject_code);
+
             }
 
             private void AddSubItem(string name, string value)
@@ -549,7 +905,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 ListViewSubItem sub = new ListViewSubItem();
                 sub.Text = value;
                 sub.Name = name;
-                if ( (name == "IsRequired" || name == "RequiredBy" )&& value == "" )
+                if ((name == "IsRequired" || name == "RequiredBy" || name == "PassingStandard" || name == "MakeupStandard") && value == "")
                 {
                     sub.Text = "未指定";
                     sub.ForeColor = Color.LightGray;
@@ -578,14 +934,14 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 get { return _is_required; }
                 set
                 {
-                    _is_dirty = ( IsRequired != value );
+                    _is_dirty = (IsRequired != value);
                     _is_required = value;
-                    if ( value == "" )
+                    if (value == "")
                         SubItems["IsRequired"].Text = "未指定";
                     else
                         SubItems["IsRequired"].Text = _is_required;
 
-                    if ( _is_dirty )
+                    if (_is_dirty)
                     {
                         SubItems["IsRequired"].ForeColor = Color.Blue;
                     }
@@ -597,14 +953,14 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 get { return _requiredby; }
                 set
                 {
-                    _is_dirty = ( _requiredby != value );
+                    _is_dirty = (_requiredby != value);
                     _requiredby = value;
-                    if ( value == "" )
+                    if (value == "")
                         SubItems["RequiredBy"].Text = "未指定";
                     else
                         SubItems["RequiredBy"].Text = _requiredby;
 
-                    if ( _is_dirty )
+                    if (_is_dirty)
                     {
                         SubItems["RequiredBy"].ForeColor = Color.Blue;
                     }
@@ -634,6 +990,52 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
             public bool IsDirty
             {
                 get { return _is_dirty; }
+            }
+
+            // 及格標準
+            public string PassingStandard
+            {
+                get { return _passing_standard; }
+                set
+                {
+                    _is_dirty = (_passing_standard != value);
+                    _passing_standard = value;
+                    if (value == "")
+                        SubItems["PassingStandard"].Text = "未指定";
+                    else
+                        SubItems["PassingStandard"].Text = _passing_standard;
+
+                    if (_is_dirty)
+                    {
+                        SubItems["PassingStandard"].ForeColor = Color.Blue;
+                    }
+                }
+            }
+            // 補考標準
+            public string MakeupStandard
+            {
+                get { return _makeup_standard; }
+                set
+                {
+                    _is_dirty = (_makeup_standard != value);
+                    _makeup_standard = value;
+                    if (value == "")
+                        SubItems["MakeupStandard"].Text = "未指定";
+                    else
+                        SubItems["MakeupStandard"].Text = _makeup_standard;
+
+                    if (_is_dirty)
+                    {
+                        SubItems["MakeupStandard"].ForeColor = Color.Blue;
+                    }
+                }
+            }
+            /// <summary>
+            /// 科目代碼，ReadOnly
+            /// </summary>
+            public string SubjectCode
+            {
+                get { return _subject_code; }
             }
 
             private int GetIntValue(XmlElement rawData, string xpath)
@@ -676,6 +1078,11 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
             {
                 XmlBox.ShowXml(_current_response.BaseElement);
             }
+        }
+
+        private void btnEditPMScore_Click(object sender, EventArgs e)
+        {
+            ChangeSelectedItemsPassingStandard();
         }
     }
 }

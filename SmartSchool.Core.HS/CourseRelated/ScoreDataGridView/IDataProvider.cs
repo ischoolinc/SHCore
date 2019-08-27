@@ -5,13 +5,15 @@ using System.Windows.Forms;
 using SmartSchool.Feature.Course;
 using FISCA.DSAUtil;
 using System.Xml;
+using FISCA.Data;
+using System.Data;
 
 namespace SmartSchool.CourseRelated.ScoreDataGridView
 {
     interface IDataProvider
     {
-        ColumnHeader ColumnHeader { get;}
-        RowCollection Rows { get;}
+        ColumnHeader ColumnHeader { get; }
+        RowCollection Rows { get; }
         ICell FindCell(string studentid, string columnName);
     }
 
@@ -110,52 +112,212 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
         public SmartSchoolDataProvider(string courseid)
         {
             _courseid = courseid;
-            DSResponse dsrsp = QueryCourse.GetCourseExam(courseid);
-            DSXmlHelper helper = dsrsp.GetContent();
-            Dictionary<string, string> examList = new Dictionary<string, string>();
+            //DSResponse dsrsp = QueryCourse.GetCourseExam(courseid);
+            //DSXmlHelper helper = dsrsp.GetContent();
+            QueryHelper cousreExamQH = new QueryHelper();
+            Dictionary<string, string> examDict = new Dictionary<string, string>();
+
+            // 取得課程評分樣板試別
+            string qryCousreExam = "SELECT " +
+                "exam.id AS exam_id" +
+                ",exam.exam_name " +
+                "FROM " +
+                "course INNER JOIN te_include " +
+                "ON course.ref_exam_template_id = te_include.ref_exam_template_id " +
+                "INNER JOIN exam " +
+                "ON te_include.ref_exam_id = exam.id " +
+                "WHERE course.id = " + courseid + " ORDER BY display_order";
+
+            DataTable dtCousreExam = cousreExamQH.Select(qryCousreExam);
+            foreach (DataRow dr in dtCousreExam.Rows)
+            {
+                string exam_id = dr["exam_id"].ToString();
+                string exam_name = dr["exam_name"].ToString();
+                if (!examDict.ContainsKey(exam_id))
+                    examDict.Add(exam_id, exam_name);
+            }
+
+
             // 塞 Header
             _columnHeader = new ColumnHeader();
+            _columnHeader.Columns.Add(new ColumnSetting("-1", "學生系統編號", 0));
             _columnHeader.Columns.Add(new ColumnSetting("-1", "班級", 60));
             _columnHeader.Columns.Add(new ColumnSetting("-1", "座號", 40, new DecimalComparer()));
             _columnHeader.Columns.Add(new ColumnSetting("-1", "姓名", 70));
             _columnHeader.Columns.Add(new ColumnSetting("-1", "學號", 70));
-            
-            foreach (XmlNode node in helper.GetElements("Course"))
-            {
-                string examName = node.SelectSingleNode("ExamName").InnerText;
-                string examid = node.SelectSingleNode("RefExamID").InnerText;
 
-                _columnHeader.Columns.Add(new ColumnSetting(examid, examName, 80, new DecimalComparer()));
-                examList.Add(examid, examName);
-            }
+            //foreach (XmlNode node in helper.GetElements("Course"))
+            //{
+            //    string examName = node.SelectSingleNode("ExamName").InnerText;
+            //    string examid = node.SelectSingleNode("RefExamID").InnerText;
+
+            //    _columnHeader.Columns.Add(new ColumnSetting(examid, examName, 80, new DecimalComparer()));
+            //    examList.Add(examid, examName);
+            //}
+
+            foreach (string examid in examDict.Keys)
+                _columnHeader.Columns.Add(new ColumnSetting(examid, examDict[examid], 80, new DecimalComparer()));
+
             _columnHeader.Columns.Add(new ColumnSetting("-1", "課程成績", 100, new DecimalComparer()));
 
+            _columnHeader.Columns.Add(new ColumnSetting("-1", "及格標準", 80, new DecimalComparer()));
+            _columnHeader.Columns.Add(new ColumnSetting("-1", "補考標準", 80, new DecimalComparer()));
+            _columnHeader.Columns.Add(new ColumnSetting("-1", "直接指定總成績", 120, new DecimalComparer()));
+            _columnHeader.Columns.Add(new ColumnSetting("-1", "備註", 200));
 
+
+            // 舊寫法
             // 取回本課程所有學生的考試成績
-            DSResponse scoreResp = QueryCourse.GetSECTake(courseid);
-            XmlElement scoreElement = scoreResp.GetContent().GetElement(".");
+            //DSResponse scoreResp = QueryCourse.GetSECTake(courseid);
+            //XmlElement scoreElement = scoreResp.GetContent().GetElement(".");
 
 
             // 塞 Row
             _rowCollection = new RowCollection();
-            dsrsp = QueryCourse.GetSCAttend(courseid);
-            helper = dsrsp.GetContent();
+            //dsrsp = QueryCourse.GetSCAttend(courseid);
+            //helper = dsrsp.GetContent();
 
-            foreach (XmlNode node in helper.GetElements("Student"))
+            // 取得學生修課紀錄
+            QueryHelper qhScattend = new QueryHelper();
+            string qryScattend = "SELECT " +
+                "sc_attend.id AS sc_attend_id" +
+                ",ref_student_id AS student_id" +
+                ",sc_attend.passing_standard" +
+                ",sc_attend.makeup_standard" +
+                ",sc_attend.remark" +
+                ",sc_attend.designate_final_score" +
+                ",sc_attend.score " +
+                "FROM " +
+                "sc_attend " +
+                "WHERE ref_course_id = " + courseid + ";";
+
+            DataTable dtScattend = qhScattend.Select(qryScattend);
+
+            Dictionary<string, DataRow> dtScattendDict = new Dictionary<string, DataRow>();
+            foreach (DataRow dr in dtScattend.Rows)
             {
-                RowEntity row = new RowEntity(node.Attributes["ID"].Value);
-                row.AddCell("班級", new StudentCell(node.SelectSingleNode("ClassName").InnerText));
-                row.AddCell("座號", new StudentCell(node.SelectSingleNode("SeatNumber").InnerText));
-                row.AddCell("姓名", new StudentCell(node.SelectSingleNode("Name").InnerText));
-                row.AddCell("學號", new StudentCell(node.SelectSingleNode("StudentNumber").InnerText));
-                foreach (string examid in examList.Keys)
+                string sc_id = dr["sc_attend_id"].ToString();
+                if (!dtScattendDict.ContainsKey(sc_id))
                 {
-                    ScoreInfo score = GetScore(scoreElement, examid, node.Attributes["ID"].Value);
-                    row.AddCell(examList[examid], new ExamCell(score));
+                    dtScattendDict.Add(sc_id, dr);
                 }
-                row.AddCell("課程成績", new ScoreExamCell(new ScoreInfo(node.Attributes["ID"].Value,node.SelectSingleNode("Score").InnerText)));
-                _rowCollection.Add(node.Attributes["ID"].Value, row);
             }
+
+            // 取得班級修課學生
+            QueryHelper qhCourseStudent = new QueryHelper();
+            string qryCourseStudent = "SELECT " +
+                "sc_attend.id AS sc_attend_id" +
+                ",student.id AS student_id" +
+                ",class.class_name" +
+                ",student.seat_no" +
+                ",student.student_number" +
+                ",student.name AS student_name  " +
+                "FROM " +
+                "sc_attend INNER JOIN student " +
+                "ON sc_attend.ref_student_id = student.id " +
+                "LEFT JOIN class " +
+                "ON student.ref_class_id = class.id " +
+                "WHERE ref_course_id = " + courseid + " " +
+                "ORDER BY class_name,seat_no,student_number";
+
+            DataTable dtCourseStudent = qhCourseStudent.Select(qryCourseStudent);
+
+            // 取得修課學生段考成績
+            QueryHelper qhSCETakeScore = new QueryHelper();
+            string qrySCETakeScore = "SELECT " +
+                "sce_take.id" +
+                ",ref_exam_id" +
+                ",ref_sc_attend_id" +
+                ",sce_take.score " +
+                "FROM " +
+                "sce_take INNER JOIN " +
+                "sc_attend " +
+                "ON sce_take.ref_sc_attend_id = sc_attend.id " +
+                "WHERE sc_attend.ref_course_id = " + courseid + ";";
+            DataTable dtSCETakeScore = qhSCETakeScore.Select(qrySCETakeScore);
+            Dictionary<string, DataRow> sceScoreDict = new Dictionary<string, DataRow>();
+            foreach (DataRow dr in dtSCETakeScore.Rows)
+            {
+                string key = dr["ref_exam_id"].ToString() + "_" + dr["ref_sc_attend_id"].ToString();
+                if (!sceScoreDict.ContainsKey(key))
+                    sceScoreDict.Add(key, dr);
+            }
+
+            foreach (DataRow dr in dtCourseStudent.Rows)
+            {
+                string sc_attend_id = dr["sc_attend_id"].ToString();
+                RowEntity row = new RowEntity(sc_attend_id);
+                row.AddCell("學生系統編號", new StudentCell(dr["student_id"].ToString()));
+                row.AddCell("班級", new StudentCell(dr["class_name"].ToString()));
+                row.AddCell("座號", new StudentCell(dr["seat_no"].ToString()));
+                row.AddCell("姓名", new StudentCell(dr["student_name"].ToString()));
+                row.AddCell("學號", new StudentCell(dr["student_number"].ToString()));
+
+                foreach (string examid in examDict.Keys)
+                {
+                    string key = examid + "_" + sc_attend_id;
+                    ScoreInfo score = new ScoreInfo();
+                    if (sceScoreDict.ContainsKey(key))
+                    {
+                        score = GetScore(sceScoreDict[key]);
+                    }
+                    row.AddCell(examDict[examid], new ExamCell(score));
+                }
+
+                if (dtScattendDict.ContainsKey(sc_attend_id))
+                {
+                    row.AddCell("課程成績", new ScoreExamCell(new ScoreInfo(sc_attend_id, dtScattendDict[sc_attend_id]["score"].ToString())));
+
+                    row.AddCell("及格標準", new ScoreExamCell(new ScoreInfo(sc_attend_id, dtScattendDict[sc_attend_id]["passing_standard"].ToString())));
+                    row.AddCell("補考標準", new ScoreExamCell(new ScoreInfo(sc_attend_id, dtScattendDict[sc_attend_id]["makeup_standard"].ToString())));
+                    row.AddCell("直接指定總成績", new ScoreExamCell(new ScoreInfo(sc_attend_id, dtScattendDict[sc_attend_id]["designate_final_score"].ToString())));
+                    if (dtScattendDict[sc_attend_id]["remark"] != null)
+                        row.AddCell("備註", new TextCell(dtScattendDict[sc_attend_id]["remark"].ToString()));
+                    else
+                        row.AddCell("備註", new TextCell(""));
+
+                }
+
+                _rowCollection.Add(sc_attend_id, row);
+            }
+
+
+
+            //foreach (XmlNode node in helper.GetElements("Student"))
+            //{
+            //    string sc_attend_id = node.Attributes["ID"].Value;
+
+            //    RowEntity row = new RowEntity(node.Attributes["ID"].Value);
+            //    row.AddCell("班級", new StudentCell(node.SelectSingleNode("ClassName").InnerText));
+            //    row.AddCell("座號", new StudentCell(node.SelectSingleNode("SeatNumber").InnerText));
+            //    row.AddCell("姓名", new StudentCell(node.SelectSingleNode("Name").InnerText));
+            //    row.AddCell("學號", new StudentCell(node.SelectSingleNode("StudentNumber").InnerText));
+            //    foreach (string examid in examList.Keys)
+            //    {
+            //        ScoreInfo score = GetScore(scoreElement, examid, node.Attributes["ID"].Value);
+            //        row.AddCell(examList[examid], new ExamCell(score));
+            //    }
+            //    //row.AddCell("課程成績", new ScoreExamCell(new ScoreInfo(node.Attributes["ID"].Value, node.SelectSingleNode("Score").InnerText)));
+
+            //    if (dtScattendDict.ContainsKey(sc_attend_id))
+            //    {
+            //        row.AddCell("課程成績", new ScoreExamCell(new ScoreInfo(sc_attend_id, dtScattendDict[sc_attend_id]["score"].ToString())));
+
+            //        row.AddCell("及格標準", new ScoreExamCell(new ScoreInfo(sc_attend_id, dtScattendDict[sc_attend_id]["passing_standard"].ToString())));
+            //        row.AddCell("補考標準", new ScoreExamCell(new ScoreInfo(sc_attend_id, dtScattendDict[sc_attend_id]["makeup_standard"].ToString())));
+            //        row.AddCell("直接指定總成績", new ScoreExamCell(new ScoreInfo(sc_attend_id, dtScattendDict[sc_attend_id]["designate_final_score"].ToString())));
+            //        if (dtScattendDict[sc_attend_id]["remark"] != null)
+            //            row.AddCell("備註", new TextCell(dtScattendDict[sc_attend_id]["remark"].ToString()));
+            //        else
+            //            row.AddCell("備註", new TextCell(""));
+
+            //    }
+
+            //    _rowCollection.Add(node.Attributes["ID"].Value, row);
+
+
+
+            //}
         }
 
         #region IDataProvider 成員
@@ -177,14 +339,20 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
 
         #endregion
 
-        private ScoreInfo GetScore(XmlElement element, string examid, string attendid)
+        //private ScoreInfo GetScore(XmlElement element, string examid, string attendid)
+        //{
+        //    foreach (XmlNode node in element.SelectNodes("Score"))
+        //    {
+        //        if (node.SelectSingleNode("ExamID").InnerText == examid && node.SelectSingleNode("AttendID").InnerText == attendid)
+        //            return new ScoreInfo(node.Attributes["ID"].Value, node.SelectSingleNode("Score").InnerText);
+        //    }
+        //    return new ScoreInfo();
+        //}
+        private ScoreInfo GetScore(DataRow data)
         {
-            foreach (XmlNode node in element.SelectNodes("Score"))
-            {
-                if (node.SelectSingleNode("ExamID").InnerText == examid && node.SelectSingleNode("AttendID").InnerText == attendid)
-                    return new ScoreInfo(node.Attributes["ID"].Value, node.SelectSingleNode("Score").InnerText);
-            }
-            return new ScoreInfo();
+
+            return new ScoreInfo(data["id"].ToString(), data["score"].ToString());
+            //  return new ScoreInfo();
         }
     }
 

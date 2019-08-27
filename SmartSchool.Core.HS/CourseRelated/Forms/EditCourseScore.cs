@@ -87,5 +87,10 @@ namespace SmartSchool.CourseRelated.Forms
         {
             Close();
         }
+
+        private void EditCourseScore_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

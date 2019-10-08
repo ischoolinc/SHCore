@@ -65,6 +65,7 @@
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgData.DefaultCellStyle = dataGridViewCellStyle1;
             this.dgData.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
+            this.dgData.ImeMode = System.Windows.Forms.ImeMode.Alpha;
             this.dgData.Location = new System.Drawing.Point(12, 21);
             this.dgData.Name = "dgData";
             this.dgData.RowTemplate.Height = 24;

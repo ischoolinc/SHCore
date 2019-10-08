@@ -290,16 +290,21 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 List<string> updateList = new List<string>();
                 foreach (DataRow dr in newScAttend.Rows)
                 {
-                    string passing_standard = "null", makeup_standard = "null", designate_final_score = "null";
+                    string passing_standard = "null", makeup_standard = "null", designate_final_score = "null", course_score = "null";
 
-                    if (dr["passing_standard"].ToString() != "")
+                    if (dr["passing_standard"] != null && dr["passing_standard"].ToString() != "")
                         passing_standard = dr["passing_standard"].ToString();
 
-                    if (dr["makeup_standard"].ToString() != "")
+                    if (dr["makeup_standard"] != null && dr["makeup_standard"].ToString() != "")
                         makeup_standard = dr["makeup_standard"].ToString();
 
-                    if (dr["designate_final_score"].ToString() != "")
+                    if (dr["designate_final_score"] != null && dr["designate_final_score"].ToString() != "")
                         designate_final_score = dr["designate_final_score"].ToString();
+
+                    if (dr["score"] != null && dr["score"].ToString() != "")
+                    {
+                        course_score = dr["score"].ToString();
+                    }
 
                     string qry = "UPDATE " +
                         "sc_attend " +
@@ -307,7 +312,8 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                         "passing_standard=" + passing_standard +
                         ",makeup_standard=" + makeup_standard +
                         ",remark='" + dr["remark"].ToString() + "'" +
-                        ",designate_final_score=" + designate_final_score + " " +
+                        ",designate_final_score=" + designate_final_score + "" +
+                        ",score = " + course_score +" " +
                         "WHERE " +
                         "id = " + dr["sc_attend_id"].ToString() + ";";
                     updateList.Add(qry);

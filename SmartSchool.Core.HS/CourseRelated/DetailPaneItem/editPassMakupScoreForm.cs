@@ -40,7 +40,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 else if (i == 2)
                     dgData.Columns[i].Width = 60;
                 else if (i == 4 || i == 5)
-                    dgData.Columns[i].Width = 80;
+                    dgData.Columns[i].Width = 70;
                 else
                     dgData.Columns[i].Width = 100;
                 

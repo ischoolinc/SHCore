@@ -89,8 +89,8 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 QueryHelper qhScattend = new QueryHelper();
                 string qryScattend = "SELECT sc_attend.id AS sc_attend_id" +
                     ",student.name AS student_name" +
-                    ",(CASE sc_attend.required_by  WHEN 1 THEN '部定' WHEN 2 THEN '校訂' ELSE  '' END) AS required_by" +
-                    ",(CASE sc_attend.is_required  WHEN '1' THEN '必修' WHEN '0' THEN '選修' ELSE  '' END) AS is_required" +
+                    ",(CASE sc_attend.required_by  WHEN 1 THEN '部訂' WHEN 2 THEN '校訂' ELSE  '' END) AS required_by" +
+                    ",(CASE sc_attend.is_required  WHEN '1' THEN '必' WHEN '0' THEN '選' ELSE  '' END) AS is_required" +
                     ",class.class_name" +
                     ",student.student_number" +
                     ",student.seat_no" +
@@ -298,7 +298,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                         {
                             info.PassingStandard = dr["passing_standard"].ToString();
                             info.MakeupStandard = dr["makeup_standard"].ToString();
-                            break;
+                            info.SetIsDirty(true);
                         }
 
                     }
@@ -523,7 +523,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
 
         private void buttonItem3_Click(object sender, EventArgs e)
         {
-            ChangeSelectedItemsRequiredBy("部定");
+            ChangeSelectedItemsRequiredBy("部訂");
         }
 
         private void buttonItem5_Click(object sender, EventArgs e)
@@ -551,14 +551,14 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
 
                         if (ai.IsRequired != "")
                         {
-                            if (ai.IsRequired == "必修")
+                            if (ai.IsRequired == "必")
                                 is_required = "'1'";
                             else
                                 is_required = "'0'";
                         }
                         if (ai.RequiredBy != "")
                         {
-                            if (ai.RequiredBy == "部定")
+                            if (ai.RequiredBy == "部訂")
                                 required_by = "1";
 
                             if (ai.RequiredBy == "校訂")
@@ -632,14 +632,14 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
 
                         if (ai.IsRequired != "")
                         {
-                            if (ai.IsRequired == "必修")
+                            if (ai.IsRequired == "必")
                                 is_required = "'1'";
                             else
                                 is_required = "'0'";
                         }
                         if (ai.RequiredBy != "")
                         {
-                            if (ai.RequiredBy == "部定")
+                            if (ai.RequiredBy == "部訂")
                                 required_by = "1";
 
                             if (ai.RequiredBy == "校訂")
@@ -928,6 +928,12 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
             {
                 get { return _gradeyear; }
             }
+
+            public void SetIsDirty(bool value)
+            {
+                _is_dirty = value;
+            }
+
 
             public string IsRequired
             {

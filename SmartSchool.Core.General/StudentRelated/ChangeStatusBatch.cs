@@ -14,13 +14,13 @@ namespace SmartSchool.StudentRelated
     internal class ChangeStatusBatch
     {
         private static BackgroundWorker _BKW = new BackgroundWorker();
-        private static Dictionary<string, List<string>> _CheckIDNumber = new Dictionary<string,List<string>> ();
-        private static Dictionary<string, List<string>> _CheckStudNumber = new Dictionary<string,List<string>> ();
+        private static Dictionary<string, List<string>> _CheckIDNumber = new Dictionary<string, List<string>>();
+        private static Dictionary<string, List<string>> _CheckStudNumber = new Dictionary<string, List<string>>();
         private static bool _checkDataError = false;
 
         static ChangeStatusBatch()
         {
-            
+
             _BKW.DoWork += new DoWorkEventHandler(_BKW_DoWork);
             _BKW.ProgressChanged += new ProgressChangedEventHandler(_BKW_ProgressChanged);
             _BKW.RunWorkerCompleted += new RunWorkerCompletedEventHandler(_BKW_RunWorkerCompleted);
@@ -52,16 +52,30 @@ namespace SmartSchool.StudentRelated
             btn延修.Text = "延修";
             btn延修.OnClick += new EventHandler(btn延修_OnClick);
             Customization.PlugIn.ContextMenu.StudentMenuButton.AddItem(btn延修);
-            //ButtonAdapter normalButton = new ButtonAdapter();
-            //normalButton.Path = "變更學生狀態";
-            //normalButton.Text = "錯學";
-            //normalButton.OnClick += new EventHandler(normalButton_OnClick);
-            //Customization.PlugIn.ContextMenu.StudentMenuButton.AddItem(normalButton);
+
+            ButtonAdapter btn刪除 = new ButtonAdapter();
+            btn刪除.Path = "變更學生狀態";
+            btn刪除.Text = "刪除";
+            btn刪除.OnClick += new EventHandler(btn刪除_OnClick);
+            Customization.PlugIn.ContextMenu.StudentMenuButton.AddItem(btn刪除);
+
+        }
+
+        private static void btn刪除_OnClick(object sender, EventArgs e)
+        {
+            if (_BKW.IsBusy)
+            {
+                MsgBox.Show("系統正在變更學生狀態，\n請等待目前作業完成後，\n再次執行此動作。");
+                return;
+            }
+            DialogResult dr = MsgBox.Show("是否變更學生狀態為\"刪除\"？", Application.ProductName, MessageBoxButtons.YesNo);
+            if (dr == DialogResult.Yes)
+                SetStatus("刪除");
         }
 
         static void btn一般_OnClick(object sender, EventArgs e)
         {
-            if ( _BKW.IsBusy )
+            if (_BKW.IsBusy)
             {
                 MsgBox.Show("系統正在變更學生狀態，\n請等待目前作業完成後，\n再次執行此動作。");
                 return;
@@ -73,7 +87,7 @@ namespace SmartSchool.StudentRelated
 
         static void btn畢業或離校_OnClick(object sender, EventArgs e)
         {
-            if ( _BKW.IsBusy )
+            if (_BKW.IsBusy)
             {
                 MsgBox.Show("系統正在變更學生狀態，\n請等待目前作業完成後，\n再次執行此動作。");
                 return;
@@ -85,7 +99,7 @@ namespace SmartSchool.StudentRelated
 
         static void btn休學_OnClick(object sender, EventArgs e)
         {
-            if ( _BKW.IsBusy )
+            if (_BKW.IsBusy)
             {
                 MsgBox.Show("系統正在變更學生狀態，\n請等待目前作業完成後，\n再次執行此動作。");
                 return;
@@ -97,7 +111,7 @@ namespace SmartSchool.StudentRelated
 
         static void btn延修_OnClick(object sender, EventArgs e)
         {
-            if ( _BKW.IsBusy )
+            if (_BKW.IsBusy)
             {
                 MsgBox.Show("系統正在變更學生狀態，\n請等待目前作業完成後，\n再次執行此動作。");
                 return;
@@ -143,10 +157,10 @@ namespace SmartSchool.StudentRelated
                     else
                     {
                         List<string> data = new List<string>();
-                        data.Add(stud.IDNumber.ToUpper ());
+                        data.Add(stud.IDNumber.ToUpper());
                         _CheckIDNumber.Add(stud.Status, data);
-                    }                
-                }               
+                    }
+                }
             }
 
             List<string> errorMsg = new List<string>();
@@ -159,13 +173,13 @@ namespace SmartSchool.StudentRelated
 
                 // 驗身分證號
                 if (_CheckIDNumber.ContainsKey(newStatus))
-                    if (_CheckIDNumber[newStatus].Contains(student.IDNumber.ToUpper ()))
-                        errorMsg.Add("身分證號:"+student.IDNumber + "在" + newStatus + "有相同身分證號無法變更");
+                    if (_CheckIDNumber[newStatus].Contains(student.IDNumber.ToUpper()))
+                        errorMsg.Add("身分證號:" + student.IDNumber + "在" + newStatus + "有相同身分證號無法變更");
 
                 // 驗學號
                 if (_CheckStudNumber.ContainsKey(newStatus))
                     if (_CheckStudNumber[newStatus].Contains(student.StudentNumber))
-                        errorMsg.Add("學號:"+student.StudentNumber + "在" + newStatus + "有相同學號無法變更");
+                        errorMsg.Add("學號:" + student.StudentNumber + "在" + newStatus + "有相同學號無法變更");
             }
 
             // 有錯誤時停止並回報
@@ -174,7 +188,7 @@ namespace SmartSchool.StudentRelated
                 e.Result = errorMsg;
                 _checkDataError = true;
             }
-            if (errorMsg.Count ==0)
+            if (errorMsg.Count == 0)
             {
                 List<string> idlist = new List<string>();
                 e.Result = idlist;
@@ -226,7 +240,7 @@ namespace SmartSchool.StudentRelated
 
         static void _BKW_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            Customization.PlugIn.Global.SetStatusBarMessage("變更學生狀態...",e.ProgressPercentage);
+            Customization.PlugIn.Global.SetStatusBarMessage("變更學生狀態...", e.ProgressPercentage);
         }
 
         static void _BKW_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -242,15 +256,18 @@ namespace SmartSchool.StudentRelated
                 }
             }
 
-            if ( e.Error != null )
+            if (e.Error != null)
             {
                 MsgBox.Show("變更狀態發生錯誤，可能有部分學生狀態未修改。");
                 BugReporter.ReportException("SmartSchool", CurrentUser.Instance.SystemVersion, e.Error, false);
             }
             List<string> idlist = (List<string>)e.Result;
-            if ( idlist.Count > 0 )
+            if (idlist.Count > 0)
+            {
                 //Student.Instance.InvokBriefDataChanged(idlist.ToArray());
+                FISCA.Presentation.MotherForm.SetStatusBarMessage("變更學生狀態成功");
                 SmartSchool.Broadcaster.Events.Items["學生/資料變更"].Invoke(idlist.ToArray());
+            }
         }
     }
 }

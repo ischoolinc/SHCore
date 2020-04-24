@@ -170,22 +170,24 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(30, 117);
+            this.label1.Location = new System.Drawing.Point(30, 159);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(60, 17);
             this.label1.TabIndex = 11;
             this.label1.Text = "經　　度";
+            this.label1.Visible = false;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(238, 117);
+            this.label7.Location = new System.Drawing.Point(238, 159);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(60, 17);
             this.label7.TabIndex = 12;
             this.label7.Text = "緯　　度";
+            this.label7.Visible = false;
             // 
             // txtLongtitude
             // 
@@ -194,11 +196,12 @@
             // 
             this.txtLongtitude.Border.Class = "TextBoxBorder";
             this.txtLongtitude.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.txtLongtitude.Location = new System.Drawing.Point(94, 114);
+            this.txtLongtitude.Location = new System.Drawing.Point(94, 156);
             this.txtLongtitude.Margin = new System.Windows.Forms.Padding(4);
             this.txtLongtitude.Name = "txtLongtitude";
             this.txtLongtitude.Size = new System.Drawing.Size(120, 25);
             this.txtLongtitude.TabIndex = 5;
+            this.txtLongtitude.Visible = false;
             this.txtLongtitude.TextChanged += new System.EventHandler(this.txtLongtitude_TextChanged);
             // 
             // txtLatitude
@@ -208,23 +211,25 @@
             // 
             this.txtLatitude.Border.Class = "TextBoxBorder";
             this.txtLatitude.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.txtLatitude.Location = new System.Drawing.Point(302, 114);
+            this.txtLatitude.Location = new System.Drawing.Point(302, 156);
             this.txtLatitude.Margin = new System.Windows.Forms.Padding(4);
             this.txtLatitude.Name = "txtLatitude";
             this.txtLatitude.Size = new System.Drawing.Size(120, 25);
             this.txtLatitude.TabIndex = 6;
+            this.txtLatitude.Visible = false;
             this.txtLatitude.TextChanged += new System.EventHandler(this.txtLatitude_TextChanged);
             // 
             // btnMap
             // 
             this.btnMap.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.btnMap.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnMap.Location = new System.Drawing.Point(439, 114);
+            this.btnMap.Location = new System.Drawing.Point(439, 156);
             this.btnMap.Margin = new System.Windows.Forms.Padding(4);
             this.btnMap.Name = "btnMap";
             this.btnMap.Size = new System.Drawing.Size(70, 22);
             this.btnMap.TabIndex = 8;
             this.btnMap.Text = "觀看地圖";
+            this.btnMap.Visible = false;
             this.btnMap.Click += new System.EventHandler(this.btnMap_Click);
             // 
             // cboTown
@@ -260,11 +265,12 @@
             this.btnQueryPoint.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.btnQueryPoint.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnQueryPoint.Image = global::SmartSchool.Properties.Resources.DefaultSearchImage;
-            this.btnQueryPoint.Location = new System.Drawing.Point(483, 83);
+            this.btnQueryPoint.Location = new System.Drawing.Point(483, 129);
             this.btnQueryPoint.Name = "btnQueryPoint";
             this.btnQueryPoint.Size = new System.Drawing.Size(26, 23);
             this.btnQueryPoint.TabIndex = 7;
             this.btnQueryPoint.Tooltip = "查詢此地址座標";
+            this.btnQueryPoint.Visible = false;
             this.btnQueryPoint.Click += new System.EventHandler(this.btnQueryPoint_Click);
             // 
             // AddressPalmerwormItem
@@ -288,7 +294,7 @@
             this.Controls.Add(this.label3);
             this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.Name = "AddressPalmerwormItem";
-            this.Size = new System.Drawing.Size(550, 144);
+            this.Size = new System.Drawing.Size(550, 124);
             this.DoubleClick += new System.EventHandler(this.AddressPalmerwormItem_DoubleClick);
             this.Controls.SetChildIndex(this.label3, 0);
             this.Controls.SetChildIndex(this.label2, 0);

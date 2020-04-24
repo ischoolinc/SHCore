@@ -53,24 +53,26 @@ namespace SmartSchool.StudentRelated.RibbonBars
             var bar = K12.Presentation.NLDPanels.Student.RibbonBarItems["其它"];
             bar.OverflowButtonImage = ( (System.Drawing.Image)( resources.GetObject("MainRibbonBar.OverflowButtonImage") ) );
             bar.ResizeOrderIndex = -500;
-            var btnQueryCoor = bar["查詢經緯度"];
-            btnQueryCoor.Image = Properties.Resources.world_zoom_64;
-            btnQueryCoor.Click += new System.EventHandler(this.buttonItem3_Click);
-            btnQueryCoor.Enable = false;
+
+            // 不使用先註解
+            //var btnQueryCoor = bar["查詢經緯度"];
+            //btnQueryCoor.Image = Properties.Resources.world_zoom_64;
+            //btnQueryCoor.Click += new System.EventHandler(this.buttonItem3_Click);
+            //btnQueryCoor.Enable = false;
             //btnQueryCoor.Image = ( (System.Drawing.Image)( resources.GetObject("btnQueryCoor.Image") ) );
 
-            var btnMap = bar["學生分佈圖"];
-            btnMap.Image = ((System.Drawing.Image)(resources.GetObject("btnMap.Image")));
-            btnMap.Enable = false;
+            //var btnMap = bar["學生分佈圖"];
+            //btnMap.Image = ((System.Drawing.Image)(resources.GetObject("btnMap.Image")));
+            //btnMap.Enable = false;
 
-            var btnPerm = btnMap["戶籍地址"];
-            btnPerm.Click += new System.EventHandler(this.btnPerm_Click);
+            //var btnPerm = btnMap["戶籍地址"];
+            //btnPerm.Click += new System.EventHandler(this.btnPerm_Click);
 
-            var btnConn = btnMap["聯絡地址"];
-            btnConn.Click += new System.EventHandler(this.btnConn_Click);
+            //var btnConn = btnMap["聯絡地址"];
+            //btnConn.Click += new System.EventHandler(this.btnConn_Click);
 
-            var btnOther = btnMap["其他地址"];
-            btnOther.Click += new System.EventHandler(this.btnOther_Click);
+            //var btnOther = btnMap["其他地址"];
+            //btnOther.Click += new System.EventHandler(this.btnOther_Click);
 
             bar.SetTopContainer(FISCA.Presentation.ContainerType.Medium);
 
@@ -90,10 +92,11 @@ namespace SmartSchool.StudentRelated.RibbonBars
 
                 bool isEnabled = SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
 
-                btnQueryCoor.Enable = isEnabled;
-                btnMap.Enable = isEnabled;
-                btnQueryCoor.Enable = isEnabled & coorCtrl.Executable();
-                btnMap.Enable = isEnabled & mapCtrl.Executable();
+                // 不使用
+                //btnQueryCoor.Enable = isEnabled;
+                //btnMap.Enable = isEnabled;
+                //btnQueryCoor.Enable = isEnabled & coorCtrl.Executable();
+                //btnMap.Enable = isEnabled & mapCtrl.Executable();
             };
 
             bkwGetGlobalPoint = new BackgroundWorker();

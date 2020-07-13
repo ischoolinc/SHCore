@@ -51,7 +51,22 @@
             this.cboAlive = new SmartSchool.StudentRelated.Palmerworm.ComboBoxAdv();
             this.txtPhone = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.label2 = new System.Windows.Forms.Label();
+            this.textFromForeign = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.label9 = new System.Windows.Forms.Label();
+            this.textEmail = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBirthYear = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.label3 = new System.Windows.Forms.Label();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.labelX1 = new DevComponents.DotNetBar.LabelX();
+            this.rdbspuy = new System.Windows.Forms.RadioButton();
+            this.rdbspun = new System.Windows.Forms.RadioButton();
+            this.textFromChina = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.label7 = new System.Windows.Forms.Label();
+            this.textBirthCountry = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picWaiting)).BeginInit();
+            this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label6
@@ -363,10 +378,214 @@
             this.label2.Text = "電　　話";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // textFromForeign
+            // 
+            // 
+            // 
+            // 
+            this.textFromForeign.Border.Class = "TextBoxBorder";
+            this.textFromForeign.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.textFromForeign.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.textFromForeign.Location = new System.Drawing.Point(426, 216);
+            this.textFromForeign.Margin = new System.Windows.Forms.Padding(4);
+            this.textFromForeign.Name = "textFromForeign";
+            this.textFromForeign.Size = new System.Drawing.Size(109, 25);
+            this.textFromForeign.TabIndex = 240;
+            this.textFromForeign.TextChanged += new System.EventHandler(this.TextFromForeign_TextChanged);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.BackColor = System.Drawing.Color.Transparent;
+            this.label9.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label9.ForeColor = System.Drawing.Color.Black;
+            this.label9.Location = new System.Drawing.Point(312, 218);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(105, 17);
+            this.label9.TabIndex = 239;
+            this.label9.Text = "為外籍配偶_國籍";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // textEmail
+            // 
+            // 
+            // 
+            // 
+            this.textEmail.Border.Class = "TextBoxBorder";
+            this.textEmail.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.textEmail.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.textEmail.Location = new System.Drawing.Point(391, 150);
+            this.textEmail.Margin = new System.Windows.Forms.Padding(4);
+            this.textEmail.Name = "textEmail";
+            this.textEmail.Size = new System.Drawing.Size(144, 25);
+            this.textEmail.TabIndex = 238;
+            this.textEmail.TextChanged += new System.EventHandler(this.TextEmail_TextChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label5.ForeColor = System.Drawing.Color.Black;
+            this.label5.Location = new System.Drawing.Point(312, 152);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(40, 17);
+            this.label5.TabIndex = 237;
+            this.label5.Text = "Email";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // textBirthYear
+            // 
+            // 
+            // 
+            // 
+            this.textBirthYear.Border.Class = "TextBoxBorder";
+            this.textBirthYear.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.textBirthYear.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.textBirthYear.Location = new System.Drawing.Point(391, 183);
+            this.textBirthYear.Margin = new System.Windows.Forms.Padding(4);
+            this.textBirthYear.Name = "textBirthYear";
+            this.textBirthYear.Size = new System.Drawing.Size(144, 25);
+            this.textBirthYear.TabIndex = 236;
+            this.textBirthYear.TextChanged += new System.EventHandler(this.TextBirthYear_TextChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label3.ForeColor = System.Drawing.Color.Black;
+            this.label3.Location = new System.Drawing.Point(312, 187);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(60, 17);
+            this.label3.TabIndex = 235;
+            this.label3.Text = "出生年次";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Controls.Add(this.labelX1);
+            this.flowLayoutPanel1.Controls.Add(this.rdbspuy);
+            this.flowLayoutPanel1.Controls.Add(this.rdbspun);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(30, 255);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(231, 27);
+            this.flowLayoutPanel1.TabIndex = 245;
+            // 
+            // labelX1
+            // 
+            // 
+            // 
+            // 
+            this.labelX1.BackgroundStyle.Class = "";
+            this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX1.ForeColor = System.Drawing.Color.Black;
+            this.labelX1.Location = new System.Drawing.Point(3, 3);
+            this.labelX1.Name = "labelX1";
+            this.labelX1.Size = new System.Drawing.Size(103, 21);
+            this.labelX1.TabIndex = 3;
+            this.labelX1.Text = "為失業勞工：";
+            // 
+            // rdbspuy
+            // 
+            this.rdbspuy.AutoSize = true;
+            this.rdbspuy.Location = new System.Drawing.Point(112, 3);
+            this.rdbspuy.Name = "rdbspuy";
+            this.rdbspuy.Size = new System.Drawing.Size(39, 21);
+            this.rdbspuy.TabIndex = 1;
+            this.rdbspuy.Text = "是";
+            this.rdbspuy.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rdbspuy.UseVisualStyleBackColor = true;
+            this.rdbspuy.CheckedChanged += new System.EventHandler(this.Rdbspuy_CheckedChanged);
+            // 
+            // rdbspun
+            // 
+            this.rdbspun.AutoSize = true;
+            this.rdbspun.Location = new System.Drawing.Point(157, 3);
+            this.rdbspun.Name = "rdbspun";
+            this.rdbspun.Size = new System.Drawing.Size(39, 21);
+            this.rdbspun.TabIndex = 2;
+            this.rdbspun.Text = "否";
+            this.rdbspun.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rdbspun.UseVisualStyleBackColor = true;
+            this.rdbspun.CheckedChanged += new System.EventHandler(this.Rdbspun_CheckedChanged);
+            // 
+            // textFromChina
+            // 
+            // 
+            // 
+            // 
+            this.textFromChina.Border.Class = "TextBoxBorder";
+            this.textFromChina.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.textFromChina.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.textFromChina.Location = new System.Drawing.Point(144, 222);
+            this.textFromChina.Margin = new System.Windows.Forms.Padding(4);
+            this.textFromChina.Name = "textFromChina";
+            this.textFromChina.Size = new System.Drawing.Size(121, 25);
+            this.textFromChina.TabIndex = 244;
+            this.textFromChina.TextChanged += new System.EventHandler(this.TextFromChina_TextChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.Transparent;
+            this.label7.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label7.ForeColor = System.Drawing.Color.Black;
+            this.label7.Location = new System.Drawing.Point(31, 224);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(105, 17);
+            this.label7.TabIndex = 243;
+            this.label7.Text = "為大陸配偶_省份";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // textBirthCountry
+            // 
+            // 
+            // 
+            // 
+            this.textBirthCountry.Border.Class = "TextBoxBorder";
+            this.textBirthCountry.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.textBirthCountry.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.textBirthCountry.Location = new System.Drawing.Point(125, 189);
+            this.textBirthCountry.Margin = new System.Windows.Forms.Padding(4);
+            this.textBirthCountry.Name = "textBirthCountry";
+            this.textBirthCountry.Size = new System.Drawing.Size(140, 25);
+            this.textBirthCountry.TabIndex = 242;
+            this.textBirthCountry.TextChanged += new System.EventHandler(this.TextBirthCountry_TextChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label4.ForeColor = System.Drawing.Color.Black;
+            this.label4.Location = new System.Drawing.Point(31, 193);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(86, 17);
+            this.label4.TabIndex = 241;
+            this.label4.Text = "原屬國家地區";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // ParentInfoPalmerwormItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.flowLayoutPanel1);
+            this.Controls.Add(this.textFromChina);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.textBirthCountry);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.textFromForeign);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.textEmail);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.textBirthYear);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtPhone);
             this.Controls.Add(this.cboJob);
@@ -389,7 +608,7 @@
             this.Controls.Add(this.cboAlive);
             this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.Name = "ParentInfoPalmerwormItem";
-            this.Size = new System.Drawing.Size(550, 206);
+            this.Size = new System.Drawing.Size(550, 303);
             this.Controls.SetChildIndex(this.cboAlive, 0);
             this.Controls.SetChildIndex(this.lnkCopyMother, 0);
             this.Controls.SetChildIndex(this.lnkCopyGuardian, 0);
@@ -411,7 +630,20 @@
             this.Controls.SetChildIndex(this.cboJob, 0);
             this.Controls.SetChildIndex(this.txtPhone, 0);
             this.Controls.SetChildIndex(this.label2, 0);
+            this.Controls.SetChildIndex(this.label3, 0);
+            this.Controls.SetChildIndex(this.textBirthYear, 0);
+            this.Controls.SetChildIndex(this.label5, 0);
+            this.Controls.SetChildIndex(this.textEmail, 0);
+            this.Controls.SetChildIndex(this.label9, 0);
+            this.Controls.SetChildIndex(this.textFromForeign, 0);
+            this.Controls.SetChildIndex(this.label4, 0);
+            this.Controls.SetChildIndex(this.textBirthCountry, 0);
+            this.Controls.SetChildIndex(this.label7, 0);
+            this.Controls.SetChildIndex(this.textFromChina, 0);
+            this.Controls.SetChildIndex(this.flowLayoutPanel1, 0);
             ((System.ComponentModel.ISupportInitialize)(this.picWaiting)).EndInit();
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -442,5 +674,19 @@
         private System.Windows.Forms.Label label1;
         private DevComponents.DotNetBar.Controls.TextBoxX txtPhone;
         private System.Windows.Forms.Label label2;
+        private DevComponents.DotNetBar.Controls.TextBoxX textFromForeign;
+        private System.Windows.Forms.Label label9;
+        private DevComponents.DotNetBar.Controls.TextBoxX textEmail;
+        private System.Windows.Forms.Label label5;
+        private DevComponents.DotNetBar.Controls.TextBoxX textBirthYear;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private DevComponents.DotNetBar.LabelX labelX1;
+        private System.Windows.Forms.RadioButton rdbspuy;
+        private System.Windows.Forms.RadioButton rdbspun;
+        private DevComponents.DotNetBar.Controls.TextBoxX textFromChina;
+        private System.Windows.Forms.Label label7;
+        private DevComponents.DotNetBar.Controls.TextBoxX textBirthCountry;
+        private System.Windows.Forms.Label label4;
     }
 }

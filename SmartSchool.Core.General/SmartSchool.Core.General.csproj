@@ -59,6 +59,10 @@
       <HintPath>Library\Aspose.Words.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Campus.Windows, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\JHPermrec\JHSchool.Permrec\Library\Campus.Windows.dll</HintPath>
+    </Reference>
     <Reference Include="DevComponents.DotNetBar2, Version=9.5.0.1, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\LibraryProject\DevComponents.DotNetBar2.dll</HintPath>
@@ -103,6 +107,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Library\FISCA.Presentation.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="Framework">
+      <HintPath>..\..\JHPermrec\JHSchool.Permrec\Library\Framework.dll</HintPath>
     </Reference>
     <Reference Include="IntelliSchool.DSA.ClientFramework, Version=1.2.2.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>Library\IntelliSchool.DSA.ClientFramework.dll</HintPath>
@@ -676,6 +683,7 @@
     <Compile Include="RomanNumeral\Symbol.cs" />
     <Compile Include="RomanNumeral\Util.cs" />
     <Compile Include="StudentRelated\CountyTown.cs" />
+    <Compile Include="StudentRelated\Palmerworm\Model\ParentExtention.cs" />
     <Compile Include="StudentRelated\Palmerworm\StudentDescriptionPane.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -1809,6 +1817,8 @@
     <Content Include="Library\Aspose.BarCode.dll" />
     <Content Include="Library\Aspose.Cells.dll" />
     <Content Include="Library\Aspose.Words.dll" />
+    <Content Include="Library\Campus.Windows.dll" />
+    <Content Include="Library\Campus.Windows.xml" />
     <Content Include="Library\DocValidate.dll" />
     <Content Include="Library\FISCA.Authentication.dll" />
     <Content Include="Library\FISCA.Data.dll" />

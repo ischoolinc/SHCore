@@ -16,7 +16,7 @@ namespace SmartSchool.StudentRelated.RibbonBars.SemesterHistory
         //覆寫
         public override void InitializeExport(SmartSchool.API.PlugIn.Export.ExportWizard wizard)
         {
-            wizard.ExportableFields.AddRange("學年度", "學期", "年級","當時科別", "當時班級", "當時座號", "當時班導師姓名", "上課天數");
+            wizard.ExportableFields.AddRange("學年度", "學期", "年級","當時科別", "當時班級", "當時座號", "當時班導師姓名", "上課天數", "課程群組代碼");
 
             wizard.ExportPackage += (sender, e) =>
             {
@@ -46,6 +46,7 @@ namespace SmartSchool.StudentRelated.RibbonBars.SemesterHistory
                                     case "當時座號": row.Add(field, "" + Item.SeatNo); break;
                                     case "當時班導師姓名": row.Add(field, "" + Item.Teacher); break;
                                     case "上課天數": row.Add(field, "" + Item.SchoolDayCount); break;
+                                    case "課程群組代碼": row.Add(field, "" + Item.CourseGroupCode); break;
                                 }
                             }
                         }

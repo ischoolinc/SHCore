@@ -1830,6 +1830,8 @@
     <Content Include="Library\FISCA.Presentation.dll" />
     <Content Include="Library\IntelliSchool.DSA.ClientFramework.dll" />
     <Content Include="Library\K12.Data.dll" />
+    <Content Include="Library\K12.Data.pdb" />
+    <Content Include="Library\K12.Data.xml" />
     <Content Include="Library\K12.EduAdminDataMapping.dll" />
     <Content Include="Library\K12.Presentation.dll" />
     <Content Include="Library\OnlineUpdateClient.dll" />

@@ -45,36 +45,36 @@ namespace SmartSchool.StudentRelated.Palmerworm
             bool hasChanged = false;
             #region 驗資料變更
             Dictionary<string, List<string>> semesterValues = new Dictionary<string, List<string>>();
-            foreach ( DataGridViewRow row in dataGridViewX1.Rows )
+            foreach (DataGridViewRow row in dataGridViewX1.Rows)
             {
-                if ( !row.IsNewRow )
+                if (!row.IsNewRow)
                 {
                     // SchoolYear,Semester,GradeYear,ClassName,SeatNo,SchoolDayCount,Teacher,DeptName
-                    string semester = ( "" + row.Cells[colSchoolYear.Index].Value ).Trim() + "_" + ( "" + row.Cells[colSemester.Index].Value ).Trim();
+                    string semester = ("" + row.Cells[colSchoolYear.Index].Value).Trim() + "_" + ("" + row.Cells[colSemester.Index].Value).Trim();
                     if (!semesterValues.ContainsKey(semester))
                     {
-                        string str = ("" + row.Cells[colGradeYear.Index].Value + "_" + row.Cells[colClassName.Index].Value + "_" + row.Cells[colSeatNo.Index].Value + "_" + row.Cells[colSchoolDayCount.Index].Value + "_" + row.Cells[colTeacher.Index].Value + "_" + row.Cells[colDeptName.Index].Value).Trim();
+                        string str = ("" + row.Cells[colGradeYear.Index].Value + "_" + row.Cells[colClassName.Index].Value + "_" + row.Cells[colSeatNo.Index].Value + "_" + row.Cells[colSchoolDayCount.Index].Value + "_" + row.Cells[colTeacher.Index].Value + "_" + row.Cells[colDeptName.Index].Value+ "_" + row.Cells[colCourseGroupCode.Index].Value).Trim();
                         semesterValues.Add(semester, new List<string>(new string[] { str }));
                     }
                     else
                         _Pass &= false;
                 }
             }
-            hasChanged = ( _semesterValues != null && semesterValues.Count != _semesterValues.Count );
-            if ( !hasChanged )
+            hasChanged = (_semesterValues != null && semesterValues.Count != _semesterValues.Count);
+            if (!hasChanged)
             {
-                foreach ( string key in semesterValues.Keys )
+                foreach (string key in semesterValues.Keys)
                 {
-                    if ( !_semesterValues.ContainsKey(key) )
+                    if (!_semesterValues.ContainsKey(key))
                     {
                         hasChanged = true;
                         break;
                     }
                     else
                     {
-                        for ( int i = 0 ; i < semesterValues[key].Count ; i++ )
+                        for (int i = 0; i < semesterValues[key].Count; i++)
                         {
-                            if ( semesterValues[key][i] != _semesterValues[key][i] )
+                            if (semesterValues[key][i] != _semesterValues[key][i])
                             {
                                 hasChanged = true;
                                 break;
@@ -90,7 +90,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
 
         void _Loader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if ( this.IsDisposed )
+            if (this.IsDisposed)
                 return;
             if (_RunningID != _CurrentID)
             {
@@ -103,7 +103,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
             _semesterValues = new Dictionary<string, List<string>>();
             foreach (XmlElement element in elements)
             {
-                string schoolYear, semester, gradeyear, ClassName, SeatNo, SchoolDayCount, Teacher, DeptName;
+                string schoolYear, semester, gradeyear, ClassName, SeatNo, SchoolDayCount, Teacher, DeptName, CourseGroupCode;
                 schoolYear = element.GetAttribute("SchoolYear");
                 semester = element.GetAttribute("Semester");
                 gradeyear = element.GetAttribute("GradeYear");
@@ -112,6 +112,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
                 SchoolDayCount = element.GetAttribute("SchoolDayCount");
                 Teacher = element.GetAttribute("Teacher");
                 DeptName = element.GetAttribute("DeptName");
+                CourseGroupCode = element.GetAttribute("CourseGroupCode");
 
                 int row = dataGridViewX1.Rows.Add();
                 dataGridViewX1.Rows[row].Cells[colSchoolYear.Index].Value = schoolYear;
@@ -122,17 +123,20 @@ namespace SmartSchool.StudentRelated.Palmerworm
                 dataGridViewX1.Rows[row].Cells[colSchoolDayCount.Index].Value = SchoolDayCount;
                 dataGridViewX1.Rows[row].Cells[colTeacher.Index].Value = Teacher;
                 dataGridViewX1.Rows[row].Cells[colDeptName.Index].Value = DeptName;
+                dataGridViewX1.Rows[row].Cells[colCourseGroupCode.Index].Value = CourseGroupCode;
 
-                string str = gradeyear + "_" + ClassName + "_" + SeatNo + "_" + SchoolDayCount + "_" + Teacher + "_" + DeptName;
+
+                string str = gradeyear + "_" + ClassName + "_" + SeatNo + "_" + SchoolDayCount + "_" + Teacher + "_" + DeptName+"_"+ CourseGroupCode;
                 _semesterValues.Add(schoolYear.Trim() + "_" + semester.Trim(), new List<string>(new string[] { str.Trim() }));
 
-                string keyIdx = schoolYear.Trim() + "_" + semester.Trim()+"_";
+                string keyIdx = schoolYear.Trim() + "_" + semester.Trim() + "_";
                 logger.AddBefore(keyIdx + "GradeYear", gradeyear);
                 logger.AddBefore(keyIdx + "ClassName", ClassName);
                 logger.AddBefore(keyIdx + "SeatNo", SeatNo);
                 logger.AddBefore(keyIdx + "SchoolDayCount", SchoolDayCount);
                 logger.AddBefore(keyIdx + "Teacher", Teacher);
                 logger.AddBefore(keyIdx + "DeptName", DeptName);
+                logger.AddBefore(keyIdx + "CourseGroupCode", CourseGroupCode);
 
             }
             dataGridViewX1.EndEdit();
@@ -141,21 +145,21 @@ namespace SmartSchool.StudentRelated.Palmerworm
 
         void _Loader_DoWork(object sender, DoWorkEventArgs e)
         {
-            string id = ""+e.Argument;
+            string id = "" + e.Argument;
             e.Result = Feature.QueryStudent.GetDetailList(new string[] { "ID", "SemesterHistory" }, id).GetContent().GetElements("Student[@ID='" + id + "']/SemesterHistory/History");
         }
         public override void LoadContent(string id)
         {
             _CurrentID = id;
             dataGridViewX1.EndEdit();
-            if(_semesterValues!=null)_semesterValues.Clear();
+            if (_semesterValues != null) _semesterValues.Clear();
             dataGridViewX1.Rows.Clear();
             SaveButtonVisible = false;
             CancelButtonVisible = false;
             if (!_Loader.IsBusy)
             {
                 _RunningID = _CurrentID;
-                _Loader .RunWorkerAsync(_RunningID);
+                _Loader.RunWorkerAsync(_RunningID);
                 WaitingPicVisible = true;
             }
         }
@@ -183,30 +187,33 @@ namespace SmartSchool.StudentRelated.Palmerworm
                         element.SetAttribute("SchoolDayCount", "" + row.Cells[colSchoolDayCount.Index].Value);
                         element.SetAttribute("Teacher", "" + row.Cells[colTeacher.Index].Value);
                         element.SetAttribute("DeptName", "" + row.Cells[colDeptName.Index].Value);
+                        element.SetAttribute("CourseGroupCode", "" + row.Cells[colCourseGroupCode.Index].Value);
 
-                        
                         string keyIdx = "";
-                        if(row.Cells[colSchoolYear.Index].Value!=null &&row.Cells[colSemester.Index].Value !=null)
-                            keyIdx=row.Cells[colSchoolYear.Index].Value.ToString() + "_" + row.Cells[colSemester.Index].Value.ToString()+"_";
+                        if (row.Cells[colSchoolYear.Index].Value != null && row.Cells[colSemester.Index].Value != null)
+                            keyIdx = row.Cells[colSchoolYear.Index].Value.ToString() + "_" + row.Cells[colSemester.Index].Value.ToString() + "_";
 
-                        if(row.Cells[colGradeYear.Index].Value !=null)
+                        if (row.Cells[colGradeYear.Index].Value != null)
                             logger.AddAfter(keyIdx + "GradeYear", row.Cells[colGradeYear.Index].Value.ToString());
 
-                        if(row.Cells[colClassName.Index].Value !=null)
+                        if (row.Cells[colClassName.Index].Value != null)
                             logger.AddAfter(keyIdx + "ClassName", row.Cells[colClassName.Index].Value.ToString());
 
-                        if(row.Cells[colSeatNo.Index].Value !=null)
+                        if (row.Cells[colSeatNo.Index].Value != null)
                             logger.AddAfter(keyIdx + "SeatNo", row.Cells[colSeatNo.Index].Value.ToString());
 
                         if (row.Cells[colSchoolDayCount.Index].Value != null)
                             logger.AddAfter(keyIdx + "SchoolDayCount", row.Cells[colSchoolDayCount.Index].Value.ToString());
 
-                        if(row.Cells[colTeacher.Index].Value !=null)
+                        if (row.Cells[colTeacher.Index].Value != null)
                             logger.AddAfter(keyIdx + "Teacher", row.Cells[colTeacher.Index].Value.ToString());
 
-                        if(row.Cells[colDeptName.Index].Value !=null)
+                        if (row.Cells[colDeptName.Index].Value != null)
                             logger.AddAfter(keyIdx + "DeptName", row.Cells[colDeptName.Index].Value.ToString());
-                        
+
+                        if (row.Cells[colCourseGroupCode.Index].Value != null)
+                            logger.AddAfter(keyIdx + "CourseGroupCode", row.Cells[colCourseGroupCode.Index].Value.ToString());
+
                     }
                 }
                 Feature.EditStudent.Update(new DSRequest(helper));
@@ -216,12 +223,12 @@ namespace SmartSchool.StudentRelated.Palmerworm
                 Dictionary<string, string[]> difference = logger.GetDifference();
                 StringBuilder desc = new StringBuilder("");
                 desc.AppendLine("學生姓名：" + Student.Instance.Items[_CurrentID].Name + " ");
-                    
+
                 foreach (string key in difference.Keys)
                 {
                     string schoolyear = key.Split('_')[0];
                     string semester = key.Split('_')[1];
-                    string keyIdx = schoolyear + "_" + semester+"_";
+                    string keyIdx = schoolyear + "_" + semester + "_";
 
                     if (difference.ContainsKey(keyIdx + "GradeYear"))
                     {
@@ -331,6 +338,24 @@ namespace SmartSchool.StudentRelated.Palmerworm
                         }
                     }
 
+                    if (difference.ContainsKey(keyIdx + "CourseGroupCode"))
+                    {
+                        string CourseGroupCodeBefore = difference[keyIdx + "CourseGroupCode"][0];
+                        string CourseGroupCodeAfter = difference[keyIdx + "CourseGroupCode"][1];
+                        if (!string.IsNullOrEmpty(CourseGroupCodeBefore) && !string.IsNullOrEmpty(CourseGroupCodeAfter))
+                        {
+                            desc.AppendLine("修改 「" + schoolyear + "」學年度 第「" + semester + "」學期 課程群組代碼由「" + CourseGroupCodeBefore + "」課程群組代碼變更為「" + CourseGroupCodeAfter + "」課程群組代碼");
+                        }
+                        else if (string.IsNullOrEmpty(CourseGroupCodeBefore) && !string.IsNullOrEmpty(CourseGroupCodeAfter))
+                        {
+                            desc.AppendLine("新增 「" + schoolyear + "」學年度 第「" + semester + "」學期 課程群組代碼為「" + CourseGroupCodeAfter + "」課程群組代碼");
+                        }
+                        else if (!string.IsNullOrEmpty(CourseGroupCodeBefore) && string.IsNullOrEmpty(CourseGroupCodeAfter))
+                        {
+                            desc.AppendLine("刪除 「" + schoolyear + "」學年度 第「" + semester + "」學期「" + CourseGroupCodeBefore + "」課程群組代碼");
+                        }
+                    }
+
                     //「」
                 }
 
@@ -374,7 +399,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
             {
                 if (!row.IsNewRow)
                 {
-                        int x;
+                    int x;
                     for (int i = 0; i < 3; i++)
                     {
                         #region 驗空白
@@ -405,7 +430,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
                         #endregion
                     }
                     #region 檢查學期輸入範圍
-                    if (int.TryParse("" + row.Cells[1].Value, out x) &&( x > 2 || x < 1))
+                    if (int.TryParse("" + row.Cells[1].Value, out x) && (x > 2 || x < 1))
                     {
                         row.Cells[1].ErrorText = "只允許1或2";
                         _Pass &= false;
@@ -415,7 +440,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
                     {
                         row.Cells[1].ErrorText = "";
                         dataGridViewX1.UpdateCellErrorText(1, row.Index);
-                    } 
+                    }
                     #endregion
                 }
             }

@@ -38,6 +38,7 @@
             this.colSeatNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTeacher = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSchoolDayCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCourseGroupCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,10 +58,11 @@
             this.colClassName,
             this.colSeatNo,
             this.colTeacher,
-            this.colSchoolDayCount});
+            this.colSchoolDayCount,
+            this.colCourseGroupCode});
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft JhengHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
@@ -126,6 +128,12 @@
             this.colSchoolDayCount.Name = "colSchoolDayCount";
             this.colSchoolDayCount.Width = 90;
             // 
+            // colCourseGroupCode
+            // 
+            this.colCourseGroupCode.HeaderText = "課程群組代碼";
+            this.colCourseGroupCode.Name = "colCourseGroupCode";
+            this.colCourseGroupCode.Width = 120;
+            // 
             // SemesterHistoryPalmerworm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
@@ -152,5 +160,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colSeatNo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTeacher;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSchoolDayCount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCourseGroupCode;
     }
 }

@@ -261,6 +261,9 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
                     {
                         score = GetScore(sceScoreDict[key]);
                     }
+
+                    if (score.Score == "-1")
+                        score.Score = "¯Ê";
                     row.AddCell(examDict[examid], new ExamCell(score));
                 }
 

@@ -187,6 +187,22 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                     if (ic == null) continue;
                     ColumnSetting setting = dataGridView1.Columns[cell.ColumnIndex].Tag as ColumnSetting;
                     string examid = setting.Key;
+
+                    // ³B²z¯Ê¦Ò
+                    string score = "null";
+                    if (!string.IsNullOrWhiteSpace(ic.GetValue()))
+                    {
+
+                        if (ic.GetValue().Replace(" ", "") == "¯Ê")
+                        {
+                            score = "-1";
+                        }
+                        else
+                        {
+                            score = ic.GetValue();
+                        }
+                    }
+
                     if (ic is ScoreExamCell && ic.IsDirty)
                     {
                         //usCount++;
@@ -201,7 +217,8 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                         //insertHelper.AddElement("ScoreSheetList", "ScoreSheet");
                         //insertHelper.AddElement("ScoreSheetList/ScoreSheet", "ExamID", examid);
                         //insertHelper.AddElement("ScoreSheetList/ScoreSheet", "AttendID", attendid);
-                        //insertHelper.AddElement("ScoreSheetList/ScoreSheet", "Score", ic.GetValue());
+                        //insertHelper.AddElement("ScoreSheetList/ScoreSheet", "Score", ic.GetValue());                       
+
                         string insertSQL = "INSERT INTO sce_take(" +
                             "ref_exam_id" +
                             ",ref_sc_attend_id" +
@@ -209,7 +226,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                             "VALUES(" +
                             "" + examid + "" +
                             "," + attendid + "" +
-                            "," + ic.GetValue() + ");";
+                            "," + score + ");";
                         insertSQLList.Add(insertSQL);
                     }
                     else if (!string.IsNullOrEmpty(ic.Key) && ic.IsDirty && !string.IsNullOrEmpty(ic.GetValue()))
@@ -218,7 +235,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                         //updateHelper.AddElement("ScoreSheetList", "ScoreSheet");
                         //updateHelper.AddElement("ScoreSheetList/ScoreSheet", "Score", ic.GetValue());
                         //updateHelper.AddElement("ScoreSheetList/ScoreSheet", "ID", ic.Key);
-                        string updateSQL = "UPDATE sce_take SET score=" + ic.GetValue() + " WHERE ID = " + ic.Key + ";";
+                        string updateSQL = "UPDATE sce_take SET score=" + score + " WHERE ID = " + ic.Key + ";";
                         updateSQLList.Add(updateSQL);
                     }
                     else if (!string.IsNullOrEmpty(ic.Key) && ic.IsDirty && string.IsNullOrEmpty(ic.GetValue()))
@@ -313,7 +330,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                         ",makeup_standard=" + makeup_standard +
                         ",remark='" + dr["remark"].ToString() + "'" +
                         ",designate_final_score=" + designate_final_score + "" +
-                        ",score = " + course_score +" " +
+                        ",score = " + course_score + " " +
                         "WHERE " +
                         "id = " + dr["sc_attend_id"].ToString() + ";";
                     updateList.Add(qry);

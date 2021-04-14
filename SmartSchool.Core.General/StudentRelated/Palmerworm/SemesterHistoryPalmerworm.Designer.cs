@@ -34,6 +34,7 @@
             this.colSemester = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colGradeYear = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDeptName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStudentNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colClassName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSeatNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTeacher = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,6 +56,7 @@
             this.colSemester,
             this.colGradeYear,
             this.colDeptName,
+            this.colStudentNumber,
             this.colClassName,
             this.colSeatNo,
             this.colTeacher,
@@ -106,6 +108,11 @@
             this.colDeptName.HeaderText = "科別";
             this.colDeptName.Name = "colDeptName";
             // 
+            // colStudentNumber
+            // 
+            this.colStudentNumber.HeaderText = "學號";
+            this.colStudentNumber.Name = "colStudentNumber";
+            // 
             // colClassName
             // 
             this.colClassName.HeaderText = "班級";
@@ -156,6 +163,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colSemester;
         private System.Windows.Forms.DataGridViewTextBoxColumn colGradeYear;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDeptName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colStudentNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn colClassName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSeatNo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTeacher;

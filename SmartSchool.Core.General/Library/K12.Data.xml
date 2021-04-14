@@ -12413,6 +12413,11 @@
             該學年度學期課程群組代碼
             </summary>
         </member>
+        <member name="P:K12.Data.SemesterHistoryItem.StudentNumber">
+            <summary>
+            該學年度學期學號
+            </summary>
+        </member>
         <member name="T:K12.Data.Student">
             <summary>
             學生類別，提供方法用來取得、新增、修改及刪除學生資訊

@@ -16,6 +16,7 @@ namespace SmartSchool.TeacherRelated
         private readonly string _IDNumber;
         private readonly string _ContactPhone;
         private readonly string _Category;
+        private readonly string _TeacherNumber;
         //private List<SupervisedByClassInfo> _SupervisedByClassInfo;
 
         public string ID { get { return _ID; } }
@@ -36,6 +37,8 @@ namespace SmartSchool.TeacherRelated
         public string IDNumber { get { return _IDNumber; } }
         public string ContactPhone { get { return _ContactPhone; } }
         public string Category { get { return _Category; } }
+        public string TeacherNumber { get { return _TeacherNumber; } }
+
         public string SupervisedByClass
         {
             get
@@ -75,6 +78,7 @@ namespace SmartSchool.TeacherRelated
             _IDNumber = element.SelectSingleNode("IDNumber").InnerText;
             _ContactPhone = element.SelectSingleNode("ContactPhone").InnerText;
             _Category = element.SelectSingleNode("Category").InnerText;
+            _TeacherNumber = element.SelectSingleNode("TeacherNumber").InnerText;
             //_SupervisedByClassInfo = new List<SupervisedByClassInfo>();
         }
 

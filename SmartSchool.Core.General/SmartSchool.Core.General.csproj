@@ -109,7 +109,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Framework">
-      <HintPath>..\..\JHPermrec\JHSchool.Permrec\Library\Framework.dll</HintPath>
+      <HintPath>Library\Framework.dll</HintPath>
     </Reference>
     <Reference Include="IntelliSchool.DSA.ClientFramework, Version=1.2.2.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>Library\IntelliSchool.DSA.ClientFramework.dll</HintPath>

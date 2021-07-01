@@ -56,6 +56,10 @@ namespace SmartSchool.TeacherRelated.Palmerworm
             // 讀取非自己同姓名與暱稱
             List<SHTeacherRecord> HasNameAndNickNameList = TeacherList.Where(x => (x.Name == txtName.Text && x.Nickname == txtNickname.Text && x.ID != RunningID)).ToList();
 
+            // 讀取非自己同教師編號-cyn
+            List<SHTeacherRecord> HasTeacherNumberList = TeacherList.Where(x => (x.TeacherNumber == txtTeacherNumber.Text && x.ID != RunningID)).Where(y => y.TeacherNumber != "").ToList();
+
+
             // 檢查一般狀態
             if (HasLoginNameList.Where(x => x.Status == K12.Data.TeacherRecord.TeacherStatus.一般).Count() > 0)
             {
@@ -67,6 +71,12 @@ namespace SmartSchool.TeacherRelated.Palmerworm
             {
                 FISCA.Presentation.Controls.MsgBox.Show("有相同姓名或暱稱無法儲存");
                 return;            
+            }
+
+            if (HasTeacherNumberList.Where(x => x.Status == K12.Data.TeacherRecord.TeacherStatus.一般).Count() > 0)
+            {
+                FISCA.Presentation.Controls.MsgBox.Show("有重複的「教師編號」，無法儲存。");
+                return;
             }
 
             // 當有刪除狀態修改刪除的
@@ -88,7 +98,9 @@ namespace SmartSchool.TeacherRelated.Palmerworm
                 SHTeacher.Update(UpdateTeacherRec);
 
 
-
+            //K12.Data.TeacherRecord teacherRecord = K12.Data.Teacher.SelectByID(RunningID);
+            //teacherRecord.TeacherNumber = "ABC";
+            //K12.Data.Teacher.Update(teacherRecord);
 
             if (IsValid())
             {
@@ -122,6 +134,7 @@ namespace SmartSchool.TeacherRelated.Palmerworm
                 machine.AddAfter(label8.Text.Replace("　", ""), txtSTLoginPwd.Text);
                 machine.AddAfter(label9.Text.Replace("　", ""), cboAccountType.Text);
                 machine.AddAfter(label10.Text.Replace("　", ""), txtNickname.Text);
+                machine.AddAfter(label11.Text.Replace("　", ""), txtTeacherNumber.Text);
                 #endregion
 
                 #region Log 登入密碼不顯示詳細修改記錄
@@ -190,6 +203,7 @@ namespace SmartSchool.TeacherRelated.Palmerworm
             txtSTLoginAccount.Text = helper.GetText("Teacher/SmartTeacherLoginName");
             txtSTLoginPwd.Text = helper.GetText("Teacher/SmartTeacherPassword");
             cboGender.Text = helper.GetText("Teacher/Gender");
+            txtTeacherNumber.Text = helper.GetText("Teacher/TeacherNumber");
 
             string picString = helper.GetText("Teacher/Photo");
             //byte[] bs = Convert.FromBase64String(picString);
@@ -222,6 +236,7 @@ namespace SmartSchool.TeacherRelated.Palmerworm
             _valueManager.AddValue("SmartTeacherLoginName", txtSTLoginAccount.Text);
             _valueManager.AddValue("SmartTeacherPassword", txtSTLoginPwd.Text);
             _valueManager.AddValue("Gender", cboGender.Text);
+            _valueManager.AddValue("TeacherNumber", txtTeacherNumber.Text);
             SaveButtonVisible = false;
 
             #region Log 記錄修改前的資料
@@ -235,6 +250,7 @@ namespace SmartSchool.TeacherRelated.Palmerworm
             machine.AddBefore(label8.Text.Replace("　", ""), txtSTLoginPwd.Text);
             machine.AddBefore(label9.Text.Replace("　", ""), cboAccountType.Text);
             machine.AddBefore(label10.Text.Replace("　", ""), txtNickname.Text);
+            machine.AddBefore(label11.Text.Replace("　", ""), txtTeacherNumber.Text);
             #endregion
         }
 
@@ -288,6 +304,11 @@ namespace SmartSchool.TeacherRelated.Palmerworm
             OnValueChanged("Category", txtCategory.Text);
         }
 
+        private void txtTeacherNumber_TextChanged(object sender, EventArgs e)
+        {
+            OnValueChanged("TeacherNumber", txtTeacherNumber.Text);
+
+        }
         private void txtName_Validated(object sender, EventArgs e)
         {
             try
@@ -468,6 +489,11 @@ namespace SmartSchool.TeacherRelated.Palmerworm
             ms.Close();
 
             return Convert.ToBase64String(bytes);
+        }
+
+        private void txtTeacherNumber_Validating(object sender, CancelEventArgs e)
+        {
+
         }
     }
 

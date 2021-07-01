@@ -4829,6 +4829,11 @@
             顯示順序
             </summary>
         </member>
+        <member name="P:K12.Data.ClassRecord.ClassNumber">
+            <summary>
+            班級代碼
+            </summary>
+        </member>
         <member name="P:K12.Data.ClassRecord.RefDepartmentID">
             <summary>
             科別編號
@@ -5762,6 +5767,11 @@
         <member name="P:K12.Data.CourseRecord.Extensions">
             <summary>
             延伸欄位資訊
+            </summary>
+        </member>
+        <member name="P:K12.Data.CourseRecord.CourseNumber">
+            <summary>
+            課程代碼(資料交換用)
             </summary>
         </member>
         <member name="M:K12.Data.CourseRecord.#ctor">
@@ -14059,6 +14069,11 @@
         <member name="P:K12.Data.TeacherRecord.Photo">
             <summary>
             照片
+            </summary>
+        </member>
+        <member name="P:K12.Data.TeacherRecord.TeacherNumber">
+            <summary>
+            Teacher Access的教師代碼
             </summary>
         </member>
         <member name="T:K12.Data.TeacherTag">

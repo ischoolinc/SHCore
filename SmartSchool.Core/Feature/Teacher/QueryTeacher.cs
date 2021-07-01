@@ -113,6 +113,7 @@ namespace SmartSchool.Feature.Teacher
             //helper.AddElement("Field", "SmartTeacherLoginName");
             //helper.AddElement("Field", "SmartTeacherPassword");  
             //helper.AddElement("Field", "RemoteAccount");
+            helper.AddElement("Field", "TeacherNumber");
             helper.AddElement("Field", "Status");
             if ( idList.Length > 0 )
             {

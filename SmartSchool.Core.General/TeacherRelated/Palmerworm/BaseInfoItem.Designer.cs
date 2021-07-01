@@ -60,6 +60,8 @@
             this.buttonItem1 = new DevComponents.DotNetBar.ButtonItem();
             this.buttonItem2 = new DevComponents.DotNetBar.ButtonItem();
             this.buttonItem3 = new DevComponents.DotNetBar.ButtonItem();
+            this.txtTeacherNumber = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.label11 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picWaiting)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errors)).BeginInit();
@@ -378,9 +380,34 @@
             this.buttonItem3.Text = "清除照片";
             this.buttonItem3.Click += new System.EventHandler(this.buttonItem3_Click);
             // 
+            // txtTeacherNumber
+            // 
+            // 
+            // 
+            // 
+            this.txtTeacherNumber.Border.Class = "TextBoxBorder";
+            this.txtTeacherNumber.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.txtTeacherNumber.Location = new System.Drawing.Point(108, 190);
+            this.txtTeacherNumber.MaxLength = 100;
+            this.txtTeacherNumber.Name = "txtTeacherNumber";
+            this.txtTeacherNumber.Size = new System.Drawing.Size(140, 25);
+            this.txtTeacherNumber.TabIndex = 212;
+            this.txtTeacherNumber.TextChanged += new System.EventHandler(this.txtTeacherNumber_TextChanged);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(30, 194);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(60, 17);
+            this.label11.TabIndex = 213;
+            this.label11.Text = "教師編號";
+            // 
             // BaseInfoItem
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.Controls.Add(this.txtTeacherNumber);
+            this.Controls.Add(this.label11);
             this.Controls.Add(this.contextMenuBar1);
             this.Controls.Add(this.cboAccountType);
             this.Controls.Add(this.txtCategory);
@@ -404,7 +431,7 @@
             this.Controls.Add(this.label10);
             this.Controls.Add(this.txtNickname);
             this.Name = "BaseInfoItem";
-            this.Size = new System.Drawing.Size(550, 198);
+            this.Size = new System.Drawing.Size(550, 221);
             this.Controls.SetChildIndex(this.txtNickname, 0);
             this.Controls.SetChildIndex(this.label10, 0);
             this.Controls.SetChildIndex(this.txtName, 0);
@@ -428,6 +455,8 @@
             this.Controls.SetChildIndex(this.picWaiting, 0);
             this.Controls.SetChildIndex(this.cboAccountType, 0);
             this.Controls.SetChildIndex(this.contextMenuBar1, 0);
+            this.Controls.SetChildIndex(this.label11, 0);
+            this.Controls.SetChildIndex(this.txtTeacherNumber, 0);
             ((System.ComponentModel.ISupportInitialize)(this.picWaiting)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errors)).EndInit();
@@ -470,5 +499,7 @@
         private DevComponents.DotNetBar.ButtonItem buttonItem1;
         private DevComponents.DotNetBar.ButtonItem buttonItem2;
         private DevComponents.DotNetBar.ButtonItem buttonItem3;
+        private DevComponents.DotNetBar.Controls.TextBoxX txtTeacherNumber;
+        private System.Windows.Forms.Label label11;
     }
 }

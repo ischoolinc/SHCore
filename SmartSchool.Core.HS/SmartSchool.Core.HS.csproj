@@ -688,6 +688,8 @@
     <Content Include="Library\SmartSchool.ExceptionHandler.pdb" />
     <Content Include="Resources\CourseBulkProcessValidateFieldRule.xml" />
     <Content Include="Resources\meeting_refresh_64.png" />
+    <None Include="Resources\SH_Course_ExportDescription.xml" />
+    <None Include="Resources\SH_Course_ImportFieldList.xml" />
     <Content Include="Resources\subject_64.ico" />
     <None Include="Resources\subject_64.png" />
     <None Include="Resources\loading5.gif" />

@@ -1784,6 +1784,10 @@
     <None Include="Resources\ico_close.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\SH_Course_ExportDescription.xml" />
+    <None Include="Resources\SH_Cls_ImportFieldList.xml" />
+    <None Include="Resources\SH_Cls_FieldValidationRule.xml" />
+    <None Include="Resources\SH_Cls_ExportDescription.xml" />
     <None Include="Resources\SH_T_FieldValidationRule.xml" />
     <None Include="Resources\SH_T_ImportFieldList.xml" />
     <None Include="Resources\SH_T_ExportDescription.xml" />

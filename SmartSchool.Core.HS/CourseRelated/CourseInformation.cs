@@ -21,6 +21,7 @@ namespace SmartSchool.CourseRelated
         private string _teacher_category, _exam_template, _required, _requiredby;
         private bool _notIncludedInCalc, _notIncludedInCredit;
         private string _entry;
+        private string _courseNumber;
         private List<Teacher> _teachers;
 
         public CourseInformation(XmlElement rawData)
@@ -46,6 +47,7 @@ namespace SmartSchool.CourseRelated
             _notIncludedInCalc = (GetStringValue(rawData, "NotIncludedInCalc") == "是");
             _notIncludedInCredit = (GetStringValue(rawData, "NotIncludedInCredit") == "是");
             _entry = GetStringValue(rawData, "ScoreType");
+            _courseNumber = GetStringValue(rawData, "CourseName");
             _teachers = new List<Teacher>();
             foreach (XmlElement each in rawData.SelectNodes("Teachers/Teacher"))
                 _teachers.Add(new Teacher(each));
@@ -119,6 +121,11 @@ namespace SmartSchool.CourseRelated
         public int Semester
         {
             get { return _semester; }
+        }
+
+        public string CourseNumber
+        {
+            get { return _courseNumber; }
         }
 
         [Obsolete("2014/9/29 已過時,請改用CreditDec")]

@@ -635,7 +635,7 @@ namespace SmartSchool.TeacherRelated.RibbonBars.Import
                 if (_cancel_validate)
                 {
                     wpValidation.NextButtonEnabled = eWizardButtonState.False;
-                    ProgressMessage("資料驗證已由使用使取消…");
+                    ProgressMessage("資料驗證已由使用者取消…");
                     return;
                 }
                 else

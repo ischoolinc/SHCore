@@ -38,6 +38,8 @@ namespace SmartSchool.API
 
         private string _RequiredBy="";
 
+        private string _CourseNumber = "";
+
         private List<string> _ExamList = new List<string>();
 
         public CourseRecord(CourseRelated.CourseInformation course)
@@ -54,6 +56,7 @@ namespace SmartSchool.API
             _SubjectLevel = course.SubjectLevel;
             _Required = course.Required == "必";
             _RequiredBy = course.RequiredBy;
+            _CourseNumber = course.CourseNumber;
         }
 
         #region CourseRecord 成員
@@ -150,6 +153,11 @@ namespace SmartSchool.API
             {
                 return _ExamList;
             }
+        }
+
+        public string CourseNumber
+        {
+            get { return _CourseNumber; }
         }
 
         #endregion

@@ -809,9 +809,11 @@
     <Content Include="Library\SmartSchool.ExceptionHandler.pdb" />
     <Content Include="Resources\balance_ok_128.png" />
     <Content Include="Resources\cabinet_info_128.png" />
+    <None Include="Resources\CourseBulkProcessValidateFieldRule.xml" />
     <Content Include="Resources\foreign_key_lock_64.png" />
     <Content Include="Resources\mail_ok_64.png" />
     <Content Include="Resources\school_fav_64.png" />
+    <None Include="Resources\SH_Course_ImportFieldList.xml" />
     <Content Include="Resources\spiral_lock_64.png" />
     <Content Include="Resources\world_upload_64.png" />
   </ItemGroup>

@@ -115,6 +115,7 @@ namespace SmartSchool.Feature.Class
             helper.AddElement("Field");
             helper.AddElement("Field", "ClassID");
             helper.AddElement("Field", "ClassName");
+            helper.AddElement("Field", "ClassNumber");
             helper.AddElement("Order");
             helper.AddElement("Order", "DisplayOrder");
             helper.AddElement("Order", "ClassName");

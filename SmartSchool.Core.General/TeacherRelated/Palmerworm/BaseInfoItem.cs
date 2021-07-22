@@ -57,7 +57,7 @@ namespace SmartSchool.TeacherRelated.Palmerworm
             List<SHTeacherRecord> HasNameAndNickNameList = TeacherList.Where(x => (x.Name == txtName.Text && x.Nickname == txtNickname.Text && x.ID != RunningID)).ToList();
 
             // 讀取非自己同教師編號-cyn
-            List<SHTeacherRecord> HasTeacherNumberList = TeacherList.Where(x => (x.TeacherNumber == txtTeacherNumber.Text && x.ID != RunningID)).Where(y => y.TeacherNumber != "").ToList();
+            //List<SHTeacherRecord> HasTeacherNumberList = TeacherList.Where(x => (x.TeacherNumber == txtTeacherNumber.Text && x.ID != RunningID)).Where(y => y.TeacherNumber != "").ToList();
 
 
             // 檢查一般狀態
@@ -73,11 +73,11 @@ namespace SmartSchool.TeacherRelated.Palmerworm
                 return;            
             }
 
-            if (HasTeacherNumberList.Where(x => x.Status == K12.Data.TeacherRecord.TeacherStatus.一般).Count() > 0)
-            {
-                FISCA.Presentation.Controls.MsgBox.Show("有重複的「教師編號」，無法儲存。");
-                return;
-            }
+            //if (HasTeacherNumberList.Where(x => x.Status == K12.Data.TeacherRecord.TeacherStatus.一般).Count() > 0)
+            //{
+            //    FISCA.Presentation.Controls.MsgBox.Show("有重複的「教師編號」，無法儲存。");
+            //    return;
+            //}
 
             // 當有刪除狀態修改刪除的
             List<SHTeacherRecord> UpdateTeacherRec = new List<SHTeacherRecord>();
@@ -96,11 +96,6 @@ namespace SmartSchool.TeacherRelated.Palmerworm
 
             if (UpdateTeacherRec.Count > 0)
                 SHTeacher.Update(UpdateTeacherRec);
-
-
-            //K12.Data.TeacherRecord teacherRecord = K12.Data.Teacher.SelectByID(RunningID);
-            //teacherRecord.TeacherNumber = "ABC";
-            //K12.Data.Teacher.Update(teacherRecord);
 
             if (IsValid())
             {
@@ -491,10 +486,7 @@ namespace SmartSchool.TeacherRelated.Palmerworm
             return Convert.ToBase64String(bytes);
         }
 
-        private void txtTeacherNumber_Validating(object sender, CancelEventArgs e)
-        {
 
-        }
     }
 
     /// <summary>

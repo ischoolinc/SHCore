@@ -19,7 +19,7 @@ namespace SmartSchool.Properties {
     // 類別透過 ResGen 或 Visual Studio 這類工具。
     // 若要加入或移除成員，請編輯您的 .ResX 檔，然後重新執行 ResGen
     // (利用 /str 選項)，或重建您的 VS 專案。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -412,6 +412,74 @@ namespace SmartSchool.Properties {
         
         /// <summary>
         ///   查詢類似 &lt;FieldDescription&gt;
+        ///  &lt;Field DisplayText=&quot;班級系統編號&quot; Name=&quot;ID&quot;/&gt;
+        ///  &lt;Field DisplayText=&quot;班級名稱&quot; Name=&quot;ClassName&quot;/&gt;
+        ///  &lt;Field DisplayText=&quot;班導師&quot; Name=&quot;TeacherName&quot;/&gt;
+        ///  &lt;Field DisplayText=&quot;年級&quot; Name=&quot;GradeYear&quot;/&gt;
+        ///  &lt;Field DisplayText=&quot;科別&quot; Name=&quot;DepartmentName&quot;/&gt;
+        ///  &lt;Field DisplayText=&quot;課程規劃&quot; Name=&quot;GraduationPlan&quot;/&gt;	
+        ///  &lt;Field DisplayText=&quot;計算規則&quot; Name=&quot;CalculationRule&quot;/&gt;
+        ///  &lt;Field DisplayText=&quot;排列序號&quot; Name=&quot;DisplayOrder&quot;/&gt;
+        ///  &lt;Field DisplayText=&quot;班級名稱規則&quot; Name=&quot;NamingRule&quot;/&gt;
+        ///  &lt;Field DisplayText=&quot;班級編號&quot; Name=&quot;ClassNumber [字串的其餘部分已遭截斷]&quot;; 的當地語系化字串。
+        /// </summary>
+        internal static string SH_Cls_ExportDescription {
+            get {
+                return ResourceManager.GetString("SH_Cls_ExportDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 &lt;ValidateRule&gt;
+        ///  &lt;FieldList&gt;
+        ///    &lt;Field DataType=&quot;Integer&quot; Name=&quot;班級系統編號&quot;&gt;
+        ///      &lt;Validate AutoCorrect=&quot;False&quot; Description=&quot;「班級系統編號」必須是數字。 &quot; ErrorType=&quot;Error&quot; Validator=&quot;Integer極限&quot; When=&quot;&quot;/&gt;
+        ///    &lt;/Field&gt;
+        ///    &lt;Field DataType=&quot;String&quot; Name=&quot;班級名稱&quot;&gt;
+        ///		&lt;Validate AutoCorrect=&quot;False&quot; Description=&quot;「班級名稱」不可重覆。 &quot; ErrorType=&quot;Error&quot; Validator=&quot;Uniq&quot; When=&quot;&quot;/&gt;
+        ///      &lt;Validate AutoCorrect=&quot;False&quot; Description=&quot;「班級名稱」不允許空白。&quot; ErrorType=&quot;Error&quot; Validator=&quot;不可空白&quot; When=&quot;&quot;/&gt;
+        ///      &lt;Validate AutoCorrect=&quot;False&quot; Description [字串的其餘部分已遭截斷]&quot;; 的當地語系化字串。
+        /// </summary>
+        internal static string SH_Cls_FieldValidationRule {
+            get {
+                return ResourceManager.GetString("SH_Cls_FieldValidationRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 &lt;FieldDescription&gt;
+        ///  &lt;Field InternalName=&quot;ID&quot; Name=&quot;班級系統編號&quot; PrimaryKey=&quot;True&quot; UniqueGroup=&quot;PrimaryKey&quot;/&gt;
+        ///	&lt;Field InternalName=&quot;ClassName&quot; Name=&quot;班級名稱&quot; ShiftCheckable=&quot;True&quot; UniqueGroup=&quot;ClassName&quot;/&gt;
+        ///  &lt;Field InternalName=&quot;TeacherName&quot; Name=&quot;班導師&quot; ShiftCheckable=&quot;True&quot;/&gt;
+        ///  &lt;Field InternalName=&quot;GradeYear&quot; Name=&quot;年級&quot; ShiftCheckable=&quot;True&quot;/&gt;
+        ///  &lt;Field InternalName=&quot;DepartmentName&quot; Name=&quot;科別&quot; ShiftCheckable=&quot;True&quot;/&gt;
+        ///	&lt;Field InternalName=&quot;GraduationPlan&quot; Name=&quot;課程規劃&quot; ShiftCheckable=&quot;True&quot;/&gt;
+        ///	&lt;Field InternalName= [字串的其餘部分已遭截斷]&quot;; 的當地語系化字串。
+        /// </summary>
+        internal static string SH_Cls_ImportFieldList {
+            get {
+                return ResourceManager.GetString("SH_Cls_ImportFieldList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 &lt;FieldDescription&gt;
+        ///  &lt;Field DataType=&quot;integer&quot; DisplayText=&quot;課程系統編號&quot; Identifiable=&quot;True&quot; Name=&quot;ID&quot; ReadOnly=&quot;True&quot;/&gt;
+        ///  &lt;Field DisplayText=&quot;課程名稱&quot; Name=&quot;CourseName&quot; ShiftCheckable=&quot;True&quot;/&gt;
+        ///  &lt;Field DataType=&quot;integer&quot; DisplayText=&quot;科目級別&quot; Name=&quot;SubjectLevel&quot; ShiftCheckable=&quot;True&quot;/&gt;
+        ///  &lt;Field DisplayText=&quot;科目名稱&quot; Name=&quot;Subject&quot; ShiftCheckable=&quot;True&quot;/&gt;
+        ///  &lt;Field DisplayText=&quot;所屬班級&quot; Name=&quot;ClassName&quot; ShiftCheckable=&quot;True&quot;/&gt;
+        ///  &lt;Field DisplayText=&quot;學年度&quot; Name=&quot;SchoolYear&quot; ShiftCheckable=&quot;True&quot;/&gt;
+        ///  &lt;Field DisplayText=&quot;學 [字串的其餘部分已遭截斷]&quot;; 的當地語系化字串。
+        /// </summary>
+        internal static string SH_Course_ExportDescription {
+            get {
+                return ResourceManager.GetString("SH_Course_ExportDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 &lt;FieldDescription&gt;
         ///  &lt;Field DisplayText=&quot;學生系統編號&quot; Identifiable=&quot;True&quot; Name=&quot;StudentID&quot; ReadOnly=&quot;True&quot;/&gt;
         ///  &lt;Field DisplayText=&quot;姓名&quot; Name=&quot;Name&quot; Required=&quot;True&quot; ShiftCheckable=&quot;True&quot;/&gt;
         ///  &lt;Field DisplayText=&quot;學號&quot; Identifiable=&quot;True&quot; Name=&quot;StudentNumber&quot; ShiftCheckable=&quot;True&quot;/&gt;
@@ -471,9 +539,8 @@ namespace SmartSchool.Properties {
         ///  &lt;Field DisplayText=&quot;電子信箱&quot; Name=&quot;Email&quot;/&gt;
         ///  &lt;Field DisplayText=&quot;教師類別&quot; Name=&quot;Category&quot;/&gt;
         ///  &lt;Field DisplayText=&quot;登入帳號&quot; Name=&quot;SmartTeacherLoginName&quot;/&gt;
-        ///  &lt;Field DisplayText=&quot;帳號類型&quot; Name=&quot;AccountType&quot;/&gt;
-        ///  &lt;!--
-        ///&lt;Fie [字串的其餘部分已遭截斷]&quot;; 的當地語系化字串。
+        ///  &lt;Field DisplayText=&quot;教師編號&quot; Name=&quot;TeacherNumber&quot;/&gt;
+        ///  &lt;Field D [字串的其餘部分已遭截斷]&quot;; 的當地語系化字串。
         /// </summary>
         internal static string SH_T_ExportDescription {
             get {

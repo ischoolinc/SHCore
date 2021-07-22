@@ -96,6 +96,8 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
             this.panel2 = new System.Windows.Forms.Panel();
             this.rdoCreditTrue = new System.Windows.Forms.RadioButton();
             this.rdoCreditFalse = new System.Windows.Forms.RadioButton();
+            this.labelX14 = new DevComponents.DotNetBar.LabelX();
+            this.txtCourseNumber = new DevComponents.DotNetBar.Controls.TextBoxX();
             ((System.ComponentModel.ISupportInitialize)(this.picWaiting)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -649,10 +651,39 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
             this.rdoCreditFalse.Text = "不計入";
             this.rdoCreditFalse.UseVisualStyleBackColor = true;
             // 
+            // labelX14
+            // 
+            // 
+            // 
+            // 
+            this.labelX14.BackgroundStyle.Class = "";
+            this.labelX14.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX14.Location = new System.Drawing.Point(287, 223);
+            this.labelX14.Name = "labelX14";
+            this.labelX14.Size = new System.Drawing.Size(70, 23);
+            this.labelX14.TabIndex = 26;
+            this.labelX14.Text = "課程編號";
+            this.labelX14.TextAlignment = System.Drawing.StringAlignment.Far;
+            // 
+            // txtCourseNumber
+            // 
+            // 
+            // 
+            // 
+            this.txtCourseNumber.Border.Class = "TextBoxBorder";
+            this.txtCourseNumber.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.txtCourseNumber.Location = new System.Drawing.Point(364, 222);
+            this.txtCourseNumber.Name = "txtCourseNumber";
+            this.txtCourseNumber.Size = new System.Drawing.Size(151, 25);
+            this.txtCourseNumber.TabIndex = 27;
+            this.txtCourseNumber.TextChanged += new System.EventHandler(this.txtCourseNumber_TextChanged);
+            // 
             // BasicInfo
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.labelX14);
+            this.Controls.Add(this.txtCourseNumber);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.labelX13);
@@ -684,7 +715,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
             this.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MinimumSize = new System.Drawing.Size(550, 0);
             this.Name = "BasicInfo";
-            this.Size = new System.Drawing.Size(550, 235);
+            this.Size = new System.Drawing.Size(550, 259);
             this.DoubleClick += new System.EventHandler(this.BasicInfo_DoubleClick);
             this.Controls.SetChildIndex(this.txtCredit, 0);
             this.Controls.SetChildIndex(this.txtSubject, 0);
@@ -715,6 +746,8 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
             this.Controls.SetChildIndex(this.panel1, 0);
             this.Controls.SetChildIndex(this.panel2, 0);
             this.Controls.SetChildIndex(this.picWaiting, 0);
+            this.Controls.SetChildIndex(this.txtCourseNumber, 0);
+            this.Controls.SetChildIndex(this.labelX14, 0);
             ((System.ComponentModel.ISupportInitialize)(this.picWaiting)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -783,6 +816,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.RadioButton rdoCreditTrue;
         private System.Windows.Forms.RadioButton rdoCreditFalse;
-
+        private DevComponents.DotNetBar.LabelX labelX14;
+        protected DevComponents.DotNetBar.Controls.TextBoxX txtCourseNumber;
     }
 }

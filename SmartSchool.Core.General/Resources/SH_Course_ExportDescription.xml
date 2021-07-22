@@ -1,0 +1,21 @@
+﻿<FieldDescription>
+  <Field DataType="integer" DisplayText="課程系統編號" Identifiable="True" Name="ID" ReadOnly="True"/>
+  <Field DisplayText="課程名稱" Name="CourseName" ShiftCheckable="True"/>
+  <Field DataType="integer" DisplayText="科目級別" Name="SubjectLevel" ShiftCheckable="True"/>
+  <Field DisplayText="科目名稱" Name="Subject" ShiftCheckable="True"/>
+  <Field DisplayText="所屬班級" Name="ClassName" ShiftCheckable="True"/>
+  <Field DisplayText="學年度" Name="SchoolYear" ShiftCheckable="True"/>
+  <Field DisplayText="學期" Name="Semester" ShiftCheckable="True"/>
+  <Field DisplayText="學分" Name="Credit" ShiftCheckable="True"/>
+  <Field DisplayText="節數" Name="Period" ShiftCheckable="True"/>
+  <Field DisplayText="授課教師一" Name="Teacher1Name" ShiftCheckable="True"/>
+  <Field DisplayText="授課教師二" Name="Teacher2Name" ShiftCheckable="True"/>
+  <Field DisplayText="授課教師三" Name="Teacher3Name" ShiftCheckable="True"/>
+  <Field DisplayText="不計入學分" Name="NotIncludedInCredit" ShiftCheckable="True"/>
+  <Field DisplayText="不評分" Name="NotIncludedInCalc" ShiftCheckable="True"/>
+  <Field DisplayText="分項類別" Name="ScoreType" ShiftCheckable="True"/>
+  <Field DisplayText="評分樣版" Name="ExamTemplate" ShiftCheckable="True"/>
+  <Field DisplayText="校部訂" Name="RequiredBy" ShiftCheckable="True"/>
+  <Field DisplayText="必選修" Name="IsRequired" ShiftCheckable="True"/>
+    <Field DisplayText="課程編號" Name="CourseNumber" ShiftCheckable="True"/>
+</FieldDescription>

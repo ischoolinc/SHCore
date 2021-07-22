@@ -19,6 +19,7 @@ namespace SmartSchool.ClassRelated
         private string _department;
         private string _NamingRule;
         private int _DisplayOrder;
+        private string _ClassNumber;
 
         public ClassInfo(XmlElement element)
         {
@@ -31,6 +32,8 @@ namespace SmartSchool.ClassRelated
             _gradeYear = helper.GetText("GradeYear");
             _department = helper.GetText("Department");
             _NamingRule = helper.GetText("NamingRule");
+            _ClassNumber = helper.GetText("ClassNumber");
+
             //_refGraduationPlanID = helper.GetText("RefGraduationPlanID");
             //_graduationPlanName = helper.GetText("GraduationPlanName");
             //_refScoreCalcRuleID = helper.GetText("RefScoreCalcRuleID");
@@ -65,6 +68,8 @@ namespace SmartSchool.ClassRelated
         //public string RefGraduationPlanID { get { return (_refGraduationPlanID == "" || GraduationPlanRelated.GraduationPlan.Instance.Items[_refGraduationPlanID] == null) ? "" : _refGraduationPlanID; } }
         public int DisplayOrder { get { return _DisplayOrder; } }
         //public string GraduationPlanName { get { return RefGraduationPlanID == "" ? "" : GraduationPlan.Instance.Items[_refGraduationPlanID].Name; } }
+
+        public string ClassNumber { get { return _ClassNumber; } }
         public List<BriefStudentData> Students { get { return Student.Instance.GetClassStudent(_classID); } }
         //public GraduationPlanInfo GraduationPlanInfo { get { return RefGraduationPlanID == "" ? null : GraduationPlan.Instance.Items[_refGraduationPlanID]; } }
         //public string RefScoreCalcRuleID { get { return (_refScoreCalcRuleID == "" || ScoreCalcRuleRelated.ScoreCalcRule.Instance.Items[_refScoreCalcRuleID] == null) ? "" : _refScoreCalcRuleID; } }

@@ -20,6 +20,8 @@ namespace SmartSchool.API
 
         private string _RefTeacherID="";
 
+        //private string _ClassNumber = "";
+
         private Dictionary<string, object> _Fields = new Dictionary<string, object>();
 
         private List<SmartSchool.Customization.Data.CategoryInfo> _ClassCategorys = new List<SmartSchool.Customization.Data.CategoryInfo>();
@@ -35,7 +37,7 @@ namespace SmartSchool.API
 
             _GradeYear = classInfo.GradeYear;
             _RefTeacherID = classInfo.TeacherID;
-
+            //_ClassNumber = classInfo.ClassNumber;
             _CachePool = CachePool;
 
         }

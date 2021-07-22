@@ -31,12 +31,19 @@ namespace SmartSchool.Feature.Course
 
         public static XmlElement GetImportDescription()
         {
-            return CallNoneRequestService("SmartSchool.Course.BulkProcess.GetImportFieldList");
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(Properties.Resources.SH_Course_ImportFieldList);
+            return doc.DocumentElement;
+            
+            //return CallNoneRequestService("SmartSchool.Course.BulkProcess.GetImportFieldList");
         }
 
         public static XmlElement GetFieldValidationRule()
         {
-            return CallNoneRequestService("SmartSchool.Course.BulkProcess.GetValidateFieldRule");
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(Properties.Resources.CourseBulkProcessValidateFieldRule);
+            return doc.DocumentElement;
+            //return CallNoneRequestService("SmartSchool.Course.BulkProcess.GetValidateFieldRule");
         }
 
         public static XmlElement GetPrimaryKeyList()

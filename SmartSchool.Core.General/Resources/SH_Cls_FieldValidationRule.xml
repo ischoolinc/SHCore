@@ -1,0 +1,80 @@
+﻿<ValidateRule>
+  <FieldList>
+    <Field DataType="Integer" Name="班級系統編號">
+      <Validate AutoCorrect="False" Description="「班級系統編號」必須是數字。 " ErrorType="Error" Validator="Integer極限" When=""/>
+    </Field>
+    <Field DataType="String" Name="班級名稱">
+		<Validate AutoCorrect="False" Description="「班級名稱」不可重覆。 " ErrorType="Error" Validator="Uniq" When=""/>
+      <Validate AutoCorrect="False" Description="「班級名稱」不允許空白。" ErrorType="Error" Validator="不可空白" When=""/>
+      <Validate AutoCorrect="False" Description="「班級名稱」長度必須小於100個文字。" ErrorType="Error" Validator="文字100" When=""/>
+    </Field>
+	  <Field DataType="String" Name="班級名稱規則">
+		  <Validate AutoCorrect="False" Description="「班級名稱規則」長度必須小於100個文字。" ErrorType="Error" Validator="文字100" When=""/>
+	  </Field>
+    <Field DataType="String" Name="班導師">
+      <Validate AutoCorrect="False" Description="「班導師」長度必須小於100個文字。" ErrorType="Error" Validator="文字100" When=""/>
+    </Field>
+    <Field DataType="Integer" Name="年級">
+      <Validate AutoCorrect="False" Description="「年級」必須為正整數。 " ErrorType="Error" Validator="Integer極限" When=""/>
+    </Field>
+    <Field DataType="String" Name="科別">
+      <Validate AutoCorrect="False" Description="「科別」長度必須小於100個文字。 " ErrorType="Error" Validator="文字100" When=""/>
+    </Field>
+    <Field DataType="String" Name="計算規則">
+      <Validate AutoCorrect="False" Description="「計算規則」長度必須小於100個文字。 " ErrorType="Error" Validator="文字100" When=""/>
+    </Field>
+    <Field DataType="String" Name="課程規劃">
+      <Validate AutoCorrect="False" Description="「課程規劃」長度必須小於100個文字。" ErrorType="Error" Validator="文字100" When=""/>
+    </Field>
+    <Field DataType="Integer" Name="排列序號">
+		<Validate AutoCorrect="False" Description="「排列序號」必須為0~999的正整數。" ErrorType="Error" Validator="Integer極限" When="排列序號非空白"/>
+    </Field>
+	  <Field DataType="String" Name="班級編號">
+		  <!--<Validate AutoCorrect="False" Description="「班級編號」不可重覆。 " ErrorType="Error" Validator="Uniq" When="班級編號非空白"/>-->
+	  </Field>
+  </FieldList>
+  <ValidatorList>
+    <FieldValidator Name="不可空白" Type="Null"/>
+    <FieldValidator Name="Integer極限" Type="Integer">
+      <MinValue>0</MinValue>
+      <MaxValue>999</MaxValue>
+    </FieldValidator>
+    <FieldValidator Name="文字20" Type="String">
+      <MinLength>0</MinLength>
+      <MaxLength>20</MaxLength>
+    </FieldValidator>
+    <FieldValidator Name="文字30" Type="String">
+      <MinLength>0</MinLength>
+      <MaxLength>30</MaxLength>
+    </FieldValidator>
+    <FieldValidator Name="文字50" Type="String">
+      <MinLength>0</MinLength>
+      <MaxLength>50</MaxLength>
+    </FieldValidator>
+    <FieldValidator Name="文字100" Type="String">
+      <MinLength>0</MinLength>
+      <MaxLength>100</MaxLength>
+    </FieldValidator>
+    <FieldValidator Name="Uniq" Type="UNIQUEKEY"/>
+    <RowValidator Name="新增匯入唯一性欄位檢查" Type="InsertDBUnique"/>
+    <RowValidator Name="新增匯入工作表唯一性欄位檢查" Type="InsertSheetUnique"/>
+    <RowValidator Name="更新匯入ShiftCheck" Type="ShiftCheck"/>
+    <RowValidator Name="更新匯入識別欄檢查" Type="UpdateIdentify"/>
+    <RowValidator Name="更新匯入唯一性欄位檢查" Type="UpdateUnique"/>
+  </ValidatorList>
+  <RowValidate>
+    <Validate AutoCorrect="False" Description="" ErrorType="Error" Validator="新增匯入唯一性欄位檢查" When=""/>
+    <Validate AutoCorrect="False" Description="" ErrorType="Error" Validator="新增匯入工作表唯一性欄位檢查" When=""/>
+    <Validate AutoCorrect="False" Description="" ErrorType="Error" Validator="更新匯入ShiftCheck" When=""/>
+    <Validate AutoCorrect="False" Description="" ErrorType="Error" Validator="更新匯入識別欄檢查" When=""/>
+    <Validate AutoCorrect="False" Description="" ErrorType="Error" Validator="更新匯入唯一性欄位檢查" When=""/>
+  </RowValidate>
+  <ConditionList>
+	  <Condition Name="班級編號非空白">
+		  <Match Field="班級編號" Operator="!=" Value=""/>
+	  </Condition>
+	  <Condition Name="排列序號非空白">
+		  <Match Field="排列序號" Operator="!=" Value=""/>
+	  </Condition>
+  </ConditionList>
+</ValidateRule>

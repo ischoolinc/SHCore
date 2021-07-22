@@ -1,0 +1,12 @@
+﻿<FieldDescription>
+  <Field DisplayText="班級系統編號" Name="ID"/>
+  <Field DisplayText="班級名稱" Name="ClassName"/>
+  <Field DisplayText="班導師" Name="TeacherName"/>
+  <Field DisplayText="年級" Name="GradeYear"/>
+  <Field DisplayText="科別" Name="DepartmentName"/>
+  <Field DisplayText="課程規劃" Name="GraduationPlan"/>	
+  <Field DisplayText="計算規則" Name="CalculationRule"/>
+  <Field DisplayText="排列序號" Name="DisplayOrder"/>
+  <Field DisplayText="班級名稱規則" Name="NamingRule"/>
+  <Field DisplayText="班級編號" Name="ClassNumber"/>
+</FieldDescription>

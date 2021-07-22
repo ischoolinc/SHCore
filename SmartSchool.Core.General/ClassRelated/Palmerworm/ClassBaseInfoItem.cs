@@ -28,6 +28,7 @@ namespace SmartSchool.ClassRelated.Palmerworm
         private ErrorProvider epDisplayOrder = new ErrorProvider();
         private ErrorProvider epGradeYear = new ErrorProvider();
         private ErrorProvider epClassName = new ErrorProvider();
+        private ErrorProvider epClassNumber = new ErrorProvider();
 
         private string _NamingRule = "";
         private bool _StopEvent = false;
@@ -180,6 +181,8 @@ namespace SmartSchool.ClassRelated.Palmerworm
             cboGradeYear.Tag = null;
             epClassName.Clear();
             txtClassName.Tag = null;
+            epClassNumber.Clear();
+            txtClassNumber.Tag = null;
 
             DSResponse dsrsp = result as DSResponse;
             DSXmlHelper helper = dsrsp.GetContent();
@@ -192,12 +195,15 @@ namespace SmartSchool.ClassRelated.Palmerworm
             cboTeacher.SelectedItem = GetTeacherObject(helper.GetText("Class/RefTeacherID"));
             cboGradeYear.Text = helper.GetText("Class/GradeYear");
             txtSortOrder.Text = helper.GetText("Class/DisplayOrder");
+            txtClassNumber.Text = helper.GetText("Class/ClassNumber");
+
             _valueManager.AddValue("ClassName", txtClassName.Text, "班級名稱");
             _valueManager.AddValue("NamingRule", _NamingRule, "命名規則");
             _valueManager.AddValue("RefDepartmentID", GetDepartmentValue(), "科別");
             _valueManager.AddValue("GradeYear", cboGradeYear.Text, "年級");
             _valueManager.AddValue("RefTeacherID", GetTeacherID(cboTeacher.SelectedItem), "班導師");
             _valueManager.AddValue("DisplayOrder", txtSortOrder.Text, "排列序號");
+            _valueManager.AddValue("ClassNumber", txtClassNumber.Text, "班級編號");
             SaveButtonVisible = false;
 
             #region Log 記錄修改前的資料
@@ -208,7 +214,7 @@ namespace SmartSchool.ClassRelated.Palmerworm
             machine.AddBefore(labelX3.Text.Replace("　", ""), cboTeacher.Text);
             machine.AddBefore(labelX4.Text.Replace("　", ""), cboGradeYear.Text);
             machine.AddBefore(labelX6.Text.Replace("　", ""), txtSortOrder.Text);
-
+            machine.AddBefore(labelX5.Text.Replace("　", ""), txtClassNumber.Text);
             #endregion
         }
 
@@ -299,6 +305,12 @@ namespace SmartSchool.ClassRelated.Palmerworm
         protected void txtSortOrder_TextChanged(object sender, EventArgs e)
         {
             OnValueChanged("DisplayOrder", txtSortOrder.Text);
+        }
+
+        private void txtClassNumber_TextChanged(object sender, EventArgs e)
+        {
+            OnValueChanged("ClassNumber", txtClassNumber.Text);
+            epClassNumber.Clear();
         }
 
         public override bool IsValid()
@@ -433,6 +445,12 @@ namespace SmartSchool.ClassRelated.Palmerworm
             }
         }
 
+        private void txtClassNumber_Validated(object sender, EventArgs e)
+        {
+
+
+        }
+
         public override void Save()
         {
             if (!IsValid())
@@ -440,6 +458,31 @@ namespace SmartSchool.ClassRelated.Palmerworm
                 MsgBox.Show("輸入資料未通過驗證，請修正後再行儲存");
                 return;
             }
+
+            #region 檢查班級編號
+            //FISCA.Data.QueryHelper queryHelper = new FISCA.Data.QueryHelper();
+            //string sql = "SELECT * FROM class where id <> " + RunningID + " AND class_number='" + txtClassNumber.Text + "'";
+            //try
+            //{
+            //    DataTable dataTable = queryHelper.Select(sql);
+            //    if (dataTable.Rows.Count > 0)
+            //    {
+            //        epClassNumber.SetError(txtClassNumber, "班級編號重複，請檢查。");
+            //        return;
+            //    }
+            //    else
+            //        epClassNumber.Clear();
+            //}
+            //catch (Exception ex)
+            //{
+            //    MsgBox.Show(ex.Message);
+            //}
+
+            #endregion
+
+
+
+
             DSXmlHelper helper = new DSXmlHelper("UpdateRequest");
             helper.AddElement("Class");
             helper.AddElement("Class", "Field");
@@ -466,7 +509,7 @@ namespace SmartSchool.ClassRelated.Palmerworm
             machine.AddAfter(labelX3.Text.Replace("　", ""), cboTeacher.Text);
             machine.AddAfter(labelX4.Text.Replace("　", ""), cboGradeYear.Text);
             machine.AddAfter(labelX6.Text.Replace("　", ""), txtSortOrder.Text);
-
+            machine.AddAfter(labelX5.Text.Replace("　", ""), txtClassNumber.Text);
             #endregion
 
             StringBuilder desc = new StringBuilder("");
@@ -530,8 +573,6 @@ namespace SmartSchool.ClassRelated.Palmerworm
                 int index = cboDept.FindString(name);
             }
         }
-
-
     }
 
     /// <summary>

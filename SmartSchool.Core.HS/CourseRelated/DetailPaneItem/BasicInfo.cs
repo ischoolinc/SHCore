@@ -234,7 +234,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 //cboTeacher.SelectedItem = content.GetText("Course/MajorTeacherID"); //ComboBox 奧義
                 cboClass.SelectedItem = content.GetText("Course/RefClassID"); //ComboBox 奧義
                 cboExamTemplate.SelectedItem = content.GetText("Course/RefExamTemplateID"); //ComboBox 奧義
-
+                txtCourseNumber.Text = content.GetText("Course/CourseNumber");
                 if (content.GetText("Course/NotIncludedInCredit") == "否")
                     rdoCreditTrue.Checked = true;
                 else
@@ -288,6 +288,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 WatchValue("ScoreType", cboEntry.Text);
                 WatchValue("RequiredBy", cboRequiredBy.Text);
                 WatchValue("Required", cboRequired.Text);
+                WatchValue("CourseNumber", txtCourseNumber.Text);
 
                 _initialing = false;
 
@@ -308,7 +309,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 machine.AddBefore(labelX10.Text.Replace("　", "").Replace(" ", ""), rdoCalcTrue.Checked ? "評分" : "不評分");
                 machine.AddBefore(labelX11.Text.Replace("　", "").Replace(" ", ""), cboEntry.Text);
                 machine.AddBefore(labelX12.Text.Replace("　", "").Replace(" ", ""), cboExamTemplate.Text);
-
+                machine.AddBefore(labelX14.Text.Replace("　", "").Replace(" ", ""), txtCourseNumber.Text);
                 SmartSchool.CourseRelated.DetailPaneItem.BasicInfo.MultiTeacherController.TeacherItem teacher1 = (SmartSchool.CourseRelated.DetailPaneItem.BasicInfo.MultiTeacherController.TeacherItem)_multi_teacher.Teacher1Button;
                 SmartSchool.CourseRelated.DetailPaneItem.BasicInfo.MultiTeacherController.TeacherItem teacher2 = (SmartSchool.CourseRelated.DetailPaneItem.BasicInfo.MultiTeacherController.TeacherItem)_multi_teacher.Teacher2Button;
                 SmartSchool.CourseRelated.DetailPaneItem.BasicInfo.MultiTeacherController.TeacherItem teacher3 = (SmartSchool.CourseRelated.DetailPaneItem.BasicInfo.MultiTeacherController.TeacherItem)_multi_teacher.Teacher3Button;
@@ -449,6 +450,26 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 if (items.Count <= 0) //沒有任何更動。
                     return;
 
+                //FISCA.Data.QueryHelper queryHelper = new FISCA.Data.QueryHelper();
+                //string sql = "SELECT * FROM course where id <> " + RunningID + " AND course_number='" + txtCourseNumber.Text + "'";
+                //try
+                //{
+                //    System.Data.DataTable dataTable = queryHelper.Select(sql);
+                //    if (dataTable.Rows.Count > 0)
+                //    {
+                //        _errors.SetError(txtCourseNumber, "課程編號重複，請檢查！");
+                //        return;
+                //    }
+                //    else
+                //        _errors.Clear();
+                //}
+                //catch (Exception ex)
+                //{
+                //    MsgBox.Show(ex.Message);
+                //}
+
+
+
                 if (string.IsNullOrEmpty(cboEntry.Text))
                 {
                     MsgBox.Show("分項類別不允許空白");
@@ -476,7 +497,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 machine.AddAfter(labelX10.Text.Replace("　", "").Replace(" ", ""), rdoCalcTrue.Checked ? "評分" : "不評分");
                 machine.AddAfter(labelX11.Text.Replace("　", "").Replace(" ", ""), cboEntry.Text);
                 machine.AddAfter(labelX12.Text.Replace("　", "").Replace(" ", ""), cboExamTemplate.Text);
-
+                machine.AddAfter(labelX14.Text.Replace("　", "").Replace(" ", ""), txtCourseNumber.Text);
                 SmartSchool.CourseRelated.DetailPaneItem.BasicInfo.MultiTeacherController.TeacherItem teacher1 = (SmartSchool.CourseRelated.DetailPaneItem.BasicInfo.MultiTeacherController.TeacherItem)_multi_teacher.Teacher1Button;
                 SmartSchool.CourseRelated.DetailPaneItem.BasicInfo.MultiTeacherController.TeacherItem teacher2 = (SmartSchool.CourseRelated.DetailPaneItem.BasicInfo.MultiTeacherController.TeacherItem)_multi_teacher.Teacher2Button;
                 SmartSchool.CourseRelated.DetailPaneItem.BasicInfo.MultiTeacherController.TeacherItem teacher3 = (SmartSchool.CourseRelated.DetailPaneItem.BasicInfo.MultiTeacherController.TeacherItem)_multi_teacher.Teacher3Button;
@@ -593,6 +614,12 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                     _update_required = true;
                 }
 
+                if (items.ContainsKey("CourseNumber"))
+                {
+                    req.AddElement("Course/Field", "CourseNumber", txtCourseNumber.Text.Trim());
+                    _update_required = true;
+                }
+
                 if (items.ContainsKey("RefExamTemplateID"))
                 {
                     req.AddElement("Course/Field", "RefExamTemplateID", GetRefExamTemplateID());
@@ -641,6 +668,13 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 OnValueChanged("CourseName", txtCourseName.Text);
         }
 
+        private void txtCourseNumber_TextChanged(object sender, EventArgs e)
+        {
+            if (!_initialing)
+                OnValueChanged("CourseNumber", txtCourseNumber.Text);
+            _errors.SetError(txtCourseNumber, "");
+
+        }
         private void txtSubject_TextChanged(object sender, EventArgs e)
         {
             if (!_initialing)
@@ -1279,6 +1313,8 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 LoadContent(RunningID);
             }
         }
+
+
     }
 
     /// <summary>

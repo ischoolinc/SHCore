@@ -19,7 +19,7 @@ namespace SmartSchool.Properties {
     // 類別透過 ResGen 或 Visual Studio 這類工具。
     // 若要加入或移除成員，請編輯您的 .ResX 檔，然後重新執行 ResGen
     // (利用 /str 選項)，或重建您的 VS 專案。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -205,6 +205,37 @@ namespace SmartSchool.Properties {
             get {
                 object obj = ResourceManager.GetObject("sandglass_unlock_64", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 &lt;FieldDescription&gt;
+        ///  &lt;Field DataType=&quot;integer&quot; DisplayText=&quot;課程系統編號&quot; Identifiable=&quot;True&quot; Name=&quot;ID&quot; ReadOnly=&quot;True&quot;/&gt;
+        ///  &lt;Field DisplayText=&quot;課程名稱&quot; Name=&quot;CourseName&quot; ShiftCheckable=&quot;True&quot;/&gt;
+        ///  &lt;Field DataType=&quot;integer&quot; DisplayText=&quot;科目級別&quot; Name=&quot;SubjectLevel&quot; ShiftCheckable=&quot;True&quot;/&gt;
+        ///  &lt;Field DisplayText=&quot;科目名稱&quot; Name=&quot;Subject&quot; ShiftCheckable=&quot;True&quot;/&gt;
+        ///  &lt;Field DisplayText=&quot;所屬班級&quot; Name=&quot;ClassName&quot; ShiftCheckable=&quot;True&quot;/&gt;
+        ///  &lt;Field DisplayText=&quot;學年度&quot; Name=&quot;SchoolYear&quot; ShiftCheckable=&quot;True&quot;/&gt;
+        ///  &lt;Field DisplayText=&quot;學 [字串的其餘部分已遭截斷]&quot;; 的當地語系化字串。
+        /// </summary>
+        internal static string SH_Course_ExportDescription {
+            get {
+                return ResourceManager.GetString("SH_Course_ExportDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 &lt;FieldDescription&gt;
+        ///  &lt;Field InternalName=&quot;ID&quot; Name=&quot;課程系統編號&quot; PrimaryKey=&quot;True&quot; UniqueGroup=&quot;PrimaryKey&quot;/&gt;
+        ///	&lt;Field InternalName=&quot;CourseName&quot; Name=&quot;課程名稱&quot; ShiftCheckable=&quot;True&quot; UniqueGroup=&quot;CourseNamePlus&quot;/&gt;
+        ///  &lt;Field InternalName=&quot;Subject&quot; Name=&quot;科目名稱&quot; ShiftCheckable=&quot;True&quot;/&gt;
+        ///  &lt;Field InternalName=&quot;SubjectLevel&quot; Name=&quot;科目級別&quot; ShiftCheckable=&quot;True&quot;/&gt;
+        ///  &lt;Field InternalName=&quot;ClassName&quot; Name=&quot;所屬班級&quot; ShiftCheckable=&quot;True&quot;/&gt;
+        ///	&lt;Field InternalName=&quot;SchoolYear&quot; Name=&quot;學年度&quot; ShiftCheckable=&quot;True&quot; UniqueGroup=&quot;CourseNameP [字串的其餘部分已遭截斷]&quot;; 的當地語系化字串。
+        /// </summary>
+        internal static string SH_Course_ImportFieldList {
+            get {
+                return ResourceManager.GetString("SH_Course_ImportFieldList", resourceCulture);
             }
         }
         

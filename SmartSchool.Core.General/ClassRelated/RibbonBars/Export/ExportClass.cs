@@ -32,9 +32,16 @@ namespace SmartSchool.ClassRelated.RibbonBars.Export
 
         private void ExportClass_Load(object sender, EventArgs e)
         {
-            XmlElement element = SmartSchool.Feature.Class.ClassBulkProcess.GetExportDescription();
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(Properties.Resources.SH_Cls_ExportDescription);
+            XmlElement element = doc.DocumentElement;
+
+            //XmlElement element = SmartSchool.Feature.Class.ClassBulkProcess.GetExportDescription();
+
             BaseFieldFormater formater = new BaseFieldFormater();
             FieldCollection collection = formater.Format(element);
+
+
 
             foreach (Field field in collection)
             {

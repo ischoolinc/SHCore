@@ -21,13 +21,13 @@
       <Validate AutoCorrect="False" Description="「科別」長度必須小於100個文字。 " ErrorType="Error" Validator="文字100" When=""/>
     </Field>
     <Field DataType="String" Name="計算規則">
-      <Validate AutoCorrect="False" Description="「計算規則」長度必須小於100個文字。 " ErrorType="Error" Validator="文字100" When=""/>
+      <!--<Validate AutoCorrect="False" Description="「計算規則」長度必須小於100個文字。 " ErrorType="Error" Validator="文字100" When=""/>-->
     </Field>
     <Field DataType="String" Name="課程規劃">
-      <Validate AutoCorrect="False" Description="「課程規劃」長度必須小於100個文字。" ErrorType="Error" Validator="文字100" When=""/>
+      <!--<Validate AutoCorrect="False" Description="「課程規劃」長度必須小於100個文字。" ErrorType="Error" Validator="文字100" When=""/>-->
     </Field>
     <Field DataType="Integer" Name="排列序號">
-		<Validate AutoCorrect="False" Description="「排列序號」必須為0~999的正整數。" ErrorType="Error" Validator="Integer極限" When="排列序號非空白"/>
+		<Validate AutoCorrect="False" Description="「排列序號」必須為0~2147483647的正整數。" ErrorType="Error" Validator="Integer極限" When="排列序號非空白"/>
     </Field>
 	  <Field DataType="String" Name="班級編號">
 		  <!--<Validate AutoCorrect="False" Description="「班級編號」不可重覆。 " ErrorType="Error" Validator="Uniq" When="班級編號非空白"/>-->
@@ -37,7 +37,7 @@
     <FieldValidator Name="不可空白" Type="Null"/>
     <FieldValidator Name="Integer極限" Type="Integer">
       <MinValue>0</MinValue>
-      <MaxValue>999</MaxValue>
+      <MaxValue>2147483647</MaxValue>
     </FieldValidator>
     <FieldValidator Name="文字20" Type="String">
       <MinLength>0</MinLength>

@@ -893,7 +893,7 @@ namespace SmartSchool.ClassRelated.RibbonBars.Import
 
             foreach (XmlElement each in output.SelectNodes("Class"))
             {
-                string name = each.SelectSingleNode("CalcuationRule").InnerText;
+                string name = each.SelectSingleNode("CalculationRule").InnerText;
                 XmlElement newNode = CreateChild(each, "RefCalculationRuleID");
                 newNode.InnerText = lookup.GetScoreCalcRuleID(name);
             }

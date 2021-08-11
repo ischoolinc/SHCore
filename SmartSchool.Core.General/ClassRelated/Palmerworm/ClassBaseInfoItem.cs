@@ -304,6 +304,27 @@ namespace SmartSchool.ClassRelated.Palmerworm
 
         protected void txtSortOrder_TextChanged(object sender, EventArgs e)
         {
+            string text = txtSortOrder.Text;
+            int i;
+            if (!string.IsNullOrEmpty(text))
+            {
+                if (!int.TryParse(text, out i))
+                {
+                    epDisplayOrder.SetError(txtSortOrder, "請輸入0~2147483647的整數。");
+                    txtSortOrder.Tag = "error";
+                    return;
+                }
+                else
+                {
+                    epDisplayOrder.Clear();
+                    txtSortOrder.Tag = null;
+                }
+            }
+            else
+            {
+                epDisplayOrder.Clear();
+                txtSortOrder.Tag = null;
+            }
             OnValueChanged("DisplayOrder", txtSortOrder.Text);
         }
 

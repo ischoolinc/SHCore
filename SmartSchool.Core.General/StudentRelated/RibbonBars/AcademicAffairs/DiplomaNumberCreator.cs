@@ -90,7 +90,7 @@ namespace SmartSchool.StudentRelated.RibbonBars.AcademicAffairs
             Dictionary<SmartSchool.Customization.Data.StudentRecord, string> tempDiplomaNumber = new Dictionary<SmartSchool.Customization.Data.StudentRecord, string>();
             foreach (SmartSchool.Customization.Data.StudentRecord var in selectedStudent)
             {
-                tempDiplomaNumber.Add(var, textWord.Text + "字第 " + serialNumber.ToString(zero.ToString()) + " 號");
+                tempDiplomaNumber.Add(var, textWord.Text + "字第" + serialNumber.ToString(zero.ToString()) + "號");
                 serialNumber++;
             }
 

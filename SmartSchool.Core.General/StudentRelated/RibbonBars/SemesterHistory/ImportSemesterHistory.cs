@@ -20,7 +20,7 @@ namespace SmartSchool.StudentRelated.RibbonBars.SemesterHistory
         {
             wizard.PackageLimit = 3000;
             //可匯入的欄位
-            wizard.ImportableFields.AddRange("學年度", "學期", "年級", "當時科別", "當時學號", "當時班級", "當時座號", "當時班導師姓名", "上課天數", "課程群組代碼");
+            wizard.ImportableFields.AddRange("學年度", "學期", "年級", "當時科別", "當時學號", "當時班級", "當時座號", "當時班導師姓名", "上課天數", "群科班代碼", "當時班級系統編號");
             //必需要有的欄位
             wizard.RequiredFields.AddRange("學年度", "學期", "年級");
             //開始驗證
@@ -134,9 +134,12 @@ namespace SmartSchool.StudentRelated.RibbonBars.SemesterHistory
                         string TeacherName = Rows[i].ContainsKey("當時班導師姓名") ? Rows[i]["當時班導師姓名"] : string.Empty;
                         string SchoolDayCount = Rows[i].ContainsKey("上課天數") ? Rows[i]["上課天數"] : string.Empty;
                         string DeptName = Rows[i].ContainsKey("當時科別") ? Rows[i]["當時科別"] : string.Empty;
-                        string CourseGroupCode = Rows[i].ContainsKey("課程群組代碼") ? Rows[i]["課程群組代碼"] : string.Empty;
+                        //string CourseGroupCode = Rows[i].ContainsKey("課程群組代碼") ? Rows[i]["課程群組代碼"] : string.Empty;
 
                         string StudentNumber = Rows[i].ContainsKey("當時學號") ? Rows[i]["當時學號"] : string.Empty;
+
+                        string ClassID = Rows[i].ContainsKey("當時班級系統編號") ? Rows[i]["當時班級系統編號"] : string.Empty;
+                        string GDCCode = Rows[i].ContainsKey("群科班代碼") ? Rows[i]["群科班代碼"] : string.Empty;
 
                         List<K12.Data.SemesterHistoryItem> Items = record.SemesterHistoryItems.Where(x => x.RefStudentID == StudentID && x.SchoolYear.ToString() == SchoolYear && x.Semester.ToString() == Semester).ToList();
 
@@ -153,11 +156,17 @@ namespace SmartSchool.StudentRelated.RibbonBars.SemesterHistory
                                 Items[0].SchoolDayCount = K12.Data.Int.ParseAllowNull(SchoolDayCount);
                             if (Rows[i].ContainsKey("當時科別"))
                                 Items[0].DeptName = DeptName;
-                            if (Rows[i].ContainsKey("課程群組代碼"))
-                                Items[0].CourseGroupCode = CourseGroupCode;
+                            //if (Rows[i].ContainsKey("課程群組代碼"))
+                            //    Items[0].CourseGroupCode = CourseGroupCode;
 
                             if (Rows[i].ContainsKey("當時學號"))
                                 Items[0].StudentNumber = StudentNumber;
+
+                            if (Rows[i].ContainsKey("當時班級系統編號"))
+                                Items[0].ClassID = ClassID;
+
+                            if (Rows[i].ContainsKey("群科班代碼"))
+                                Items[0].GDCCode = GDCCode;
                         }
                         else
                         {
@@ -170,8 +179,11 @@ namespace SmartSchool.StudentRelated.RibbonBars.SemesterHistory
                             Item.Teacher = TeacherName;
                             Item.SchoolDayCount = K12.Data.Int.ParseAllowNull(SchoolDayCount);
                             Item.DeptName = DeptName;
-                            Item.CourseGroupCode = CourseGroupCode;
+                            //Item.CourseGroupCode = CourseGroupCode;
                             Item.StudentNumber = StudentNumber;
+                            Item.GDCCode = GDCCode;
+                            Item.ClassID = ClassID;
+
                             record.SemesterHistoryItems.Add(Item);
                         }
                     }
@@ -196,9 +208,12 @@ namespace SmartSchool.StudentRelated.RibbonBars.SemesterHistory
                         string TeacherName = Rows[i].ContainsKey("當時班導師姓名") ? Rows[i]["當時班導師姓名"] : string.Empty;
                         string SchoolDayCount = Rows[i].ContainsKey("上課天數") ? Rows[i]["上課天數"] : string.Empty;
                         string DeptName = Rows[i].ContainsKey("當時科別") ? Rows[i]["當時科別"] : string.Empty;
-                        string CourseGroupCode = Rows[i].ContainsKey("課程群組代碼") ? Rows[i]["課程群組代碼"] : string.Empty;
+                        //string CourseGroupCode = Rows[i].ContainsKey("課程群組代碼") ? Rows[i]["課程群組代碼"] : string.Empty;
 
                         string StudentNumber = Rows[i].ContainsKey("當時學號") ? Rows[i]["當時學號"] : string.Empty;
+
+                        string ClassID = Rows[i].ContainsKey("當時班級系統編號") ? Rows[i]["當時班級系統編號"] : string.Empty;
+                        string GDCCode = Rows[i].ContainsKey("群科班代碼") ? Rows[i]["群科班代碼"] : string.Empty;
 
                         K12.Data.SemesterHistoryItem Item = new K12.Data.SemesterHistoryItem();
                         Item.SchoolYear = K12.Data.Int.Parse(SchoolYear);
@@ -209,7 +224,9 @@ namespace SmartSchool.StudentRelated.RibbonBars.SemesterHistory
                         Item.Teacher = TeacherName;
                         Item.SchoolDayCount = K12.Data.Int.ParseAllowNull(SchoolDayCount);
                         Item.DeptName = DeptName;
-                        Item.CourseGroupCode = CourseGroupCode;
+                        // Item.CourseGroupCode = CourseGroupCode;
+                        Item.ClassID = ClassID;
+                        Item.GDCCode = GDCCode;
                         Item.StudentNumber = StudentNumber;
                         Items.Add(Item);
                     }

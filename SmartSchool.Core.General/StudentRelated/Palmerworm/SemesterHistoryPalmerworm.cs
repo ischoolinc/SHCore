@@ -53,7 +53,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
                     string semester = ("" + row.Cells[colSchoolYear.Index].Value).Trim() + "_" + ("" + row.Cells[colSemester.Index].Value).Trim();
                     if (!semesterValues.ContainsKey(semester))
                     {
-                        string str = ("" + row.Cells[colGradeYear.Index].Value + "_" + row.Cells[colClassName.Index].Value + "_" + row.Cells[colSeatNo.Index].Value + "_" + row.Cells[colSchoolDayCount.Index].Value + "_" + row.Cells[colTeacher.Index].Value + "_" + row.Cells[colDeptName.Index].Value+ "_" + row.Cells[colCourseGroupCode.Index].Value + "_" + row.Cells[colStudentNumber.Index].Value).Trim();
+                        string str = ("" + row.Cells[colGradeYear.Index].Value + "_" + row.Cells[colClassName.Index].Value + "_" + row.Cells[colSeatNo.Index].Value + "_" + row.Cells[colSchoolDayCount.Index].Value + "_" + row.Cells[colTeacher.Index].Value + "_" + row.Cells[colDeptName.Index].Value + "_" + row.Cells[colGDCCode.Index].Value + "_" + row.Cells[colStudentNumber.Index].Value + "_" + row.Cells[colClassID.Index].Value).Trim();
                         semesterValues.Add(semester, new List<string>(new string[] { str }));
                     }
                     else
@@ -103,7 +103,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
             _semesterValues = new Dictionary<string, List<string>>();
             foreach (XmlElement element in elements)
             {
-                string schoolYear, semester, gradeyear, ClassName, SeatNo, SchoolDayCount, Teacher, DeptName, CourseGroupCode, StudentNumber;
+                string schoolYear, semester, gradeyear, ClassName, SeatNo, SchoolDayCount, Teacher, DeptName, GDCCode, StudentNumber, ClassID;
                 schoolYear = element.GetAttribute("SchoolYear");
                 semester = element.GetAttribute("Semester");
                 gradeyear = element.GetAttribute("GradeYear");
@@ -112,8 +112,10 @@ namespace SmartSchool.StudentRelated.Palmerworm
                 SchoolDayCount = element.GetAttribute("SchoolDayCount");
                 Teacher = element.GetAttribute("Teacher");
                 DeptName = element.GetAttribute("DeptName");
-                CourseGroupCode = element.GetAttribute("CourseGroupCode");
+                //CourseGroupCode = element.GetAttribute("CourseGroupCode");
                 StudentNumber = element.GetAttribute("StudentNumber");
+                GDCCode = element.GetAttribute("GDCCode");
+                ClassID = element.GetAttribute("ClassID");
 
                 int row = dataGridViewX1.Rows.Add();
                 dataGridViewX1.Rows[row].Cells[colSchoolYear.Index].Value = schoolYear;
@@ -124,10 +126,12 @@ namespace SmartSchool.StudentRelated.Palmerworm
                 dataGridViewX1.Rows[row].Cells[colSchoolDayCount.Index].Value = SchoolDayCount;
                 dataGridViewX1.Rows[row].Cells[colTeacher.Index].Value = Teacher;
                 dataGridViewX1.Rows[row].Cells[colDeptName.Index].Value = DeptName;
-                dataGridViewX1.Rows[row].Cells[colCourseGroupCode.Index].Value = CourseGroupCode;
+                //dataGridViewX1.Rows[row].Cells[colCourseGroupCode.Index].Value = CourseGroupCode;
                 dataGridViewX1.Rows[row].Cells[colStudentNumber.Index].Value = StudentNumber;
+                dataGridViewX1.Rows[row].Cells[colGDCCode.Index].Value = GDCCode;
+                dataGridViewX1.Rows[row].Cells[colClassID.Index].Value = ClassID;
 
-                string str = gradeyear + "_" + ClassName + "_" + SeatNo + "_" + SchoolDayCount + "_" + Teacher + "_" + DeptName+"_"+ CourseGroupCode+"_"+ StudentNumber;
+                string str = gradeyear + "_" + ClassName + "_" + SeatNo + "_" + SchoolDayCount + "_" + Teacher + "_" + DeptName + "_" + GDCCode + "_" + StudentNumber + "_" + ClassID;
                 _semesterValues.Add(schoolYear.Trim() + "_" + semester.Trim(), new List<string>(new string[] { str.Trim() }));
 
                 string keyIdx = schoolYear.Trim() + "_" + semester.Trim() + "_";
@@ -137,8 +141,10 @@ namespace SmartSchool.StudentRelated.Palmerworm
                 logger.AddBefore(keyIdx + "SchoolDayCount", SchoolDayCount);
                 logger.AddBefore(keyIdx + "Teacher", Teacher);
                 logger.AddBefore(keyIdx + "DeptName", DeptName);
-                logger.AddBefore(keyIdx + "CourseGroupCode", CourseGroupCode);
+                //logger.AddBefore(keyIdx + "CourseGroupCode", CourseGroupCode);
                 logger.AddBefore(keyIdx + "StudentNumber", StudentNumber);
+                logger.AddBefore(keyIdx + "GDCCode", GDCCode);
+                logger.AddBefore(keyIdx + "ClassID", ClassID);
 
             }
             dataGridViewX1.EndEdit();
@@ -189,8 +195,10 @@ namespace SmartSchool.StudentRelated.Palmerworm
                         element.SetAttribute("SchoolDayCount", "" + row.Cells[colSchoolDayCount.Index].Value);
                         element.SetAttribute("Teacher", "" + row.Cells[colTeacher.Index].Value);
                         element.SetAttribute("DeptName", "" + row.Cells[colDeptName.Index].Value);
-                        element.SetAttribute("CourseGroupCode", "" + row.Cells[colCourseGroupCode.Index].Value);
+                        //element.SetAttribute("CourseGroupCode", "" + row.Cells[colCourseGroupCode.Index].Value);
                         element.SetAttribute("StudentNumber", "" + row.Cells[colStudentNumber.Index].Value);
+                        element.SetAttribute("GDCCode", "" + row.Cells[colGDCCode.Index].Value);
+                        element.SetAttribute("ClassID", "" + row.Cells[colClassID.Index].Value);
 
                         string keyIdx = "";
                         if (row.Cells[colSchoolYear.Index].Value != null && row.Cells[colSemester.Index].Value != null)
@@ -214,11 +222,17 @@ namespace SmartSchool.StudentRelated.Palmerworm
                         if (row.Cells[colDeptName.Index].Value != null)
                             logger.AddAfter(keyIdx + "DeptName", row.Cells[colDeptName.Index].Value.ToString());
 
-                        if (row.Cells[colCourseGroupCode.Index].Value != null)
-                            logger.AddAfter(keyIdx + "CourseGroupCode", row.Cells[colCourseGroupCode.Index].Value.ToString());
+                        //if (row.Cells[colCourseGroupCode.Index].Value != null)
+                        //    logger.AddAfter(keyIdx + "CourseGroupCode", row.Cells[colCourseGroupCode.Index].Value.ToString());
 
                         if (row.Cells[colStudentNumber.Index].Value != null)
                             logger.AddAfter(keyIdx + "StudentNumber", row.Cells[colStudentNumber.Index].Value.ToString());
+
+                        if (row.Cells[colGDCCode.Index].Value != null)
+                            logger.AddAfter(keyIdx + "GDCCode", row.Cells[colGDCCode.Index].Value.ToString());
+
+                        if (row.Cells[colClassID.Index].Value != null)
+                            logger.AddAfter(keyIdx + "ClassID", row.Cells[colClassID.Index].Value.ToString());
                     }
                 }
                 Feature.EditStudent.Update(new DSRequest(helper));
@@ -343,23 +357,23 @@ namespace SmartSchool.StudentRelated.Palmerworm
                         }
                     }
 
-                    if (difference.ContainsKey(keyIdx + "CourseGroupCode"))
-                    {
-                        string CourseGroupCodeBefore = difference[keyIdx + "CourseGroupCode"][0];
-                        string CourseGroupCodeAfter = difference[keyIdx + "CourseGroupCode"][1];
-                        if (!string.IsNullOrEmpty(CourseGroupCodeBefore) && !string.IsNullOrEmpty(CourseGroupCodeAfter))
-                        {
-                            desc.AppendLine("修改 「" + schoolyear + "」學年度 第「" + semester + "」學期 課程群組代碼由「" + CourseGroupCodeBefore + "」課程群組代碼變更為「" + CourseGroupCodeAfter + "」課程群組代碼");
-                        }
-                        else if (string.IsNullOrEmpty(CourseGroupCodeBefore) && !string.IsNullOrEmpty(CourseGroupCodeAfter))
-                        {
-                            desc.AppendLine("新增 「" + schoolyear + "」學年度 第「" + semester + "」學期 課程群組代碼為「" + CourseGroupCodeAfter + "」課程群組代碼");
-                        }
-                        else if (!string.IsNullOrEmpty(CourseGroupCodeBefore) && string.IsNullOrEmpty(CourseGroupCodeAfter))
-                        {
-                            desc.AppendLine("刪除 「" + schoolyear + "」學年度 第「" + semester + "」學期「" + CourseGroupCodeBefore + "」課程群組代碼");
-                        }
-                    }
+                    //if (difference.ContainsKey(keyIdx + "CourseGroupCode"))
+                    //{
+                    //    string CourseGroupCodeBefore = difference[keyIdx + "CourseGroupCode"][0];
+                    //    string CourseGroupCodeAfter = difference[keyIdx + "CourseGroupCode"][1];
+                    //    if (!string.IsNullOrEmpty(CourseGroupCodeBefore) && !string.IsNullOrEmpty(CourseGroupCodeAfter))
+                    //    {
+                    //        desc.AppendLine("修改 「" + schoolyear + "」學年度 第「" + semester + "」學期 課程群組代碼由「" + CourseGroupCodeBefore + "」課程群組代碼變更為「" + CourseGroupCodeAfter + "」課程群組代碼");
+                    //    }
+                    //    else if (string.IsNullOrEmpty(CourseGroupCodeBefore) && !string.IsNullOrEmpty(CourseGroupCodeAfter))
+                    //    {
+                    //        desc.AppendLine("新增 「" + schoolyear + "」學年度 第「" + semester + "」學期 課程群組代碼為「" + CourseGroupCodeAfter + "」課程群組代碼");
+                    //    }
+                    //    else if (!string.IsNullOrEmpty(CourseGroupCodeBefore) && string.IsNullOrEmpty(CourseGroupCodeAfter))
+                    //    {
+                    //        desc.AppendLine("刪除 「" + schoolyear + "」學年度 第「" + semester + "」學期「" + CourseGroupCodeBefore + "」課程群組代碼");
+                    //    }
+                    //}
 
                     // 學號
                     if (difference.ContainsKey(keyIdx + "StudentNumber"))
@@ -380,7 +394,44 @@ namespace SmartSchool.StudentRelated.Palmerworm
                         }
                     }
 
-                    //「」
+                    // 群科班代碼
+                    if (difference.ContainsKey(keyIdx + "GDCCode"))
+                    {
+                        string GDCCodeBefore = difference[keyIdx + "GDCCode"][0];
+                        string GDCCodeAfter = difference[keyIdx + "GDCCode"][1];
+                        if (!string.IsNullOrEmpty(GDCCodeBefore) && !string.IsNullOrEmpty(GDCCodeAfter))
+                        {
+                            desc.AppendLine("修改 「" + schoolyear + "」學年度 第「" + semester + "」學期 群科班代碼由「" + GDCCodeBefore + "」群科班代碼變更為「" + GDCCodeAfter + "」群科班代碼");
+                        }
+                        else if (string.IsNullOrEmpty(GDCCodeBefore) && !string.IsNullOrEmpty(GDCCodeAfter))
+                        {
+                            desc.AppendLine("新增 「" + schoolyear + "」學年度 第「" + semester + "」學期 群科班代碼為「" + GDCCodeAfter + "」群科班代碼");
+                        }
+                        else if (!string.IsNullOrEmpty(GDCCodeBefore) && string.IsNullOrEmpty(GDCCodeAfter))
+                        {
+                            desc.AppendLine("刪除 「" + schoolyear + "」學年度 第「" + semester + "」學期「" + GDCCodeBefore + "」群科班代碼");
+                        }
+                    }
+
+                    // 班級系統編號
+                    if (difference.ContainsKey(keyIdx + "ClassID"))
+                    {
+                        string ClassIDBefore = difference[keyIdx + "ClassID"][0];
+                        string ClassIDAfter = difference[keyIdx + "ClassID"][1];
+                        if (!string.IsNullOrEmpty(ClassIDBefore) && !string.IsNullOrEmpty(ClassIDAfter))
+                        {
+                            desc.AppendLine("修改 「" + schoolyear + "」學年度 第「" + semester + "」學期 班級系統編號由「" + ClassIDBefore + "」班級系統編號變更為「" + ClassIDAfter + "」班級系統編號");
+                        }
+                        else if (string.IsNullOrEmpty(ClassIDBefore) && !string.IsNullOrEmpty(ClassIDAfter))
+                        {
+                            desc.AppendLine("新增 「" + schoolyear + "」學年度 第「" + semester + "」學期 班級系統編號為「" + ClassIDAfter + "」班級系統編號");
+                        }
+                        else if (!string.IsNullOrEmpty(ClassIDBefore) && string.IsNullOrEmpty(ClassIDAfter))
+                        {
+                            desc.AppendLine("刪除 「" + schoolyear + "」學年度 第「" + semester + "」學期「" + ClassIDBefore + "」班級系統編號");
+                        }
+                    }
+
                 }
 
                 CurrentUser.Instance.AppLog.Write(EntityType.Student, "修改學期對照表", _CurrentID, desc.ToString(), "", "");

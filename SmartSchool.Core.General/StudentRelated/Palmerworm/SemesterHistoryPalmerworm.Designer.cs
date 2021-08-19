@@ -39,7 +39,8 @@
             this.colSeatNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTeacher = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSchoolDayCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCourseGroupCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colGDCCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colClassID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -61,7 +62,8 @@
             this.colSeatNo,
             this.colTeacher,
             this.colSchoolDayCount,
-            this.colCourseGroupCode});
+            this.colGDCCode,
+            this.colClassID});
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
@@ -135,11 +137,17 @@
             this.colSchoolDayCount.Name = "colSchoolDayCount";
             this.colSchoolDayCount.Width = 90;
             // 
-            // colCourseGroupCode
+            // colGDCCode
             // 
-            this.colCourseGroupCode.HeaderText = "課程群組代碼";
-            this.colCourseGroupCode.Name = "colCourseGroupCode";
-            this.colCourseGroupCode.Width = 120;
+            this.colGDCCode.HeaderText = "群科班代碼";
+            this.colGDCCode.Name = "colGDCCode";
+            this.colGDCCode.Width = 120;
+            // 
+            // colClassID
+            // 
+            this.colClassID.HeaderText = "班級系統編號";
+            this.colClassID.Name = "colClassID";
+            this.colClassID.Width = 110;
             // 
             // SemesterHistoryPalmerworm
             // 
@@ -168,6 +176,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colSeatNo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTeacher;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSchoolDayCount;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colCourseGroupCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colGDCCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colClassID;
     }
 }

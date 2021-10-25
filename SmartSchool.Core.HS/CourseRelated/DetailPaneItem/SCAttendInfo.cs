@@ -192,7 +192,31 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 if (each.Selected)
                 {
                     if (rsp.GetContent().GetElement("Score/AttendID[.='" + each.Identity + "']") == null)
-                        can.Add(each);
+                    {
+                        #region 2021-10-25 Cynthia 檢查是否有課程成績
+                        // 原本只有檢查是否有評量成績
+                        // 改為檢查若無評量成績，再檢查是否有課程成績，兩個都沒有才允許移除修課學生。
+                        QueryHelper queryHelper = new QueryHelper();
+                        string query = "SELECT score FROM sc_attend  where id IN (" + each.Identity + ") ";
+                        try
+                        {
+                            DataTable dt = queryHelper.Select(query);
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                string score = dr["score"].ToString();
+                                if (score != "")
+                                    cannot.Add(each);
+                                else
+                                    can.Add(each);
+                            }
+                        }
+                        catch(Exception ex)
+                        {
+
+                        }
+
+                        #endregion
+                    }
                     else
                         cannot.Add(each);
                 }
@@ -203,7 +227,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 string names = string.Empty;
                 foreach (AttendInfo each in cannot)
                     names += string.Format("{0,-12}  {1}", each.Class, each.StudentName + "\n");
-                MsgBox.Show("下列學生已經有評量成績，請先刪除評量成績再移除學生修課記錄。\n\n" + names, Application.ProductName);
+                MsgBox.Show("下列學生已經有評量成績或課程成績，請先刪除成績再移除學生修課記錄。\n\n" + names, Application.ProductName);
                 return false;
             }
             else

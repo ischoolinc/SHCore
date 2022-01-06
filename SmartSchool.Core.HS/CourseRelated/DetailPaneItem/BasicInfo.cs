@@ -851,7 +851,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
 
                 _main_button.SubItems.Clear();
                 //自定 ButtonItem 類別，讓其可以儲存 Teacher Object 與 Sequence 資訊。
-                _main_button.SubItems.Add(new TeacherItem("Teacher1", "教師一(評分)", 1));
+                _main_button.SubItems.Add(new TeacherItem("Teacher1", "教師一", 1));
                 _main_button.SubItems.Add(new TeacherItem("Teacher2", "教師二", 2));
                 _main_button.SubItems.Add(new TeacherItem("Teacher3", "教師三", 3));
 

@@ -13,7 +13,7 @@
     </Field>
     <Field DataType="Integer" Name="科目級別" />
     <Field DataType="String" Name="分項類別">
-      <Validate AutoCorrect="False" Description="「分項類別」只允許下列值：學業、體育、國防通識、健康與護理、實習科目、專業科目。 " ErrorType="Error" Validator="分項類別" When="" />
+      <Validate AutoCorrect="False" Description="「分項類別」只允許下列值：學業、實習科目、專業科目。 " ErrorType="Error" Validator="分項類別" When="" />
     </Field>
     <Field DataType="Integer" Name="學年度">
       <Validate AutoCorrect="False" Description="「學年度」必須是數字。 " ErrorType="Error" Validator="數字型態" When="" />
@@ -71,9 +71,9 @@
     <FieldValidator Name="分項類別" Type="Enumeration">
       <!-- Value 是正確的值，一般 Code 是不用的。-->
       <Item Value="學業" />
-      <Item Value="體育" />
+      <!--<Item Value="體育" />
       <Item Value="國防通識" />
-      <Item Value="健康與護理" />
+      <Item Value="健康與護理" />-->
       <Item Value="實習科目" />
       <Item Value="專業科目" />
       <Item Value="" />

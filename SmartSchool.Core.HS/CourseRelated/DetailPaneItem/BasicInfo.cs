@@ -181,9 +181,9 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                     //foreach (XmlElement each in Config.GetScoreEntryList().GetContent().GetElements("Entry"))
                     //    _entries.Add(each.InnerText);
                     _entries.Add("學業");
-                    _entries.Add("體育");
-                    _entries.Add("國防通識");
-                    _entries.Add("健康與護理");
+                    //_entries.Add("體育");
+                    //_entries.Add("國防通識");
+                    //_entries.Add("健康與護理");
                     _entries.Add("實習科目");
                     _entries.Add("專業科目");
 
@@ -244,6 +244,13 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                     rdoCalcTrue.Checked = true;
                 else
                     rdoCalcFalse.Checked = true;
+
+                // 2022-01 Cynthia cboEntry移除舊分項，但為了讓舊課程的分項可以正常顯示，所以增加一個判斷加回來。
+                if (!cboEntry.Items.Contains(content.GetText("Course/ScoreType"))
+                    && (content.GetText("Course/ScoreType")== "體育"
+                    || content.GetText("Course/ScoreType") == "國防通識"
+                    || content.GetText("Course/ScoreType") == "健康與護理"))
+                    cboEntry.Items.Add(content.GetText("Course/ScoreType"));
 
                 cboEntry.Text = content.GetText("Course/ScoreType");
                 _multi_teacher.BindData(RunningID, content.GetElement("Course/Teachers"));

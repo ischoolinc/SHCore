@@ -82,6 +82,7 @@ namespace SmartSchool.ClassRelated.RibbonBars
 
         private void btnWordComment_Click(object sender, EventArgs e)
         {
+            //WordNewForm form = new WordNewForm();
             WordComment form = new WordComment();
             form.ShowDialog();
         }

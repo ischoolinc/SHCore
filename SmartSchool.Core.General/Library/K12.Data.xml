@@ -1515,7 +1515,7 @@
             </summary>
             <returns></returns>
         </member>
-        <!-- 已忽略成員 "M:K12.Data.PeriodMapping.Update(System.Collections.Generic.IEnumerable{K12.Data.PeriodMappingInfo})" 中格式錯誤的 XML 註解 -->
+        <!-- Badly formed XML comment ignored for member "M:K12.Data.PeriodMapping.Update(System.Collections.Generic.IEnumerable{K12.Data.PeriodMappingInfo})" -->
         <member name="E:K12.Data.PeriodMapping.AfterUpdate">
             <summary>
             更新之後所觸發的事件
@@ -2993,7 +2993,7 @@
             2.新增必填欄位為學生記錄編號（RefStudentID）、學年度（SchoolYear）、學期（Semester）、缺曠日期（OccurDate）。
             </remarks>
         </member>
-        <!-- 已忽略成員 "M:K12.Data.Attendance.Insert(System.Collections.Generic.IEnumerable{K12.Data.AttendanceRecord})" 中格式錯誤的 XML 註解 -->
+        <!-- Badly formed XML comment ignored for member "M:K12.Data.Attendance.Insert(System.Collections.Generic.IEnumerable{K12.Data.AttendanceRecord})" -->
         <member name="M:K12.Data.Attendance.Update(K12.Data.AttendanceRecord)">
             <summary>
             更新單筆學生缺曠記錄
@@ -4190,7 +4190,7 @@
             2.新增必填欄位為學生記錄編號（RefStudentID）、學年度（SchoolYear）、學期（Semester）、缺曠日期（OccurDate）。
             </remarks>
         </member>
-        <!-- 已忽略成員 "M:K12.Data.Merit.Insert(System.Collections.Generic.IEnumerable{K12.Data.MeritRecord})" 中格式錯誤的 XML 註解 -->
+        <!-- Badly formed XML comment ignored for member "M:K12.Data.Merit.Insert(System.Collections.Generic.IEnumerable{K12.Data.MeritRecord})" -->
         <member name="M:K12.Data.Merit.Update(K12.Data.MeritRecord)">
             <summary>
             更新單筆學生獎勵記錄
@@ -5370,7 +5370,7 @@
             </example>
             <remarks></remarks>
         </member>
-        <!-- 已忽略成員 "M:K12.Data.Course.SelectBySchoolYearAndSemester``1(System.Nullable{System.Int32},System.Nullable{System.Int32},System.String)" 中格式錯誤的 XML 註解 -->
+        <!-- Badly formed XML comment ignored for member "M:K12.Data.Course.SelectBySchoolYearAndSemester``1(System.Nullable{System.Int32},System.Nullable{System.Int32},System.String)" -->
         <member name="M:K12.Data.Course.SelectByID(System.String)">
             <summary>
             根據單筆課程編號取得課程物件。
@@ -6202,8 +6202,8 @@
                 List&lt;AEIncludeRecord&gt; aeincluderecords = AEInclude.SelectByIDs(AEIncludeIDs);
             </example>
         </member>
-        <!-- 已忽略成員 "M:K12.Data.AEInclude.Insert(K12.Data.AEIncludeRecord)" 中格式錯誤的 XML 註解 -->
-        <!-- 已忽略成員 "M:K12.Data.AEInclude.Insert(System.Collections.Generic.IEnumerable{K12.Data.AEIncludeRecord})" 中格式錯誤的 XML 註解 -->
+        <!-- Badly formed XML comment ignored for member "M:K12.Data.AEInclude.Insert(K12.Data.AEIncludeRecord)" -->
+        <!-- Badly formed XML comment ignored for member "M:K12.Data.AEInclude.Insert(System.Collections.Generic.IEnumerable{K12.Data.AEIncludeRecord})" -->
         <member name="M:K12.Data.AEInclude.Update(K12.Data.AEIncludeRecord)">
             <summary>
             更新單筆評分樣板記錄
@@ -6485,8 +6485,8 @@
                 List&lt;AssessmentSetupRecord&gt; records = AssessmentSetup.SelectByIDs(AssessmentSetupIDs);
             </example>
         </member>
-        <!-- 已忽略成員 "M:K12.Data.AssessmentSetup.Insert(K12.Data.AssessmentSetupRecord)" 中格式錯誤的 XML 註解 -->
-        <!-- 已忽略成員 "M:K12.Data.AssessmentSetup.Insert(System.Collections.Generic.IEnumerable{K12.Data.AssessmentSetupRecord})" 中格式錯誤的 XML 註解 -->
+        <!-- Badly formed XML comment ignored for member "M:K12.Data.AssessmentSetup.Insert(K12.Data.AssessmentSetupRecord)" -->
+        <!-- Badly formed XML comment ignored for member "M:K12.Data.AssessmentSetup.Insert(System.Collections.Generic.IEnumerable{K12.Data.AssessmentSetupRecord})" -->
         <member name="M:K12.Data.AssessmentSetup.Update(K12.Data.AssessmentSetupRecord)">
             <summary>
             更新單筆評量設定記錄
@@ -6711,8 +6711,8 @@
                 List&lt;ExamRecord&gt; records = Exam.SelectByIDs(ExamIDs);
             </example>
         </member>
-        <!-- 已忽略成員 "M:K12.Data.Exam.Insert(K12.Data.ExamRecord)" 中格式錯誤的 XML 註解 -->
-        <!-- 已忽略成員 "M:K12.Data.Exam.Insert(System.Collections.Generic.IEnumerable{K12.Data.ExamRecord})" 中格式錯誤的 XML 註解 -->
+        <!-- Badly formed XML comment ignored for member "M:K12.Data.Exam.Insert(K12.Data.ExamRecord)" -->
+        <!-- Badly formed XML comment ignored for member "M:K12.Data.Exam.Insert(System.Collections.Generic.IEnumerable{K12.Data.ExamRecord})" -->
         <member name="M:K12.Data.Exam.Update(K12.Data.ExamRecord)">
             <summary>
             更新單筆試別項目記錄
@@ -6998,7 +6998,7 @@
             <exception cref="T:System.Exception">
             </exception>
         </member>
-        <!-- 已忽略成員 "M:K12.Data.MoralScore.Insert(System.Collections.Generic.IEnumerable{K12.Data.MoralScoreRecord})" 中格式錯誤的 XML 註解 -->
+        <!-- Badly formed XML comment ignored for member "M:K12.Data.MoralScore.Insert(System.Collections.Generic.IEnumerable{K12.Data.MoralScoreRecord})" -->
         <member name="M:K12.Data.MoralScore.Update(K12.Data.MoralScoreRecord)">
             <summary>
             更新單筆學期德行評量記錄
@@ -7255,8 +7255,8 @@
                 List&lt;ProgramPlanRecord&gt; records = ProgramPlan.SelectByIDs(ProgramPlanIDs);
             </example>
         </member>
-        <!-- 已忽略成員 "M:K12.Data.ProgramPlan.Insert(K12.Data.ProgramPlanRecord)" 中格式錯誤的 XML 註解 -->
-        <!-- 已忽略成員 "M:K12.Data.ProgramPlan.Insert(System.Collections.Generic.IEnumerable{K12.Data.ProgramPlanRecord})" 中格式錯誤的 XML 註解 -->
+        <!-- Badly formed XML comment ignored for member "M:K12.Data.ProgramPlan.Insert(K12.Data.ProgramPlanRecord)" -->
+        <!-- Badly formed XML comment ignored for member "M:K12.Data.ProgramPlan.Insert(System.Collections.Generic.IEnumerable{K12.Data.ProgramPlanRecord})" -->
         <member name="M:K12.Data.ProgramPlan.Update(K12.Data.ProgramPlanRecord)">
             <summary>
             更新單筆課程規劃記錄
@@ -7741,8 +7741,8 @@
             <param name="CourseIDs"></param>
             <returns></returns>
         </member>
-        <!-- 已忽略成員 "M:K12.Data.SCAttend.Insert(K12.Data.SCAttendRecord)" 中格式錯誤的 XML 註解 -->
-        <!-- 已忽略成員 "M:K12.Data.SCAttend.Insert(System.Collections.Generic.IEnumerable{K12.Data.SCAttendRecord})" 中格式錯誤的 XML 註解 -->
+        <!-- Badly formed XML comment ignored for member "M:K12.Data.SCAttend.Insert(K12.Data.SCAttendRecord)" -->
+        <!-- Badly formed XML comment ignored for member "M:K12.Data.SCAttend.Insert(System.Collections.Generic.IEnumerable{K12.Data.SCAttendRecord})" -->
         <member name="M:K12.Data.SCAttend.Update(K12.Data.SCAttendRecord)">
             <summary>
             更新單筆學生修課記錄
@@ -8232,7 +8232,7 @@
             <exception cref="T:System.Exception">
             </exception>
         </member>
-        <!-- 已忽略成員 "M:K12.Data.SCETake.Insert(System.Collections.Generic.IEnumerable{K12.Data.SCETakeRecord})" 中格式錯誤的 XML 註解 -->
+        <!-- Badly formed XML comment ignored for member "M:K12.Data.SCETake.Insert(System.Collections.Generic.IEnumerable{K12.Data.SCETakeRecord})" -->
         <member name="M:K12.Data.SCETake.Update(K12.Data.SCETakeRecord)">
             <summary>
             更新單筆學生期中成績記錄
@@ -8521,7 +8521,7 @@
                 </code>
             </example>
         </member>
-        <!-- 已忽略成員 "M:K12.Data.ScoreCalcRule.Insert(System.Collections.Generic.IEnumerable{K12.Data.ScoreCalcRuleRecord})" 中格式錯誤的 XML 註解 -->
+        <!-- Badly formed XML comment ignored for member "M:K12.Data.ScoreCalcRule.Insert(System.Collections.Generic.IEnumerable{K12.Data.ScoreCalcRuleRecord})" -->
         <member name="M:K12.Data.ScoreCalcRule.Update(K12.Data.ScoreCalcRuleRecord)">
             <summary>
             更新單筆成績計算規則記錄
@@ -8850,8 +8850,8 @@
                 List&lt;SemesterScoreRecord&gt; records = SemesterScore.SelectByStudent&lt;K12.Data.SemesterScoreRecord&gt;(Student);
             </example>
         </member>
-        <!-- 已忽略成員 "M:K12.Data.SemesterScore.Insert(K12.Data.SemesterScoreRecord)" 中格式錯誤的 XML 註解 -->
-        <!-- 已忽略成員 "M:K12.Data.SemesterScore.Insert(System.Collections.Generic.IEnumerable{K12.Data.SemesterScoreRecord})" 中格式錯誤的 XML 註解 -->
+        <!-- Badly formed XML comment ignored for member "M:K12.Data.SemesterScore.Insert(K12.Data.SemesterScoreRecord)" -->
+        <!-- Badly formed XML comment ignored for member "M:K12.Data.SemesterScore.Insert(System.Collections.Generic.IEnumerable{K12.Data.SemesterScoreRecord})" -->
         <member name="M:K12.Data.SemesterScore.Update(K12.Data.SemesterScoreRecord)">
             <summary>
             更新單筆學生學期成績記錄
@@ -9345,8 +9345,8 @@
                 List&lt;TCInstructRecord&gt; tcinstructrecords = TCInstruct.SelectByIDs(TCInstructIDs);
             </example>
         </member>
-        <!-- 已忽略成員 "M:K12.Data.TCInstruct.Insert(K12.Data.TCInstructRecord)" 中格式錯誤的 XML 註解 -->
-        <!-- 已忽略成員 "M:K12.Data.TCInstruct.Insert(System.Collections.Generic.IEnumerable{K12.Data.TCInstructRecord})" 中格式錯誤的 XML 註解 -->
+        <!-- Badly formed XML comment ignored for member "M:K12.Data.TCInstruct.Insert(K12.Data.TCInstructRecord)" -->
+        <!-- Badly formed XML comment ignored for member "M:K12.Data.TCInstruct.Insert(System.Collections.Generic.IEnumerable{K12.Data.TCInstructRecord})" -->
         <member name="M:K12.Data.TCInstruct.Update(K12.Data.TCInstructRecord)">
             <summary>
             更新單筆教師教授課程記錄
@@ -12914,6 +12914,11 @@
             國籍
             </summary>
         </member>
+        <member name="P:K12.Data.StudentRecord.EMail">
+            <summary>
+            電子信箱
+            </summary>
+        </member>
         <member name="P:K12.Data.StudentRecord.OverrideDepartmentID">
             <summary>
             覆蓋後的科別編號
@@ -13599,7 +13604,7 @@
             </example>
             <remarks>傳回值為成功刪除的筆數。</remarks>
         </member>
-        <!-- 已忽略成員 "M:K12.Data.TagConfig.Delete(System.Collections.Generic.IEnumerable{System.String})" 中格式錯誤的 XML 註解 -->
+        <!-- Badly formed XML comment ignored for member "M:K12.Data.TagConfig.Delete(System.Collections.Generic.IEnumerable{System.String})" -->
         <member name="E:K12.Data.TagConfig.AfterInsert">
             <summary>
             新增之後所觸發的事件
@@ -14505,7 +14510,7 @@
             不給該欄位值。
             </summary>
         </member>
-        <!-- 已忽略成員 "T:K12.Data.StringComparer" 中格式錯誤的 XML 註解 -->
+        <!-- Badly formed XML comment ignored for member "T:K12.Data.StringComparer" -->
         <member name="M:K12.Data.StringComparer.Comparer(System.String,System.String)">
             <summary>
             使用預設字根比較字串

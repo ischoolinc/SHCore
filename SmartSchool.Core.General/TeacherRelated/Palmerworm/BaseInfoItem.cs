@@ -59,18 +59,27 @@ namespace SmartSchool.TeacherRelated.Palmerworm
             // 讀取非自己同教師編號-cyn
             //List<SHTeacherRecord> HasTeacherNumberList = TeacherList.Where(x => (x.TeacherNumber == txtTeacherNumber.Text && x.ID != RunningID)).Where(y => y.TeacherNumber != "").ToList();
 
+            // 讀取非自己同身分證號
+            List<SHTeacherRecord> HasIDNumberList = TeacherList.Where(x => (x.IDNumber == txtIDNumber.Text && x.ID != RunningID)).Where(y => y.IDNumber != "").ToList();
+
 
             // 檢查一般狀態
             if (HasLoginNameList.Where(x => x.Status == K12.Data.TeacherRecord.TeacherStatus.一般).Count() > 0)
             {
-                FISCA.Presentation.Controls.MsgBox.Show("有相同帳號無法儲存");
+                FISCA.Presentation.Controls.MsgBox.Show("有相同「登入帳號」，無法儲存。");
                 return;           
             }
 
             if (HasNameAndNickNameList.Where(x => x.Status == K12.Data.TeacherRecord.TeacherStatus.一般).Count() > 0)
             {
-                FISCA.Presentation.Controls.MsgBox.Show("有相同姓名或暱稱無法儲存");
+                FISCA.Presentation.Controls.MsgBox.Show("有相同姓名或暱稱，無法儲存。");
                 return;            
+            }
+
+            if (HasIDNumberList.Where(x => x.Status == K12.Data.TeacherRecord.TeacherStatus.一般).Count() > 0)
+            {
+                FISCA.Presentation.Controls.MsgBox.Show("有重複的「身分證號」，無法儲存。");
+                return;
             }
 
             //if (HasTeacherNumberList.Where(x => x.Status == K12.Data.TeacherRecord.TeacherStatus.一般).Count() > 0)
@@ -149,7 +158,7 @@ namespace SmartSchool.TeacherRelated.Palmerworm
             }
             else
             {
-                MsgBox.Show("輸入資料有誤，請重新整理後再儲存");
+                MsgBox.Show("輸入資料有誤，請重新整理後再儲存。");
             }
         }
 

@@ -41,7 +41,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
         }
         protected override object OnBackgroundWorkerWorking()
         {
-            return QueryStudent.GetDetailList(new string[] { "Nationality", "Birthdate", "Name", "EnglishName", "IDNumber", "BirthPlace", "Gender", "FreshmanPhoto", "GraduatePhoto", "SALoginName", "SAPassword", "AccountType" }, RunningID);
+            return QueryStudent.GetDetailList(new string[] { "Nationality", "Birthdate", "Name", "EnglishName", "IDNumber", "BirthPlace", "Gender", "FreshmanPhoto", "GraduatePhoto", "SALoginName", "SAPassword", "AccountType", "EMail" }, RunningID);
         }
 
         protected override void OnBackgroundWorkerCompleted(object p)
@@ -62,6 +62,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
             string saLoginName = dsrsp.GetContent().GetText("Student/SALoginName");
             string saPassword = dsrsp.GetContent().GetText("Student/SAPassword");
             string accountType = dsrsp.GetContent().GetText("Student/AccountType");
+            string email = dsrsp.GetContent().GetText("Student/EMail");
 
             cboNationality.Text=nationality;
             txtBirthDate.SetDate(birthday);
@@ -72,6 +73,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
             txtBirthPlace.Text = birthPlace;
             txtLoginID.Text = saLoginName;
             txtLoginPwd.Text = saPassword;
+            txtEmail.Text = email;
             //cboBirthCounty.SetComboBoxValue(birthProvince);
             //cboBirthCity.SetComboBoxValue(birthCounty);
             cboGender.SetComboBoxValue(gender);
@@ -121,6 +123,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
             _valueManager.AddValue("SALoginName", saLoginName, "登入帳號");
             _valueManager.AddValue("SAPassword", saPassword, "登入密碼");
             _valueManager.AddValue("AccountType", accountType, "帳號類型");
+            _valueManager.AddValue("EMail", txtEmail.Text, "電子信箱");
 
             SaveButtonVisible = false;
         }
@@ -436,6 +439,11 @@ namespace SmartSchool.StudentRelated.Palmerworm
             {
                 MsgBox.Show(ex.Message);
             }
+        }
+
+        private void txtEmail_TextChanged(object sender, EventArgs e)
+        {
+            OnValueChanged("EMail", txtEmail.Text);
         }
 
         //清除畢業照片

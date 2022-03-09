@@ -68,6 +68,8 @@
             this.cboAccountType = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.comboItem4 = new DevComponents.Editors.ComboItem();
             this.comboItem5 = new DevComponents.Editors.ComboItem();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtEmail = new DevComponents.DotNetBar.Controls.TextBoxX();
             ((System.ComponentModel.ISupportInitialize)(this.picWaiting)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic2)).BeginInit();
@@ -473,10 +475,38 @@
             // 
             this.comboItem5.Text = "自定帳號";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.Location = new System.Drawing.Point(30, 205);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(60, 17);
+            this.label4.TabIndex = 213;
+            this.label4.Text = "電子信箱";
+            // 
+            // txtEmail
+            // 
+            // 
+            // 
+            // 
+            this.txtEmail.Border.Class = "TextBoxBorder";
+            this.txtEmail.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.txtEmail.Location = new System.Drawing.Point(97, 203);
+            this.txtEmail.Margin = new System.Windows.Forms.Padding(4);
+            this.txtEmail.MaxLength = 100;
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Size = new System.Drawing.Size(152, 25);
+            this.txtEmail.TabIndex = 212;
+            this.txtEmail.TextChanged += new System.EventHandler(this.txtEmail_TextChanged);
+            // 
             // BaseInfoPalmerwormItem
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.Control;
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.txtEmail);
             this.Controls.Add(this.txtBirthDate);
             this.Controls.Add(this.cboAccountType);
             this.Controls.Add(this.cboGender);
@@ -502,7 +532,7 @@
             this.Controls.Add(this.label80);
             this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.Name = "BaseInfoPalmerwormItem";
-            this.Size = new System.Drawing.Size(550, 204);
+            this.Size = new System.Drawing.Size(550, 235);
             this.Controls.SetChildIndex(this.label80, 0);
             this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.label2, 0);
@@ -527,6 +557,8 @@
             this.Controls.SetChildIndex(this.cboAccountType, 0);
             this.Controls.SetChildIndex(this.txtBirthDate, 0);
             this.Controls.SetChildIndex(this.picWaiting, 0);
+            this.Controls.SetChildIndex(this.txtEmail, 0);
+            this.Controls.SetChildIndex(this.label4, 0);
             ((System.ComponentModel.ISupportInitialize)(this.picWaiting)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic2)).EndInit();
@@ -578,5 +610,7 @@
         private DevComponents.Editors.ComboItem comboItem5;
         private DevComponents.DotNetBar.ButtonItem buttonItem5;
         private DevComponents.DotNetBar.ButtonItem buttonItem6;
+        internal System.Windows.Forms.Label label4;
+        internal DevComponents.DotNetBar.Controls.TextBoxX txtEmail;
     }
 }

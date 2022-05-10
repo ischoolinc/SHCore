@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using DevComponents.DotNetBar;
 using DevComponents.DotNetBar.Controls;
+using FISCA.Data;
 using FISCA.DSAUtil;
 using SmartSchool.AccessControl;
 using SmartSchool.ApplicationLog;
@@ -247,7 +249,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
 
                 // 2022-01 Cynthia cboEntry移除舊分項，但為了讓舊課程的分項可以正常顯示，所以增加一個判斷加回來。
                 if (!cboEntry.Items.Contains(content.GetText("Course/ScoreType"))
-                    && (content.GetText("Course/ScoreType")== "體育"
+                    && (content.GetText("Course/ScoreType") == "體育"
                     || content.GetText("Course/ScoreType") == "國防通識"
                     || content.GetText("Course/ScoreType") == "健康與護理"))
                     cboEntry.Items.Add(content.GetText("Course/ScoreType"));
@@ -377,7 +379,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 cboExamTemplate.ValueMember = "TemplateID";
 
                 cboEntry.SelectedItem = null;
-                cboEntry.Items.Clear();                
+                cboEntry.Items.Clear();
                 cboEntry.Items.AddRange(_entries.ToArray());
             }
         }
@@ -447,8 +449,56 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
             }
         }
 
+
+        /// <summary>
+        /// 類別 課程計畫:課程
+        /// </summary>
+        private bool CheckTagged()
+        {
+            bool value = false;
+            string tagID = "";
+            QueryHelper queryHelper = new QueryHelper();
+            string queryTagID = @"
+SELECT
+    *
+FROM
+    tag
+WHERE
+    prefix = '課程計畫'
+	AND name='課程'
+    AND category = 'Course'
+";
+            try
+            {
+                DataTable dt = queryHelper.Select(queryTagID);
+
+                if (dt.Rows.Count > 0)
+                {
+                    tagID = "" + dt.Rows[0]["id"];
+                    string queryTagCourse = "SELECT * FROM tag_course WHERE ref_tag_id='" + tagID + "' AND ref_course_id='" + RunningID + "'";
+
+                    DataTable dt2 = queryHelper.Select(queryTagCourse);
+
+                    if (dt2.Rows.Count > 0)
+                    {
+                        value = true;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MsgBox.Show(ex.Message);
+            }
+
+            return value;
+
+        }
+
         public override void Save()
         {
+            bool isTagged=CheckTagged();
+
             try
             {
                 DSXmlHelper req = new DSXmlHelper("UpdateRequest");
@@ -519,7 +569,8 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 _multi_teacher.Save();
 
                 bool _update_required = false;
-
+                bool updateTagged = false;
+                //學年度,學期,科目名稱+科目級別,學分數,必選修,部定/校訂，分項類別
                 req.AddElement("Course");
                 req.AddElement("Course", "Field");
 
@@ -533,12 +584,14 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 {
                     req.AddElement("Course/Field", "Subject", txtSubject.Text);
                     _update_required = true;
+                    updateTagged = true;
                 }
 
                 if (items.ContainsKey("SubjectLevel"))
                 {
                     req.AddElement("Course/Field", "SubjectLevel", cboSubjectLevel.Text);
                     _update_required = true;
+                    updateTagged = true;
                 }
 
                 if (items.ContainsKey("RefClassID"))
@@ -551,12 +604,14 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 {
                     req.AddElement("Course/Field", "SchoolYear", cboSchoolYear.Text);
                     _update_required = true;
+                    updateTagged = true;
                 }
 
                 if (items.ContainsKey("Semester"))
                 {
                     req.AddElement("Course/Field", "Semester", cboSemester.Text);
                     _update_required = true;
+                    updateTagged = true;
                 }
 
                 if (items.ContainsKey("Credit"))
@@ -572,18 +627,21 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                         req.AddElement("Course/Field", "Credit", strCreditPeriod);
                         req.AddElement("Course/Field", "Period", strCreditPeriod);
                         _update_required = true;
+                        updateTagged = true;
                     }
                     else if (strCreditPeriods.Length >= 2)
                     {
                         req.AddElement("Course/Field", "Credit", strCreditPeriods[0]);
                         req.AddElement("Course/Field", "Period", strCreditPeriods[1]);
                         _update_required = true;
+                        updateTagged = true;
                     }
                     else if (string.IsNullOrEmpty(strCreditPeriod))
                     {
                         req.AddElement("Course/Field", "Credit", string.Empty);
                         req.AddElement("Course/Field", "Period", string.Empty);
                         _update_required = true;
+                        updateTagged = true;
                     }
                     #endregion
                 }
@@ -592,12 +650,14 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 {
                     req.AddElement("Course/Field", "RequiredBy", cboRequiredBy.Text);
                     _update_required = true;
+                    updateTagged = true;
                 }
 
                 if (items.ContainsKey("Required"))
                 {
                     req.AddElement("Course/Field", "IsRequired", cboRequired.Text.Replace("修", ""));
                     _update_required = true;
+                    updateTagged = true;
                 }
 
                 //if (items.ContainsKey("RefTeacherID"))
@@ -619,6 +679,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 {
                     req.AddElement("Course/Field", "ScoreType", cboEntry.Text.Trim());
                     _update_required = true;
+                    updateTagged = true;
                 }
 
                 if (items.ContainsKey("CourseNumber"))
@@ -640,6 +701,15 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
 
                 if (_update_required)
                 {
+                    if (updateTagged&& isTagged)
+                    {
+                        //輸入密碼
+                        PassWordForm passWordForm = new PassWordForm();
+                        if (passWordForm.ShowDialog() == DialogResult.Cancel)
+                        {
+                            return;
+                        }
+                    }
                     EditCourse.UpdateCourse(new DSRequest(req));
 
                     #region Log

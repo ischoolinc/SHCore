@@ -218,6 +218,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 txtCourseName.Text = content.GetText("Course/CourseName");
                 txtSubject.Text = content.GetText("Course/Subject");
                 cboSubjectLevel.Text = content.GetText("Course/SubjectLevel");
+                txtSpecifySubjectName.Text = content.GetText("Course/SpecifySubjectName");
 
                 string Credit = content.GetText("Course/Credit"); //取得學分數
                 string Period = content.GetText("Course/Period"); //取得節數
@@ -286,6 +287,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 WatchValue("CourseName", txtCourseName.Text);
                 WatchValue("Subject", txtSubject.Text);
                 WatchValue("SubjectLevel", cboSubjectLevel.Text);
+                WatchValue("SpecifySubjectName", txtSpecifySubjectName.Text);
                 WatchValue("Credit", txtCredit.Text);
                 WatchValue("SchoolYear", cboSchoolYear.Text);
                 WatchValue("Semester", cboSemester.Text);
@@ -319,6 +321,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 machine.AddBefore(labelX11.Text.Replace("　", "").Replace(" ", ""), cboEntry.Text);
                 machine.AddBefore(labelX12.Text.Replace("　", "").Replace(" ", ""), cboExamTemplate.Text);
                 machine.AddBefore(labelX14.Text.Replace("　", "").Replace(" ", ""), txtCourseNumber.Text);
+                machine.AddBefore(labelX15.Text.Replace("　", "").Replace(" ", ""), txtSpecifySubjectName.Text);
                 SmartSchool.CourseRelated.DetailPaneItem.BasicInfo.MultiTeacherController.TeacherItem teacher1 = (SmartSchool.CourseRelated.DetailPaneItem.BasicInfo.MultiTeacherController.TeacherItem)_multi_teacher.Teacher1Button;
                 SmartSchool.CourseRelated.DetailPaneItem.BasicInfo.MultiTeacherController.TeacherItem teacher2 = (SmartSchool.CourseRelated.DetailPaneItem.BasicInfo.MultiTeacherController.TeacherItem)_multi_teacher.Teacher2Button;
                 SmartSchool.CourseRelated.DetailPaneItem.BasicInfo.MultiTeacherController.TeacherItem teacher3 = (SmartSchool.CourseRelated.DetailPaneItem.BasicInfo.MultiTeacherController.TeacherItem)_multi_teacher.Teacher3Button;
@@ -529,13 +532,25 @@ WHERE
 
                 if (string.IsNullOrEmpty(cboEntry.Text))
                 {
-                    MsgBox.Show("分項類別不允許空白");
+                    MsgBox.Show("「分項類別」不允許空白。");
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(cboRequiredBy.Text))
+                {
+                    MsgBox.Show("「校部訂」不允許空白。");
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(cboRequired.Text))
+                {
+                    MsgBox.Show("「必選修」不允許空白。");
                     return;
                 }
 
                 if (_errors.HasError)
                 {
-                    MsgBox.Show("輸入資料未通過驗證，請修正後再儲存");
+                    MsgBox.Show("輸入資料未通過驗證，請修正後再儲存。");
                     return;
                 }
 
@@ -555,6 +570,7 @@ WHERE
                 machine.AddAfter(labelX11.Text.Replace("　", "").Replace(" ", ""), cboEntry.Text);
                 machine.AddAfter(labelX12.Text.Replace("　", "").Replace(" ", ""), cboExamTemplate.Text);
                 machine.AddAfter(labelX14.Text.Replace("　", "").Replace(" ", ""), txtCourseNumber.Text);
+                machine.AddAfter(labelX15.Text.Replace("　", "").Replace(" ", ""), txtSpecifySubjectName.Text);
                 SmartSchool.CourseRelated.DetailPaneItem.BasicInfo.MultiTeacherController.TeacherItem teacher1 = (SmartSchool.CourseRelated.DetailPaneItem.BasicInfo.MultiTeacherController.TeacherItem)_multi_teacher.Teacher1Button;
                 SmartSchool.CourseRelated.DetailPaneItem.BasicInfo.MultiTeacherController.TeacherItem teacher2 = (SmartSchool.CourseRelated.DetailPaneItem.BasicInfo.MultiTeacherController.TeacherItem)_multi_teacher.Teacher2Button;
                 SmartSchool.CourseRelated.DetailPaneItem.BasicInfo.MultiTeacherController.TeacherItem teacher3 = (SmartSchool.CourseRelated.DetailPaneItem.BasicInfo.MultiTeacherController.TeacherItem)_multi_teacher.Teacher3Button;
@@ -688,6 +704,12 @@ WHERE
                     _update_required = true;
                 }
 
+                if (items.ContainsKey("SpecifySubjectName"))
+                {
+                    req.AddElement("Course/Field", "SpecifySubjectName", txtSpecifySubjectName.Text.Trim());
+                    _update_required = true;
+                }
+
                 if (items.ContainsKey("RefExamTemplateID"))
                 {
                     req.AddElement("Course/Field", "RefExamTemplateID", GetRefExamTemplateID());
@@ -752,6 +774,14 @@ WHERE
             _errors.SetError(txtCourseNumber, "");
 
         }
+
+        private void txtSpecifySubjectName_TextChanged(object sender, EventArgs e)
+        {
+            if (!_initialing)
+                OnValueChanged("SpecifySubjectName", txtSpecifySubjectName.Text);
+            _errors.SetError(txtSpecifySubjectName, "");
+        }
+
         private void txtSubject_TextChanged(object sender, EventArgs e)
         {
             if (!_initialing)
@@ -1391,6 +1421,10 @@ WHERE
             }
         }
 
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            MsgBox.Show("「指定學年科目名稱」用於處理「自然科學領域」之學年科目成績名稱，若不需要則無需填寫，請保持空白。");
+        }
 
     }
 

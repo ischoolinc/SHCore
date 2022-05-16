@@ -121,6 +121,7 @@
     <Reference Include="K12.Data, Version=2.0.0.15, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Library\K12.Data.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="K12.EduAdminDataMapping">
       <HintPath>Library\K12.EduAdminDataMapping.dll</HintPath>

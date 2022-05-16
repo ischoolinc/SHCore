@@ -216,7 +216,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
 
         private void txtName_TextChanged(object sender, EventArgs e)
         {
-            OnValueChanged("Name", this.txtName.Text);
+            OnValueChanged("Name", this.txtName.Text.Trim());
         }
 
         private void txtEngName_TextChanged(object sender, EventArgs e)
@@ -226,7 +226,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
 
         private void txtSSN_TextChanged(object sender, EventArgs e)
         {
-            OnValueChanged("IDNumber", this.txtSSN.Text);
+            OnValueChanged("IDNumber", this.txtSSN.Text.Trim());
         }
 
         private string pic1String = string.Empty, pic2String = string.Empty;
@@ -396,13 +396,13 @@ namespace SmartSchool.StudentRelated.Palmerworm
 
         private void ValidateLoginID()
         {
-            if (string.IsNullOrEmpty(txtLoginID.Text))
+            if (string.IsNullOrEmpty(txtLoginID.Text.Trim()))
             {
                 _errors.SetError(txtLoginID, string.Empty);
                 return;
             }
 
-            if (QueryStudent.LoginIDExists(txtLoginID.Text, RunningID))
+            if (QueryStudent.LoginIDExists(txtLoginID.Text.Trim(), RunningID))
                 _errors.SetError(txtLoginID, "帳號重覆，請重新選擇。");
             else
                 _errors.SetError(txtLoginID, string.Empty);
@@ -410,7 +410,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
 
         private void txtLoginID_TextChanged(object sender, EventArgs e)
         {
-            OnValueChanged("SALoginName", txtLoginID.Text);
+            OnValueChanged("SALoginName", txtLoginID.Text.Trim());
         }
 
         private void txtLoginPwd_TextChanged(object sender, EventArgs e)
@@ -443,7 +443,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
 
         private void txtEmail_TextChanged(object sender, EventArgs e)
         {
-            OnValueChanged("EMail", txtEmail.Text);
+            OnValueChanged("EMail", txtEmail.Text.Trim());
         }
 
         //清除畢業照片

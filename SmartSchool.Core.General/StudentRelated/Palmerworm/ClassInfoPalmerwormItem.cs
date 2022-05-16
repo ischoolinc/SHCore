@@ -335,7 +335,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
 
         private void txtStudentID_TextChanged(object sender, EventArgs e)
         {
-            OnValueChanged("StudentNumber", txtStudentID.Text);
+            OnValueChanged("StudentNumber", txtStudentID.Text.Trim());
         }
 
         private void cboGradeYear_SelectedIndexChanged_1(object sender, EventArgs e)

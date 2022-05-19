@@ -61,15 +61,15 @@ namespace SmartSchool.StudentRelated.RibbonBars
             lvlEduCtrl = new FeatureAccessControl("Button0092");
 
             //btnInOut["產生教育程度資料檔"].Enable = lvlEduCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
-            btnDiploma["證書字號"].Enable = placeCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
-            btnPlacing["排名"].Enable = diplomaCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
+            btnDiploma["證書字號"].Enable = diplomaCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
+            btnPlacing["排名"].Enable = placeCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
             btnDiploma["產生教育程度資料檔"].Enable = lvlEduCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
 
             K12.Presentation.NLDPanels.Student.SelectedSourceChanged += delegate
             {
                 //btnInOut.Enable = lvlEduCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
-                btnDiploma["證書字號"].Enable = placeCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
-                btnPlacing["排名"].Enable = diplomaCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
+                btnDiploma["證書字號"].Enable = diplomaCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
+                btnPlacing["排名"].Enable = placeCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
                 btnDiploma["產生教育程度資料檔"].Enable = lvlEduCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
             };
         }

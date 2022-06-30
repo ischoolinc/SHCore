@@ -11,6 +11,7 @@ using SmartSchool.Feature.Basic;
 using SmartSchool.Feature.Class;
 using SmartSchool.Properties;
 using System.Data;
+using FISCA.Data;
 
 namespace SmartSchool.StudentRelated.Palmerworm
 {
@@ -94,20 +95,21 @@ namespace SmartSchool.StudentRelated.Palmerworm
 
             //年級
             cboGradeYear.SelectedItem = null;
-            cboGradeYear.Items.Clear();
-            cboGradeYear.AddItem("", "");
-            cboGradeYear.AddItem("1", "一年級");
-            cboGradeYear.AddItem("2", "二年級");
-            cboGradeYear.AddItem("3", "三年級");
-            cboGradeYear.AddItem("4", "四年級");
-            cboGradeYear.AddItem("5", "五年級");
-            cboGradeYear.AddItem("6", "六年級");
-            cboGradeYear.AddItem("7", "七年級");
-            cboGradeYear.AddItem("8", "八年級");
-            cboGradeYear.AddItem("9", "九年級");
-            cboGradeYear.AddItem("10", "十年級");
-            cboGradeYear.AddItem("11", "十一年級");
-            cboGradeYear.AddItem("12", "十二年級");
+            AddExistClassGradeToItem();
+            //cboGradeYear.Items.Clear();
+            //cboGradeYear.AddItem("", "");
+            //cboGradeYear.AddItem("1", "一年級");
+            //cboGradeYear.AddItem("2", "二年級");
+            //cboGradeYear.AddItem("3", "三年級");
+            //cboGradeYear.AddItem("4", "四年級");
+            //cboGradeYear.AddItem("5", "五年級");
+            //cboGradeYear.AddItem("6", "六年級");
+            //cboGradeYear.AddItem("7", "七年級");
+            //cboGradeYear.AddItem("8", "八年級");
+            //cboGradeYear.AddItem("9", "九年級");
+            //cboGradeYear.AddItem("10", "十年級");
+            //cboGradeYear.AddItem("11", "十一年級");
+            //cboGradeYear.AddItem("12", "十二年級");
 
             if (_isInitialized) return;
 
@@ -195,7 +197,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
             string classID = e.Argument as string;
 
             //added by Cloud 2014.2.20
-            if(!string.IsNullOrWhiteSpace(classID))
+            if (!string.IsNullOrWhiteSpace(classID))
             {
                 seatNoList = new List<int>();
                 FISCA.Data.QueryHelper Q = new FISCA.Data.QueryHelper();
@@ -312,6 +314,29 @@ namespace SmartSchool.StudentRelated.Palmerworm
         }
 
         #endregion
+
+        private void AddExistClassGradeToItem()
+        {
+            cboGradeYear.Items.Clear();
+            cboGradeYear.AddItem("", "");
+
+            QueryHelper queryHelper = new QueryHelper();
+            string query = "SELECT DISTINCT grade_year FROM class WHERE grade_year IS NOT NULL ORDER BY grade_year";
+            try
+            {
+                DataTable dt = queryHelper.Select(query);
+                
+                foreach (DataRow dr in dt.Rows)
+                {
+                    string gradeYear = dr["grade_year"].ToString();
+                    cboGradeYear.AddItem(gradeYear, gradeYear + "年級");
+                }
+            }
+            catch (Exception ex)
+            {
+                MsgBox.Show("取得班級資訊發生錯誤。");
+            }
+        }
 
         private void SetComboBoxValue(ComboBox combo, string value)
         {

@@ -664,7 +664,7 @@ WHERE
 
                 if (items.ContainsKey("RequiredBy"))
                 {
-                    req.AddElement("Course/Field", "RequiredBy", cboRequiredBy.Text);
+                    req.AddElement("Course/Field", "RequiredBy", cboRequiredBy.Text=="部定"?"部訂": cboRequiredBy.Text);
                     _update_required = true;
                     updateTagged = true;
                 }

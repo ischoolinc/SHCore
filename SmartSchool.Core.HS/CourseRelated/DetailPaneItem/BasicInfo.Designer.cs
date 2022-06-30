@@ -560,7 +560,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
             // 
             // comboItem25
             // 
-            this.comboItem25.Text = "部訂";
+            this.comboItem25.Text = "部定";
             // 
             // labelX8
             // 

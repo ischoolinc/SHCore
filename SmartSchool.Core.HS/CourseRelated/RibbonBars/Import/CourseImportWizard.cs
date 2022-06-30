@@ -852,6 +852,10 @@ namespace SmartSchool.CourseRelated.RibbonBars.Import
                 if (Context.SelectedFields.Contains("評分樣版"))
                     ConvertTemplateField(output);
 
+                if (Context.SelectedFields.Contains("校部訂"))
+                    ConvertRequiredByField(output);
+
+
                 pgImport.Value = 100;
 
                 ImportMessage("上傳資料到主機，請稍後…");
@@ -940,6 +944,20 @@ namespace SmartSchool.CourseRelated.RibbonBars.Import
                 string className = each.SelectSingleNode("ClassName").InnerText;
                 XmlElement classNode = CreateChild(each, "ClassID");
                 classNode.InnerText = lookup.GetClassID(className);
+            }
+        }
+
+        private void ConvertRequiredByField(XmlElement output)
+        {
+            //TemplateLookup lookup = Context.Extensions[TemplateLookup.Name] as TemplateLookup;
+
+            foreach (XmlElement each in output.SelectNodes("Course"))
+            {
+                string requiredBy = each.SelectSingleNode("RequiredBy").InnerText;
+                if (requiredBy == "部定")
+                    each.SelectSingleNode("RequiredBy").InnerText = "部訂";
+                //XmlElement node = CreateChild(each, "ExamTemplateID");
+                //node.InnerText = lookup.GetTemplateID(name);
             }
         }
 

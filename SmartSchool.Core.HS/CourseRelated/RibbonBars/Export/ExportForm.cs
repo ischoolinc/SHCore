@@ -63,11 +63,23 @@ namespace SmartSchool.CourseRelated.RibbonBars.Export
             {
                 IExportConnector ec = new ExportCourseConnector();
                 foreach (CourseInformation course in SmartSchool.CourseRelated.Course.Instance.SelectionCourse)
-                {                    
+                {
                     ec.AddCondition(course.Identity.ToString());
                 }
                 ec.SetSelectedFields(GetSelectedFields());
                 ExportTable table = ec.Export();
+
+
+                if (IsSelectedRequiredBy())
+                    foreach (var row in table.Rows)
+                    {
+                        for (int i = 0; i < row.Cells.Count - 1; i++)
+                        {
+                            if (row.Cells[i].Value == "部訂")
+                                row.Cells[i].Value = "部定";
+
+                        }
+                    }
 
                 ExportOutput output = new ExportOutput();
                 output.SetSource(table);
@@ -97,6 +109,18 @@ namespace SmartSchool.CourseRelated.RibbonBars.Export
                 collection.Add(field);
             }
             return collection;
+        }
+
+        private bool IsSelectedRequiredBy()
+        {
+            bool isRequiredBy = false;
+
+            foreach (ListViewItem item in listView.CheckedItems)
+            {
+                if (item.Text == "校部訂")
+                    isRequiredBy = true;
+            }
+            return isRequiredBy;
         }
 
         private void btnExit_Click(object sender, EventArgs e)

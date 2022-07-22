@@ -64,7 +64,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
             string accountType = dsrsp.GetContent().GetText("Student/AccountType");
             string email = dsrsp.GetContent().GetText("Student/EMail");
 
-            cboNationality.Text=nationality;
+            cboNationality.Text = nationality;
             txtBirthDate.SetDate(birthday);
             birthday = txtBirthDate.DateString;
             txtName.Text = name;
@@ -106,7 +106,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
             }
             try
             {
-                if(cboNationality.Text=="<空白>")
+                if (cboNationality.Text == "<空白>")
                     _valueManager.AddValue("Nationality", "", "國籍");
                 else
                     _valueManager.AddValue("Nationality", cboNationality.Text, "國籍");
@@ -199,7 +199,7 @@ namespace SmartSchool.StudentRelated.Palmerworm
                 List<string> dataList = new List<string>();
                 dataList.Add("<空白>");
                 foreach (string str in K12.EduAdminDataMapping.Utility.GetNationalityMappingDict().Keys)
-                    dataList.Add(str);                
+                    dataList.Add(str);
 
                 cboNationality.Items.AddRange(dataList.ToArray());
             }
@@ -402,10 +402,21 @@ namespace SmartSchool.StudentRelated.Palmerworm
                 return;
             }
 
-            if (QueryStudent.LoginIDExists(txtLoginID.Text.Trim(), RunningID))
-                _errors.SetError(txtLoginID, "帳號重覆，請重新選擇。");
-            else
-                _errors.SetError(txtLoginID, string.Empty);
+            //if (QueryStudent.LoginIDExists(txtLoginID.Text.Trim(), RunningID))
+            FISCA.Data.QueryHelper queryHelper = new FISCA.Data.QueryHelper();
+            string sql = "SELECT id, LOWER(sa_login_name) FROM student WHERE sa_login_name <>'' AND id <> '" + RunningID + "' AND LOWER(sa_login_name) = '" + txtLoginID.Text.Trim().ToLower() + "'";
+            try
+            {
+                DataTable dataTable = queryHelper.Select(sql);
+                if (dataTable.Rows.Count > 0)
+                    _errors.SetError(txtLoginID, "帳號重覆，請重新選擇。");
+                else
+                    _errors.SetError(txtLoginID, string.Empty);
+            }
+            catch (Exception ex)
+            {
+                MsgBox.Show(ex.Message);
+            }
         }
 
         private void txtLoginID_TextChanged(object sender, EventArgs e)

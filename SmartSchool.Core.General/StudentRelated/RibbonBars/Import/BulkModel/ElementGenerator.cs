@@ -46,6 +46,8 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import.BulkModel
 
         public void Generate(SheetReader reader, XmlElement output)
         {
+            List<string> toTrimColumnsList = new List<string> { "姓名", "身分證號", "登入帳號", "電子信箱", "學號" };
+
             XmlElement newelm = output.OwnerDocument.CreateElement(TargetName);
             output.AppendChild(newelm);
 
@@ -55,7 +57,12 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import.BulkModel
                     each.Generate(reader, newelm);
             }
             else
-                newelm.InnerText = reader.GetValue(_full_source_name);
+            {
+                if (toTrimColumnsList.Contains(_full_source_name))
+                    newelm.InnerText = reader.GetValue(_full_source_name).Trim();
+                else
+                    newelm.InnerText = reader.GetValue(_full_source_name);
+            }
         }
 
         private string GetFullDisplayText(XmlElement column)

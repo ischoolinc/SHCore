@@ -35,7 +35,7 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
                     _by_student_number.Add(record.StudentNumber, record);
 
                 if (!string.IsNullOrEmpty(record.SALoginName))
-                    _by_login_name.Add(record.SALoginName, record);
+                    _by_login_name.Add(record.SALoginName.ToLower(), record);
             }
         }
 
@@ -213,10 +213,10 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
 
             foreach (ImportRecord each in CheckDataList)
             {
-                if (!checkDict.ContainsKey(each.SALoginName))
-                    checkDict.Add(each.SALoginName, new List<ImportRecord>());
+                if (!checkDict.ContainsKey(each.SALoginName.ToLower()))
+                    checkDict.Add(each.SALoginName.ToLower(), new List<ImportRecord>());
 
-                checkDict[each.SALoginName].Add(each);
+                checkDict[each.SALoginName.ToLower()].Add(each);
             }
 
             foreach (string key in checkDict.Keys)

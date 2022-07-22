@@ -108,6 +108,7 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import.BulkModel
                     condition.AppendChild(identifyElm);
 
                     identifyElm.InnerText = reader.GetValue(identifyName);
+
                 }
             }
 

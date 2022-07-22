@@ -82,7 +82,13 @@ namespace SmartSchool.ImportSupport
         {
             StringBuilder builder = new StringBuilder();
             foreach (ImportField each in Fields)
-                builder.Append(values[each.InternalName] + ":");
+            {
+                if (each.InternalName == "LoginName")//登入帳號改為全小寫驗證
+                    builder.Append(values[each.InternalName].ToLower() + ":");
+                else
+                    builder.Append(values[each.InternalName] + ":");
+            }
+
 
             return builder.ToString();
         }
@@ -105,7 +111,12 @@ namespace SmartSchool.ImportSupport
         {
             StringBuilder builder = new StringBuilder();
             foreach (ImportField each in Fields)
-                builder.Append(rowSource.GetFieldData(each.FieldName) + ":");
+            {
+                if (each.InternalName == "LoginName")//登入帳號改為全小寫驗證
+                    builder.Append(rowSource.GetFieldData(each.FieldName).ToLower() + ":");
+                else
+                    builder.Append(rowSource.GetFieldData(each.FieldName) + ":");
+            }
 
             return builder.ToString();
 

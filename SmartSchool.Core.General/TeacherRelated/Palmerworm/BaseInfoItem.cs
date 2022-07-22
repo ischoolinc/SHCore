@@ -51,7 +51,7 @@ namespace SmartSchool.TeacherRelated.Palmerworm
             List<SHTeacherRecord> TeacherList = SHTeacher.SelectAll().ToList();
 
             // 讀取非自己同帳號
-            List<SHTeacherRecord> HasLoginNameList = TeacherList.Where(x => (x.TALoginName == txtSTLoginAccount.Text && x.ID !=RunningID)).Where(y => y.TALoginName !="").ToList();
+            List<SHTeacherRecord> HasLoginNameList = TeacherList.Where(x => (x.TALoginName.ToLower() == txtSTLoginAccount.Text.Trim().ToLower() && x.ID !=RunningID)).Where(y => y.TALoginName !="").ToList();
 
             // 讀取非自己同姓名與暱稱
             List<SHTeacherRecord> HasNameAndNickNameList = TeacherList.Where(x => (x.Name == txtName.Text && x.Nickname == txtNickname.Text && x.ID != RunningID)).ToList();

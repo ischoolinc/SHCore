@@ -605,9 +605,9 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.Message + "," + studRec.Name);
+                            MessageBox.Show(ex.Message + "\n\r " + "學生：" + studRec.Name + " 在資料庫中有重複的key值，請檢查登入帳號、學號、身分證號是否有與其他人重複。","驗證提示");
                         }
-                        
+
                     }                    
 
 
@@ -781,7 +781,7 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
 
                     if (Context.SelectedFields.ContainsKey(login))
                     {
-                        if (importRecords.ContainSALoginName(reader.GetValue(login)))
+                        if (importRecords.ContainSALoginName(reader.GetValue(login).ToLower()))
                         {
                             rowMessages[reader.RelativelyIndex].ReportMessage(login, MessageType.Error,
                                 "此資料已存在於資料庫中，無法重複新增。");
@@ -857,6 +857,7 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
 
                         record.AbsoluteRowIndex = reader.AbsoluteIndex;
                         record.RelativelyRowIndex = reader.RelativelyIndex;
+                        
                     }
 
                     // 是否用學生系統編號驗證

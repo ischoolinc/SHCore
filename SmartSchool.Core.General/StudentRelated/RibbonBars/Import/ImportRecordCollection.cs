@@ -26,7 +26,7 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
             _by_identity.Add(record.Identity, record);
 
             // 這三類目前只支援學生狀態唯一般。
-            if(record.StudentStatus=="一般")
+            if (record.StudentStatus == "一般")
             {
                 if (!string.IsNullOrEmpty(record.IDNumber))
                     _by_id_number.Add(record.IDNumber, record);
@@ -91,7 +91,7 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
             if (chkID)
                 CheckDataList = _by_identity.Values.ToList();
             else
-                CheckDataList=_by_id_number.Values.ToList();
+                CheckDataList = _by_id_number.Values.ToList();
 
             foreach (ImportRecord each in CheckDataList)
             {
@@ -103,7 +103,7 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
 
             foreach (string key in checkDict.Keys)
             {
-                if (checkDict[key].Count > 1)
+                if (checkDict[key].Count > 1 && key != "")
                 {
                     foreach (ImportRecord each in checkDict[key])
                         Values.Add(each);
@@ -116,7 +116,7 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
 
             //foreach (ImportRecord each in _by_identity.Values)
             //{
-                
+
             //    if (string.IsNullOrEmpty(each.IDNumber)) continue;
 
             //    if (checkList.ContainsKey(each.IDNumber))
@@ -130,7 +130,7 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
             //foreach (ImportRecord each in copyList)
             //{
             //    ImportRecord origin = checkList[each.IDNumber];
-                
+
 
 
             //    duplicateList.Add(origin.Identity, origin);
@@ -162,7 +162,7 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
 
             foreach (string key in checkDict.Keys)
             {
-                if (checkDict[key].Count > 1)
+                if (checkDict[key].Count > 1 && key != "")
                 {
                     foreach (ImportRecord each in checkDict[key])
                         Values.Add(each);
@@ -221,7 +221,7 @@ namespace SmartSchool.StudentRelated.RibbonBars.Import
 
             foreach (string key in checkDict.Keys)
             {
-                if (checkDict[key].Count > 1 &&key!="" )
+                if (checkDict[key].Count > 1 && key != "")
                 {
                     foreach (ImportRecord each in checkDict[key])
                         Values.Add(each);

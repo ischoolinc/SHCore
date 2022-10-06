@@ -234,6 +234,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
 
                 cboSchoolYear.Text = content.GetText("Course/SchoolYear");
                 cboSemester.Text = content.GetText("Course/Semester");
+                cboDomain.Text = content.GetText("Course/Domain");
                 //cboTeacher.SelectedItem = content.GetText("Course/MajorTeacherID"); //ComboBox 奧義
                 cboClass.SelectedItem = content.GetText("Course/RefClassID"); //ComboBox 奧義
                 cboExamTemplate.SelectedItem = content.GetText("Course/RefExamTemplateID"); //ComboBox 奧義
@@ -285,6 +286,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
 
                 WatchValue("Teachers", _multi_teacher.CurrentValue);
                 WatchValue("CourseName", txtCourseName.Text);
+                WatchValue("Domain", cboDomain.Text);
                 WatchValue("Subject", txtSubject.Text);
                 WatchValue("SubjectLevel", cboSubjectLevel.Text);
                 WatchValue("SpecifySubjectName", txtSpecifySubjectName.Text);
@@ -308,6 +310,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                 #region Log 記錄修改前資料
 
                 machine.AddBefore(labelX1.Text.Replace("　", "").Replace(" ", ""), txtCourseName.Text);
+                machine.AddBefore(labelX16.Text.Replace("  ", "").Replace(" ", ""), cboDomain.Text);
                 machine.AddBefore(labelX2.Text.Replace("　", "").Replace(" ", ""), txtSubject.Text);
                 machine.AddBefore(labelX3.Text.Replace("　", "").Replace(" ", ""), cboSubjectLevel.Text);
                 machine.AddBefore(labelX4.Text.Replace("　", "").Replace(" ", ""), cboClass.Text);
@@ -343,17 +346,28 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
         {
             cboSchoolYear.SelectedItem = null;
             cboSchoolYear.Items.Clear();
+            cboDomain.SelectedItem = null;
+            cboDomain.Items.Clear();
             List<int> years = new List<int>();
+            List<string> domainList = new List<string>();
             foreach (var item in Course.Instance.Items)
             {
                 if (!years.Contains(item.SchoolYear))
                     years.Add(item.SchoolYear);
+
+                if (!domainList.Contains(item.Domain) && !string.IsNullOrEmpty(item.Domain))
+                    domainList.Add(item.Domain);
             }
+
             years.Sort();
             cboSchoolYear.Items.Add(string.Empty);
             foreach (int each in years)
                 cboSchoolYear.Items.Add(each);
 
+            domainList.Sort();
+            cboDomain.Items.Add(string.Empty);
+            foreach (string domain in domainList)
+                cboDomain.Items.Add(domain);
             //cboTeacher.Items.Clear();
             //cboTeacher.Items.AddRange(_teachers.ToArray());
             //cboTeacher.DisplayMember = "TeacherName";
@@ -557,6 +571,7 @@ WHERE
                 #region Log 記錄修改後的資料
 
                 machine.AddAfter(labelX1.Text.Replace("　", "").Replace(" ", ""), txtCourseName.Text);
+                machine.AddAfter(labelX16.Text.Replace("　", "").Replace(" ", ""), cboDomain.Text);
                 machine.AddAfter(labelX2.Text.Replace("　", "").Replace(" ", ""), txtSubject.Text);
                 machine.AddAfter(labelX3.Text.Replace("　", "").Replace(" ", ""), cboSubjectLevel.Text);
                 machine.AddAfter(labelX4.Text.Replace("　", "").Replace(" ", ""), cboClass.Text);
@@ -593,6 +608,12 @@ WHERE
                 if (items.ContainsKey("CourseName"))
                 {
                     req.AddElement("Course/Field", "CourseName", txtCourseName.Text);
+                    _update_required = true;
+                }
+
+                if (items.ContainsKey("Domain"))
+                {
+                    req.AddElement("Course/Field", "Domain", cboDomain.Text);
                     _update_required = true;
                 }
 
@@ -933,6 +954,18 @@ WHERE
         {
             if (!_initialing)
                 ChangeValue("Required", cboRequired.Text);
+        }
+
+        private void cboDomain_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!_initialing)
+                ChangeValue("Domain", cboDomain.Text);
+        }
+
+        private void cboDomain_TextChanged(object sender, EventArgs e)
+        {
+            if (!_initialing)
+                ChangeValue("Domain", cboDomain.Text);
         }
 
         private void ComboBoxItem_Validating(object sender, CancelEventArgs e)
@@ -1425,7 +1458,6 @@ WHERE
         {
             MsgBox.Show("「指定學年科目名稱」用於處理「自然科學領域」之學年科目成績名稱，若不需要則無需填寫，請保持空白。");
         }
-
     }
 
     /// <summary>

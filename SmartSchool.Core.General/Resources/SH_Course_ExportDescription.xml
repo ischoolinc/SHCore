@@ -1,6 +1,7 @@
 ﻿<FieldDescription>
 	<Field DataType="integer" DisplayText="課程系統編號" Identifiable="True" Name="ID" ReadOnly="True"/>
 	<Field DisplayText="課程名稱" Name="CourseName" ShiftCheckable="True"/>
+  <Field DisplayText="領域" Name="Domain" ShiftCheckable="True"/>
 	<Field DataType="integer" DisplayText="科目級別" Name="SubjectLevel" ShiftCheckable="True"/>
 	<Field DisplayText="科目名稱" Name="Subject" ShiftCheckable="True"/>
 	<Field DisplayText="所屬班級" Name="ClassName" ShiftCheckable="True"/>

@@ -47,7 +47,7 @@ namespace SmartSchool.ImportExport.Student
                 exams.Add(examName, id);
             }
             // 2018.09.06 [ischoolKingdom] Vicky依據 [12-01][01] 多學期成績排名 項目，增加 "分項類別", "科目", "學分" 項目資料。
-            List<string> fieldList = new List<string>(new string[] { "學年度", "學期", "課程名稱", "分項類別", "科目", "學分", "總成績" });
+            List<string> fieldList = new List<string>(new string[] { "學年度", "學期", "課程名稱", "領域", "分項類別", "科目", "學分", "總成績" });
             fieldList.AddRange(exams.Keys);
             wizard.ExportableFields.AddRange(fieldList);
             bool courseCkecked = false;
@@ -159,6 +159,10 @@ namespace SmartSchool.ImportExport.Student
                                     if (e.ExportFields.Contains("課程名稱"))
                                     {
                                         row.Add("課程名稱", cinfo.CourseName);                                     
+                                    }
+                                    if (e.ExportFields.Contains("領域"))
+                                    {
+                                        row.Add("領域", cinfo.Domain);
                                     }
                                     // 2018.09.06 [ischoolKingdom] Vicky依據 [12-01][01] 多學期成績排名 項目，增加 "分項類別", "科目", "學分" 項目資料。
                                     if (e.ExportFields.Contains("分項類別"))

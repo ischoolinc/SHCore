@@ -261,6 +261,11 @@ namespace SmartSchool.API
             get { return _CourseRecord.Semester; }
         }
 
+        public string Domain
+        {
+            get { return _CourseRecord.Domain; }
+        }
+
         public string Subject
         {
             get { return _CourseRecord.Subject; }

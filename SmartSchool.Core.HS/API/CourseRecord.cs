@@ -28,6 +28,8 @@ namespace SmartSchool.API
 
         private List<SmartSchool.Customization.Data.StudentAttendCourseRecord> _StudentAttendList=new List<SmartSchool.Customization.Data.StudentAttendCourseRecord>();
 
+        private string _Domain;
+
         private string _Subject;
 
         private string _SubjectLevel;
@@ -52,6 +54,7 @@ namespace SmartSchool.API
             _NotIncludedInCredit = course.NotIncludedInCredit;
             _SchoolYear = course.SchoolYear;
             _Semester = course.Semester;
+            _Domain = course.Domain;
             _Subject = course.Subject;
             _SubjectLevel = course.SubjectLevel;
             _Required = course.Required == "必";
@@ -120,6 +123,11 @@ namespace SmartSchool.API
         public List<SmartSchool.Customization.Data.StudentAttendCourseRecord> StudentAttendList
         {
             get { return _StudentAttendList; }
+        }
+
+        public string Domain
+        {
+            get { return _Domain; }
         }
 
         public string Subject

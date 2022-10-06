@@ -17,7 +17,7 @@ namespace SmartSchool.CourseRelated
         private decimal _credit;
 
         private int _class_grade_year, _class_display_order, _ref_exam_template_id;
-        private string _subj_level, _course_name, _subject, _class_name, _taught_by, _taught_nickname;
+        private string _subj_level, _course_name, _subject, _class_name, _taught_by, _taught_nickname, _domain;
         private string _teacher_category, _exam_template, _required, _requiredby;
         private bool _notIncludedInCalc, _notIncludedInCredit;
         private string _entry;
@@ -33,6 +33,7 @@ namespace SmartSchool.CourseRelated
             _semester = GetIntValue(rawData, "Semester");
             _credit = GetDecimalValue(rawData, "Credit"); //2014/9/29 - 改為Decimal型態
             _course_name = GetStringValue(rawData, "CourseName");
+            _domain = GetStringValue(rawData, "Domain");
             _subject = GetStringValue(rawData, "Subject");
             _class_name = GetStringValue(rawData, "ClassName");
             _teacher_id = GetIntValue(rawData, "MajorTeacherID");
@@ -86,6 +87,11 @@ namespace SmartSchool.CourseRelated
         public string CourseName
         {
             get { return _course_name; }
+        }
+
+        public string Domain
+        {
+            get { return _domain; }
         }
 
         public string Subject

@@ -10,6 +10,7 @@ using SmartSchool.Customization.PlugIn.ExtendedColumn;
 using SmartSchool.Customization.PlugIn.ExtendedContent;
 using SmartSchool.ExceptionHandler;
 using SmartSchool.Feature.Course;
+using System.Linq;
 
 namespace SmartSchool.CourseRelated
 {
@@ -111,6 +112,14 @@ namespace SmartSchool.CourseRelated
                     e.Value = Items[e.Key].CreditDec;
             };
             K12.Presentation.NLDPanels.Course.AddListPaneField(creditField);
+
+            ListPaneField domainField = new ListPaneField("領域");
+            domainField.GetVariable += delegate (object sender, GetVariableEventArgs e)
+            {
+                if (Items[e.Key] != null)
+                    e.Value = Items[e.Key].Domain;
+            };
+            K12.Presentation.NLDPanels.Course.AddListPaneField(domainField);
 
             ListPaneField subjectField = new ListPaneField("科目");
             subjectField.GetVariable += delegate(object sender, GetVariableEventArgs e)

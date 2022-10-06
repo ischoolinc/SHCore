@@ -61,42 +61,48 @@ namespace SmartSchool.CourseRelated.RibbonBars.Export
             saveFileDialog1.FileName = "匯出課程基本資料";
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                IExportConnector ec = new ExportCourseConnector();
-                foreach (CourseInformation course in SmartSchool.CourseRelated.Course.Instance.SelectionCourse)
+                try
                 {
-                    ec.AddCondition(course.Identity.ToString());
-                }
-                ec.SetSelectedFields(GetSelectedFields());
-                ExportTable table = ec.Export();
-
-
-                if (IsSelectedRequiredBy())
-                    foreach (var row in table.Rows)
+                    IExportConnector ec = new ExportCourseConnector();
+                    foreach (CourseInformation course in SmartSchool.CourseRelated.Course.Instance.SelectionCourse)
                     {
-                        for (int i = 0; i < row.Cells.Count - 1; i++)
-                        {
-                            if (row.Cells[i].Value == "部訂")
-                                row.Cells[i].Value = "部定";
+                        ec.AddCondition(course.Identity.ToString());
+                    }
+                    ec.SetSelectedFields(GetSelectedFields());
+                    ExportTable table = ec.Export();
 
+                    if (IsSelectedRequiredBy())
+                        foreach (var row in table.Rows)
+                        {
+                            for (int i = 0; i < row.Cells.Count - 1; i++)
+                            {
+                                if (row.Cells[i].Value == "部訂")
+                                    row.Cells[i].Value = "部定";
+
+                            }
+                        }
+
+                    ExportOutput output = new ExportOutput();
+                    output.SetSource(table);
+                    output.Save(saveFileDialog1.FileName);
+
+                    if (MsgBox.Show("檔案存檔完成，是否開啟該檔案", "是否開啟", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        try
+                        {
+                            Process.Start(saveFileDialog1.FileName);
+                        }
+                        catch (Exception ex)
+                        {
+                            MsgBox.Show("開啟檔案發生失敗:" + ex.Message, "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
-
-                ExportOutput output = new ExportOutput();
-                output.SetSource(table);
-                output.Save(saveFileDialog1.FileName);
-
-                if (MsgBox.Show("檔案存檔完成，是否開啟該檔案", "是否開啟", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    try
-                    {
-                        Process.Start(saveFileDialog1.FileName);
-                    }
-                    catch (Exception ex)
-                    {
-                        MsgBox.Show("開啟檔案發生失敗:" + ex.Message, "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    this.Close();
                 }
-                this.Close();
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
 

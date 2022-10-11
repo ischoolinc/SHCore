@@ -14,7 +14,7 @@ namespace SmartSchool.API
             Customization.Data.StudentRecord studentRecord, 
             Customization.Data.CourseRecord courseRecord,
             decimal? finalScore,
-            bool required,
+            bool? required,
             string requiredBy,
             string examName,
             decimal examScore,

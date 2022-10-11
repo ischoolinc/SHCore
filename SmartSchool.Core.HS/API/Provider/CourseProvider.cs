@@ -364,10 +364,21 @@ namespace SmartSchool.API.Provider
 
                         decimal tryParsedecimal = 0;
                         int gradeyear = 0;
-                        bool required = false;
+                        bool? required = null;
                         string requiredby = "";
                         int.TryParse(helper.GetText("GradeYear"), out gradeyear);
-                        required = ( helper.GetText("IsRequired") == "必" );
+                        switch (helper.GetText("IsRequired"))
+                        {
+                            case "必":
+                                required = true;
+                                break;
+                            case "選":
+                                required = false;
+                                break;
+                            default:
+                                required = null;
+                                break;
+                        }
                         requiredby = helper.GetText("RequiredBy");
                         decimal? aScore = ( decimal.TryParse(helper.GetText("AttendScore"), out tryParsedecimal) ? (decimal?)tryParsedecimal : null );
 

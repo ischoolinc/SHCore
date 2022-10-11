@@ -27,8 +27,8 @@ namespace SmartSchool.API
             _StudentRecord = studentRecord;
             _CourseRecord = courseRecord;
             _FinalScore = finalScore;
-            _Required = ( required == null ? courseRecord.Required : (bool)required );
-            _RequiredBy = ( string.IsNullOrEmpty(requiredBy) ? courseRecord.RequiredBy : requiredBy );
+            _Required = ( required == null ? courseRecord.Required : (bool)required ); // 以修課紀錄的必選修為主，沒有的話才抓課程上的必選修資料
+            _RequiredBy = ( string.IsNullOrEmpty(requiredBy) ? courseRecord.RequiredBy : requiredBy ); // 以修課紀錄的校部定為主，沒有的話才抓課程上的必選修資料
         }
 
         #region StudentAttendCourseRecord 成員

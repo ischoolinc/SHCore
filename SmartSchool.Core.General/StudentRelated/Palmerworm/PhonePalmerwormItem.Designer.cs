@@ -194,6 +194,7 @@
             this.buttonX4.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.buttonX4.AutoExpandOnClick = true;
             this.buttonX4.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX4.Enabled = false;
             this.buttonX4.Location = new System.Drawing.Point(491, 49);
             this.buttonX4.Margin = new System.Windows.Forms.Padding(4);
             this.buttonX4.Name = "buttonX4";
@@ -202,6 +203,7 @@
             this.buttonItem4});
             this.buttonX4.SubItemsExpandWidth = 15;
             this.buttonX4.TabIndex = 9;
+            this.buttonX4.Visible = false;
             // 
             // buttonItem4
             // 
@@ -216,6 +218,7 @@
             // 
             // btnCSMS
             // 
+            this.btnCSMS.Enabled = false;
             this.btnCSMS.GlobalItem = false;
             this.btnCSMS.Name = "btnCSMS";
             this.btnCSMS.Text = "SMS簡訊";

@@ -109,7 +109,7 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
         private ColumnHeader _columnHeader;
         private RowCollection _rowCollection;
 
-        public SmartSchoolDataProvider(string courseid)
+        public SmartSchoolDataProvider(string courseid, bool isShowAllStudent)
         {
             _courseid = courseid;
             //DSResponse dsrsp = QueryCourse.GetCourseExam(courseid);
@@ -211,7 +211,8 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
                 ",class.class_name" +
                 ",student.seat_no" +
                 ",student.student_number" +
-                ",student.name AS student_name  " +
+                ",student.name AS student_name " +
+                ",student.status AS student_status " +
                 "FROM " +
                 "sc_attend INNER JOIN student " +
                 "ON sc_attend.ref_student_id = student.id " +
@@ -221,6 +222,24 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
                 "ORDER BY class_name,seat_no,student_number";
 
             DataTable dtCourseStudent = qhCourseStudent.Select(qryCourseStudent);
+
+            // 依照狀態決定是否要顯示所有學生，預設僅顯示在校生
+            if (!isShowAllStudent)
+            {
+                List<DataRow> removeRowList = new List<DataRow>();
+                foreach (DataRow row in dtCourseStudent.Rows)
+                {
+                    if (row["student_status"].ToString() != "1" && row["student_status"].ToString() != "2")
+                    {
+                        removeRowList.Add(row);
+                    }
+                }
+
+                foreach (DataRow row in removeRowList)
+                {
+                    dtCourseStudent.Rows.Remove(row);
+                }
+            }
 
             // 取得修課學生段考成績
             QueryHelper qhSCETakeScore = new QueryHelper();

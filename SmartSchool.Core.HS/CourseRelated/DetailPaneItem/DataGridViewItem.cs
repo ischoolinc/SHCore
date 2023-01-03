@@ -383,7 +383,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
 
         protected override object OnBackgroundWorkerWorking()
         {
-            return new SmartSchoolDataProvider(RunningID);
+            return new SmartSchoolDataProvider(RunningID, cbShowAllStudent.Checked);
         }
 
         protected override void OnBackgroundWorkerCompleted(object result)
@@ -393,6 +393,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
 
             _valueManager.AddValue("IsDirty", false.ToString());
             IDataProvider provider = result as IDataProvider;
+
             _helper = new DataGridViewHelper(dataGridView1, provider);
             _helper.DirtyChanged += new EventHandler<DirtyChangedEventArgs>(_helper_DirtyChanged);
             _helper.Fill();
@@ -471,6 +472,11 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
             _helper.ResetValue();
             _valueManager.AddValue("IsDirty", false.ToString());
             SaveButtonVisible = false;
+        }
+
+        private void cbShowAllStudent_CheckedChanged(object sender, EventArgs e)
+        {
+            LoadContent(RunningID);
         }
     }
 }

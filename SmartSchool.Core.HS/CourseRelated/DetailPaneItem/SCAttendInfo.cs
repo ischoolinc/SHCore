@@ -95,6 +95,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                     ",student.student_number" +
                     ",student.seat_no" +
                     ",student.id AS student_id" +
+                    ",student.status AS student_status" +
                     ",class.grade_year" +
                     ",sc_attend.passing_standard" +
                     ",sc_attend.makeup_standard" +
@@ -116,6 +117,13 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
 
                 foreach (DataRow dr in dtScattend.Rows)
                 {
+                    if (!cbShowAllStudent.Checked)
+                    {
+                        if(dr["student_status"].ToString() != "1" && dr["student_status"].ToString() != "2")
+                        {
+                            continue;
+                        }
+                    }
                     attends.Add(new AttendInfo(dr));
                 }
 
@@ -1113,6 +1121,11 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
         private void btnEditPMScore_Click(object sender, EventArgs e)
         {
             ChangeSelectedItemsPassingStandard();
+        }
+
+        private void cbShowAllStudent_CheckedChanged(object sender, EventArgs e)
+        {
+            LoadContent(RunningID);
         }
     }
 }

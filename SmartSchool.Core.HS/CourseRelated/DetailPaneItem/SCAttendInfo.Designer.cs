@@ -37,6 +37,7 @@
             this.chRequiredBy = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chPassingStandard = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chMakeupStandard = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chSubjectCode = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnRemove = new DevComponents.DotNetBar.ButtonX();
             this.contextMenuBar1 = new DevComponents.DotNetBar.ContextMenuBar();
             this.MainMenu = new DevComponents.DotNetBar.ButtonItem();
@@ -55,7 +56,7 @@
             this.buttonItem1 = new DevComponents.DotNetBar.ButtonItem();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.chSubjectCode = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.cbShowAllStudent = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picWaiting)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.contextMenuBar1)).BeginInit();
             this.SuspendLayout();
@@ -132,6 +133,12 @@
             this.chMakeupStandard.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.chMakeupStandard.Width = 80;
             // 
+            // chSubjectCode
+            // 
+            this.chSubjectCode.Text = "科目代碼";
+            this.chSubjectCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.chSubjectCode.Width = 100;
+            // 
             // btnRemove
             // 
             this.btnRemove.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
@@ -149,7 +156,7 @@
             this.MainMenu});
             this.contextMenuBar1.Location = new System.Drawing.Point(41, 54);
             this.contextMenuBar1.Name = "contextMenuBar1";
-            this.contextMenuBar1.Size = new System.Drawing.Size(160, 26);
+            this.contextMenuBar1.Size = new System.Drawing.Size(160, 27);
             this.contextMenuBar1.Stretch = true;
             this.contextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
             this.contextMenuBar1.TabIndex = 5;
@@ -286,7 +293,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(304, 230);
+            this.label1.Location = new System.Drawing.Point(416, 230);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(99, 17);
             this.label1.TabIndex = 7;
@@ -295,22 +302,28 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(399, 230);
+            this.label2.Location = new System.Drawing.Point(508, 230);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(21, 17);
             this.label2.TabIndex = 8;
             this.label2.Text = "　";
             // 
-            // chSubjectCode
+            // cbShowAllStudent
             // 
-            this.chSubjectCode.Text = "科目代碼";
-            this.chSubjectCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.chSubjectCode.Width = 100;
+            this.cbShowAllStudent.AutoSize = true;
+            this.cbShowAllStudent.Location = new System.Drawing.Point(279, 228);
+            this.cbShowAllStudent.Name = "cbShowAllStudent";
+            this.cbShowAllStudent.Size = new System.Drawing.Size(105, 21);
+            this.cbShowAllStudent.TabIndex = 9;
+            this.cbShowAllStudent.Text = "顯示所有狀態";
+            this.cbShowAllStudent.UseVisualStyleBackColor = true;
+            this.cbShowAllStudent.CheckedChanged += new System.EventHandler(this.cbShowAllStudent_CheckedChanged);
             // 
             // SCAttendInfo
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.cbShowAllStudent);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnAdd);
@@ -320,13 +333,14 @@
             this.Name = "SCAttendInfo";
             this.Size = new System.Drawing.Size(550, 261);
             this.DoubleClick += new System.EventHandler(this.SCAttendInfo_DoubleClick);
-            this.Controls.SetChildIndex(this.picWaiting, 0);
             this.Controls.SetChildIndex(this.lvStudents, 0);
             this.Controls.SetChildIndex(this.btnRemove, 0);
             this.Controls.SetChildIndex(this.contextMenuBar1, 0);
             this.Controls.SetChildIndex(this.btnAdd, 0);
             this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.label2, 0);
+            this.Controls.SetChildIndex(this.cbShowAllStudent, 0);
+            this.Controls.SetChildIndex(this.picWaiting, 0);
             ((System.ComponentModel.ISupportInitialize)(this.picWaiting)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.contextMenuBar1)).EndInit();
             this.ResumeLayout(false);
@@ -364,5 +378,6 @@
         private System.Windows.Forms.ColumnHeader chMakeupStandard;
         private DevComponents.DotNetBar.ButtonItem btnEditPMScore;
         private System.Windows.Forms.ColumnHeader chSubjectCode;
+        private System.Windows.Forms.CheckBox cbShowAllStudent;
     }
 }

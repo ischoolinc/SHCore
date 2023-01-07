@@ -46,6 +46,7 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
             _dgv.KeyUp += new KeyEventHandler(_dgv_KeyUp);
             _dgv.SelectionChanged += new EventHandler(_dgv_SelectionChanged);
             _dgv.CellEnter += new DataGridViewCellEventHandler(_dgv_CellEnter);
+            Campus.Windows.DataGridViewImeDecorator dec = new Campus.Windows.DataGridViewImeDecorator(this._dgv);
         }
 
         private DataGridViewCell _selectedCell;

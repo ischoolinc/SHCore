@@ -74,9 +74,15 @@
       <HintPath>Library\Aspose.Words.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Campus.Windows, Version=1.0.4.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\Campus.Windows.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="DevComponents.DotNetBar2, Version=9.5.0.1, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Library\DevComponents.DotNetBar2.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="DocValidate, Version=1.1.3.7, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -637,6 +643,7 @@
     <Content Include="Library\Aspose.Cells.xml" />
     <Content Include="Library\Aspose.Words.dll" />
     <Content Include="Library\Aspose.Words.xml" />
+    <Content Include="Library\Campus.Windows.dll" />
     <Content Include="Library\DevComponents.DotNetBar2.dll" />
     <Content Include="Library\DevComponents.DotNetBar2.xml" />
     <Content Include="Library\DocValidate.dll" />

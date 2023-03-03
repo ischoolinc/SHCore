@@ -16,6 +16,7 @@ using System.Linq;
 using SHSchool.Data;
 using SmartSchool.StudentRelated;
 using System.Drawing.Imaging;
+using System.Net.Http;
 
 namespace SmartSchool.TeacherRelated.Palmerworm
 {
@@ -51,7 +52,7 @@ namespace SmartSchool.TeacherRelated.Palmerworm
             List<SHTeacherRecord> TeacherList = SHTeacher.SelectAll().ToList();
 
             // 讀取非自己同帳號
-            List<SHTeacherRecord> HasLoginNameList = TeacherList.Where(x => (x.TALoginName.ToLower() == txtSTLoginAccount.Text.Trim().ToLower() && x.ID !=RunningID)).Where(y => y.TALoginName !="").ToList();
+            List<SHTeacherRecord> HasLoginNameList = TeacherList.Where(x => (x.TALoginName.ToLower() == txtSTLoginAccount.Text.Trim().ToLower() && x.ID != RunningID)).Where(y => y.TALoginName != "").ToList();
 
             // 讀取非自己同姓名與暱稱
             List<SHTeacherRecord> HasNameAndNickNameList = TeacherList.Where(x => (x.Name == txtName.Text && x.Nickname == txtNickname.Text && x.ID != RunningID)).ToList();
@@ -67,13 +68,13 @@ namespace SmartSchool.TeacherRelated.Palmerworm
             if (HasLoginNameList.Where(x => x.Status == K12.Data.TeacherRecord.TeacherStatus.一般).Count() > 0)
             {
                 FISCA.Presentation.Controls.MsgBox.Show("有相同「登入帳號」，無法儲存。");
-                return;           
+                return;
             }
 
             if (HasNameAndNickNameList.Where(x => x.Status == K12.Data.TeacherRecord.TeacherStatus.一般).Count() > 0)
             {
                 FISCA.Presentation.Controls.MsgBox.Show("有相同姓名或暱稱，無法儲存。");
-                return;            
+                return;
             }
 
             if (HasIDNumberList.Where(x => x.Status == K12.Data.TeacherRecord.TeacherStatus.一般).Count() > 0)
@@ -91,7 +92,7 @@ namespace SmartSchool.TeacherRelated.Palmerworm
             // 當有刪除狀態修改刪除的
             List<SHTeacherRecord> UpdateTeacherRec = new List<SHTeacherRecord>();
 
-            foreach (SHTeacherRecord TRec in HasLoginNameList.Where(x=>x.Status == K12.Data.TeacherRecord.TeacherStatus.刪除))
+            foreach (SHTeacherRecord TRec in HasLoginNameList.Where(x => x.Status == K12.Data.TeacherRecord.TeacherStatus.刪除))
             {
                 TRec.TALoginName = "";
                 UpdateTeacherRec.Add(TRec);
@@ -100,7 +101,7 @@ namespace SmartSchool.TeacherRelated.Palmerworm
             foreach (SHTeacherRecord TRec in HasNameAndNickNameList.Where(x => x.Status == K12.Data.TeacherRecord.TeacherStatus.刪除))
             {
                 TRec.Nickname = TRec.Nickname + TRec.ID;
-                UpdateTeacherRec.Add(TRec); 
+                UpdateTeacherRec.Add(TRec);
             }
 
             if (UpdateTeacherRec.Count > 0)
@@ -154,11 +155,34 @@ namespace SmartSchool.TeacherRelated.Palmerworm
                 #endregion
 
                 Teacher.Instance.InvokTeacherDataChanged(RunningID);
+
+                if (machine.IfNeededSynchronize())
+                    SynchronizeGreeningImmediately();
                 SaveButtonVisible = false;
             }
             else
             {
                 MsgBox.Show("輸入資料有誤，請重新整理後再儲存。");
+            }
+        }
+
+        public async void SynchronizeGreeningImmediately()
+        {
+            string dsns = FISCA.Authentication.DSAServices.AccessPoint;
+            string url = @"https://onecampus-task-yc3uirpz5a-de.a.run.app/greening/sync/" + dsns + "?delaySeconds=600&mode=immediately";
+
+            try
+            {
+                HttpClient client = new HttpClient();
+                HttpResponseMessage rsp = await client.GetAsync(url);
+                if (rsp.IsSuccessStatusCode)
+                    Console.WriteLine("Greening帳號同步成功。");
+                else
+                    Console.WriteLine("Greening帳號同步失敗。");
+            }
+            catch
+            {
+                Console.WriteLine("Greening帳號同步失敗。");
             }
         }
 
@@ -547,5 +571,21 @@ namespace SmartSchool.TeacherRelated.Palmerworm
 
             return desc.ToString();
         }
+
+        public bool IfNeededSynchronize()
+        {
+            bool needed = false;
+            foreach (string key in beforeData.Keys)
+            {
+                if (key == "登入帳號")
+                    if (afterData.ContainsKey(key) && afterData[key] != beforeData[key])
+                    {
+                        needed = true;
+                    }
+            }
+
+            return needed;
+        }
+
     }
 }

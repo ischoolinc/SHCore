@@ -18,6 +18,7 @@ using SmartSchool.Properties;
 using SmartSchool.ApplicationLog;
 using SmartSchool.AccessControl;
 using SmartSchool.Common;
+using System.Net.Http;
 
 namespace SmartSchool.StudentRelated.Palmerworm
 {
@@ -161,6 +162,9 @@ namespace SmartSchool.StudentRelated.Palmerworm
 
                 LogUtility.LogChange(_valueManager, RunningID, GetOriginStudentName());
 
+                if (IfNeededSynchronize(_valueManager))
+                    SynchronizeGreeningImmediately();
+
                 //Student.Instance.InvokBriefDataChanged(RunningID);
                 SmartSchool.Broadcaster.Events.Items["學生/資料變更"].Invoke(RunningID);
                 SaveButtonVisible = false;
@@ -168,6 +172,42 @@ namespace SmartSchool.StudentRelated.Palmerworm
             else
             {
                 MsgBox.Show("姓名欄不可空白");
+            }
+        }
+
+
+        public bool IfNeededSynchronize(DataValueManager valueManager)
+        {
+            bool needed = false;
+            foreach (KeyValuePair<string, string> each in valueManager.GetDirtyItems())
+            {
+                if (each.Key == "SALoginName") //登入帳號
+                {
+                    //string oldValue = valueManager.GetOldValue(each.Key);
+                    //string newValue = each.Value;
+                    //if (oldValue != newValue)
+                        needed = true;
+                }
+            }
+            return needed;
+        }
+        public async void SynchronizeGreeningImmediately()
+        {
+            string dsns = FISCA.Authentication.DSAServices.AccessPoint;
+            string url = @"https://onecampus-task-yc3uirpz5a-de.a.run.app/greening/sync/" + dsns + "?delaySeconds=600&mode=immediately";
+
+            try
+            {
+                HttpClient client = new HttpClient();
+                HttpResponseMessage rsp = await client.GetAsync(url);
+                if (rsp.IsSuccessStatusCode)
+                    Console.WriteLine("Greening帳號同步成功。");
+                else
+                    Console.WriteLine("Greening帳號同步失敗。");
+            }
+            catch
+            {
+                Console.WriteLine("Greening帳號同步失敗。");
             }
         }
 

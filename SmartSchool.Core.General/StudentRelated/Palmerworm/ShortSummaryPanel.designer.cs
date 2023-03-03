@@ -55,10 +55,10 @@
             this.lblName.AutoSize = true;
             this.lblName.BackColor = System.Drawing.Color.Transparent;
             this.lblName.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblName.Location = new System.Drawing.Point(94, 7);
+            this.lblName.Location = new System.Drawing.Point(91, 7);
             this.lblName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(54, 17);
+            this.lblName.Size = new System.Drawing.Size(50, 17);
             this.lblName.TabIndex = 178;
             this.lblName.Text = "李大明 ";
             // 
@@ -67,7 +67,7 @@
             this.lblSnum.AutoSize = true;
             this.lblSnum.BackColor = System.Drawing.Color.Transparent;
             this.lblSnum.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblSnum.Location = new System.Drawing.Point(148, 7);
+            this.lblSnum.Location = new System.Drawing.Point(141, 7);
             this.lblSnum.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSnum.Name = "lblSnum";
             this.lblSnum.Size = new System.Drawing.Size(64, 17);
@@ -82,7 +82,7 @@
             this.lblClass.Location = new System.Drawing.Point(44, 7);
             this.lblClass.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblClass.Name = "lblClass";
-            this.lblClass.Size = new System.Drawing.Size(50, 17);
+            this.lblClass.Size = new System.Drawing.Size(47, 17);
             this.lblClass.TabIndex = 181;
             this.lblClass.Text = "園三智";
             // 
@@ -119,7 +119,7 @@
             this.pxStatus.Style.BorderSide = DevComponents.DotNetBar.eBorderSide.None;
             this.pxStatus.Style.BorderWidth = 0;
             this.pxStatus.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded;
-            this.pxStatus.Style.Font = new System.Drawing.Font(SmartSchool.Common.FontStyles.GeneralFontFamily, 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.pxStatus.Style.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.pxStatus.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.pxStatus.Style.GradientAngle = 90;
             this.pxStatus.Style.TextTrimming = System.Drawing.StringTrimming.Word;
@@ -129,7 +129,7 @@
             // 
             // ctxMenuBar
             // 
-            this.ctxMenuBar.Font = new System.Drawing.Font(SmartSchool.Common.FontStyles.GeneralFontFamily, 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.ctxMenuBar.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.ctxMenuBar.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.ctxChangeStatus});
             this.ctxMenuBar.Location = new System.Drawing.Point(188, 1);
@@ -145,7 +145,6 @@
             // ctxChangeStatus
             // 
             this.ctxChangeStatus.AutoExpandOnClick = true;
-            this.ctxChangeStatus.ImagePaddingHorizontal = 8;
             this.ctxChangeStatus.Name = "ctxChangeStatus";
             this.ctxChangeStatus.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.buttonItem2,
@@ -157,7 +156,6 @@
             // 
             // buttonItem2
             // 
-            this.buttonItem2.ImagePaddingHorizontal = 8;
             this.buttonItem2.Name = "buttonItem2";
             this.buttonItem2.Tag = "一般";
             this.buttonItem2.Text = "一般";
@@ -165,7 +163,6 @@
             // 
             // buttonItem3
             // 
-            this.buttonItem3.ImagePaddingHorizontal = 8;
             this.buttonItem3.Name = "buttonItem3";
             this.buttonItem3.Tag = "畢業或離校";
             this.buttonItem3.Text = "畢業或離校";
@@ -173,7 +170,6 @@
             // 
             // buttonItem4
             // 
-            this.buttonItem4.ImagePaddingHorizontal = 8;
             this.buttonItem4.Name = "buttonItem4";
             this.buttonItem4.Tag = "休學";
             this.buttonItem4.Text = "休學";
@@ -181,7 +177,6 @@
             // 
             // buttonItem1
             // 
-            this.buttonItem1.ImagePaddingHorizontal = 8;
             this.buttonItem1.Name = "buttonItem1";
             this.buttonItem1.Tag = "延修";
             this.buttonItem1.Text = "延修";
@@ -189,7 +184,6 @@
             // 
             // buttonItem5
             // 
-            this.buttonItem5.ImagePaddingHorizontal = 8;
             this.buttonItem5.Name = "buttonItem5";
             this.buttonItem5.Tag = "輟學";
             this.buttonItem5.Text = "輟學";

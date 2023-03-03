@@ -448,13 +448,13 @@ namespace SmartSchool.Properties {
         
         /// <summary>
         ///   查詢類似 &lt;FieldDescription&gt;
-        ///  &lt;Field InternalName=&quot;ID&quot; Name=&quot;班級系統編號&quot; PrimaryKey=&quot;True&quot; UniqueGroup=&quot;PrimaryKey&quot;/&gt;
+        ///  &lt;Field InternalName=&quot;ClassID&quot; Name=&quot;班級系統編號&quot; PrimaryKey=&quot;True&quot; UniqueGroup=&quot;PrimaryKey&quot;/&gt;
         ///	&lt;Field InternalName=&quot;ClassName&quot; Name=&quot;班級名稱&quot; ShiftCheckable=&quot;True&quot; UniqueGroup=&quot;ClassName&quot;/&gt;
         ///  &lt;Field InternalName=&quot;TeacherName&quot; Name=&quot;班導師&quot; ShiftCheckable=&quot;True&quot;/&gt;
         ///  &lt;Field InternalName=&quot;GradeYear&quot; Name=&quot;年級&quot; ShiftCheckable=&quot;True&quot;/&gt;
         ///  &lt;Field InternalName=&quot;DepartmentName&quot; Name=&quot;科別&quot; ShiftCheckable=&quot;True&quot;/&gt;
         ///	&lt;Field InternalName=&quot;GraduationPlan&quot; Name=&quot;課程規劃&quot; ShiftCheckable=&quot;True&quot;/&gt;
-        ///	&lt;Field InternalName= [字串的其餘部分已遭截斷]&quot;; 的當地語系化字串。
+        ///	&lt;Field Internal [字串的其餘部分已遭截斷]&quot;; 的當地語系化字串。
         /// </summary>
         internal static string SH_Cls_ImportFieldList {
             get {
@@ -464,13 +464,13 @@ namespace SmartSchool.Properties {
         
         /// <summary>
         ///   查詢類似 &lt;FieldDescription&gt;
-        ///  &lt;Field DataType=&quot;integer&quot; DisplayText=&quot;課程系統編號&quot; Identifiable=&quot;True&quot; Name=&quot;ID&quot; ReadOnly=&quot;True&quot;/&gt;
-        ///  &lt;Field DisplayText=&quot;課程名稱&quot; Name=&quot;CourseName&quot; ShiftCheckable=&quot;True&quot;/&gt;
-        ///  &lt;Field DataType=&quot;integer&quot; DisplayText=&quot;科目級別&quot; Name=&quot;SubjectLevel&quot; ShiftCheckable=&quot;True&quot;/&gt;
-        ///  &lt;Field DisplayText=&quot;科目名稱&quot; Name=&quot;Subject&quot; ShiftCheckable=&quot;True&quot;/&gt;
-        ///  &lt;Field DisplayText=&quot;所屬班級&quot; Name=&quot;ClassName&quot; ShiftCheckable=&quot;True&quot;/&gt;
-        ///  &lt;Field DisplayText=&quot;學年度&quot; Name=&quot;SchoolYear&quot; ShiftCheckable=&quot;True&quot;/&gt;
-        ///  &lt;Field DisplayText=&quot;學 [字串的其餘部分已遭截斷]&quot;; 的當地語系化字串。
+        ///	&lt;Field DataType=&quot;integer&quot; DisplayText=&quot;課程系統編號&quot; Identifiable=&quot;True&quot; Name=&quot;ID&quot; ReadOnly=&quot;True&quot;/&gt;
+        ///	&lt;Field DisplayText=&quot;課程名稱&quot; Name=&quot;CourseName&quot; ShiftCheckable=&quot;True&quot;/&gt;
+        ///  &lt;Field DisplayText=&quot;領域&quot; Name=&quot;Domain&quot; ShiftCheckable=&quot;True&quot;/&gt;
+        ///	&lt;Field DataType=&quot;integer&quot; DisplayText=&quot;科目級別&quot; Name=&quot;SubjectLevel&quot; ShiftCheckable=&quot;True&quot;/&gt;
+        ///	&lt;Field DisplayText=&quot;科目名稱&quot; Name=&quot;Subject&quot; ShiftCheckable=&quot;True&quot;/&gt;
+        ///	&lt;Field DisplayText=&quot;所屬班級&quot; Name=&quot;ClassName&quot; ShiftCheckable=&quot;True&quot;/&gt;
+        ///	&lt;Field DisplayText=&quot;學年度&quot; Name=&quot;S [字串的其餘部分已遭截斷]&quot;; 的當地語系化字串。
         /// </summary>
         internal static string SH_Course_ExportDescription {
             get {

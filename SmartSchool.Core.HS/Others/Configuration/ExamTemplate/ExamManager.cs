@@ -190,7 +190,7 @@ namespace SmartSchool.Others.Configuration.ExamTemplate
                         //string msg = "已有其他資料使用【{3}】，無法刪除。\n\n評量樣版使用數：{0}\n數字評量使用數：{1}\n文字評量使用數：{2}";
                         string msg = "已有其他資料使用【{0}】，無法刪除。";
                         //msg = string.Format(msg, templateCount, numberCount, textCount, exam.ExamName);
-                        msg = string.Format(msg,  exam.ExamName);
+                        msg = string.Format(msg, exam.ExamName);
                         MsgBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         e.Cancel = true;
                     }
@@ -228,6 +228,13 @@ namespace SmartSchool.Others.Configuration.ExamTemplate
                     if (value == string.Empty)
                         continue;
 
+                    if (value == "總成績")
+                    {
+                        each.Cells[0].ErrorText = "「總成績」為系統唯一值，請使用其他名稱。";
+                        validResult = false;
+                        break;
+                    }
+
                     if (examdump.Contains(value))
                     {
                         each.Cells[0].ErrorText = "評量名稱不可重覆。";
@@ -254,6 +261,11 @@ namespace SmartSchool.Others.Configuration.ExamTemplate
                     if (value == string.Empty)
                     {
                         cell.ErrorText = "此欄位必須有資料。";
+                        return false;
+                    }
+                    else if (value == "總成績")
+                    {
+                        cell.ErrorText = "「總成績」為系統唯一值，請使用其他名稱。";
                         return false;
                     }
                     else

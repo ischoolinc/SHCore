@@ -98,47 +98,59 @@ namespace SmartSchool.TeacherRelated
                 Image pic = null;
                 string statusD = "";
                 #region 判斷在學狀態並對應成圖片
-                switch (Items[e.Key].Status)
+                if (Items.ContainsKey(e.Key))
                 {
-                    case "一般":
-                        pic = global::SmartSchool.Properties.Resources.一般;
-                        pic.Tag = 0;
-                        statusD = "一般";
-                        break;
-                    case "刪除":
-                        pic = global::SmartSchool.Properties.Resources.刪除;
-                        pic.Tag = 4;
-                        statusD = "已刪除";
-                        break;
-                    default:
-                        pic = null;
-                        statusD = "我也不知道";
-                        break;
+                    switch (Items[e.Key].Status)
+                    {
+                        case "一般":
+                            pic = global::SmartSchool.Properties.Resources.一般;
+                            pic.Tag = 0;
+                            statusD = "一般";
+                            break;
+                        case "刪除":
+                            pic = global::SmartSchool.Properties.Resources.刪除;
+                            pic.Tag = 4;
+                            statusD = "已刪除";
+                            break;
+                        default:
+                            pic = null;
+                            statusD = "我也不知道";
+                            break;
+                    }
+                    #endregion
+                    e.Value = pic;
+                    e.Tooltip = statusD;
                 }
-                #endregion
-                e.Value = pic;
-                e.Tooltip = statusD;
             };
             K12.Presentation.NLDPanels.Teacher.AddListPaneField(statusField);
 
             ListPaneField nameField = new ListPaneField("姓名");
             nameField.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
-                e.Value = Items[e.Key].UniqName;
+                if (Items.ContainsKey(e.Key))
+                {
+                    e.Value = Items[e.Key].UniqName;
+                }
             };
             K12.Presentation.NLDPanels.Teacher.AddListPaneField(nameField);
 
             ListPaneField genderField = new ListPaneField("性別");
             genderField.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
-                e.Value = Items[e.Key].Gender;
+                if (Items.ContainsKey(e.Key))
+                {
+                    e.Value = Items[e.Key].Gender;
+                }
             };
             K12.Presentation.NLDPanels.Teacher.AddListPaneField(genderField);
 
             ListPaneField idNumberField = new ListPaneField("身分證號");
             idNumberField.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
-                e.Value = Items[e.Key].IDNumber;
+                if (Items.ContainsKey(e.Key))
+                {
+                    e.Value = Items[e.Key].IDNumber;
+                }
             };
             if (UserAcl.Current["Teacher.Field.身分證號"].Executable)
                 K12.Presentation.NLDPanels.Teacher.AddListPaneField(idNumberField);
@@ -149,17 +161,20 @@ namespace SmartSchool.TeacherRelated
             ListPaneField superviseClassField = new ListPaneField("帶班班級");
             superviseClassField.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
-                if (Class.Instance.Loaded)
+                if (Items.ContainsKey(e.Key))
                 {
-                    var superviseClass = "";
-                    foreach (var item in Class.Instance.GetTecaherSupervisedClass(Items[e.Key]))
+                    if (Class.Instance.Loaded)
                     {
-                        superviseClass += (superviseClass == "" ? "" : "、") + item.ClassName;
+                        var superviseClass = "";
+                        foreach (var item in Class.Instance.GetTecaherSupervisedClass(Items[e.Key]))
+                        {
+                            superviseClass += (superviseClass == "" ? "" : "、") + item.ClassName;
+                        }
+                        e.Value = superviseClass;
                     }
-                    e.Value = superviseClass;
+                    else
+                        e.Value = "Loading...";
                 }
-                else
-                    e.Value = "Loading...";
             };
             Class.Instance.ItemUpdated += delegate { superviseClassField.Reload(); };
             Class.Instance.ItemLoaded += delegate { superviseClassField.Reload(); };
@@ -168,7 +183,10 @@ namespace SmartSchool.TeacherRelated
             ListPaneField telField = new ListPaneField("聯絡電話");
             telField.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
-                e.Value = Items[e.Key].ContactPhone;
+                if (Items.ContainsKey(e.Key))
+                {
+                    e.Value = Items[e.Key].ContactPhone;
+                }
             };
             if (UserAcl.Current["Teacher.Field.聯絡電話"].Executable)
                 K12.Presentation.NLDPanels.Teacher.AddListPaneField(telField);

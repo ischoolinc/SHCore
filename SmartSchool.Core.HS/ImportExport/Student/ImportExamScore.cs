@@ -30,7 +30,7 @@ namespace SmartSchool.ImportExport.Student
             {
                 nodes.Add(node);
             }
-            nodes.Sort(delegate(XmlElement node1, XmlElement node2)
+            nodes.Sort(delegate (XmlElement node1, XmlElement node2)
             {
                 int i1 = int.MinValue;
                 int i2 = int.MinValue;
@@ -57,7 +57,7 @@ namespace SmartSchool.ImportExport.Student
             MultiThreadBackgroundWorker<string> examLoader = null;
             #region 驗證資料
             MultiThreadBackgroundWorker<List<string>> loader = new MultiThreadBackgroundWorker<List<string>>();
-            wizard.ValidateStart += delegate(object sender, SmartSchool.API.PlugIn.Import.ValidateStartEventArgs e)
+            wizard.ValidateStart += delegate (object sender, SmartSchool.API.PlugIn.Import.ValidateStartEventArgs e)
             {
                 lock (wizard)
                 {
@@ -87,7 +87,7 @@ namespace SmartSchool.ImportExport.Student
                     examLoader.PackageSize = 300;
                     examLoader.Loading = MultiThreadLoading.Heavy;
                     examLoader.WorkerSupportsCancellation = true;
-                    examLoader.DoWork += delegate(object sender1, PackageDoWorkEventArgs<string> e1)
+                    examLoader.DoWork += delegate (object sender1, PackageDoWorkEventArgs<string> e1)
                     {
                         MultiThreadBackgroundWorker<string> worker = (MultiThreadBackgroundWorker<string>)sender1;
                         DSXmlHelper xmlHelper = Feature.Course.QueryCourse.GetCourseExam(new List<string>(e1.Items).ToArray()).GetContent();
@@ -103,15 +103,25 @@ namespace SmartSchool.ImportExport.Student
                             courseExams.Add(key, new List<string>());
                             foreach (XmlElement element in xmlHelper.GetElements("Course[@ID='" + id + "']/ExamName"))
                             {
-                                if (worker.CancellationPending)
+                                try
                                 {
-                                    waitCourseExamLoader2.Set();
-                                    return;
+                                    if (worker.CancellationPending)
+                                    {
+                                        waitCourseExamLoader2.Set();
+                                        return;
+                                    }
+                                    lock (courseExams)
+                                    {
+                                        // 2023/6/13 CT,檢查key是否存在再加入。
+                                        if (courseExams.ContainsKey(key))
+                                            courseExams[key].Add(element.InnerText);
+                                    }
                                 }
-                                lock (courseExams)
+                                catch (Exception ex)
                                 {
-                                    courseExams[key].Add(element.InnerText);
+                                    Console.WriteLine(ex.Message);
                                 }
+
                             }
                         }
 
@@ -152,7 +162,7 @@ namespace SmartSchool.ImportExport.Student
                     loader.PackageSize = 1;
                     loader.Loading = MultiThreadLoading.Heavy;
                     loader.WorkerSupportsCancellation = true;
-                    loader.DoWork += delegate(object sender1, PackageDoWorkEventArgs<List<string>> e1)
+                    loader.DoWork += delegate (object sender1, PackageDoWorkEventArgs<List<string>> e1)
                     {
                         Dictionary<List<string>, ManualResetEvent> handlers = (Dictionary<List<string>, ManualResetEvent>)e1.Argument;
                         MultiThreadBackgroundWorker<List<string>> worker = (MultiThreadBackgroundWorker<List<string>>)sender1;
@@ -216,7 +226,7 @@ namespace SmartSchool.ImportExport.Student
                     loader.RunWorkerAsync(packages, packageWaitHandlers);
                 }
             };
-            wizard.ValidateRow += delegate(object sender, SmartSchool.API.PlugIn.Import.ValidateRowEventArgs e)
+            wizard.ValidateRow += delegate (object sender, SmartSchool.API.PlugIn.Import.ValidateRowEventArgs e)
             {
                 #region 驗證資料
                 waitHandlers[e.Data.ID].WaitOne();
@@ -255,7 +265,7 @@ namespace SmartSchool.ImportExport.Student
             };
             #endregion
 
-            wizard.ImportPackage += delegate(object sender, SmartSchool.API.PlugIn.Import.ImportPackageEventArgs e)
+            wizard.ImportPackage += delegate (object sender, SmartSchool.API.PlugIn.Import.ImportPackageEventArgs e)
             {
                 Dictionary<string, List<RowData>> id_Rows = new Dictionary<string, List<RowData>>();
                 #region 分包裝

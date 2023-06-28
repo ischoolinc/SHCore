@@ -1066,7 +1066,7 @@
             this.labelX1.ForeColor = System.Drawing.Color.Red;
             this.labelX1.Location = new System.Drawing.Point(32, 558);
             this.labelX1.Name = "labelX1";
-            this.labelX1.Size = new System.Drawing.Size(277, 20);
+            this.labelX1.Size = new System.Drawing.Size(300, 21);
             this.labelX1.TabIndex = 26;
             this.labelX1.Text = "(當校務軟體有重大通知時,會優先通知資訊連繫人)";
             // 
@@ -1077,7 +1077,7 @@
             // 
             this.txtOtherTitle.Border.Class = "TextBoxBorder";
             this.txtOtherTitle.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.txtOtherTitle.Location = new System.Drawing.Point(433, 339);
+            this.txtOtherTitle.Location = new System.Drawing.Point(434, 388);
             this.txtOtherTitle.Name = "txtOtherTitle";
             this.txtOtherTitle.Size = new System.Drawing.Size(79, 23);
             this.txtOtherTitle.TabIndex = 22;

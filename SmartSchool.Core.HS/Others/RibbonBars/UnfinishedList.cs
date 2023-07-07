@@ -204,9 +204,10 @@ namespace SmartSchool.Others.RibbonBars
 
 
             FormatCell(sheet.Cells["A3"], "課程名稱");
-            FormatCell(sheet.Cells["B3"], "授課教師");
-            FormatCell(sheet.Cells["C3"], "分數評量輸入狀態");
-            FormatCell(sheet.Cells["D3"], "文字評量輸入狀態");
+            FormatCell(sheet.Cells["B3"], "強制繳交");
+            FormatCell(sheet.Cells["C3"], "授課教師");
+            FormatCell(sheet.Cells["D3"], "分數評量輸入狀態");
+            FormatCell(sheet.Cells["E3"], "文字評量輸入狀態");
 
             int index = 4;
             foreach (ListViewItem item in listView.Items)
@@ -226,6 +227,10 @@ namespace SmartSchool.Others.RibbonBars
                 Cell D = sheet.Cells["D" + index];
                 D.PutValue(item.SubItems[3].Text);
                 D.Style.HorizontalAlignment = TextAlignmentType.Center;
+
+                Cell E = sheet.Cells["E" + index];
+                E.PutValue(item.SubItems[4].Text);
+                E.Style.HorizontalAlignment = TextAlignmentType.Center;
 
                 index++;
             }

@@ -200,7 +200,7 @@ namespace SmartSchool.Others.RibbonBars
             A1.Style.Borders.SetColor(Color.Black);
             A1.PutValue(schoolyear + "學年度第" + semester + "學期  " + schoolName + " " + cboExam.Text + " 成績未完成輸入清單");
             A1.Style.HorizontalAlignment = TextAlignmentType.Center;
-            sheet.Cells.Merge(0, 0, 1, 4);
+            sheet.Cells.Merge(0, 0, 1, 5);
 
 
             FormatCell(sheet.Cells["A3"], "課程名稱");

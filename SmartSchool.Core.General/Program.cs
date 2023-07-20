@@ -18,6 +18,7 @@ using SmartSchool.API.PlugIn.Export;
 using SmartSchool.API.PlugIn.Import;
 using System.Collections.Generic;
 using FISCA.Permission;
+using SmartSchool.Others.RibbonBars;
 
 namespace SmartSchool
 {
@@ -85,28 +86,6 @@ namespace SmartSchool
                 wizard.ShowDialog();
             };
 
-            //rbItemExport["學籍相關匯出"]["匯出學生類別"].Enable = CurrentUser.Acl["Button0205"].Executable;
-            //rbItemExport["學籍相關匯出"]["匯出學生類別"].Click += delegate
-            //{
-            //    Exporter exporter = new ExportCategory();
-            //    ExportStudentV2 wizard = new ExportStudentV2(exporter.Text, exporter.Image);
-            //    exporter.InitializeExport(wizard);
-            //    wizard.ShowDialog();
-            //};
-
-            //將匯出匯入缺曠獎懲,移至高中學務模組 - 20140312(dylan)
-            //rbItemExport["學務相關匯出"]["匯出缺曠紀錄"].Enable = CurrentUser.Acl["Button0180"].Executable;
-            //rbItemExport["學務相關匯出"]["匯出缺曠紀錄"].Click += delegate
-            //{
-            //    new ExportStudent(new ExportAbsence()).ShowDialog();
-            //};
-
-            //rbItemExport["學務相關匯出"]["匯出獎懲紀錄"].Enable = CurrentUser.Acl["Button0190"].Executable;
-            //rbItemExport["學務相關匯出"]["匯出獎懲紀錄"].Click += delegate
-            //{
-            //    new ExportStudent(new ExportDiscipline()).ShowDialog();
-            //};
-
             // 2018.09.27 [ischoolKingdom] Vicky依據 [H成績][H學務][06] 功能沒有設定權限管理 項目，將各功能按鈕註冊時Enable設定與系統權限綁定，權限Code使用GUID。
             rbItemExport["其它相關匯出"]["匯出自訂欄位"].Enable = CurrentUser.Acl["B2B63AFC-2019-4596-823A-BA044C8203F1"].Executable;
             rbItemExport["其它相關匯出"]["匯出自訂欄位"].Click += delegate
@@ -131,38 +110,6 @@ namespace SmartSchool
                 StudentImportWizard wizard = new StudentImportWizard();
                 wizard.ShowDialog();
             };
-
-            //20131216 - dylan 註解
-            //rbItemImport["學籍相關匯入"]["匯入學生照片"].Enable = CurrentUser.Acl["Button0290"].Executable;
-            //rbItemImport["學籍相關匯入"]["匯入學生照片"].Click += delegate
-            //{
-            //    new K12.Form.Photo.PhotosBatchImportForm().ShowDialog();
-            //};
-
-            //rbItemImport["學籍相關匯入"]["匯入學生類別"].Enable = CurrentUser.Acl["Button0285"].Executable;
-            //rbItemImport["學籍相關匯入"]["匯入學生類別"].Click += delegate
-            //{
-            //    SmartSchool.API.PlugIn.Import.Importer importer = new ImportCategory();
-            //    ImportStudentV2 wizard = new ImportStudentV2(importer.Text, importer.Image);
-            //    importer.InitializeImport(wizard);
-            //    wizard.ShowDialog();
-            //};
-
-            //將匯出匯入缺曠獎懲,移至高中學務模組 - 20140312(dylan)
-            //rbItemImport["學務相關匯入"]["匯入獎懲紀錄"].Enable = CurrentUser.Acl["Button0270"].Executable;
-            //rbItemImport["學務相關匯入"]["匯入獎懲紀錄"].Click += delegate
-            //{
-            //    SmartSchool.API.PlugIn.Import.Importer importer = new ImportDiscipline();
-            //    ImportStudentV2 wizard = new ImportStudentV2(importer.Text, importer.Image);
-            //    importer.InitializeImport(wizard);
-            //    wizard.ShowDialog();
-            //};
-
-            //rbItemImport["學務相關匯入"]["匯入缺曠紀錄"].Enable = CurrentUser.Acl["Button0260"].Executable;
-            //rbItemImport["學務相關匯入"]["匯入缺曠紀錄"].Click += delegate
-            //{
-            //    new ImportStudent(new ImportAbsence()).ShowDialog();
-            //};
 
             // 2018.09.27 [ischoolKingdom] Vicky依據 [H成績][H學務][06] 功能沒有設定權限管理 項目，將各功能按鈕註冊時Enable設定與系統權限綁定，權限Code使用GUID。
             rbItemImport["其它相關匯入"]["匯入自訂欄位"].Enable = CurrentUser.Acl["F1D8F0DD-AC8B-442A-88DB-75A4E4208156"].Executable;
@@ -241,6 +188,9 @@ namespace SmartSchool
             departmentSetting["科別對照管理"].Enable = CurrentUser.Acl["Button0790"].Executable;
             departmentSetting["科別對照管理"].Click += new EventHandler(departmentSetting_OnShown);
 
+            departmentSetting["上課地點管理"].Enable = CurrentUser.Acl["Button0791"].Executable;
+            departmentSetting["上課地點管理"].Click += new EventHandler(classRoomSetting_OnShown);
+
             var subjectChineseToEnglish = MotherForm.RibbonBarItems["教務作業", "基本設定"]["對照/代碼"];
             subjectChineseToEnglish.Size = RibbonBarButton.MenuButtonSize.Large;
             subjectChineseToEnglish.Image = Properties.Resources.notepad_lock_64;
@@ -316,6 +266,12 @@ namespace SmartSchool
         static void departmentSetting_OnShown(object sender, EventArgs e)
         {
             DeptSetup form = new DeptSetup();
+            form.ShowDialog();
+        }
+
+        static void classRoomSetting_OnShown(object sender, EventArgs e)
+        {
+            ClassRoomConfig form = new ClassRoomConfig();
             form.ShowDialog();
         }
     }

@@ -647,6 +647,19 @@
     <Compile Include="Others\RibbonBars\AwardScore.Designer.cs">
       <DependentUpon>AwardScore.cs</DependentUpon>
     </Compile>
+    <Compile Include="Others\RibbonBars\Forms\ClassRoomConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Others\RibbonBars\Forms\ClassRoomConfig.Designer.cs">
+      <DependentUpon>ClassRoomConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Others\RibbonBars\Forms\CompleteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Others\RibbonBars\Forms\CompleteForm.designer.cs">
+      <DependentUpon>CompleteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Others\RibbonBars\Forms\DataGridViewExport.cs" />
     <Compile Include="Others\RibbonBars\TeacherDiffOpenConfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1488,6 +1501,12 @@
       <DependentUpon>InheritImportWizard.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Others\RibbonBars\Forms\ClassRoomConfig.resx">
+      <DependentUpon>ClassRoomConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Others\RibbonBars\Forms\CompleteForm.resx">
+      <DependentUpon>CompleteForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
@@ -2191,9 +2210,7 @@
     <None Include="Resources\一般.gif" />
     <None Include="Resources\loading5.gif" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Others\RibbonBars\Forms\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

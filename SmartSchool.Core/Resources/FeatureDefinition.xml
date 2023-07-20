@@ -168,6 +168,7 @@
     <ButtonItem FeatureCode="Button0690" Title="重修處理"/>
     <!-- <ButtonItem FeatureCode="Button0700" Title="批次開課"/> -->
     <ButtonItem FeatureCode="Button0790" Title="科別對照管理"/>
+    <ButtonItem FeatureCode="Button0791" Title="上課地點管理"/>
     <ButtonItem FeatureCode="Button0795" Title="學籍身分對照表"/>
     <ButtonItem FeatureCode="Button0800" Title="評量名稱管理"/>
     <ButtonItem FeatureCode="Button0810" Title="評分樣版管理"/>

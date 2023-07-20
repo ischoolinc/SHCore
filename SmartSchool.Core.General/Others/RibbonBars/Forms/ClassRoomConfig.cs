@@ -134,7 +134,7 @@ namespace SmartSchool
                 string name = "" + row.Cells[1].Value;
                 string comment = "" + row.Cells[2].Value;
 
-                sb_log.AppendLine(string.Format("代碼「{0}」地點名稱「{1}」備註「{2}」", code, name, comment));
+                sb_log.AppendLine(string.Format("代碼「{0}」上課地點「{1}」備註「{2}」", code, name, comment));
 
                 string sql = string.Format(@"INSERT INTO classroom (id ,code ,name ,comment )
 VALUES ('{0}','{1}','{2}','{3}')", id, code, name, comment);
@@ -206,7 +206,7 @@ VALUES ('{0}','{1}','{2}','{3}')", id, code, name, comment);
                 return;
 
             //必要欄位
-            List<string> requiredHeaders = new List<string>(new string[] { "代碼", "地點名稱", "備註" });
+            List<string> requiredHeaders = new List<string>(new string[] { "代碼", "上課地點", "備註" });
             //欄位標題的索引
             Dictionary<string, int> headers = new Dictionary<string, int>();
             Worksheet ws = wb.Worksheets[0];
@@ -285,13 +285,13 @@ VALUES ('{0}','{1}','{2}','{3}')", id, code, name, comment);
             for (int x = 1; x <= wb.Worksheets[0].Cells.MaxDataRow; x++) //每一Row
             {
                 string code = ws.Cells[x, headers["代碼"]].StringValue;
-                string name = ws.Cells[x, headers["地點名稱"]].StringValue;
+                string name = ws.Cells[x, headers["上課地點"]].StringValue;
                 string comment = ws.Cells[x, headers["備註"]].StringValue;
 
                 if (string.IsNullOrEmpty(name.Trim()) || string.IsNullOrEmpty(code.Trim())) //沒有 代碼/上課地點 則跳過
                     continue;
 
-                sb_log.AppendLine(string.Format("代碼「{0}」地點名稱「{1}」備註「{2}」", code, name, comment));
+                sb_log.AppendLine(string.Format("代碼「{0}」上課地點「{1}」備註「{2}」", code, name, comment));
 
                 string sql = string.Format(@"INSERT INTO classroom (id ,code ,name ,comment )
 VALUES ('{0}','{1}','{2}','{3}')", x, code, name, comment);

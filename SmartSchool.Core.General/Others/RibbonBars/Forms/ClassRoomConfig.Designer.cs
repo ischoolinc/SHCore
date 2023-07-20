@@ -28,15 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnSave = new DevComponents.DotNetBar.ButtonX();
             this.btnExit = new DevComponents.DotNetBar.ButtonX();
             this.dataGridViewX1 = new DevComponents.DotNetBar.Controls.DataGridViewX();
+            this.btnReport = new DevComponents.DotNetBar.ButtonX();
+            this.btnImport = new DevComponents.DotNetBar.ButtonX();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnReport = new DevComponents.DotNetBar.ButtonX();
-            this.btnImport = new DevComponents.DotNetBar.ButtonX();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -80,14 +80,14 @@
             this.Column2,
             this.Column1,
             this.Column3});
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewX1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
             this.dataGridViewX1.Location = new System.Drawing.Point(12, 12);
             this.dataGridViewX1.Name = "dataGridViewX1";
@@ -95,23 +95,6 @@
             this.dataGridViewX1.Size = new System.Drawing.Size(501, 461);
             this.dataGridViewX1.TabIndex = 2;
             this.dataGridViewX1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewX1_CellEndEdit);
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "代碼";
-            this.Column2.Name = "Column2";
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "地點名稱";
-            this.Column1.Name = "Column1";
-            this.Column1.Width = 150;
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "備註";
-            this.Column3.Name = "Column3";
-            this.Column3.Width = 200;
             // 
             // btnReport
             // 
@@ -139,6 +122,23 @@
             this.btnImport.Text = "匯入";
             this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "代碼";
+            this.Column2.Name = "Column2";
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "上課地點";
+            this.Column1.Name = "Column1";
+            this.Column1.Width = 150;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "備註";
+            this.Column3.Name = "Column3";
+            this.Column3.Width = 200;
+            // 
             // ClassRoomConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
@@ -163,10 +163,10 @@
         private DevComponents.DotNetBar.ButtonX btnSave;
         private DevComponents.DotNetBar.ButtonX btnExit;
         private DevComponents.DotNetBar.Controls.DataGridViewX dataGridViewX1;
+        private DevComponents.DotNetBar.ButtonX btnReport;
+        private DevComponents.DotNetBar.ButtonX btnImport;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private DevComponents.DotNetBar.ButtonX btnReport;
-        private DevComponents.DotNetBar.ButtonX btnImport;
     }
 }

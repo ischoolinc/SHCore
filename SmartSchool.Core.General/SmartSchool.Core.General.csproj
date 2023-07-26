@@ -26,7 +26,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\debug\</OutputPath>
+    <OutputPath>..\SHSchoolLoader\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -136,10 +136,9 @@
       <HintPath>Library\OnlineUpdateClient.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="SHSchool.Data, Version=1.9.0.9, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SHSchool.Data, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Library\SHSchool.Data.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\GitSources\SHPermrec\UpdateRecordModule_SH_D\UpdateRecordModule\Library\SHSchool.Data.dll</HintPath>
     </Reference>
     <Reference Include="SmartSchool.AccessControl, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -591,6 +590,12 @@
     </Compile>
     <Compile Include="Others\Configuration\Setup\DeptChineseToEnglishImport.Designer.cs">
       <DependentUpon>DeptChineseToEnglishImport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Others\Configuration\Setup\DeptGroupSetup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Others\Configuration\Setup\DeptGroupSetup.Designer.cs">
+      <DependentUpon>DeptGroupSetup.cs</DependentUpon>
     </Compile>
     <Compile Include="Others\Configuration\Setup\DeptSetup.cs">
       <SubType>Form</SubType>
@@ -1501,6 +1506,9 @@
       <DependentUpon>InheritImportWizard.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Others\Configuration\Setup\DeptGroupSetup.resx">
+      <DependentUpon>DeptGroupSetup.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Others\RibbonBars\Forms\ClassRoomConfig.resx">
       <DependentUpon>ClassRoomConfig.cs</DependentUpon>
     </EmbeddedResource>
@@ -1863,6 +1871,7 @@
     <Content Include="Library\K12.Presentation.dll" />
     <Content Include="Library\OnlineUpdateClient.dll" />
     <Content Include="Library\SHSchool.Data.dll" />
+    <Content Include="Library\SHSchool.Data.pdb" />
     <Content Include="Library\SmartSchool.AccessControl.dll" />
     <Content Include="Library\SmartSchool.API.PlugIn.dll" />
     <Content Include="Library\SmartSchool.Broadcaster.dll" />

@@ -41,6 +41,7 @@
             this.colChiName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDeptTeacher = new SmartSchool.Others.Configuration.Setup.DataGridViewComboBoxExColumn();
             this.colEngName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDeptGroup = new DevComponents.DotNetBar.Controls.DataGridViewComboBoxExColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgDept)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,10 +57,11 @@
             this.colCode,
             this.colChiName,
             this.colDeptTeacher,
-            this.colEngName});
+            this.colEngName,
+            this.colDeptGroup});
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft JhengHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
@@ -70,9 +72,8 @@
             this.dgDept.Name = "dgDept";
             this.dgDept.RowHeadersWidth = 25;
             this.dgDept.RowTemplate.Height = 24;
-            this.dgDept.Size = new System.Drawing.Size(455, 393);
+            this.dgDept.Size = new System.Drawing.Size(584, 393);
             this.dgDept.TabIndex = 0;
-            
             this.dgDept.CurrentCellDirtyStateChanged += new System.EventHandler(this.dgDept_CurrentCellDirtyStateChanged);
             this.dgDept.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dgDept_UserDeletingRow);
             // 
@@ -82,7 +83,7 @@
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.BackColor = System.Drawing.Color.Transparent;
             this.btnSave.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnSave.Location = new System.Drawing.Point(282, 406);
+            this.btnSave.Location = new System.Drawing.Point(411, 406);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(87, 23);
             this.btnSave.TabIndex = 1;
@@ -95,7 +96,7 @@
             this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExit.BackColor = System.Drawing.Color.Transparent;
             this.btnExit.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnExit.Location = new System.Drawing.Point(375, 406);
+            this.btnExit.Location = new System.Drawing.Point(504, 406);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(87, 23);
             this.btnExit.TabIndex = 1;
@@ -159,14 +160,28 @@
             this.colEngName.Visible = false;
             this.colEngName.Width = 120;
             // 
+            // colDeptGroup
+            // 
+            this.colDeptGroup.DisplayMember = "Text";
+            this.colDeptGroup.DropDownHeight = 106;
+            this.colDeptGroup.DropDownWidth = 121;
+            this.colDeptGroup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.colDeptGroup.HeaderText = "部別";
+            this.colDeptGroup.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.colDeptGroup.ItemHeight = 17;
+            this.colDeptGroup.Name = "colDeptGroup";
+            this.colDeptGroup.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colDeptGroup.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            // 
             // DeptSetup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(470, 437);
+            this.ClientSize = new System.Drawing.Size(599, 437);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.dgDept);
+            this.DoubleBuffered = true;
             this.Name = "DeptSetup";
             this.Text = "科別對照管理";
             this.Load += new System.EventHandler(this.DeptSetup_Load);
@@ -188,6 +203,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colChiName;
         private DataGridViewComboBoxExColumn colDeptTeacher;
         private System.Windows.Forms.DataGridViewTextBoxColumn colEngName;
-
+        private DevComponents.DotNetBar.Controls.DataGridViewComboBoxExColumn colDeptGroup;
     }
 }

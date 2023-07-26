@@ -25,9 +25,18 @@ namespace SmartSchool.Others.Configuration.Setup
         List<SHDepartmentRecord> _delRecList = new List<SHDepartmentRecord>();
         // 班級使用科別ID
         List<string> _classUseDeptIDList = new List<string>();
+
+        // 科別隸屬部別ID
+        List<string> _deptUseDeptGroupIDList = new List<string>();
+
         // 比對用
         Dictionary<string, string> _TeacherID_NameDict = new Dictionary<string, string>();
         Dictionary<string, string> _TeacherName_IDDict = new Dictionary<string, string>();
+
+        // 比對用
+        Dictionary<string, string> _DeptGroupID_NameDict = new Dictionary<string, string>();
+        Dictionary<string, string> _DeptGroupName_IDDict = new Dictionary<string, string>();
+
 
         List<SHDepartmentRecord> _oldData = new List<SHDepartmentRecord>();
         // 重複時檢查
@@ -55,15 +64,21 @@ namespace SmartSchool.Others.Configuration.Setup
                     dgDept.Rows[rowIdx].Cells[colDeptTeacher.Index].Value = _TeacherID_NameDict[rec.RefTeacherID];
                 else
                     dgDept.Rows[rowIdx].Cells[colDeptTeacher.Index].Value = "";
-            
+                if (_DeptGroupID_NameDict.ContainsKey(rec.RefDeptGroupID))
+                    dgDept.Rows[rowIdx].Cells[colDeptGroup.Index].Value = _DeptGroupID_NameDict[rec.RefDeptGroupID];
+                else
+                    dgDept.Rows[rowIdx].Cells[colDeptGroup.Index].Value = "";
             }
 
             // 建立教師選單
             colDeptTeacher.Items.Clear();
             colDeptTeacher.Items.Add("");
             colDeptTeacher.Items.AddRange((from data in _TeacherName_IDDict.Keys orderby data select data).ToArray());
-         
-            
+
+            // 建立部別選單
+            colDeptGroup.Items.Clear();
+            colDeptGroup.Items.Add("");
+            colDeptGroup.Items.AddRange((from data in _DeptGroupName_IDDict.Keys orderby data select data).ToArray());
         }
 
         void _bgWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -98,6 +113,20 @@ namespace SmartSchool.Others.Configuration.Setup
                     _TeacherName_IDDict.Add(tName, tr.ID);
             }
 
+            // 部別名稱ID索引建立
+            _DeptGroupID_NameDict.Clear();
+            _DeptGroupName_IDDict.Clear();
+            List<SHDeptGroupRecord> dGRecList = (from data in SHDeptGroup.SelectAll() select data).ToList();
+            foreach (SHDeptGroupRecord tr in dGRecList)
+            {
+                string tName = tr.Name;
+
+                _DeptGroupID_NameDict.Add(tr.ID, tName);
+                if (!_DeptGroupName_IDDict.ContainsKey(tName))
+                    _DeptGroupName_IDDict.Add(tName, tr.ID);
+            }
+
+
             // 班級使用科別ID
             _classUseDeptIDList.Clear();
             foreach (SHClassRecord rec in SHClass.SelectAll())
@@ -106,6 +135,8 @@ namespace SmartSchool.Others.Configuration.Setup
                     if (!_classUseDeptIDList.Contains(rec.RefDepartmentID))
                         _classUseDeptIDList.Add(rec.RefDepartmentID);
             }
+
+
 
         }
 
@@ -183,6 +214,8 @@ namespace SmartSchool.Others.Configuration.Setup
                     sb.AppendLine("科別名稱：" + rec.FullName);
                     if (_TeacherID_NameDict.ContainsKey(rec.RefTeacherID))
                         sb.AppendLine("科主任：" + _TeacherID_NameDict[rec.RefTeacherID]);
+                    if (_DeptGroupID_NameDict.ContainsKey(rec.RefDeptGroupID))
+                        sb.AppendLine("部別：" + _DeptGroupID_NameDict[rec.RefDeptGroupID]);
                     sb.AppendLine();
                 }
 
@@ -216,9 +249,19 @@ namespace SmartSchool.Others.Configuration.Setup
                     tName=dr.Cells[colDeptTeacher.Index].Value.ToString();
                 if (_TeacherName_IDDict.ContainsKey(tName))
                     rec.RefTeacherID = _TeacherName_IDDict[tName];
+
+                string dGName = "";
+                if (dr.Cells[colDeptGroup.Index].Value != null)
+                    dGName = dr.Cells[colDeptGroup.Index].Value.ToString();
+                if (_DeptGroupName_IDDict.ContainsKey(dGName))
+                    rec.RefDeptGroupID = _DeptGroupName_IDDict[dGName];
+
                 // 當要清空資料
                 if (string.IsNullOrEmpty(tName))
                     rec.RefTeacherID = "";
+
+                if (string.IsNullOrEmpty(dGName))
+                    rec.RefDeptGroupID = "";
 
                 if (isNew)                
                     insertList.Add(rec);
@@ -239,6 +282,8 @@ namespace SmartSchool.Others.Configuration.Setup
                     sb.AppendLine("科別名稱：" + rec.FullName);
                     if(_TeacherID_NameDict.ContainsKey(rec.RefTeacherID))
                         sb.AppendLine("科主任：" + _TeacherID_NameDict[rec.RefTeacherID]);
+                    if (_DeptGroupID_NameDict.ContainsKey(rec.RefDeptGroupID))
+                        sb.AppendLine("部別：" + _DeptGroupID_NameDict[rec.RefDeptGroupID]);
                     sb.AppendLine();
                 }
                 FISCA.LogAgent.ApplicationLog.Log("教務作業>科別對照管理","新增", sb.ToString());
@@ -276,6 +321,23 @@ namespace SmartSchool.Others.Configuration.Setup
 
                             sbs1.AppendLine("科主任：由 「 " + t1 + " 」修改成「 " + t2 + " 」");
                         }
+                        if (rec.RefDeptGroupID != recNew.RefDeptGroupID)
+                        {
+                            string d1 = "";
+                            if (rec.RefDeptGroupID == null)
+                                d1 = "";
+                            else
+                            {
+                                if (_DeptGroupID_NameDict.ContainsKey(rec.RefDeptGroupID))
+                                    d1 = _DeptGroupID_NameDict[rec.RefDeptGroupID];
+                            }
+                            string d2 = "";
+                            if (_DeptGroupID_NameDict.ContainsKey(recNew.RefDeptGroupID))
+                                d2 = _DeptGroupID_NameDict[recNew.RefDeptGroupID];
+                            sbs1.AppendLine("部別：由 「 " + d1 + " 」修改成「 " + d2 + " 」");
+                        }
+
+
                         if (sbs1.Length > 0)
                         {
                            sbs.AppendLine("== 原科別代碼：" + rec.Code + ",原科別名稱：" + rec.FullName + "==");
@@ -342,8 +404,21 @@ namespace SmartSchool.Others.Configuration.Setup
                 dgDept.BeginEdit(false);
             }
 
-           // dgDept.BeginEdit(false);           
-            
+            // 檢查部別
+            if (dgDept.CurrentCell.ColumnIndex == colDeptGroup.Index)
+            {
+                dgDept.EndEdit();
+                dgDept.CurrentCell.ErrorText = "";
+                if (dgDept.CurrentCell.Value != null)
+                {
+                    if (!_DeptGroupName_IDDict.ContainsKey(dgDept.CurrentCell.Value.ToString()))
+                        dgDept.CurrentCell.ErrorText = "部別不在系統內";
+                }
+                dgDept.BeginEdit(false);
+            }
+
+            // dgDept.BeginEdit(false);           
+
         }
     }
 }

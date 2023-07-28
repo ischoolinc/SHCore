@@ -122,26 +122,23 @@ namespace SmartSchool
         private string RunSave()
         {
             List<string> updateSQLList = new List<string>();
-            int countID = 1;
             StringBuilder sb_log = new StringBuilder();
             foreach (DataGridViewRow row in dataGridViewX1.Rows)
             {
                 if (row.IsNewRow)
                     continue;
 
-                string id = "" + countID;
                 string code = "" + row.Cells[0].Value;
                 string name = "" + row.Cells[1].Value;
                 string comment = "" + row.Cells[2].Value;
 
                 sb_log.AppendLine(string.Format("代碼「{0}」上課地點「{1}」備註「{2}」", code, name, comment));
 
-                string sql = string.Format(@"INSERT INTO classroom (id ,code ,name ,comment )
-VALUES ('{0}','{1}','{2}','{3}')", id, code, name, comment);
+                string sql = string.Format(@"INSERT INTO classroom (code ,name ,comment )
+VALUES ('{0}','{1}','{2}')", code, name, comment);
 
                 updateSQLList.Add(sql);
 
-                countID++;
             }
 
             //先刪除資料
@@ -293,8 +290,8 @@ VALUES ('{0}','{1}','{2}','{3}')", id, code, name, comment);
 
                 sb_log.AppendLine(string.Format("代碼「{0}」上課地點「{1}」備註「{2}」", code, name, comment));
 
-                string sql = string.Format(@"INSERT INTO classroom (id ,code ,name ,comment )
-VALUES ('{0}','{1}','{2}','{3}')", x, code, name, comment);
+                string sql = string.Format(@"INSERT INTO classroom (code ,name ,comment )
+VALUES ('{0}','{1}','{2}')",code, name, comment);
 
                 updateSQLList.Add(sql);
 

@@ -689,6 +689,7 @@
     <Compile Include="Others\RibbonBars\ScoreOpenTime.Designer.cs">
       <DependentUpon>ScoreOpenTime.cs</DependentUpon>
     </Compile>
+    <Compile Include="Permissions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

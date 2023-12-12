@@ -31,17 +31,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TemplateManager));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataview = new DevComponents.DotNetBar.Controls.DataGridViewX();
-            this.ExamID = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Weight = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.UseScore = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.UseText = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.OpenTeacherAccess = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.StartTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EndTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.InputRequired = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.expandableSplitter1 = new DevComponents.DotNetBar.ExpandableSplitter();
             this.buttonItem3 = new DevComponents.DotNetBar.ButtonItem();
             this.buttonItem2 = new DevComponents.DotNetBar.ButtonItem();
@@ -64,6 +56,15 @@
             this.txtStartTime = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
+            this.ExamID = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Weight = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UseScore = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.UseText = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.OpenTeacherAccess = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.StartTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EndTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.InputRequired = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.UseGroup = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataview)).BeginInit();
             this.ipTemplateList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.loading)).BeginInit();
@@ -79,7 +80,7 @@
             this.dataview.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft JhengHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -94,10 +95,11 @@
             this.OpenTeacherAccess,
             this.StartTime,
             this.EndTime,
-            this.InputRequired});
+            this.InputRequired,
+            this.UseGroup});
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft JhengHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlText;
@@ -119,81 +121,6 @@
             this.dataview.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dataview_RowsAdded);
             this.dataview.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataview_RowsRemoved);
             this.dataview.RowValidating += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataview_RowValidating);
-            // 
-            // ExamID
-            // 
-            this.ExamID.DataPropertyName = "ExamID";
-            this.ExamID.DisplayStyleForCurrentCellOnly = true;
-            this.ExamID.HeaderText = "評量名稱";
-            this.ExamID.Name = "ExamID";
-            this.ExamID.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ExamID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // Weight
-            // 
-            this.Weight.DataPropertyName = "Weight";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Weight.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Weight.HeaderText = "比重";
-            this.Weight.Name = "Weight";
-            this.Weight.Width = 50;
-            // 
-            // UseScore
-            // 
-            this.UseScore.DataPropertyName = "UseScore";
-            this.UseScore.FalseValue = "否";
-            this.UseScore.HeaderText = "分數評量";
-            this.UseScore.Name = "UseScore";
-            this.UseScore.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.UseScore.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.UseScore.TrueValue = "是";
-            this.UseScore.Width = 75;
-            // 
-            // UseText
-            // 
-            this.UseText.DataPropertyName = "UseText";
-            this.UseText.FalseValue = "否";
-            this.UseText.HeaderText = "文字評量";
-            this.UseText.Name = "UseText";
-            this.UseText.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.UseText.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.UseText.TrueValue = "是";
-            this.UseText.Width = 75;
-            // 
-            // OpenTeacherAccess
-            // 
-            this.OpenTeacherAccess.DataPropertyName = "OpenTeacherAccess";
-            this.OpenTeacherAccess.FalseValue = "否";
-            this.OpenTeacherAccess.HeaderText = "開放繳交";
-            this.OpenTeacherAccess.Name = "OpenTeacherAccess";
-            this.OpenTeacherAccess.TrueValue = "是";
-            this.OpenTeacherAccess.Visible = false;
-            this.OpenTeacherAccess.Width = 75;
-            // 
-            // StartTime
-            // 
-            this.StartTime.DataPropertyName = "StartTime";
-            this.StartTime.HeaderText = "開始時間";
-            this.StartTime.Name = "StartTime";
-            this.StartTime.Width = 70;
-            // 
-            // EndTime
-            // 
-            this.EndTime.DataPropertyName = "EndTime";
-            this.EndTime.HeaderText = "結束時間";
-            this.EndTime.Name = "EndTime";
-            this.EndTime.Width = 70;
-            // 
-            // InputRequired
-            // 
-            this.InputRequired.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.InputRequired.DataPropertyName = "InputRequired";
-            this.InputRequired.FalseValue = "是";
-            this.InputRequired.HeaderText = "不強制繳交成績";
-            this.InputRequired.Name = "InputRequired";
-            this.InputRequired.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.InputRequired.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.InputRequired.TrueValue = "否";
             // 
             // expandableSplitter1
             // 
@@ -334,7 +261,7 @@
             this.peTemplateName1.CanvasColor = System.Drawing.SystemColors.Control;
             this.peTemplateName1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
             this.peTemplateName1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.peTemplateName1.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.peTemplateName1.Font = new System.Drawing.Font("Microsoft JhengHei", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.peTemplateName1.Location = new System.Drawing.Point(156, 0);
             this.peTemplateName1.Name = "peTemplateName1";
             this.peTemplateName1.Size = new System.Drawing.Size(625, 37);
@@ -401,7 +328,7 @@
             // 
             this.npLeft.TitlePanel.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
             this.npLeft.TitlePanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.npLeft.TitlePanel.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.npLeft.TitlePanel.Font = new System.Drawing.Font("Microsoft JhengHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.npLeft.TitlePanel.Location = new System.Drawing.Point(1, 1);
             this.npLeft.TitlePanel.Name = "panelTitle";
             this.npLeft.TitlePanel.Size = new System.Drawing.Size(154, 24);
@@ -410,7 +337,7 @@
             this.npLeft.TitlePanel.Style.Border = DevComponents.DotNetBar.eBorderType.RaisedInner;
             this.npLeft.TitlePanel.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
             this.npLeft.TitlePanel.Style.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom;
-            this.npLeft.TitlePanel.Style.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.npLeft.TitlePanel.Style.Font = new System.Drawing.Font("Microsoft JhengHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.npLeft.TitlePanel.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
             this.npLeft.TitlePanel.Style.GradientAngle = 90;
             this.npLeft.TitlePanel.Style.MarginLeft = 4;
@@ -533,6 +460,91 @@
             this.labelX2.TabIndex = 15;
             this.labelX2.Text = "～";
             // 
+            // ExamID
+            // 
+            this.ExamID.DataPropertyName = "ExamID";
+            this.ExamID.DisplayStyleForCurrentCellOnly = true;
+            this.ExamID.HeaderText = "評量名稱";
+            this.ExamID.Name = "ExamID";
+            this.ExamID.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ExamID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // Weight
+            // 
+            this.Weight.DataPropertyName = "Weight";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Weight.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Weight.HeaderText = "比重";
+            this.Weight.Name = "Weight";
+            this.Weight.Width = 50;
+            // 
+            // UseScore
+            // 
+            this.UseScore.DataPropertyName = "UseScore";
+            this.UseScore.FalseValue = "否";
+            this.UseScore.HeaderText = "分數評量";
+            this.UseScore.Name = "UseScore";
+            this.UseScore.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.UseScore.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.UseScore.TrueValue = "是";
+            this.UseScore.Width = 75;
+            // 
+            // UseText
+            // 
+            this.UseText.DataPropertyName = "UseText";
+            this.UseText.FalseValue = "否";
+            this.UseText.HeaderText = "文字評量";
+            this.UseText.Name = "UseText";
+            this.UseText.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.UseText.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.UseText.TrueValue = "是";
+            this.UseText.Width = 75;
+            // 
+            // OpenTeacherAccess
+            // 
+            this.OpenTeacherAccess.DataPropertyName = "OpenTeacherAccess";
+            this.OpenTeacherAccess.FalseValue = "否";
+            this.OpenTeacherAccess.HeaderText = "開放繳交";
+            this.OpenTeacherAccess.Name = "OpenTeacherAccess";
+            this.OpenTeacherAccess.TrueValue = "是";
+            this.OpenTeacherAccess.Visible = false;
+            this.OpenTeacherAccess.Width = 75;
+            // 
+            // StartTime
+            // 
+            this.StartTime.DataPropertyName = "StartTime";
+            this.StartTime.HeaderText = "開始時間";
+            this.StartTime.Name = "StartTime";
+            this.StartTime.Width = 70;
+            // 
+            // EndTime
+            // 
+            this.EndTime.DataPropertyName = "EndTime";
+            this.EndTime.HeaderText = "結束時間";
+            this.EndTime.Name = "EndTime";
+            this.EndTime.Width = 70;
+            // 
+            // InputRequired
+            // 
+            this.InputRequired.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.InputRequired.DataPropertyName = "InputRequired";
+            this.InputRequired.FalseValue = "是";
+            this.InputRequired.HeaderText = "不強制繳交成績";
+            this.InputRequired.Name = "InputRequired";
+            this.InputRequired.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.InputRequired.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.InputRequired.TrueValue = "否";
+            // 
+            // UseGroup
+            // 
+            this.UseGroup.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.UseGroup.FalseValue = "否";
+            this.UseGroup.HeaderText = "評量群組";
+            this.UseGroup.Name = "UseGroup";
+            this.UseGroup.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.UseGroup.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.UseGroup.TrueValue = "是";
+            // 
             // TemplateManager
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -542,7 +554,8 @@
             this.Controls.Add(this.expandableSplitter1);
             this.Controls.Add(this.peTemplateName1);
             this.Controls.Add(this.npLeft);
-            this.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DoubleBuffered = true;
+            this.Font = new System.Drawing.Font("Microsoft JhengHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MinimumSize = new System.Drawing.Size(600, 296);
             this.Name = "TemplateManager";
             this.Text = "評分樣版管理";
@@ -592,6 +605,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn StartTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn EndTime;
         private System.Windows.Forms.DataGridViewCheckBoxColumn InputRequired;
-
+        private System.Windows.Forms.DataGridViewCheckBoxColumn UseGroup;
     }
 }

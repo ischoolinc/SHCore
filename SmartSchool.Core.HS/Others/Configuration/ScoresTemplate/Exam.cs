@@ -10,7 +10,7 @@ namespace SmartSchool.Others.Configuration.ScoresTemplate
 {
     class Exam
     {
-        private string _identity, _exam_id, _use_text, _use_score, _open_ta;
+        private string _identity, _exam_id, _use_text, _use_score, _open_ta, _use_group;
         private string _weight, _start_time, _end_time, _template_id, _input_required;
 
         public Exam()
@@ -77,5 +77,13 @@ namespace SmartSchool.Others.Configuration.ScoresTemplate
             get { return _input_required; }
             set { _input_required = value; }
         }
+
+        // 使用群組
+        public string UseGroup
+        {
+            get { return _use_group; }
+            set { _use_group = value; }
+        }
+
     }
 }

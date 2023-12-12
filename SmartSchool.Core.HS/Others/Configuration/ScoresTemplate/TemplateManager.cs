@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using DevComponents.DotNetBar.Controls;
@@ -23,12 +24,13 @@ namespace SmartSchool.Others.Configuration.ScoresTemplate
         private XmlElement _raw_templates, _raw_exam_includes, _raw_exams;
         private bool _has_deleted;
         private EnhancedErrorProvider _errors;
+        private Dictionary<string, string> ExamIDNameDict;
 
         public TemplateManager()
         {
             InitializeComponent();
             HideNavigationBar();
-
+            ExamIDNameDict = new Dictionary<string, string>();
             _errors = new EnhancedErrorProvider();
         }
 
@@ -114,6 +116,7 @@ namespace SmartSchool.Others.Configuration.ScoresTemplate
 
         private void FillExamRowSource()
         {
+            ExamIDNameDict.Clear();
             XmlElement exams = _raw_exams;
             ExamID.Items.Clear();
             ExamID.Items.Add(new KeyValuePair<string, string>("-1", string.Empty));
@@ -124,6 +127,11 @@ namespace SmartSchool.Others.Configuration.ScoresTemplate
 
                 KeyValuePair<string, string> exam = new KeyValuePair<string, string>(id, name);
                 ExamID.Items.Add(exam);
+
+                if (!ExamIDNameDict.ContainsKey(id))
+                {
+                    ExamIDNameDict.Add(id, name);
+                }
             }
             ExamID.DisplayMember = "Value";
             ExamID.ValueMember = "Key";
@@ -196,7 +204,7 @@ namespace SmartSchool.Others.Configuration.ScoresTemplate
                 foreach (Exam each in item.Exams)
                 {
                     DataGridViewRow row = new DataGridViewRow();
-                    row.CreateCells(dataview, each.ExamID, each.Weight, each.UseScore, each.UseText, each.OpenTeacherAccess, each.StartTime, each.EndTime, each.InputRequired);
+                    row.CreateCells(dataview, each.ExamID, each.Weight, each.UseScore, each.UseText, each.OpenTeacherAccess, each.StartTime, each.EndTime, each.InputRequired, each.UseGroup);
                     dataview.Rows.Add(row);
                 }
                 item.RaiseClick();
@@ -320,13 +328,19 @@ namespace SmartSchool.Others.Configuration.ScoresTemplate
 
             // 預設使用Extension內設定的文字評量設定
             item.UseText = "否";
-            if(each.SelectSingleNode("Extension") !=null )
+            if (each.SelectSingleNode("Extension") != null)
                 if (each.SelectSingleNode("Extension").SelectSingleNode("Extension") != null)
                     item.UseText = each.SelectSingleNode("Extension").SelectSingleNode("Extension").SelectSingleNode("UseText").InnerText;
-                 
 
-           
-                //item.UseText = each.SelectSingleNode("UseText").InnerText;
+            // 使用群組
+            item.UseGroup = "否";
+            if (each.SelectSingleNode("Extension") != null)
+                if (each.SelectSingleNode("Extension").SelectSingleNode("Extension") != null)
+                    if (each.SelectSingleNode("Extension").SelectSingleNode("Extension").SelectSingleNode("UseGroup") != null)
+                        item.UseGroup = each.SelectSingleNode("Extension").SelectSingleNode("Extension").SelectSingleNode("UseGroup").InnerText;
+
+
+            //item.UseText = each.SelectSingleNode("UseText").InnerText;
 
             item.Weight = each.SelectSingleNode("Weight").InnerText;
             item.InputRequired = each.SelectSingleNode("InputRequired").InnerText;
@@ -643,10 +657,16 @@ namespace SmartSchool.Others.Configuration.ScoresTemplate
 
                 EditTemplate.UpdateTemplate(target.Identity, target.TemplateName, source.AllowUpload, startTime, endTime);
 
+                List<string> logStr = new List<string>();
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("== 評分樣版從 " + source.TemplateName + " 複製到 " + target.TemplateName + "  ==");
+
                 bool executeRequired = false;
                 DSXmlHelper reqInclude = new DSXmlHelper("Request");
                 foreach (Exam exam in source.Exams)
                 {
+                    logStr.Clear();
+
                     reqInclude.AddElement("IncludeExam");
                     reqInclude.AddElement("IncludeExam", "RefExamTemplateID", target.Identity);
                     reqInclude.AddElement("IncludeExam", "RefExamID", exam.ExamID);
@@ -657,10 +677,37 @@ namespace SmartSchool.Others.Configuration.ScoresTemplate
                     reqInclude.AddElement("IncludeExam", "StartTime", DateToSaveFormat(exam.StartTime));
                     reqInclude.AddElement("IncludeExam", "EndTime", DateToSaveFormat(exam.EndTime));
                     reqInclude.AddElement("IncludeExam", "InputRequired", exam.InputRequired);
+
+
+                    // 高中是否使用文字評量多存一份在Extension,給Web讀取使用。
+                    reqInclude.AddElement("IncludeExam", "Extension", "");
+                    reqInclude.AddElement("IncludeExam/Extension", "Extension", "");
+                    reqInclude.AddElement("IncludeExam/Extension/Extension", "UseText", exam.UseText);
+
+                    reqInclude.AddElement("IncludeExam/Extension/Extension", "UseGroup", exam.UseGroup);
+
+                    // log
+                    if (ExamIDNameDict.ContainsKey(exam.ExamID))
+                        logStr.Add("評量名稱：" + ExamIDNameDict[exam.ExamID]);
+
+                    logStr.Add("比重：" + exam.Weight);
+                    logStr.Add("分數評量：" + exam.UseScore);
+                    logStr.Add("文字評量：" + exam.UseText);
+                    logStr.Add("開始時間：" + exam.StartTime);
+                    logStr.Add("結束時間：" + exam.EndTime);
+                    logStr.Add("不強制繳交成績：" + exam.InputRequired);
+                    logStr.Add("評量群組：" + exam.UseGroup);
+                    sb.AppendLine(string.Join(",", logStr.ToArray()));
                     executeRequired = true;
                 }
                 if (executeRequired)
+                {
+
                     EditTemplate.InsertIncludeExam(reqInclude.BaseElement);
+                    // 紀錄log
+                    FISCA.LogAgent.ApplicationLog.Log("評分樣版複製", "複製", sb.ToString());
+                }
+
             }
             catch (Exception ex)
             {
@@ -713,12 +760,17 @@ namespace SmartSchool.Others.Configuration.ScoresTemplate
                 request.AddElement("IncludeExam", "RefExamTemplateID", CurrentTemplate.Identity);
                 EditTemplate.DeleteIncludeExam(request.BaseElement);
 
+                List<string> logStr = new List<string>();
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("== " + CurrentTemplate.TemplateName + " 評分樣版設定  ==");
+
                 bool executeRequired = false;
                 DSXmlHelper reqInclude = new DSXmlHelper("Request");
                 foreach (DataGridViewRow each in dataview.Rows)
                 {
                     if (each.IsNewRow) continue;
 
+                    logStr.Clear();
                     reqInclude.AddElement("IncludeExam");
                     reqInclude.AddElement("IncludeExam", "RefExamTemplateID", CurrentTemplate.Identity);
                     reqInclude.AddElement("IncludeExam", "RefExamID", each.Cells["ExamID"].Value + string.Empty);
@@ -730,21 +782,55 @@ namespace SmartSchool.Others.Configuration.ScoresTemplate
                     reqInclude.AddElement("IncludeExam", "EndTime", DateToSaveFormat(each.Cells["EndTime"].Value + string.Empty));
 
                     // 高中是否使用文字評量多存一份在Extension,給Web讀取使用。
-                    reqInclude.AddElement("IncludeExam", "Extension","");
-                    reqInclude.AddElement("IncludeExam/Extension","Extension","");
+                    reqInclude.AddElement("IncludeExam", "Extension", "");
+                    reqInclude.AddElement("IncludeExam/Extension", "Extension", "");
                     reqInclude.AddElement("IncludeExam/Extension/Extension", "UseText", GetYesNoString(each.Cells["UseText"].FormattedValue, "否"));
 
                     if (each.Cells["InputRequired"].FormattedValue == null)
+                    {
                         reqInclude.AddElement("IncludeExam", "InputRequired", "是");
+                        logStr.Add("不強制繳交成績：是");
+                    }
                     else if ((bool)each.Cells["InputRequired"].FormattedValue)
+                    {
                         reqInclude.AddElement("IncludeExam", "InputRequired", "否");
+                        logStr.Add("不強制繳交成績：否");
+                    }
+
                     else
+                    {
                         reqInclude.AddElement("IncludeExam", "InputRequired", "是");
+                        logStr.Add("不強制繳交成績：是");
+                    }
+
+
+                    reqInclude.AddElement("IncludeExam/Extension/Extension", "UseGroup", GetYesNoString(each.Cells["UseGroup"].FormattedValue, "否"));
+
+                    string examID = each.Cells["ExamID"].Value + string.Empty;
+                    // log
+                    if (ExamIDNameDict.ContainsKey(examID))
+                        logStr.Add("評量名稱：" + ExamIDNameDict[examID]);
+
+                    logStr.Add("比重：" + each.Cells["Weight"].Value + string.Empty);
+                    logStr.Add("分數評量：" + GetYesNoString(each.Cells["UseScore"].FormattedValue, "否"));
+                    logStr.Add("文字評量：" + GetYesNoString(each.Cells["UseText"].FormattedValue, "否"));
+                    logStr.Add("開始時間：" + DateToSaveFormat(each.Cells["StartTime"].Value + string.Empty));
+                    logStr.Add("結束時間：" + DateToSaveFormat(each.Cells["EndTime"].Value + string.Empty));
+
+                    logStr.Add("評量群組：" + GetYesNoString(each.Cells["UseGroup"].FormattedValue, "否"));
+                    sb.AppendLine(string.Join(",", logStr.ToArray()));
+
 
                     executeRequired = true;
+
                 }
                 if (executeRequired)
+                {
                     EditTemplate.InsertIncludeExam(reqInclude.BaseElement);
+                    // 紀錄log
+                    FISCA.LogAgent.ApplicationLog.Log("評分樣版設定", "設定", sb.ToString());
+                }
+
 
                 ResetDirty();
                 return true;
@@ -860,7 +946,7 @@ namespace SmartSchool.Others.Configuration.ScoresTemplate
                     newid = EditTemplate.Insert(editor.TemplateName);
                     Course.Instance.InvokeForeignTableChanged();
 
-                   
+
                     Template item = new Template(newid, editor.TemplateName);
                     item.OptionGroup = "TemplateItems";
                     item.Click += new EventHandler(Template_Click);

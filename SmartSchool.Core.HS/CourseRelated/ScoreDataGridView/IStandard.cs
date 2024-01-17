@@ -8,8 +8,8 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
 {
     interface IStandard
     {
-        string StandardName { get;}
-        void Judge(DataGridViewCell handlingCell);
+        string StandardName { get; }
+        void Judge(DataGridViewCell handlingCell, List<string> strValues);
     }
 
     internal class NormalStandard : IStandard
@@ -26,7 +26,7 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
             get { return _name; }
         }
 
-        public void Judge(DataGridViewCell handlingCell)
+        public void Judge(DataGridViewCell handlingCell, List<string> strValues)
         {
             string value = handlingCell.Value == null ? "" : handlingCell.Value.ToString();
             DataGridViewCellStyle style = handlingCell.DataGridView.Rows[handlingCell.RowIndex].Cells[0].Style;
@@ -40,13 +40,14 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
             decimal d;
             if (decimal.TryParse(value, out d))
             {
-                handlingCell.Style.BackColor = defaultBackColor;               
+                handlingCell.Style.BackColor = defaultBackColor;
                 if (d < 60)
                     handlingCell.Style.ForeColor = Color.Red;
                 else
-                    handlingCell.Style.ForeColor = Color.Black;                                
+                    handlingCell.Style.ForeColor = Color.Black;
             }
-            else if(value == "¯Ê")
+            //else if(value == "¯Ê")
+            else if (strValues.Contains(value))
             {
                 handlingCell.Style.BackColor = Color.LightGray;
                 handlingCell.Style.ForeColor = Color.Brown;

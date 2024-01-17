@@ -6,13 +6,15 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
 {
     interface IExamCell : ICell
     {
-        IStandard Standard { get;}
+        IStandard Standard { get; }
         void SetValue(string value);
-        bool IsDirty { get;}
+        bool IsDirty { get; }
         void Reset();
         bool IsValid();
-        string Key { get;}
-        string DefaultValue { get;}
+        string Key { get; }
+        string DefaultValue { get; }
+
+        void SetStringValues(List<string> values);
     }
 
     abstract class AbstractExamCell : IExamCell
@@ -21,6 +23,9 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
         private string _nowValue;
         private IStandard _standard;
         private string _key;
+
+        // 缺考設定文字
+        private List<string> _stringValues;
 
         public string DefaultValue
         {
@@ -33,6 +38,7 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
             _nowValue = scoreInfo.Score;
             _key = scoreInfo.ID;
             _standard = StandardFactory.getInstance("Normal");
+            _stringValues = new List<string>();
         }
 
         #region IExamCell 成員
@@ -65,10 +71,18 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
         public virtual bool IsValid()
         {
             decimal d;
-            if (!string.IsNullOrEmpty(_nowValue) && !decimal.TryParse(_nowValue, out d) && _nowValue != "缺")
+            //if (!string.IsNullOrEmpty(_nowValue) && !decimal.TryParse(_nowValue, out d) && _nowValue != "缺")
+            if (!string.IsNullOrEmpty(_nowValue) && !decimal.TryParse(_nowValue, out d) && !_stringValues.Contains(_nowValue))
                 return false;
             return true;
         }
+
+        // 設定缺考設定文字
+        public void SetStringValues(List<string> values)
+        {
+            _stringValues = values;
+        }
+
         #endregion
 
         #region ICell 成員
@@ -111,7 +125,7 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
             decimal d;
             if (!string.IsNullOrEmpty(GetValue()) && !decimal.TryParse(GetValue(), out d))
                 return false;
-            return true;        
+            return true;
         }
     }
 }

@@ -143,26 +143,30 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                         sce_take_extDDict.Add(ic.Key, "");
                 }
             }
-            string strSQL = string.Format(@"
-            SELECT
-                id,
-                extension
-            FROM
-                sce_take
-            WHERE
-                extension <>'' AND id IN({0})", string.Join(",", sce_take_extDDict.Keys.ToArray()));
 
-            sce_take_extDDict.Clear();
-
-            QueryHelper qh1 = new QueryHelper();
-            DataTable dt = qh1.Select(strSQL);
-            foreach (DataRow dr in dt.Rows)
+            if (sce_take_extDDict.Count > 0)
             {
-                string id = dr["id"] + "";
-                string ext = dr["extension"] + "";
-                if (!sce_take_extDDict.ContainsKey(id))
-                    sce_take_extDDict.Add(id, ext);
-            }
+                string strSQL = string.Format(@"
+                SELECT
+                    id,
+                    extension
+                FROM
+                    sce_take
+                WHERE
+                    extension <>'' AND id IN({0})", string.Join(",", sce_take_extDDict.Keys.ToArray()));
+
+                sce_take_extDDict.Clear();
+
+                QueryHelper qh1 = new QueryHelper();
+                DataTable dt = qh1.Select(strSQL);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    string id = dr["id"] + "";
+                    string ext = dr["extension"] + "";
+                    if (!sce_take_extDDict.ContainsKey(id))
+                        sce_take_extDDict.Add(id, ext);
+                }
+            }            
 
 
             foreach (DataGridViewRow row in dataGridView1.Rows)

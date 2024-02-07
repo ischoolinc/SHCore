@@ -13,6 +13,9 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
         private bool _input_required;
         private float _weight;
 
+        // 使用評量群組
+        private bool use_group;
+
         public TEInclude(XmlElement data)
         {
             DSXmlHelper obj = new DSXmlHelper(data);
@@ -21,6 +24,7 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
             _exam_template_id = obj.GetText("ExamTemplateID");
             _input_required = (obj.GetText("InputRequired") == "是" ? true : false);
             _exam_name = obj.GetText("ExamName");
+            use_group = (obj.GetText("Extension/Extension/UseGroup") == "是" ? true : false);
 
             _weight = 0;
             float.TryParse(obj.GetText("Weight"), out _weight);
@@ -44,6 +48,11 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
         public bool InputRequired
         {
             get { return _input_required; }
+        }
+
+        public bool UseGroup
+        {
+            get { return use_group; }
         }
 
         public float Weight

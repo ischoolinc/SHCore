@@ -9,7 +9,7 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
 {
     class SCETake
     {
-        private string _identity, _scattend_id, _exam_id, _score;
+        private string _identity, _scattend_id, _exam_id, _score, _use_text;
 
         public SCETake(XmlElement data)
         {
@@ -18,6 +18,14 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
             _exam_id = obj.GetText("ExamID");
             _score = obj.GetText("Score");
             _scattend_id = obj.GetText("AttendID");
+
+            // 如果是缺考或是免修，則讀取缺考文字
+            if (_score == "-1" || _score == "-2")
+            {
+                // 讀取存在定期評量內的缺考文字
+                // obj.GetText("Extension/Extension/UseText");
+                _use_text = obj.GetText("Extension/Extension/UseText");
+            }
         }
 
         public string Identity
@@ -38,6 +46,11 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
         public string Score
         {
             get { return _score; }
+        }
+
+        public string UseText
+        {
+            get { return _use_text; }
         }
 
         public static SCETakeCollection GetSCETakes(IProgressUI progress, params string[] courseIds)

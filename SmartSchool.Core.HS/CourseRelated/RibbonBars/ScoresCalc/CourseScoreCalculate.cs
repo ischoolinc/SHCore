@@ -8,14 +8,19 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
     {
         private CourseCollection _courses;
 
+        // 缺考設定
+        private Dictionary<string, string> _UseTextScoreTypeDict;
+
         public CourseScoreCalculate(CourseCollection courses)
         {
             _courses = courses;
+            _UseTextScoreTypeDict = new Dictionary<string, string>();
         }
 
         public void Calculate() 
         {
-            Calculate(false);
+            // Calculate(false);
+            Calculate(_UseTextScoreTypeDict);
         }
 
 
@@ -27,5 +32,16 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
                     attend.CalculateScore(absentEqualZero);
             }
         }
+
+        // 使用缺考設定
+        public void Calculate(Dictionary<string,string> UseTextScoreTypeDict)
+        {
+            foreach (Course course in _courses.Values)
+            {
+                foreach (SCAttend attend in course.SCAttends.Values)
+                    attend.CalculateScore(UseTextScoreTypeDict);
+            }
+        }
+
     }
 }

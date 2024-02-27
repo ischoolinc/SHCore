@@ -10,6 +10,7 @@ using SmartSchool.Common;
 using System.Threading;
 using SmartSchool.AccessControl;
 using System.ComponentModel;
+using System.Linq;
 
 namespace SmartSchool.ImportExport.Student
 {
@@ -26,6 +27,21 @@ namespace SmartSchool.ImportExport.Student
             Dictionary<string, string> exams = new Dictionary<string, string>();
             XmlElement list = SmartSchool.Feature.Exam.QueryExam.GetAbstractList();
             List<XmlElement> nodes = new List<XmlElement>();
+
+            // 缺考設定
+            Dictionary<string, string> ScoreValueMapDict = new Dictionary<string, string>();
+            List<DAO.ScoreValueMangInfo> ScoreValueList = QueryData.GetScoreValueMangInfoList();
+            foreach (DAO.ScoreValueMangInfo sv in ScoreValueList)
+            {
+                if (!ScoreValueMapDict.ContainsKey(sv.UseText))
+                    ScoreValueMapDict.Add(sv.UseText, sv.UseValue);
+            }
+
+            // 評量成績缺考設定輸入值
+            // key:StudentID+CourseID+ExamName
+            Dictionary<string, string> sceTakeUseTextDict = new Dictionary<string, string>();
+
+
             foreach (XmlElement node in list.SelectNodes("Exam"))
             {
                 nodes.Add(node);
@@ -248,12 +264,30 @@ namespace SmartSchool.ImportExport.Student
                         {
                             string value = "" + row[exam];
                             decimal d;
-                            if (value != "" && value != "缺" && !decimal.TryParse(value, out d))
-                                e.ErrorFields.Add(exam, "評量成績只允許空白、缺、或數字");
+
+                            //if (value != "" && value != "缺" && !decimal.TryParse(value, out d))
+                            if (value != "" && !ScoreValueMapDict.ContainsKey(value) && !decimal.TryParse(value, out d))
+                            {
+
+                                e.ErrorFields.Add(exam, "評量成績只允許空白、" + string.Join("、", ScoreValueMapDict.Keys.ToArray()) + "、或數字");
+                            }
                             else if (!courseExams[key].Contains(exam) && value != "")
                             {
                                 e.WarningFields.Add(exam, "該課程沒有這次考試");
                             }
+
+                            // 檢查輸入符合缺考設定，填入缺考設定值
+                            if (ScoreValueMapDict.ContainsKey(value))
+                            {
+                                // 記錄缺考
+                                string sceKey = e.Data.ID + "_" + key + "_" + exam;
+
+                                if (!sceTakeUseTextDict.ContainsKey(sceKey))
+                                    sceTakeUseTextDict.Add(sceKey, value);
+
+                                row[exam] = ScoreValueMapDict[value];
+                            }
+
                         }
                     }
                 }
@@ -314,6 +348,16 @@ namespace SmartSchool.ImportExport.Student
                                     insertHelper.AddElement("ScoreSheetList/ScoreSheet", "ExamID", exams[examName]);
                                     insertHelper.AddElement("ScoreSheetList/ScoreSheet", "AttendID", courseStudentAttend[key][row.ID]);
                                     insertHelper.AddElement("ScoreSheetList/ScoreSheet", "Score", "" + row[examName]);
+
+                                    // 檢查缺考設定值
+                                    string sceKey =row.ID + "_" + key + "_" + examName;
+                                    if (sceTakeUseTextDict.ContainsKey(sceKey))
+                                    {
+                                        insertHelper.AddElement("ScoreSheetList/ScoreSheet", "Extension");
+                                        insertHelper.AddElement("ScoreSheetList/ScoreSheet/Extension", "Extension");
+                                        insertHelper.AddElement("ScoreSheetList/ScoreSheet/Extension/Extension", "UseText", "" + sceTakeUseTextDict[sceKey]);
+                                    }
+
                                     hasInsert = true;
                                 }
                             }
@@ -328,6 +372,18 @@ namespace SmartSchool.ImportExport.Student
                                 {
                                     updateHelper.AddElement("ScoreSheetList", "ScoreSheet");
                                     updateHelper.AddElement("ScoreSheetList/ScoreSheet", "Score", row[examName]);
+
+
+                                    // 檢查缺考設定值
+                                    string sceKey = row.ID + "_" + key + "_" + examName;
+                                    if (sceTakeUseTextDict.ContainsKey(sceKey))
+                                    {
+                                        updateHelper.AddElement("ScoreSheetList/ScoreSheet", "Extension");
+                                        updateHelper.AddElement("ScoreSheetList/ScoreSheet/Extension", "Extension");
+                                        updateHelper.AddElement("ScoreSheetList/ScoreSheet/Extension/Extension", "UseText", "" + sceTakeUseTextDict[sceKey]);
+                                    }
+
+
                                     updateHelper.AddElement("ScoreSheetList/ScoreSheet", "ID", examScoreElement.GetAttribute("ID"));
                                     hasUpdate = true;
                                 }

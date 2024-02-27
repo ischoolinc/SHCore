@@ -202,6 +202,12 @@ namespace SmartSchool.ImportExport.Student
                         {
                             string examName = helper.GetText("ExamName");
                             string score = helper.GetText("Score");
+
+                            // 因為有使用缺考設定寫入UseText，先判斷再判斷Score
+                            string UseText = helper.GetText("Extension/Extension/UseText");
+                            if (!string.IsNullOrEmpty(UseText))
+                                score = UseText;
+
                             if (e.ExportFields.Contains(examName))
                             {
                                 string key = sinfo.ID + "__" + cinfo.Identity;

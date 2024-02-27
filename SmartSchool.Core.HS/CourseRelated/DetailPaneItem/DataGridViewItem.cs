@@ -305,7 +305,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                                     extension
                                 )
                             VALUES
-                                ({0}, {1}, {2},{3});
+                                ({0}, {1}, {2},'{3}');
                             ", examid, attendid, score, elmRoot.ToString());
                         }
 

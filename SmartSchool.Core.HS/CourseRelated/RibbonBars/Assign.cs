@@ -19,6 +19,8 @@ using SmartSchool.Common;
 using SmartSchool.Security;
 using FISCA.Presentation;
 using SmartSchool.ExceptionHandler;
+using System.Security.Principal;
+using Aspose.Cells;
 
 namespace SmartSchool.CourseRelated.RibbonBars
 {
@@ -28,6 +30,8 @@ namespace SmartSchool.CourseRelated.RibbonBars
         FeatureAccessControl attendStudentCtrl;
         FeatureAccessControl assignTeacherCtrl;
         FeatureAccessControl scoresCtrl;
+
+        Dictionary<string, string> TempNameDic { get; set; }
 
         private List<ButtonItem> _items;
         public Assign()
@@ -47,30 +51,30 @@ namespace SmartSchool.CourseRelated.RibbonBars
             btnAttendStudent.SupposeHasChildern = true;
             btnAttendStudent.PopupOpen += new EventHandler<FISCA.Presentation.PopupOpenEventArgs>(btnAttendStudent_PopupOpen);
             btnAttendStudent.Size = RibbonBarButton.MenuButtonSize.Medium;
-            btnAttendStudent.Enable = attendStudentCtrl.Executable() && ( K12.Presentation.NLDPanels.Student.TempSource.Count > 0 ) && ( K12.Presentation.NLDPanels.Course.SelectedSource.Count > 0 );
+            btnAttendStudent.Enable = attendStudentCtrl.Executable() && (K12.Presentation.NLDPanels.Student.TempSource.Count > 0) && (K12.Presentation.NLDPanels.Course.SelectedSource.Count > 0);
 
             var btnAssignTeacher = K12.Presentation.NLDPanels.Course.RibbonBarItems["指定"]["評分教師"];
             btnAssignTeacher.Image = Properties.Resources.admin_64;
             btnAssignTeacher.SupposeHasChildern = true;
             btnAssignTeacher.PopupOpen += new EventHandler<FISCA.Presentation.PopupOpenEventArgs>(btnAssignTeacher_PopupOpen);
             btnAssignTeacher.Size = RibbonBarButton.MenuButtonSize.Medium;
-            btnAssignTeacher.Enable = assignTeacherCtrl.Executable() && ( K12.Presentation.NLDPanels.Teacher.TempSource.Count > 0 ) && ( K12.Presentation.NLDPanels.Course.SelectedSource.Count > 0 );
+            btnAssignTeacher.Enable = assignTeacherCtrl.Executable() && (K12.Presentation.NLDPanels.Teacher.TempSource.Count > 0) && (K12.Presentation.NLDPanels.Course.SelectedSource.Count > 0);
 
             var btnScores = K12.Presentation.NLDPanels.Course.RibbonBarItems["指定"]["評分樣版"];
-            btnScores.Image = ( (System.Drawing.Image)( resources.GetObject("btnScores.Image") ) );
+            btnScores.Image = ((System.Drawing.Image)(resources.GetObject("btnScores.Image")));
             btnScores.SupposeHasChildern = true;
             btnScores.PopupOpen += new EventHandler<FISCA.Presentation.PopupOpenEventArgs>(btnScores_PopupOpen);
             btnScores.Size = RibbonBarButton.MenuButtonSize.Medium;
-            btnScores.Enable = scoresCtrl.Executable() && ( K12.Presentation.NLDPanels.Course.SelectedSource.Count > 0 );
+            btnScores.Enable = scoresCtrl.Executable() && (K12.Presentation.NLDPanels.Course.SelectedSource.Count > 0);
 
 
             SmartSchool.StudentRelated.Student.Instance.TemporalChanged += delegate
             {
-                btnAttendStudent.Enable = attendStudentCtrl.Executable() && ( K12.Presentation.NLDPanels.Student.TempSource.Count > 0 ) && ( K12.Presentation.NLDPanels.Course.SelectedSource.Count > 0 );
+                btnAttendStudent.Enable = attendStudentCtrl.Executable() && (K12.Presentation.NLDPanels.Student.TempSource.Count > 0) && (K12.Presentation.NLDPanels.Course.SelectedSource.Count > 0);
             };
             K12.Presentation.NLDPanels.Teacher.TempSourceChanged += delegate
             {
-                btnAssignTeacher.Enable = assignTeacherCtrl.Executable() && ( K12.Presentation.NLDPanels.Teacher.TempSource.Count > 0 ) && ( K12.Presentation.NLDPanels.Course.SelectedSource.Count > 0 );
+                btnAssignTeacher.Enable = assignTeacherCtrl.Executable() && (K12.Presentation.NLDPanels.Teacher.TempSource.Count > 0) && (K12.Presentation.NLDPanels.Course.SelectedSource.Count > 0);
             };
             Course.Instance.ForeignTableChanged += delegate
             {
@@ -78,9 +82,9 @@ namespace SmartSchool.CourseRelated.RibbonBars
             };
             K12.Presentation.NLDPanels.Course.SelectedSourceChanged += delegate
             {
-                btnAttendStudent.Enable = attendStudentCtrl.Executable() && ( K12.Presentation.NLDPanels.Student.TempSource.Count > 0 ) && ( K12.Presentation.NLDPanels.Course.SelectedSource.Count > 0 );
-                btnAssignTeacher.Enable = assignTeacherCtrl.Executable() && ( K12.Presentation.NLDPanels.Teacher.TempSource.Count > 0 ) && ( K12.Presentation.NLDPanels.Course.SelectedSource.Count > 0 );
-                btnScores.Enable = scoresCtrl.Executable() && ( K12.Presentation.NLDPanels.Course.SelectedSource.Count > 0 );
+                btnAttendStudent.Enable = attendStudentCtrl.Executable() && (K12.Presentation.NLDPanels.Student.TempSource.Count > 0) && (K12.Presentation.NLDPanels.Course.SelectedSource.Count > 0);
+                btnAssignTeacher.Enable = assignTeacherCtrl.Executable() && (K12.Presentation.NLDPanels.Teacher.TempSource.Count > 0) && (K12.Presentation.NLDPanels.Course.SelectedSource.Count > 0);
+                btnScores.Enable = scoresCtrl.Executable() && (K12.Presentation.NLDPanels.Course.SelectedSource.Count > 0);
             };
 
         }
@@ -89,26 +93,34 @@ namespace SmartSchool.CourseRelated.RibbonBars
         {
             try
             {
-                if ( _items == null )
+                if (_items == null)
                 {
                     _items = new List<ButtonItem>();
 
                     XmlElement templates = QueryTemplate.GetAbstractList();
-                    foreach ( XmlElement each in templates.SelectNodes("ExamTemplate") )
+                    TempNameDic = new Dictionary<string, string>();
+                    foreach (XmlElement each in templates.SelectNodes("ExamTemplate"))
                     {
                         TemplateButton button = new TemplateButton(each);
+
+                        string Text = each.SelectSingleNode("TemplateName").InnerText;
+                        string Identity = each.GetAttribute("ID");
+
+                        if (!TempNameDic.ContainsKey(Identity))
+                            TempNameDic.Add(Identity, Text);
+
                         button.Click += new EventHandler(TemplateButton_Click);
                         _items.Add(button);
                     }
                 }
-                foreach ( TemplateButton button in _items )
+                foreach (TemplateButton button in _items)
                 {
                     var temp = e.VirtualButtons[button.Text];
                     temp.Tag = button;
                     temp.Click += new EventHandler(temp_Click);
                 }
             }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
                 CurrentUser user = CurrentUser.Instance;
                 BugReporter.ReportException(user.SystemName, user.SystemVersion, ex, false);
@@ -121,17 +133,34 @@ namespace SmartSchool.CourseRelated.RibbonBars
         {
             try
             {
-                TemplateButton button = ( sender as MenuButton ).Tag as TemplateButton;
+                TemplateButton button = (sender as MenuButton).Tag as TemplateButton;
                 string templateId = button.Identity;
 
                 List<CourseInformation> courses = Course.Instance.SelectionCourse;
-
-                if ( courses.Count > 0 )
+                StringBuilder sb_log = new StringBuilder();
+                sb_log.AppendLine(string.Format("課程評分樣版「{0}」已指定給以下課程", button.Text));
+                sb_log.AppendLine("");
+                if (courses.Count > 0)
                 {
                     DSXmlHelper req = new DSXmlHelper("UpdateRequest");
 
-                    foreach ( CourseInformation each in courses )
+                    foreach (CourseInformation each in courses)
                     {
+                        sb_log.Append(string.Format("課程名稱「{0}」", each.CourseName));
+                        sb_log.Append(string.Format("學年度「{0}」", each.SchoolYear));
+                        sb_log.Append(string.Format("學期「{0}」", each.Semester));
+
+                        if (TempNameDic.ContainsKey("" + each.RefExamTemplateID))
+                        {
+                            string name = TempNameDic["" + each.RefExamTemplateID];
+                            sb_log.AppendLine(string.Format("(原課程評分樣版「{0}」)", name));
+                        }
+                        else
+                        {
+                            sb_log.AppendLine("原評量名稱「未設定」");
+                        }
+
+
                         req.AddElement("Course");
                         req.AddElement("Course", "Field", "<RefExamTemplateID>" + templateId + "</RefExamTemplateID>", true);
                         req.AddElement("Course", "Condition", "<ID>" + each.Identity + "</ID>", true);
@@ -140,15 +169,15 @@ namespace SmartSchool.CourseRelated.RibbonBars
                     EditCourse.UpdateCourse(new DSRequest(req));
 
                     List<int> courseids = new List<int>();
-                    foreach ( CourseInformation each in courses )
+                    foreach (CourseInformation each in courses)
                         courseids.Add(each.Identity);
 
                     Course.Instance.InvokeAfterCourseChange(courseids.ToArray());
-
+                    FISCA.LogAgent.ApplicationLog.Log("課程評分樣版", "指定", sb_log.ToString());
                     MsgBox.Show("課程評分樣版指定完成。\n指定課程數：" + courses.Count, Application.ProductName);
                 }
             }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
                 CurrentUser user = CurrentUser.Instance;
                 BugReporter.ReportException(user.SystemName, user.SystemVersion, ex, false);
@@ -162,7 +191,7 @@ namespace SmartSchool.CourseRelated.RibbonBars
         {
             List<BriefTeacherData> teacherList = SmartSchool.TeacherRelated.Teacher.Instance.TempTeacher;
 
-            foreach ( BriefTeacherData teacher in teacherList )
+            foreach (BriefTeacherData teacher in teacherList)
             {
                 var item = e.VirtualButtons[teacher.UniqName];
                 item.Tag = teacher.ID;
@@ -173,19 +202,19 @@ namespace SmartSchool.CourseRelated.RibbonBars
         void btnAttendStudent_PopupOpen(object sender, FISCA.Presentation.PopupOpenEventArgs e)
         {
             List<BriefStudentData> students = SmartSchool.StudentRelated.Student.Instance.TempStudent;
-            if ( students.Count > 1 )
+            if (students.Count > 1)
             {
                 var btnStudentAll = e.VirtualButtons["加入所有待處理學生"];
                 btnStudentAll.AutoCheckOnClick = false;
                 btnStudentAll.Click += new EventHandler(btnStudentAll_Click);
             }
             bool b = true;
-            foreach ( BriefStudentData student in students )
+            foreach (BriefStudentData student in students)
             {
                 var sitem = e.VirtualButtons["【" + student.ClassName + "】" + student.Name];
                 sitem.Tag = student;
                 sitem.Click += new EventHandler(sitem_Click);
-                if ( b )
+                if (b)
                 {
                     sitem.BeginGroup = true;
                     b = false;
@@ -199,14 +228,14 @@ namespace SmartSchool.CourseRelated.RibbonBars
             string teacherid = "" + item.Tag;
 
             List<CourseInformation> courses = SmartSchool.CourseRelated.Course.Instance.SelectionCourse;
-            if ( courses.Count == 0 )
+            if (courses.Count == 0)
             {
                 MsgBox.Show("您必須選擇課程");
                 return;
             }
 
             DSXmlHelper removeBySequence = new DSXmlHelper("Request");
-            foreach ( CourseInformation info in courses )
+            foreach (CourseInformation info in courses)
             {
                 removeBySequence.AddElement("Course");
                 removeBySequence.AddElement("Course", "CourseID", info.Identity.ToString());
@@ -214,7 +243,7 @@ namespace SmartSchool.CourseRelated.RibbonBars
             }
 
             DSXmlHelper removeByTeacher = new DSXmlHelper("Request");
-            foreach ( CourseInformation info in courses )
+            foreach (CourseInformation info in courses)
             {
                 removeByTeacher.AddElement("Course");
                 removeByTeacher.AddElement("Course", "CourseID", info.Identity.ToString());
@@ -222,7 +251,7 @@ namespace SmartSchool.CourseRelated.RibbonBars
             }
 
             DSXmlHelper addnew = new DSXmlHelper("Request");
-            foreach ( CourseInformation info in courses )
+            foreach (CourseInformation info in courses)
             {
                 addnew.AddElement("CourseTeacher");
                 addnew.AddElement("CourseTeacher", "RefCourseID", info.Identity.ToString());
@@ -237,14 +266,14 @@ namespace SmartSchool.CourseRelated.RibbonBars
                 EditCourse.AddCourseTeacher(addnew);
 
                 List<int> courseIdList = new List<int>();
-                foreach ( CourseInformation each in courses )
+                foreach (CourseInformation each in courses)
                     courseIdList.Add(each.Identity);
 
                 Course.Instance.InvokeAfterCourseChange(courseIdList.ToArray());
 
                 MsgBox.Show("指派完成");
             }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
                 MsgBox.Show("指派失敗:" + ex.Message);
             }
@@ -254,7 +283,7 @@ namespace SmartSchool.CourseRelated.RibbonBars
         void btnStudentAll_Click(object sender, EventArgs e)
         {
             List<CourseInformation> collection = SmartSchool.CourseRelated.Course.Instance.SelectionCourse;
-            if ( collection.Count == 0 )
+            if (collection.Count == 0)
             {
                 MsgBox.Show("您必須選擇至少一筆課程");
                 return;
@@ -286,9 +315,9 @@ namespace SmartSchool.CourseRelated.RibbonBars
             helper.AddElement("Field", "RefCourseID");
             helper.AddElement("Condition");
             helper.AddElement("Condition", "Or");
-            foreach ( CourseInformation info in collection )
+            foreach (CourseInformation info in collection)
             {
-                foreach ( BriefStudentData student in students )
+                foreach (BriefStudentData student in students)
                 {
                     helper.AddElement("Condition/Or", "And");
                     helper.AddElement("Condition/Or/And", "StudentID", student.ID);
@@ -301,23 +330,23 @@ namespace SmartSchool.CourseRelated.RibbonBars
             helper = new DSXmlHelper("InsertSCAttend");
 
 
-            foreach ( CourseInformation info in collection )
+            foreach (CourseInformation info in collection)
             {
-                foreach ( BriefStudentData student in students )
+                foreach (BriefStudentData student in students)
                 {
                     //學生必須是在校生才能加入課程。
-                    if ( !student.IsNormal ) continue;
+                    if (!student.IsNormal) continue;
 
                     XmlElement element = null;
-                    foreach ( XmlElement ele in dsrsp.GetContent().GetElements("Student") )
+                    foreach (XmlElement ele in dsrsp.GetContent().GetElements("Student"))
                     {
                         string courseid = info.Identity.ToString();
                         string studentid = student.ID;
-                        if ( courseid == ele.SelectSingleNode("RefCourseID").InnerText && studentid == ele.SelectSingleNode("RefStudentID").InnerText )
+                        if (courseid == ele.SelectSingleNode("RefCourseID").InnerText && studentid == ele.SelectSingleNode("RefStudentID").InnerText)
                             element = ele;
                     }
 
-                    if ( element == null )
+                    if (element == null)
                     {
                         // 沒有Element 表示該學生沒有修過這個課程，要新增
                         helper.AddElement("Attend");
@@ -345,7 +374,7 @@ namespace SmartSchool.CourseRelated.RibbonBars
                     }
                 }
             }
-            if ( insertCount > 0 )
+            if (insertCount > 0)
                 SmartSchool.Feature.Course.AddCourse.AttendCourse(helper);
             MsgBox.Show("處理完畢");
             SmartSchool.Broadcaster.Events.Items["課程/學生修課"].Invoke(collection);
@@ -358,7 +387,7 @@ namespace SmartSchool.CourseRelated.RibbonBars
             string studentid = data.ID; ;
 
             List<CourseInformation> collection = SmartSchool.CourseRelated.Course.Instance.SelectionCourse;
-            if ( collection.Count == 0 )
+            if (collection.Count == 0)
             {
                 MsgBox.Show("您必須選擇至少一筆課程");
                 return;
@@ -383,7 +412,7 @@ namespace SmartSchool.CourseRelated.RibbonBars
             helper.AddElement("Field", "RefCourseID");
             helper.AddElement("Condition");
             helper.AddElement("Condition", "Or");
-            foreach ( CourseInformation info in collection )
+            foreach (CourseInformation info in collection)
             {
                 helper.AddElement("Condition/Or", "And");
                 helper.AddElement("Condition/Or/And", "StudentID", studentid);
@@ -394,10 +423,10 @@ namespace SmartSchool.CourseRelated.RibbonBars
             int insertCount = 0;
             helper = new DSXmlHelper("InsertSCAttend");
 
-            foreach ( CourseInformation info in collection )
+            foreach (CourseInformation info in collection)
             {
                 XmlElement element = dsrsp.GetContent().GetElement("Student[RefCourseID='" + info.Identity + "']");
-                if ( element == null )
+                if (element == null)
                 {
                     // 沒有Element 表示該學生沒有修過這個課程，要新增
                     helper.AddElement("Attend");
@@ -424,7 +453,7 @@ namespace SmartSchool.CourseRelated.RibbonBars
                     insertCount++;
                 }
             }
-            if ( insertCount > 0 )
+            if (insertCount > 0)
                 SmartSchool.Feature.Course.AddCourse.AttendCourse(helper);
             MsgBox.Show("處理完畢");
             SmartSchool.Broadcaster.Events.Items["課程/學生修課"].Invoke(collection);
@@ -432,13 +461,13 @@ namespace SmartSchool.CourseRelated.RibbonBars
 
         private string GetRequiredString(string input)
         {
-            if ( input == "必" || input == "選" )
+            if (input == "必" || input == "選")
                 return input;
             else
             {
-                if ( input == "必修" )
+                if (input == "必修")
                     return "必";
-                else if ( input == "選修" )
+                else if (input == "選修")
                     return "選";
                 else
                     throw new ArgumentException("只允許「必」或「選」，不接受「" + input + "」");
@@ -454,11 +483,11 @@ namespace SmartSchool.CourseRelated.RibbonBars
 
                 List<CourseInformation> courses = Course.Instance.SelectionCourse;
 
-                if ( courses.Count > 0 )
+                if (courses.Count > 0)
                 {
                     DSXmlHelper req = new DSXmlHelper("UpdateRequest");
 
-                    foreach ( CourseInformation each in courses )
+                    foreach (CourseInformation each in courses)
                     {
                         req.AddElement("Course");
                         req.AddElement("Course", "Field", "<RefExamTemplateID>" + templateId + "</RefExamTemplateID>", true);
@@ -468,7 +497,7 @@ namespace SmartSchool.CourseRelated.RibbonBars
                     EditCourse.UpdateCourse(new DSRequest(req));
 
                     List<int> courseids = new List<int>();
-                    foreach ( CourseInformation each in courses )
+                    foreach (CourseInformation each in courses)
                         courseids.Add(each.Identity);
 
                     Course.Instance.InvokeAfterCourseChange(courseids.ToArray());
@@ -476,7 +505,7 @@ namespace SmartSchool.CourseRelated.RibbonBars
                     MsgBox.Show("課程評分樣版指定完成。\n指定課程數：" + courses.Count, Application.ProductName);
                 }
             }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
                 CurrentUser user = CurrentUser.Instance;
                 BugReporter.ReportException(user.SystemName, user.SystemVersion, ex, false);

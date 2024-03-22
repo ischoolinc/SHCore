@@ -11,6 +11,9 @@ using DevComponents.DotNetBar;
 using FISCA.DSAUtil;
 using SmartSchool.Feature.Course;
 using K12.Data;
+using System.Linq;
+using System.Xml.Linq;
+using FISCA.Data;
 
 namespace SmartSchool.CourseRelated.DetailPaneItem
 {
@@ -23,6 +26,12 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
         Dictionary<string, Dictionary<string, string>> oldLogDataDict = new Dictionary<string, Dictionary<string, string>>();
         Dictionary<string, Dictionary<string, string>> newLogDataDict = new Dictionary<string, Dictionary<string, string>>();
 
+        // 缺考設定資訊
+        List<SmartSchool.DAO.ScoreValueMangInfo> ScoreValueMangInfoList = new List<SmartSchool.DAO.ScoreValueMangInfo>();
+
+        // 缺考設定文字對照值
+        Dictionary<string, string> ScoreValueMangTextDict = new Dictionary<string, string>();
+
         public DataGridViewItem()
         {
             InitializeComponent();
@@ -31,7 +40,10 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
 
         public bool IsValid
         {
-            get { return _helper.IsValid(); }
+            get
+            {
+                return _helper.IsValid();
+            }
         }
 
         public override void Save()
@@ -115,6 +127,48 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
 
             insertSQLList.Clear(); updateSQLList.Clear(); deleteSQLList.Clear();
 
+            Dictionary<string, string> sce_take_extDDict = new Dictionary<string, string>();
+
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    IExamCell ic = cell.Tag as IExamCell;
+                    if (ic == null) continue;
+
+                    if (string.IsNullOrEmpty(ic.Key))
+                        continue;
+
+                    if (!sce_take_extDDict.ContainsKey(ic.Key))
+                        sce_take_extDDict.Add(ic.Key, "");
+                }
+            }
+
+            if (sce_take_extDDict.Count > 0)
+            {
+                string strSQL = string.Format(@"
+                SELECT
+                    id,
+                    extension
+                FROM
+                    sce_take
+                WHERE
+                    extension <>'' AND id IN({0})", string.Join(",", sce_take_extDDict.Keys.ToArray()));
+
+                sce_take_extDDict.Clear();
+
+                QueryHelper qh1 = new QueryHelper();
+                DataTable dt = qh1.Select(strSQL);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    string id = dr["id"] + "";
+                    string ext = dr["extension"] + "";
+                    if (!sce_take_extDDict.ContainsKey(id))
+                        sce_take_extDDict.Add(id, ext);
+                }
+            }            
+
+
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 string attendid = row.Tag.ToString();
@@ -190,12 +244,15 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
 
                     // 處理缺考
                     string score = "null";
+                    string strValue = "";
                     if (!string.IsNullOrWhiteSpace(ic.GetValue()))
                     {
-
-                        if (ic.GetValue().Replace(" ", "") == "缺")
+                        string value = ic.GetValue().Replace(" ", "");
+                        if (ScoreValueMangTextDict.ContainsKey(value))
                         {
-                            score = "-1";
+                            //score = "-1";
+                            score = ScoreValueMangTextDict[value];
+                            strValue = value;
                         }
                         else
                         {
@@ -218,15 +275,40 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                         //insertHelper.AddElement("ScoreSheetList/ScoreSheet", "ExamID", examid);
                         //insertHelper.AddElement("ScoreSheetList/ScoreSheet", "AttendID", attendid);
                         //insertHelper.AddElement("ScoreSheetList/ScoreSheet", "Score", ic.GetValue());                       
+                        // 需要寫入缺考
+                        string insertSQL = "";
+                        if (string.IsNullOrEmpty(strValue))
+                        {
+                            // 一般
+                            insertSQL = string.Format(@"
+                            INSERT INTO
+                                sce_take(
+                                    ref_exam_id,
+                                    ref_sc_attend_id,
+                                    score
+                                )
+                            VALUES
+                                ({0}, {1}, {2});
+                            ", examid, attendid, score);
+                        }
+                        else
+                        {
+                            // 產生 xml 將缺考key資料寫入 extension
+                            XElement elmRoot = new XElement("Extension");
+                            elmRoot.SetElementValue("UseText", strValue);
+                            insertSQL = string.Format(@"
+                            INSERT INTO
+                                sce_take(
+                                    ref_exam_id,
+                                    ref_sc_attend_id,
+                                    score,
+                                    extension
+                                )
+                            VALUES
+                                ({0}, {1}, {2},'{3}');
+                            ", examid, attendid, score, elmRoot.ToString());
+                        }
 
-                        string insertSQL = "INSERT INTO sce_take(" +
-                            "ref_exam_id" +
-                            ",ref_sc_attend_id" +
-                            ",score) " +
-                            "VALUES(" +
-                            "" + examid + "" +
-                            "," + attendid + "" +
-                            "," + score + ");";
                         insertSQLList.Add(insertSQL);
                     }
                     else if (!string.IsNullOrEmpty(ic.Key) && ic.IsDirty && !string.IsNullOrEmpty(ic.GetValue()))
@@ -235,7 +317,54 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                         //updateHelper.AddElement("ScoreSheetList", "ScoreSheet");
                         //updateHelper.AddElement("ScoreSheetList/ScoreSheet", "Score", ic.GetValue());
                         //updateHelper.AddElement("ScoreSheetList/ScoreSheet", "ID", ic.Key);
-                        string updateSQL = "UPDATE sce_take SET score=" + score + " WHERE ID = " + ic.Key + ";";
+                        string updateSQL = "";
+
+                        if (string.IsNullOrEmpty(strValue))
+                        {
+                            updateSQL = string.Format(@"
+                            UPDATE
+                                sce_take
+                            SET
+                                score = {0}
+                            WHERE
+                                ID = {1};
+                            ", score, ic.Key);
+                        }
+                        else
+                        {
+                            try
+                            {
+                                string ext = "";
+                                if (sce_take_extDDict.ContainsKey(ic.Key))
+                                    ext = sce_take_extDDict[ic.Key];
+
+                                XElement elmRoot = null;
+                                if (ext == "")
+                                {
+                                    elmRoot = new XElement("Extension");
+                                }
+                                else
+                                {
+                                    // 原本已有資料
+                                    elmRoot = XElement.Parse(ext);
+                                }
+
+                                elmRoot.SetElementValue("UseText", strValue);
+                                updateSQL = string.Format(@"
+                            UPDATE
+                                sce_take
+                            SET
+                                score = {0},
+                                extension = '{2}' 
+                            WHERE
+                                ID = {1};
+                            ", score, ic.Key, elmRoot.ToString());
+                            }
+                            catch (Exception ex)
+                            { Console.WriteLine(ex.Message); }
+
+                        }
+
                         updateSQLList.Add(updateSQL);
                     }
                     else if (!string.IsNullOrEmpty(ic.Key) && ic.IsDirty && string.IsNullOrEmpty(ic.GetValue()))
@@ -383,6 +512,8 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
 
         protected override object OnBackgroundWorkerWorking()
         {
+            // 取得缺考設定資料
+            ScoreValueMangInfoList = QueryData.GetScoreValueMangInfoList();
             return new SmartSchoolDataProvider(RunningID, cbShowAllStudent.Checked);
         }
 
@@ -391,12 +522,26 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
             //因為這是第二個執行緒的 Callback，很可能使用者操作很快，所以在沒有執行這此時，畫面就被關了，不檢查可能會造成錯誤！
             if (IsDisposed) return;
 
+            // 缺考設定索引            
+            ScoreValueMangTextDict.Clear();
+            foreach (SmartSchool.DAO.ScoreValueMangInfo info in ScoreValueMangInfoList)
+            {
+                if (!ScoreValueMangTextDict.ContainsKey(info.UseText))
+                    ScoreValueMangTextDict.Add(info.UseText, info.UseValue);
+            }
+
             _valueManager.AddValue("IsDirty", false.ToString());
             IDataProvider provider = result as IDataProvider;
 
             _helper = new DataGridViewHelper(dataGridView1, provider);
+            // 設定缺考文字可以輸入那些值
+            _helper.SetStringValues(ScoreValueMangTextDict.Keys.ToList());
+
             _helper.DirtyChanged += new EventHandler<DirtyChangedEventArgs>(_helper_DirtyChanged);
             _helper.Fill();
+
+
+
 
             if (_showItems == null)
             {

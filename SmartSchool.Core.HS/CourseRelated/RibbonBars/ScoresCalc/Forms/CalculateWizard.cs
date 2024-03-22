@@ -11,6 +11,7 @@ using FISCA.DSAUtil;
 using SmartSchool;
 using System.Threading;
 using FISCA.Presentation;
+using FISCA.Data;
 
 namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
 {
@@ -46,8 +47,15 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
             _raw_data = new CourseDataLoader();
             _raw_data.LoadCalculationData(this);
 
+            // 取得缺考設定
+            Dictionary<string, string> UseTextScoreTypeDict = GetExamUseTextScoreType();
+
             CourseScoreCalculate calculate = new CourseScoreCalculate(_raw_data.Courses);
-            calculate.Calculate(Is_AbsentEqualZero);
+            //  原本畫面設定讓使用者自行決定缺考是否0分
+            //calculate.Calculate(Is_AbsentEqualZero);
+
+            // 使用缺考設定處理
+            calculate.Calculate(UseTextScoreTypeDict);
         }
 
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -214,6 +222,48 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
                 Is_AbsentEqualZero = false;
             }
 
+        }
+    
+        // 取得缺考設定
+        private Dictionary<string,string> GetExamUseTextScoreType()
+        {
+            Dictionary<string, string> value = new Dictionary<string, string>();
+            QueryHelper qh = new QueryHelper();
+
+            string sql = string.Format(@"
+            SELECT
+                array_to_string(xpath('//UseText/text()', settings), '') AS UseText,
+                array_to_string(xpath('//ScoreType/text()', settings), '') AS ScoreType,
+                array_to_string(xpath('//ReportValue/text()', settings), '') AS ReportValue,
+                array_to_string(xpath('//UseValue/text()', settings), '') AS UseValue
+            FROM
+                (
+                    SELECT
+                        unnest(
+                            xpath(
+                                '//Configurations/Configuration/Settings/Setting',
+                                xmlparse(
+                                    content REPLACE(REPLACE(content, '&lt;', '<'), '&gt;', '>')
+                                )
+                            )
+                        ) AS settings
+                    FROM
+                        list
+                    WHERE
+                        name = '評量成績缺考設定'
+                ) AS content
+            ");
+
+            DataTable dt = qh.Select(sql);
+            foreach(DataRow dr in dt.Rows)
+            {
+                string text = dr["usetext"] + "";
+                string type = dr["scoretype"] + "";
+
+                if (!value.ContainsKey(text))
+                    value.Add(text, type);
+            }
+            return value;
         }
     }
 }

@@ -7,6 +7,7 @@ using FISCA.DSAUtil;
 using System.Xml;
 using FISCA.Data;
 using System.Data;
+using System.Xml.Linq;
 
 namespace SmartSchool.CourseRelated.ScoreDataGridView
 {
@@ -248,6 +249,7 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
                 ",ref_exam_id" +
                 ",ref_sc_attend_id" +
                 ",sce_take.score " +
+                ",sce_take.extension " +
                 "FROM " +
                 "sce_take INNER JOIN " +
                 "sc_attend " +
@@ -281,8 +283,25 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
                         score = GetScore(sceScoreDict[key]);
                     }
 
-                    if (score.Score == "-1")
-                        score.Score = "缺";
+                    if (score.Score == "-1" || score.Score == "-2")
+                    {
+                        // 解析 extension，讀取當時缺考設定存的設定值
+                        try
+                        {
+                            if (sceScoreDict.ContainsKey(key))
+                            {
+                                XElement elm = XElement.Parse(sceScoreDict[key]["extension"] + "");
+                                if (elm != null && elm.Element("UseText") != null)
+                                    score.Score = elm.Element("UseText").Value;
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                    }
+                    //score.Score = "缺";
                     row.AddCell(examDict[examid], new ExamCell(score));
                 }
 

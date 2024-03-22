@@ -64,8 +64,8 @@
             this.lblDescription.Name = "lblDescription";
             this.lblDescription.Size = new System.Drawing.Size(373, 101);
             this.lblDescription.TabIndex = 1;
-            this.lblDescription.Text = "提醒您：學生於各次評量中，若成績空白或為缺考者，將不納入計算，並以其餘有成績之評量依相對的權重進行計算；若勾選下方\"缺考以零分計算\"，成績空白及缺考將以0分進行計" +
-    "算。若課程未設定評分樣板、評分樣板中設定成績由老師繳交、或課程設定為不需評分，則系統將不進行成績計算。";
+            this.lblDescription.Text = "提醒您：請先檢查 1.教務作業>基本設定>設定>缺考設定，2.教務作業>基本設定>設定>評分樣板設定，缺考與評量群組設定是否正確， 學生於各次評量中，會依設定進行" +
+    "計算。若課程未設定評分樣板、評分樣板中設定成績由老師繳交、或課程設定為不需評分，則系統將不進行成績計算。";
             this.lblDescription.TextLineAlignment = System.Drawing.StringAlignment.Near;
             this.lblDescription.WordWrap = true;
             // 
@@ -137,6 +137,7 @@
             this.AbsentEqualZero.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.AbsentEqualZero.TabIndex = 5;
             this.AbsentEqualZero.Text = "缺考以零分計算";
+            this.AbsentEqualZero.Visible = false;
             this.AbsentEqualZero.CheckedChanged += new System.EventHandler(this.AbsentEqualZero_CheckedChanged);
             // 
             // CalculateWizard

@@ -14,6 +14,11 @@ using SmartSchool.ApplicationLog;
 using SmartSchool.Feature.Course;
 using SmartSchool.AccessControl;
 using SmartSchool.StudentRelated;
+using System.Linq;
+using DevComponents.DotNetBar.Controls;
+using FISCA.Data;
+using SmartSchool.CourseRelated.ScoreDataGridView;
+using System.Xml.Linq;
 
 namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
 {
@@ -29,11 +34,24 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
         private DataGetter _data_getter;
         private ScoreType _process_score_type;
 
+        // 評量成績 extension 內容
+        Dictionary<string, string> sce_take_extDDict;
+
+        // 缺考設定資訊
+        List<SmartSchool.DAO.ScoreValueMangInfo> ScoreValueMangInfoList;
+
+        // 缺考設定文字對照值
+        Dictionary<string, string> ScoreValueMangTextDict;
+
+
         public CourseScorePalmerwormItem()
         {
             InitializeComponent();
             Title = "課程相關成績";
             _errorProvider = new ErrorProvider();
+            ScoreValueMangInfoList = new List<DAO.ScoreValueMangInfo>();
+            ScoreValueMangTextDict = new Dictionary<string, string>();
+            sce_take_extDDict = new Dictionary<string, string>();
             _initialized = false;
             _loading = false;
         }
@@ -42,13 +60,23 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
         protected override object OnBackgroundWorkerWorking()
         {
             _schoolYearList = new List<int>();
-            foreach ( var item in Course.Instance.Items )
+            foreach (var item in Course.Instance.Items)
             {
-                if ( !_schoolYearList.Contains(item.SchoolYear) )
+                if (!_schoolYearList.Contains(item.SchoolYear))
                     _schoolYearList.Add(item.SchoolYear);
             }
             _schoolYearList.Sort();
             _examList = SmartSchool.Feature.Course.QueryCourse.GetExamList();
+            // 取得缺考設定資料
+            ScoreValueMangInfoList = QueryData.GetScoreValueMangInfoList();
+
+            // 缺考設定索引            
+            ScoreValueMangTextDict.Clear();
+            foreach (SmartSchool.DAO.ScoreValueMangInfo info in ScoreValueMangInfoList)
+            {
+                if (!ScoreValueMangTextDict.ContainsKey(info.UseText))
+                    ScoreValueMangTextDict.Add(info.UseText, info.UseValue);
+            }
             return null;
         }
 
@@ -169,19 +197,42 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
             _valueManager.ResetValues();
             dgvScore.EndEdit();
             dgvScore.Rows.Clear();
-            if ( dgvScore.Columns.Count > 0 )
+            if (dgvScore.Columns.Count > 0)
             {
                 RowInfoCollection collection = e.Result as RowInfoCollection;
-                foreach ( RowInfo info in collection.Items )
+                foreach (RowInfo info in collection.Items)
                 {
                     int rowIndex = dgvScore.Rows.Add();
                     DataGridViewRow row = dgvScore.Rows[rowIndex];
                     row.Cells[colCourse.Name].Value = info.CourseName;
                     row.Cells[colCourse.Name].Tag = info.CourseID;
-                    row.Cells[colScore.Name].Value = info.Score == "-1" ? "缺" : info.Score;
+
+                    string strValue = info.Score;
+                    if (info.Score == "-1" || info.Score == "-2")
+                    {
+                        // 讀取缺考對照
+                        if (_data_getter.sce_take_extDDict.ContainsKey(info.SecID))
+                        {
+                            try
+                            {
+                                XElement elmRoot = XElement.Parse(_data_getter.sce_take_extDDict[info.SecID]);
+                                if (elmRoot.Element("UseText") != null)
+                                    strValue = elmRoot.Element("UseText").Value;
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+
+                        }
+                    }
+
+                    //row.Cells[colScore.Name].Value = info.Score == "-1" ? "缺" : info.Score;
+                    row.Cells[colScore.Name].Value = strValue;
                     row.Cells[colScore.Name].Tag = info.Score;
                     row.Tag = info;
-                    _valueManager.AddValue(info.CourseID, info.Score == "-1" ? "缺" : info.Score);
+                    //_valueManager.AddValue(info.CourseID, info.Score == "-1" ? "缺" : info.Score);
+                    _valueManager.AddValue(info.CourseID, strValue);
                 }
             }
             dgvScore.SuspendLayout();
@@ -196,11 +247,14 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
             private DSXmlHelper _currentResponse;
             private DSResponse rsp_temp;
             private ScoreType _score_type;
+            // 評量成績 extension 內容
+            public Dictionary<string, string> sce_take_extDDict;
 
             public DataGetter(string runningId, ScoreType scoreType)
             {
                 _running_id = runningId;
                 _score_type = scoreType;
+                sce_take_extDDict = new Dictionary<string, string>();
             }
 
             private string StudentID
@@ -306,6 +360,9 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
                 xmlTemp = rsp_temp.GetContent();
                 CurrentResponse = xmlTemp;
 
+                //  取得評量成績 extension 資料
+                sce_take_extDDict.Clear();
+
                 // 依照查詢回來的成績清單填回所對應的課程
                 foreach (XmlElement element in xmlTemp.GetElements("Score"))
                 {
@@ -321,8 +378,36 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
 
                         info.SecID = sce_id;
                         info.Score = score;
+                        if (!sce_take_extDDict.ContainsKey(sce_id))
+                            sce_take_extDDict.Add(sce_id, "");
                     }
                 }
+
+                if (sce_take_extDDict.Count > 0)
+                {
+                    string strSQL = string.Format(@"
+                    SELECT
+                        id,
+                        extension
+                    FROM
+                        sce_take
+                    WHERE
+                        extension <>'' AND id IN({0})", string.Join(",", sce_take_extDDict.Keys.ToArray()));
+
+                    sce_take_extDDict.Clear();
+
+                    QueryHelper qh1 = new QueryHelper();
+                    DataTable dt = qh1.Select(strSQL);
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        string id = dr["id"] + "";
+                        string ext = dr["extension"] + "";
+                        if (!sce_take_extDDict.ContainsKey(id))
+                            sce_take_extDDict.Add(id, ext);
+                    }
+                }
+
+
             }
 
             private void GetSCAttendScore(ConditionArg arg, RowInfoCollection rows)
@@ -453,17 +538,42 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
             RowInfo info = row.Tag as RowInfo;
 
             string id = info.CourseID;
-            string oldValue = info.Score == "-1" ? "缺" : info.Score;
+            //string oldValue = info.Score == "-1" ? "缺" : info.Score;
+            string oldValue = info.Score;
+
+            if (info.Score == "-1" || info.Score == "-2")
+            {
+                // 讀取缺考對照
+                if (_data_getter.sce_take_extDDict.ContainsKey(info.SecID))
+                {
+                    try
+                    {
+                        XElement elmRoot = XElement.Parse(_data_getter.sce_take_extDDict[info.SecID]);
+                        if (elmRoot.Element("UseText") != null)
+                            oldValue = elmRoot.Element("UseText").Value;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+
+                }
+            }
+
+
             string value = cell.Value == null ? null : cell.Value.ToString();
 
             decimal score;
             if (_process_score_type == ScoreType.Exam)
             {
-                if (!string.IsNullOrEmpty(value) && !decimal.TryParse(value, out score) && value != "缺")
+                // 處理缺考設定
+                if (!string.IsNullOrEmpty(value) && !decimal.TryParse(value, out score) && !ScoreValueMangTextDict.ContainsKey(value))
                 {
-                    cell.ErrorText = "分數必須為數字或『缺』。";
+                    //cell.ErrorText = "分數必須為數字或『缺』。";
+                    cell.ErrorText = "分數必須為數字或『" + string.Join("、", ScoreValueMangTextDict.Keys.ToArray()) + "』。";
                     return;
                 }
+
             }
             else
             {
@@ -547,6 +657,11 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
             DSXmlHelper insertHelper = new DSXmlHelper("Request");
             DSXmlHelper deleteHelper = new DSXmlHelper("Request");
 
+            //  因為 Service 回寫 extension 有問題，改使用 sql 方式處理
+            List<string> updateExtensionList = new List<string>();
+            List<string> insertExtensionLList = new List<string>();
+
+
             updateHelper.AddElement("ScoreSheetList");
             insertHelper.AddElement("ScoreSheetList");
             deleteHelper.AddElement("ScoreSheet");
@@ -577,7 +692,66 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
                 {
                     updateHelper.AddElement("ScoreSheetList", "ScoreSheet");
                     updateHelper.AddElement("ScoreSheetList/ScoreSheet", "ID", info.SecID);
-                    updateHelper.AddElement("ScoreSheetList/ScoreSheet", "Score", cell.Value == null ? "" : cell.Value.ToString());
+
+                    // 對照寫入成績
+                    string strValue = cell.Value == null ? "" : cell.Value.ToString();
+                    string strScore = strValue;
+
+                    //updateHelper.AddElement("ScoreSheetList/ScoreSheet", "Score", cell.Value == null ? "" : cell.Value.ToString());
+
+                    string xmlExtension = "";
+
+                    if (_data_getter.sce_take_extDDict.ContainsKey(info.SecID))
+                    {
+                        xmlExtension = _data_getter.sce_take_extDDict[info.SecID];
+                    }
+
+                    if (ScoreValueMangTextDict.ContainsKey(strValue))
+                    {
+                        strScore = ScoreValueMangTextDict[strValue];
+                        XElement elmRoot = null;
+                        if (xmlExtension == "")
+                        {
+                            // 沒資料
+                            elmRoot = new XElement("Extension");
+                            elmRoot.SetElementValue("UseText", strValue);
+                        }
+                        else
+                        {
+                            try
+                            {
+                                // 已有其他資料
+                                elmRoot = XElement.Parse(xmlExtension);
+                                elmRoot.SetElementValue("UseText", strValue);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+
+                        }
+
+                        if (elmRoot != null)
+                            xmlExtension = elmRoot.ToString();
+                    }
+
+
+                    updateHelper.AddElement("ScoreSheetList/ScoreSheet", "Score", strScore);
+
+                    if (xmlExtension != "")
+                    {
+                        //updateHelper.AddElement("ScoreSheetList/ScoreSheet", "Extension");
+                        //updateHelper.AddElement("ScoreSheetList/ScoreSheet", "Extension", xmlExtension);
+                        string strSQL = string.Format(@"
+                        UPDATE
+                            sce_take
+                        SET
+                            extension = '{0}'
+                        WHERE
+                            id = {1};
+                        ", xmlExtension, info.SecID);
+                        updateExtensionList.Add(strSQL);
+                    }
 
                     updateDesc.Append("課程『" + info.CourseName + "』成績由『" + info.Score + "』修改為『" + cell.Value.ToString() + "』。\n");
                     hasUpdate = true;
@@ -593,7 +767,41 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
                     insertHelper.AddElement("ScoreSheetList", "ScoreSheet");
                     insertHelper.AddElement("ScoreSheetList/ScoreSheet", "AttendID", info.AttendID);
                     insertHelper.AddElement("ScoreSheetList/ScoreSheet", "ExamID", ((KeyValuePair<string, string>)cboExam.SelectedItem).Key);
-                    insertHelper.AddElement("ScoreSheetList/ScoreSheet", "Score", cell.Value == null ? "" : cell.Value.ToString());
+
+                    string xmlExtension = "";
+                    string strValue = cell.Value == null ? "" : cell.Value.ToString();
+                    string strScore = strValue;
+                    if (ScoreValueMangTextDict.ContainsKey(strValue))
+                    {
+                        strScore = ScoreValueMangTextDict[strValue];
+                        XElement elmRoot = new XElement("Extension");
+                        elmRoot.SetElementValue("UseText", strValue);
+                        xmlExtension = elmRoot.ToString();
+                    }
+
+
+                    //insertHelper.AddElement("ScoreSheetList/ScoreSheet", "Score", cell.Value == null ? "" : cell.Value.ToString());
+
+                    insertHelper.AddElement("ScoreSheetList/ScoreSheet", "Score", strScore);
+
+                    // 寫入 extension
+                    if (xmlExtension != "")
+                    {
+                        //insertHelper.AddElement("ScoreSheetList/ScoreSheet", "Extension");
+                        //insertHelper.AddElement("ScoreSheetList/ScoreSheet", "Extension", xmlExtension);
+
+                        string strSQL = string.Format(@"
+                        UPDATE
+                            sce_take
+                        SET
+                            extension = '{0}'
+                        WHERE
+                            ref_exam_id = {1}
+                            AND ref_sc_attend_id = {2};
+                        ", xmlExtension, ((KeyValuePair<string, string>)cboExam.SelectedItem).Key, info.AttendID);
+                        insertExtensionLList.Add(strSQL);
+                    }
+
 
                     insertDesc.Append("課程『" + info.CourseName + "』新增成績『" + cell.Value.ToString() + "』。\n");
                     hasInsert = true;
@@ -618,6 +826,14 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
                 {
                     SmartSchool.Feature.Course.EditCourse.InsertSCEScore(new DSRequest(insertHelper));
                     CurrentUser.Instance.AppLog.Write(EntityType.Student, EntityAction.Insert, RunningID, insertDesc.ToString(), Title, insertHelper.GetRawXml());
+
+                    if (insertExtensionLList.Count > 0)
+                    {
+                        // 更新 extension
+                        K12.Data.UpdateHelper uh = new K12.Data.UpdateHelper();
+                        uh.Execute(insertExtensionLList);
+                    }
+                    
                 }
             }
             catch (Exception ex)
@@ -631,6 +847,13 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
                 {
                     SmartSchool.Feature.Course.EditCourse.UpdateSCEScore(new DSRequest(updateHelper));
                     CurrentUser.Instance.AppLog.Write(EntityType.Student, EntityAction.Update, RunningID, updateDesc.ToString(), Title, updateHelper.GetRawXml());
+
+                    if (updateExtensionList.Count > 0)
+                    {
+                        // 更新 extension
+                        K12.Data.UpdateHelper uh = new K12.Data.UpdateHelper();
+                        uh.Execute(updateExtensionList);
+                    }
                 }
             }
             catch (Exception ex)

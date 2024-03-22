@@ -15,10 +15,12 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
         private DataGridView _dgv;
         private IDataProvider _provider;
         private List<string> _displayColumns;
+        private List<string> _stringValues;
 
         public DataGridViewHelper(DataGridView dataGridView, IDataProvider dataProvider)
         {
             List<string> columns = new List<string>();
+            _stringValues = new List<string>();
             foreach (ColumnSetting setting in dataProvider.ColumnHeader.Columns)
                 columns.Add(setting.ColumnName);
             Initialize(dataGridView, dataProvider, columns);
@@ -167,9 +169,10 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
             if (icell != null)
             {
                 icell.SetValue(value);
+                icell.SetStringValues(_stringValues);
                 if (icell.IsValid())
                 {
-                    icell.Standard.Judge(cell);
+                    icell.Standard.Judge(cell, _stringValues);
                     if (icell.IsDirty)
                     {
                         cell.Style.BackColor = Color.Yellow;
@@ -231,9 +234,10 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
                             {
                                 IExamCell examCell = valueCell as IExamCell;
                                 if (!string.IsNullOrEmpty(value))
-                                    examCell.Standard.Judge(currentCell);
+                                    examCell.Standard.Judge(currentCell, _stringValues);
                             }
-                        } else
+                        }
+                        else
                         {
                             Console.WriteLine(column.Name);
                         }
@@ -275,7 +279,7 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
                     {
                         ic.Reset();
                         cell.Value = ic.GetValue();
-                        ic.Standard.Judge(cell);
+                        ic.Standard.Judge(cell, _stringValues);
                     }
                 }
             }
@@ -289,6 +293,7 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
                 {
                     IExamCell ic = cell.Tag as IExamCell;
                     if (ic == null) continue;
+                    ic.SetStringValues(_stringValues);
                     if (!ic.IsValid()) return false;
                 }
             }
@@ -307,6 +312,12 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
                 }
             }
             return false;
+        }
+
+        // 設定缺考可使用文字
+        public void SetStringValues(List<string> strValues)
+        {
+            _stringValues = strValues;
         }
 
         #region 提供事件(Event)

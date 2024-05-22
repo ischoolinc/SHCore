@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using DevComponents.DotNetBar;
 using FISCA.DSAUtil;
+using SmartSchool.CourseRelated.DetailPaneItem.OtherEntity;
+using SmartSchool.DAO;
 using SmartSchool.Feature.Course;
 
 namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
@@ -265,9 +268,7 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
 
             decimal total = 0;
 
-            Console.WriteLine(UseTextScoreType.Keys);
-
-
+            // 當沒有缺考設定，使用原本系統內預設處理方式
             if (UseTextScoreType.Count == 0)
             {
                 // 當0分記
@@ -287,145 +288,102 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
                 }
 
             }
-
-            //缺考不當0分處理
             else
             {
+                // 當有缺考設定，使用缺考設定處理方式
 
-                decimal weight = 0;
+                decimal weight = 0; // 總分比重
 
-                // 免試處理
-                // 取得目前課程相關試別比重
-                Dictionary<string, float> ExamUseGroupWDict = new Dictionary<string, float>();
-                // 各次評量成績
-                Dictionary<string, decimal> ExamScoreDict = new Dictionary<string, decimal>();
+                // 計算處理：
+                //1.建立新試別成績物件。
+                Dictionary<string, ExamScoreNewInfo> ExamScoreDict = new Dictionary<string, ExamScoreNewInfo>();
+
+                //2.取得各試別資料填入新物件。
                 foreach (TEInclude exam in Course.RefExams)
                 {
-                    if (exam.UseGroup)
+                    ExamScoreNewInfo examS = new ExamScoreNewInfo();
+                    examS.ExamID = exam.ExamId;
+                    examS.ExamWeight = (decimal)exam.Weight;
+                    examS.ExamName = exam.ExamName;
+                    examS.UseGroup = exam.UseGroup;
+
+                    if (!ExamScoreDict.ContainsKey(exam.ExamId))
                     {
-                        if (!ExamUseGroupWDict.ContainsKey(exam.ExamId))
-                            ExamUseGroupWDict.Add(exam.ExamId, exam.Weight);
+                        ExamScoreDict.Add(exam.ExamId, examS);
                     }
                 }
 
-                int useGroupCount = ExamUseGroupWDict.Count;
-                foreach (TEInclude exam in Course.RefExams)
+                //3.取得學生成績填入物件，並填入缺或免。
+                foreach (ExamScoreNewInfo exam in ExamScoreDict.Values)
                 {
-                    decimal score = 0;
-
-                    if (SCETakes.ContainsKey(exam.ExamId))
+                    if (SCETakes.ContainsKey(exam.ExamID))
                     {
-                        SCETake take = SCETakes[exam.ExamId];
+                        SCETake take = SCETakes[exam.ExamID];
+                        // 取得分數
+                        decimal score = 0;
+                        decimal.TryParse(take.Score, out score);
+                        exam.ExamScore = score;
+                        exam.ExamStatus = "";
 
                         // 讀取缺考設定處理                        
                         if (take.UseText != null && UseTextScoreType.ContainsKey(take.UseText))
                         {
                             string scoreType = UseTextScoreType[take.UseText];
-
+                            exam.ExamStatus = scoreType;
                             if (scoreType == "0分")
                             {
-                                if (!ExamScoreDict.ContainsKey(exam.ExamId))
-                                    ExamScoreDict.Add(exam.ExamId, 0);
+                                exam.ExamScore = 0;
                             }
                             else
-                            {
-                                useGroupCount--;
-                                if (!ExamScoreDict.ContainsKey(exam.ExamId))
-                                    ExamScoreDict.Add(exam.ExamId, -2);
-                                //total += (score * (decimal)exam.Weight);
-                                //weight += (decimal)exam.Weight;
-
+                            {    // 免試
+                                exam.ExamScore = -2;
                             }
-
                         }
-                        else
+                    }
+                }
+
+                //4.檢查免試設定與比重均分
+                // 免試群組比數與個數
+                decimal wGroup = 0;
+                int wCount = 0;
+                foreach (ExamScoreNewInfo exam in ExamScoreDict.Values)
+                {
+                    // 計算使用群組且免試比重
+                    if (exam.UseGroup && exam.ExamStatus == "免試")
+                        if (exam.ExamWeight.HasValue)
                         {
-                            if (decimal.TryParse(take.Score, out score)) //如果缺考會 0 分處理。
-                                if (!ExamScoreDict.ContainsKey(exam.ExamId))
-                                    ExamScoreDict.Add(exam.ExamId, score);
-
-                            _contains_lack = true;
+                            wGroup += exam.ExamWeight.Value;
+                            wCount += 1;
                         }
+                }
 
-                    }
-                    else
-                    {
-                        _contains_lack = true;
-                    }
+                // 均分比重
+                decimal wAvg = 0;
+                if (wCount > 0)
+                    wAvg = wGroup / (decimal)wCount;
+
+                // 群組內比重重新分配
+                foreach (ExamScoreNewInfo exam in ExamScoreDict.Values)
+                {
+                    // 計算使用群組且免試比重
+                    if (exam.UseGroup && exam.ExamStatus == "")
+                        exam.ExamWeight += wAvg;
                 }
 
                 // 重新算成績
-                if (useGroupCount == 1)
+                foreach (ExamScoreNewInfo exam in ExamScoreDict.Values)
                 {
-                    // 檢查非免試成績
-                    foreach (string examId in ExamScoreDict.Keys)
+                    // 計算使用群組且免試比重
+                    if (exam.ExamStatus == "")
                     {
-                        if (ExamScoreDict[examId] != -2)
+                        if (exam.ExamWeight.HasValue)
                         {
-                            total = ExamScoreDict[examId];
-                            weight = 1;
+                            weight += exam.ExamWeight.Value;
+                            if (exam.ExamScore.HasValue)
+                                total += exam.ExamScore.Value * exam.ExamWeight.Value;
                         }
                     }
-                }
-                else
-                {
-                    // 沒有任何免試
-                    if (ExamUseGroupWDict.Count == useGroupCount)
-                    {
-                        // 重新計算成績，沒成績當0分算
 
-                        foreach (string examId in ExamUseGroupWDict.Keys)
-                        {
-                            decimal wei = 0;
-                            wei = (decimal)ExamUseGroupWDict[examId];
-
-                            if (ExamScoreDict.ContainsKey(examId))
-                            {
-                                // 非免試
-                                if (ExamScoreDict[examId] != -2)
-                                {
-
-                                    total += ExamScoreDict[examId] * wei;
-                                    weight += wei;
-                                }
-                            }
-                            else
-                            {
-                                weight += wei;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        // 取出分配比重
-                        decimal w = 0;
-                        foreach (string examId in ExamScoreDict.Keys)
-                        {
-                            if (ExamScoreDict[examId] == -2)
-                            {
-                                if (ExamUseGroupWDict.ContainsKey(examId))
-                                    w += (decimal)ExamUseGroupWDict[examId];
-                            }
-                        }
-                        // 分配比重
-                        w = w / useGroupCount;
-
-                        // 重新計算成績
-                        foreach (string examId in ExamScoreDict.Keys)
-                        {
-                            // 非免試
-                            if (ExamScoreDict[examId] != -2)
-                            {
-                                decimal wei = 0;
-                                if (ExamUseGroupWDict.ContainsKey(examId))
-                                    wei = (decimal)ExamUseGroupWDict[examId];
-
-                                wei += w;
-                                total += ExamScoreDict[examId] * wei;
-                                weight += wei;
-                            }
-                        }
-                    }
                 }
 
                 if (weight != 0)

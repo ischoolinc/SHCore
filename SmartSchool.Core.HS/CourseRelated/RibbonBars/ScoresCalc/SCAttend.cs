@@ -271,22 +271,39 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
             // 當沒有缺考設定，使用原本系統內預設處理方式
             if (UseTextScoreType.Count == 0)
             {
-                // 當0分記
+                decimal weight = 0;
+                // 
                 foreach (TEInclude exam in Course.RefExams)
                 {
                     decimal score = 0;
+
                     if (SCETakes.ContainsKey(exam.ExamId))
                     {
                         SCETake take = SCETakes[exam.ExamId];
-                        if (!decimal.TryParse(take.Score, out score)) //如果缺考會 0 分處理。
+                        if (!decimal.TryParse(take.Score, out score))
+                        {
                             _contains_lack = true;
+                        }
+                        else
+                        {
+                            total += (score * (decimal)exam.Weight);
+                            weight += (decimal)exam.Weight;
+                        }
+
                     }
                     else
+                    {
                         _contains_lack = true;
-
-                    total += (score * ((decimal)exam.Weight / 100m));
+                    }
                 }
-
+                if (weight != 0)
+                {
+                    total = total / weight;
+                }
+                else
+                {
+                    return; // 完全沒輸入不處理
+                }
             }
             else
             {
@@ -340,6 +357,10 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
                             }
                         }
                     }
+                    else
+                    {
+                        _contains_lack = true;
+                    }
                 }
 
                 //4.檢查免試設定與比重均分
@@ -389,6 +410,10 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
                 if (weight != 0)
                 {
                     total = total / weight;
+                }
+                else
+                {
+                    return;  // 完全沒輸入不處理
                 }
             }
 

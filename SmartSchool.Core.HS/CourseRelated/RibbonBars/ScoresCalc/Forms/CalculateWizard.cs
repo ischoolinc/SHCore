@@ -125,9 +125,9 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
         }
 
         private void btnExport_Click(object sender, EventArgs e)
-        {            
-            _export_worker.RunWorkerAsync();
+        {
             btnExport.Enabled = false;
+            _export_worker.RunWorkerAsync();            
         }
 
         private void btnExit_Click(object sender, EventArgs e)

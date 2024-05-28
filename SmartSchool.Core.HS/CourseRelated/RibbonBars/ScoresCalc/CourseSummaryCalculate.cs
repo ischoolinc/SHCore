@@ -30,6 +30,30 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
             _message.AppendLine("含有「成績缺漏」之課程數：" + count.ToString());
         }
 
+        // 選取課程數
+        public int GetCourseCount
+        {
+            get { return _courses.Count; }
+        }
+
+        // 未設定評分樣版課程
+        public int GetExamTemplateNullCount
+        {
+            get { return ExamTemplateNullCount(); }
+        }
+
+        //  由教師繳交課程成績課程數
+        public int GetExamTemplateAllowUploadCount
+        {
+            get { return ExamTemplateAllowUploadCount(); }
+        }
+
+        // 含評量成績闕漏課程
+        public int GetLackScoreCount
+        {
+            get { return CalcLackScoreCount(); }
+        }
+
         private int CalcLackScoreCount()
         {
             int count = 0;
@@ -75,6 +99,22 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
             }
             return count;
         }
+
+        // 由教師提供
+        private int ExamTemplateAllowUploadCount()
+        {
+            int count = 0;
+            foreach (Course each in _courses.Values)
+            {
+                if (each.ExamTemplate != null)
+                {
+                    if (each.ExamTemplate.AllowUpload)
+                        count++;
+                }                    
+            }
+            return count;
+        }
+
 
         public string Message()
         {

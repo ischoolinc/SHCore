@@ -22,6 +22,9 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
         private BackgroundWorker _calc_worker, _export_worker;
         private CourseDataLoader _raw_data;
 
+        // 判斷計算按鈕是否按
+        bool isButtonCalClick = false;
+
         private Boolean Is_AbsentEqualZero { get; set; }
 
 
@@ -79,6 +82,7 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
                 btnExport.Visible = true; // 給按了。
                 btnExport.Enabled = true;
                 btnCalcuate.Enabled = true;
+                
 
                 CourseSummaryCalculate summary = new CourseSummaryCalculate(_raw_data.Courses);
                 summary.Calculate();
@@ -94,16 +98,20 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
                 // 未設定評分樣版課程
                 labelCousreCount3.Text = summary.GetExamTemplateNullCount + "";
 
-                // 含評量成績闕漏課程
+                // 含評量成績缺漏課程
                 labelCousreCount4.Text = summary.GetLackScoreCount + "";
 
             }
             else
                 MsgBox.Show("取得課程成績相關資料錯誤。", Application.ProductName);
 
-            CalculateResult result = new CalculateResult(_raw_data.Courses);
-            result.ShowDialog();
-
+            // 由計算功能按下
+            if (isButtonCalClick)
+            {                
+                CalculateResult result = new CalculateResult(_raw_data.Courses);
+                result.ShowDialog();
+                isButtonCalClick = false;
+            }
         }
 
         private void ExportWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -136,6 +144,8 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
             lblCourseCount.Text = "建立課程總覽資料，請稍後...";
             btnExport.Enabled = false;
             btnCalcuate.Enabled = false;
+            isButtonCalClick = true;
+            
             _calc_worker.RunWorkerAsync();
 
             //CalculateResult result = new CalculateResult(_raw_data.Courses);

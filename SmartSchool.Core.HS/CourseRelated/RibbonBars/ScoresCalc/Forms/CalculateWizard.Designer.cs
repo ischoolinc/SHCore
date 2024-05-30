@@ -214,7 +214,7 @@
             this.labelX4.Name = "labelX4";
             this.labelX4.Size = new System.Drawing.Size(198, 23);
             this.labelX4.TabIndex = 11;
-            this.labelX4.Text = "由教師繳交課程成績課程數：";
+            this.labelX4.Text = "未設定評分樣版課程：";
             // 
             // labelX5
             // 
@@ -256,7 +256,7 @@
             this.labelX7.Name = "labelX7";
             this.labelX7.Size = new System.Drawing.Size(143, 23);
             this.labelX7.TabIndex = 13;
-            this.labelX7.Text = "含評量成績闕漏課程：";
+            this.labelX7.Text = "含評量成績缺漏課程：";
             // 
             // labelCousreCount3
             // 
@@ -266,7 +266,7 @@
             // 
             this.labelCousreCount3.BackgroundStyle.Class = "";
             this.labelCousreCount3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelCousreCount3.Location = new System.Drawing.Point(188, 152);
+            this.labelCousreCount3.Location = new System.Drawing.Point(148, 152);
             this.labelCousreCount3.Name = "labelCousreCount3";
             this.labelCousreCount3.Size = new System.Drawing.Size(75, 23);
             this.labelCousreCount3.TabIndex = 15;
@@ -313,6 +313,7 @@
             this.MinimumSize = new System.Drawing.Size(405, 249);
             this.Name = "CalculateWizard";
             this.Text = "計算課程成績";
+            this.Load += new System.EventHandler(this.CalculateWizard_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

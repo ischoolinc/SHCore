@@ -48,7 +48,7 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
             get { return ExamTemplateAllowUploadCount(); }
         }
 
-        // 含評量成績闕漏課程
+        // 含評量成績缺漏課程
         public int GetLackScoreCount
         {
             get { return CalcLackScoreCount(); }
@@ -60,6 +60,12 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
             bool breakCurrent = false;
             foreach (Course each in _courses.Values)
             {
+                //  沒有評分樣板就不算
+                if (each.ExamTemplate == null) continue;
+
+                // 不需評分的課程不算
+                if (each.ExamRequired == false) continue;
+
                 breakCurrent = false;
                 foreach (SCAttend attend in each.SCAttends.Values)
                 {

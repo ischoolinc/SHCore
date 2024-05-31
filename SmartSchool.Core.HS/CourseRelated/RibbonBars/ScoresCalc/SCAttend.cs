@@ -371,11 +371,20 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
                 {
                     // 計算使用群組且免試比重
                     if (exam.UseGroup && exam.ExamStatus == "免試")
+                    {
                         if (exam.ExamWeight.HasValue)
                         {
                             wGroup += exam.ExamWeight.Value;
-                            wCount += 1;
+
                         }
+                    }
+                    else
+                    {
+                        // 分給是群組，一般狀態
+                        if (exam.UseGroup && exam.ExamStatus == "")
+                            wCount += 1;
+                    }
+
                 }
 
                 // 均分比重

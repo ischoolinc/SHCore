@@ -144,6 +144,13 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
                                 else
                                     score = "無";
 
+                                // 處理有缺考設定
+                                if (score == "-1" || score == "-2")
+                                {
+                                    if (attend.SCETakes[include.ExamId].UseText != null)
+                                        score = attend.SCETakes[include.ExamId].UseText;
+                                }
+
                                 outputer.PutString(include.ExamId, score);
                             }
 

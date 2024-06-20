@@ -336,11 +336,19 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
                     if (SCETakes.ContainsKey(exam.ExamID))
                     {
                         SCETake take = SCETakes[exam.ExamID];
-                        // 取得分數
-                        decimal score = 0;
-                        decimal.TryParse(take.Score, out score);
-                        exam.ExamScore = score;
-                        exam.ExamStatus = "";
+
+                        // 取得分數，沒有輸入當作免試
+                        if (string.IsNullOrEmpty(take.Score))
+                        {
+                            exam.ExamStatus = "免試";
+                        }
+                        else
+                        {
+                            decimal score = 0;
+                            decimal.TryParse(take.Score, out score);
+                            exam.ExamScore = score;
+                            exam.ExamStatus = "";
+                        }
 
                         // 讀取缺考設定處理                        
                         if (take.UseText != null && UseTextScoreType.ContainsKey(take.UseText))

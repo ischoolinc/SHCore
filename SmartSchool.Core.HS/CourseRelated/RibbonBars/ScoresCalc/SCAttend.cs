@@ -346,24 +346,39 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
                         {
                             decimal score = 0;
                             decimal.TryParse(take.Score, out score);
-                            exam.ExamScore = score;
-                            exam.ExamStatus = "";
-                        }
 
-                        // 讀取缺考設定處理                        
-                        if (take.UseText != null && UseTextScoreType.ContainsKey(take.UseText))
-                        {
-                            string scoreType = UseTextScoreType[take.UseText];
-                            exam.ExamStatus = scoreType;
-                            if (scoreType == "0分")
+                            // 使用成績本身判斷
+                            if (take.Score == "-1")
                             {
                                 exam.ExamScore = 0;
+                                exam.ExamStatus = "0分";
+                            }
+                            else if (take.Score == "-2")
+                            {
+                                exam.ExamScore = -2;
+                                exam.ExamStatus = "免試";
                             }
                             else
-                            {    // 免試
-                                exam.ExamScore = -2;
+                            {
+                                exam.ExamScore = score;
+                                exam.ExamStatus = "";
                             }
                         }
+
+                        //// 讀取缺考設定處理                        
+                        //if (take.UseText != null && UseTextScoreType.ContainsKey(take.UseText))
+                        //{
+                        //    string scoreType = UseTextScoreType[take.UseText];
+                        //    exam.ExamStatus = scoreType;
+                        //    if (scoreType == "0分")
+                        //    {
+                        //        exam.ExamScore = 0;
+                        //    }
+                        //    else
+                        //    {    // 免試
+                        //        exam.ExamScore = -2;
+                        //    }
+                        //}
                     }
                     else
                     {

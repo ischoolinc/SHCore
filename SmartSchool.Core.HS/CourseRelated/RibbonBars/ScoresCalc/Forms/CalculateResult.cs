@@ -21,6 +21,14 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
             _courses = courses;
             foreach (Course each in courses.Values)
             {
+                // 沒有評分樣版的課程，不出現
+                if (each.ExamTemplate == null)
+                    continue;
+
+                // 教師提供不出現
+                if (each.ExamTemplate.AllowUpload)
+                    continue;
+
                 ListViewItem item = new ListViewItem(each.CourseName);
                 item.Tag = each;
                 CourseList.Items.Add(item);

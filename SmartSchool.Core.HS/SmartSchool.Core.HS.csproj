@@ -417,6 +417,8 @@
     <Compile Include="CourseRelated\ScoreDataGridView\RowEntity.cs" />
     <Compile Include="CourseRelated\ScoreDataGridView\StandardFactory.cs" />
     <Compile Include="CourseRelated\SemesterManager.cs" />
+    <Compile Include="DAO\ExamScoreNewInfo.cs" />
+    <Compile Include="DAO\ScoreValueMangInfo.cs" />
     <Compile Include="ImportExport\Student\ExportExamScore.cs" />
     <Compile Include="ImportExport\Student\ImportExamScore.cs" />
     <Compile Include="Others\Configuration\SimplyConfigure.cs" />

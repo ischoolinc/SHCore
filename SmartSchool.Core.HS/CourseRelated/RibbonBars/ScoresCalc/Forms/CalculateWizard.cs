@@ -15,16 +15,19 @@ using FISCA.Data;
 
 namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
 {
-            
+
 
     public partial class CalculateWizard : BaseForm, IProgressUI
     {
         private BackgroundWorker _calc_worker, _export_worker;
         private CourseDataLoader _raw_data;
 
+        // 判斷計算按鈕是否按
+        bool isButtonCalClick = false;
+
         private Boolean Is_AbsentEqualZero { get; set; }
 
-    
+
         public bool _Is_AbsentEqualZero
         {
             get { return Is_AbsentEqualZero; }
@@ -40,6 +43,10 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
             btnExport.Visible = false; // 這個匯出功能一開始也不先給使用者按，因為在計算完之前按，會當掉
 
             lblTitle.Font = new Font(FontStyles.GeneralFontFamily, 20);
+
+            labelCousreCount2.Text = labelCousreCount3.Text = labelCousreCount4.Text = "";
+            // 選取科目數
+            labelCousreCount1.Text = K12.Presentation.NLDPanels.Course.SelectedSource.Count + "";
         }
 
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
@@ -75,17 +82,36 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
                 btnExport.Visible = true; // 給按了。
                 btnExport.Enabled = true;
                 btnCalcuate.Enabled = true;
+                
 
                 CourseSummaryCalculate summary = new CourseSummaryCalculate(_raw_data.Courses);
                 summary.Calculate();
-                lblCourseCount.Text = summary.Message();
+                // lblCourseCount.Text = summary.Message();                
+
+                // 統計值
+                // 選取課程數
+                labelCousreCount1.Text = summary.GetCourseCount + "";
+
+                // 由教師繳交課程成績課程數
+                labelCousreCount2.Text = summary.GetExamTemplateAllowUploadCount + "";
+
+                // 未設定評分樣版課程
+                labelCousreCount3.Text = summary.GetExamTemplateNullCount + "";
+
+                // 含評量成績缺漏課程
+                labelCousreCount4.Text = summary.GetLackScoreCount + "";
+
             }
             else
                 MsgBox.Show("取得課程成績相關資料錯誤。", Application.ProductName);
 
-            CalculateResult result = new CalculateResult(_raw_data.Courses);
-            result.ShowDialog();
-
+            // 由計算功能按下
+            if (isButtonCalClick)
+            {                
+                CalculateResult result = new CalculateResult(_raw_data.Courses);
+                result.ShowDialog();
+                isButtonCalClick = false;
+            }
         }
 
         private void ExportWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -118,16 +144,18 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
             lblCourseCount.Text = "建立課程總覽資料，請稍後...";
             btnExport.Enabled = false;
             btnCalcuate.Enabled = false;
+            isButtonCalClick = true;
+            
             _calc_worker.RunWorkerAsync();
-                                    
+
             //CalculateResult result = new CalculateResult(_raw_data.Courses);
             //result.ShowDialog();
         }
 
         private void btnExport_Click(object sender, EventArgs e)
-        {            
-            _export_worker.RunWorkerAsync();
+        {
             btnExport.Enabled = false;
+            _export_worker.RunWorkerAsync();
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -223,9 +251,9 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
             }
 
         }
-    
+
         // 取得缺考設定
-        private Dictionary<string,string> GetExamUseTextScoreType()
+        private Dictionary<string, string> GetExamUseTextScoreType()
         {
             Dictionary<string, string> value = new Dictionary<string, string>();
             QueryHelper qh = new QueryHelper();
@@ -255,7 +283,7 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc.Forms
             ");
 
             DataTable dt = qh.Select(sql);
-            foreach(DataRow dr in dt.Rows)
+            foreach (DataRow dr in dt.Rows)
             {
                 string text = dr["usetext"] + "";
                 string type = dr["scoretype"] + "";

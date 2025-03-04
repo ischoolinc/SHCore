@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
 using System.Drawing;
+using K12.Data;
 
 namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
 {
@@ -30,25 +31,63 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
 
             OutputLackScoreToWorkbook(lacks, book);
 
-            int newIndex = book.Worksheets.Add();
-            Worksheet sheet = book.Worksheets[newIndex];
-            sheet.Name = "未設定評分樣版課程清單";
-            sheet.Cells[0, 0].PutValue("課程名稱");
-            int offset = 1;
+            // 未設評分樣版課程
+            List<Course> CourseNoSetExamTemplate = new List<Course>();
             foreach (Course each in _courses.Values)
             {
                 if (each.ExamTemplate == null)
+                {
+                    CourseNoSetExamTemplate.Add(each);
+                }
+            }
+
+            if (CourseNoSetExamTemplate.Count > 0)
+            {
+                int newIndex = book.Worksheets.Add();
+                Worksheet sheet = book.Worksheets[newIndex];
+                sheet.Name = "未設定評分樣版課程清單";
+                sheet.Cells[0, 0].PutValue("課程名稱");
+                int offset = 1;
+                foreach (Course each in CourseNoSetExamTemplate)
                 {
                     sheet.Cells[offset, 0].PutValue(each.CourseName);
                     offset++;
                 }
             }
 
+            // 處理由教師繳交課程
+            List<Course> CourseTeacherList = new List<Course>();
+            foreach (Course each in _courses.Values)
+            {
+                if (each.ExamTemplate != null)
+                {
+                    if (each.ExamTemplate.AllowUpload)
+                        CourseTeacherList.Add(each);
+                }
+            }
+            if (CourseTeacherList.Count > 0)
+            {
+                int newIndexT = book.Worksheets.Add();
+                Worksheet sheetT = book.Worksheets[newIndexT];
+                sheetT.Name = "由教師繳交課程成績課程清單";
+                sheetT.Cells[0, 0].PutValue("課程名稱");
+                int offsetT = 1;
+                foreach (Course each in CourseTeacherList)
+                {
+                    sheetT.Cells[offsetT, 0].PutValue(each.CourseName);
+                    offsetT++;
+                }
+            }
+
+
             //_progress.ReportProgress("儲存檔案中…", 0);  // 2018/6/5 穎驊註解 ，在這邊動到UI，會有錯誤訊息，此時的執行序與建立控制項的執行序不同。 因此統一由母form 處理
 
             string fileName = GetFileName();
-            book.Save(fileName);
-            Process.Start(fileName);
+            if (book.Worksheets.Count > 0)
+            {
+                book.Save(fileName);
+                Process.Start(fileName);
+            }           
 
             //_progress.ReportProgress("儲存完成…", 0);
         }
@@ -63,6 +102,22 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
             foreach (LackScoresCategory each in lacks)
             {
                 if (each.Tempalte == null) continue;
+
+                bool hasContainsLack = false;
+
+                foreach (Course course in each.Courses.Values)
+                {
+                    foreach (SCAttend attend in course.SCAttends.Values)
+                    {
+                        if (attend.ContainsLack)
+                        {
+                            hasContainsLack = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!hasContainsLack) continue;
 
                 int index = book.Worksheets.Add();
                 Worksheet sheet = book.Worksheets[index];
@@ -88,6 +143,13 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
                                     score = attend.SCETakes[include.ExamId].Score;
                                 else
                                     score = "無";
+
+                                // 處理有缺考設定
+                                if (score == "-1" || score == "-2")
+                                {
+                                    if (attend.SCETakes[include.ExamId].UseText != null)
+                                        score = attend.SCETakes[include.ExamId].UseText;
+                                }
 
                                 outputer.PutString(include.ExamId, score);
                             }

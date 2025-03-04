@@ -234,6 +234,11 @@ namespace SmartSchool.StudentRelated.Palmerworm
                     bool changed = false;
                     string schoolYear = "" + row.Cells[colSchoolYear.Index].Value;
                     string semester = "" + row.Cells[colSemester.Index].Value;
+
+                    // 變更點 1：新增 Dictionary 用來追蹤已處理的 Face，避免重複
+                    // 目的：記錄每個 Face 是否已經被處理過，後續用於檢查 _reserveFaces 是否重複
+                    Dictionary<string, string> processedFaces = new Dictionary<string, string>();
+
                     foreach (DataGridViewCell cell in row.Cells)
                     {
                         string columnText = dgView.Columns[cell.ColumnIndex].HeaderText;
@@ -252,6 +257,14 @@ namespace SmartSchool.StudentRelated.Palmerworm
                             string oldValue = _valueManager.GetOldValue(key);
                             usb.Append(key).Append("：由「").Append(oldValue).Append("」變更值為「").Append(newValue).Append("」\n");
                             changed = true;
+                        }
+
+                        // 變更點 2：記錄已處理的 colItem 欄位的 Face 和值
+                        // 目的：在遍歷時收集 DataGridView 中每個 colItem 的 Face，供後續檢查使用
+                        DataGridViewColumn column = cell.OwningColumn;
+                        if (column.Name.StartsWith("colItem"))
+                        {
+                            processedFaces[column.HeaderText] = GetValue(cell); // 將 Face 和值存入 Dictionary
                         }
                     }
                     if (changed)
@@ -284,21 +297,23 @@ namespace SmartSchool.StudentRelated.Palmerworm
 
                         foreach (string other_face in _reserveFaces.GetFacesByID(id))
                         {
-                            if (!hasRoot)
+                            if (!processedFaces.ContainsKey(other_face)) // 如果此 Face 未在 DataGridView 中處理過
                             {
-                                uh.AddElement("SemesterMoralScore/TextScore", "Content");
-                                hasRoot = true;
+                                if (!hasRoot)
+                                {
+                                    uh.AddElement("SemesterMoralScore/TextScore", "Content");
+                                    hasRoot = true;
+                                }
+                                XmlElement element = uh.AddElement("SemesterMoralScore/TextScore/Content", "Morality", _reserveFaces.GetComment(id, other_face));
+                                element.SetAttribute("Face", other_face);
                             }
-                            XmlElement element = uh.AddElement("SemesterMoralScore/TextScore/Content", "Morality", _reserveFaces.GetComment(id, other_face));
-                            element.SetAttribute("Face", other_face);
                         }
                     }
                 }
-
-
-                // 處理 insert
                 else
                 {
+                    // 處理 insert
+
                     isb.Append("新增【").Append(studentName).Append("-").Append(GetValue(row.Cells[colSchoolYear.Name]))
                         .Append("學年度").Append(GetValue(row.Cells[colSemester.Name])).Append("學期】資料：\n");
 

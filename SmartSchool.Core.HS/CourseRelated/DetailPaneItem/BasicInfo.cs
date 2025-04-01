@@ -542,7 +542,41 @@ WHERE
                 //    MsgBox.Show(ex.Message);
                 //}
 
+                // 2025/4/1，因工單：https://3.basecamp.com/4399967/buckets/15765350/todos/7958885296，調整檢查學年度、學期不能空白。
 
+                // 檢查學年度
+                if (string.IsNullOrEmpty(cboSchoolYear.Text))
+                {
+                    MsgBox.Show("「學年度」不允許空白。");
+                    return;
+                }
+
+                int sy;
+                if (!int.TryParse(cboSchoolYear.Text, out sy))
+                {
+                    MsgBox.Show("「學年度」請輸入數字。");
+                    return;
+                }
+                
+                // 學期不允取空白
+                if (string.IsNullOrEmpty(cboSemester.Text))
+                {
+                    MsgBox.Show("「學期」不允許空白。");
+                    return;
+                }
+
+                int ss;
+                if (!int.TryParse(cboSemester.Text, out ss))
+                {
+                    MsgBox.Show("「學期」輸入數字。");
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(cboRequiredBy.Text))
+                {
+                    MsgBox.Show("「校部訂」不允許空白。");
+                    return;
+                }
 
                 if (string.IsNullOrEmpty(cboEntry.Text))
                 {

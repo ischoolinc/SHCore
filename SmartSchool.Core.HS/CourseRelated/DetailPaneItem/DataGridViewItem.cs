@@ -166,7 +166,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                     if (!sce_take_extDDict.ContainsKey(id))
                         sce_take_extDDict.Add(id, ext);
                 }
-            }            
+            }
 
 
             foreach (DataGridViewRow row in dataGridView1.Rows)
@@ -256,7 +256,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                         }
                         else
                         {
-                            score = ic.GetValue();
+                            score = value;
                         }
                     }
 
@@ -319,38 +319,40 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                         //updateHelper.AddElement("ScoreSheetList/ScoreSheet", "ID", ic.Key);
                         string updateSQL = "";
 
-                        if (string.IsNullOrEmpty(strValue))
+                        //if (string.IsNullOrEmpty(strValue))
+                        //{
+                        //    updateSQL = string.Format(@"
+                        //    UPDATE
+                        //        sce_take
+                        //    SET
+                        //        score = {0}
+                        //    WHERE
+                        //        ID = {1};
+                        //    ", score, ic.Key);
+                        //}
+                        //else
+                        //{
+                        try
                         {
-                            updateSQL = string.Format(@"
-                            UPDATE
-                                sce_take
-                            SET
-                                score = {0}
-                            WHERE
-                                ID = {1};
-                            ", score, ic.Key);
-                        }
-                        else
-                        {
-                            try
+                            string ext = "";
+                            if (sce_take_extDDict.ContainsKey(ic.Key))
+                                ext = sce_take_extDDict[ic.Key];
+
+                            XElement elmRoot = null;
+                            if (ext == "")
                             {
-                                string ext = "";
-                                if (sce_take_extDDict.ContainsKey(ic.Key))
-                                    ext = sce_take_extDDict[ic.Key];
+                                elmRoot = new XElement("Extension");
+                            }
+                            else
+                            {
+                                // 原本已有資料
+                                elmRoot = XElement.Parse(ext);
+                            }
 
-                                XElement elmRoot = null;
-                                if (ext == "")
-                                {
-                                    elmRoot = new XElement("Extension");
-                                }
-                                else
-                                {
-                                    // 原本已有資料
-                                    elmRoot = XElement.Parse(ext);
-                                }
-
-                                elmRoot.SetElementValue("UseText", strValue);
-                                updateSQL = string.Format(@"
+                            // 總是更新 UseText，即使 strValue 為空
+                            elmRoot.SetElementValue("UseText", strValue ?? ""); // 若 strValue 為 null，設為空字串
+                            
+                            updateSQL = string.Format(@"
                             UPDATE
                                 sce_take
                             SET
@@ -359,11 +361,11 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
                             WHERE
                                 ID = {1};
                             ", score, ic.Key, elmRoot.ToString());
-                            }
-                            catch (Exception ex)
-                            { Console.WriteLine(ex.Message); }
-
                         }
+                        catch (Exception ex)
+                        { Console.WriteLine(ex.Message); }
+
+                        //}
 
                         updateSQLList.Add(updateSQL);
                     }
@@ -536,9 +538,10 @@ namespace SmartSchool.CourseRelated.DetailPaneItem
             _helper = new DataGridViewHelper(dataGridView1, provider);
             // 設定缺考文字可以輸入那些值
             _helper.SetStringValues(ScoreValueMangTextDict.Keys.ToList());
-
-            _helper.DirtyChanged += new EventHandler<DirtyChangedEventArgs>(_helper_DirtyChanged);
+            dataGridView1.Rows.Clear(); // 清空舊資料
             _helper.Fill();
+            _helper.DirtyChanged += new EventHandler<DirtyChangedEventArgs>(_helper_DirtyChanged);
+           
 
 
 

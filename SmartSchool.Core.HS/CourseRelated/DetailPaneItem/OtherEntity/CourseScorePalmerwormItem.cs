@@ -34,20 +34,20 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
         private DataGetter _data_getter;
         private ScoreType _process_score_type;
 
-        // µû¶q¦¨ÁZ extension ¤º®e
+        // è©•é‡æˆç¸¾ extension å…§å®¹
         Dictionary<string, string> sce_take_extDDict;
 
-        // ¯Ê¦Ò³]©w¸ê°T
+        // ç¼ºè€ƒè¨­å®šè³‡è¨Š
         List<SmartSchool.DAO.ScoreValueMangInfo> ScoreValueMangInfoList;
 
-        // ¯Ê¦Ò³]©w¤å¦r¹ï·Ó­È
+        // ç¼ºè€ƒè¨­å®šæ–‡å­—å°ç…§å€¼
         Dictionary<string, string> ScoreValueMangTextDict;
 
 
         public CourseScorePalmerwormItem()
         {
             InitializeComponent();
-            Title = "½Òµ{¬ÛÃö¦¨ÁZ";
+            Title = "èª²ç¨‹ç›¸é—œæˆç¸¾";
             _errorProvider = new ErrorProvider();
             ScoreValueMangInfoList = new List<DAO.ScoreValueMangInfo>();
             ScoreValueMangTextDict = new Dictionary<string, string>();
@@ -67,10 +67,10 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
             }
             _schoolYearList.Sort();
             _examList = SmartSchool.Feature.Course.QueryCourse.GetExamList();
-            // ¨ú±o¯Ê¦Ò³]©w¸ê®Æ
+            // å–å¾—ç¼ºè€ƒè¨­å®šè³‡æ–™
             ScoreValueMangInfoList = QueryData.GetScoreValueMangInfoList();
 
-            // ¯Ê¦Ò³]©w¯Á¤Ş            
+            // ç¼ºè€ƒè¨­å®šç´¢å¼•            
             ScoreValueMangTextDict.Clear();
             foreach (SmartSchool.DAO.ScoreValueMangInfo info in ScoreValueMangInfoList)
             {
@@ -82,7 +82,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
 
         protected override void OnBackgroundWorkerCompleted(object result)
         {
-            //±Nµe­±¤Wªº±ø¥ó¿ï¶µ­«¸m¦¨¹w³]ª¬ºA¡C
+            //å°‡ç•«é¢ä¸Šçš„æ¢ä»¶é¸é …é‡ç½®æˆé è¨­ç‹€æ…‹ã€‚
             ResetConditionOptions();
 
             BindData();
@@ -97,10 +97,10 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
             cboExam.SelectedItem = null;
             cboExam.Items.Clear();
 
-            //¶ñ¤J¾Ç¦~«×¡B¾Ç´Á±ø¥ó¿ï¶µ¡C
+            //å¡«å…¥å­¸å¹´åº¦ã€å­¸æœŸæ¢ä»¶é¸é …ã€‚
             IninialSemesterConditions();
 
-            //¶ñ¤J¸Õ§O±ø¥ó¿ï¶µ¡C
+            //å¡«å…¥è©¦åˆ¥æ¢ä»¶é¸é …ã€‚
             InitialExamConditions();
 
             if (cboExam.Items.Count > 0)
@@ -113,8 +113,8 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
 
         private void InitialExamConditions()
         {
-            //§Q¥Î ExamId ªº¯S®í¸ê®Æ¡A¥Nªí½Òµ{¦¨ÁZ¡C
-            KeyValuePair<string, string> courseItem = new KeyValuePair<string, string>("CourseScore", "(½Òµ{¦¨ÁZ)");
+            //åˆ©ç”¨ ExamId çš„ç‰¹æ®Šè³‡æ–™ï¼Œä»£è¡¨èª²ç¨‹æˆç¸¾ã€‚
+            KeyValuePair<string, string> courseItem = new KeyValuePair<string, string>("CourseScore", "(èª²ç¨‹æˆç¸¾)");
             cboExam.Items.Add(courseItem);
 
             foreach (XmlElement element in _examList.GetContent().GetElements("Exam"))
@@ -177,7 +177,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
 
         void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            // ¦pªG¸ü¤J§¹¦¨«áÀË¬d¾Ç¦~«×¾Ç´Á¦Ò¸Õ¤TºØ°Ñ¼Æ¤w¸g©M·í®É¸ü¤J®É©Ò³]©wªº¤£¦Pªº¸Ü, ­«·s¨ú±o¸ê®Æ
+            // å¦‚æœè¼‰å…¥å®Œæˆå¾Œæª¢æŸ¥å­¸å¹´åº¦å­¸æœŸè€ƒè©¦ä¸‰ç¨®åƒæ•¸å·²ç¶“å’Œç•¶æ™‚è¼‰å…¥æ™‚æ‰€è¨­å®šçš„ä¸åŒçš„è©±, é‡æ–°å–å¾—è³‡æ–™
             if (_currentArg.SchoolYear != cboSchoolYear.Text
                 || _currentArg.Semester != cboSemester.Text
                 || _currentArg.Examid != ((KeyValuePair<string, string>)cboExam.SelectedItem).Key)
@@ -186,7 +186,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
                 BindData();
                 return;
             }
-            // ¦pªG¦³¿ùªº¸Ü
+            // å¦‚æœæœ‰éŒ¯çš„è©±
             if (e.Error != null)
             {
                 MsgBox.Show(e.Error.Message);
@@ -210,7 +210,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
                     string strValue = info.Score;
                     if (info.Score == "-1" || info.Score == "-2")
                     {
-                        // Åª¨ú¯Ê¦Ò¹ï·Ó
+                        // è®€å–ç¼ºè€ƒå°ç…§
                         if (_data_getter.sce_take_extDDict.ContainsKey(info.SecID))
                         {
                             try
@@ -227,11 +227,11 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
                         }
                     }
 
-                    //row.Cells[colScore.Name].Value = info.Score == "-1" ? "¯Ê" : info.Score;
+                    //row.Cells[colScore.Name].Value = info.Score == "-1" ? "ç¼º" : info.Score;
                     row.Cells[colScore.Name].Value = strValue;
                     row.Cells[colScore.Name].Tag = info.Score;
                     row.Tag = info;
-                    //_valueManager.AddValue(info.CourseID, info.Score == "-1" ? "¯Ê" : info.Score);
+                    //_valueManager.AddValue(info.CourseID, info.Score == "-1" ? "ç¼º" : info.Score);
                     _valueManager.AddValue(info.CourseID, strValue);
                 }
             }
@@ -247,7 +247,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
             private DSXmlHelper _currentResponse;
             private DSResponse rsp_temp;
             private ScoreType _score_type;
-            // µû¶q¦¨ÁZ extension ¤º®e
+            // è©•é‡æˆç¸¾ extension å…§å®¹
             public Dictionary<string, string> sce_take_extDDict;
 
             public DataGetter(string runningId, ScoreType scoreType)
@@ -270,7 +270,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
 
             public RowInfoCollection Evaluate(ConditionArg arg)
             {
-                //¥ı¨ú±o¸Ó¾Ç¥Í©ó«ü©w¾Ç¦~«×¾Ç´Á­×²ß¤§©Ò¦³½Òµ{²M³æ
+                //å…ˆå–å¾—è©²å­¸ç”Ÿæ–¼æŒ‡å®šå­¸å¹´åº¦å­¸æœŸä¿®ç¿’ä¹‹æ‰€æœ‰èª²ç¨‹æ¸…å–®
                 DSXmlHelper xml_temp = GetMajorCourse(arg);
 
                 DSXmlHelper h2 = new DSXmlHelper("MappingRequest");
@@ -294,7 +294,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
                 if (_courseList.Count == 0)
                     return new RowInfoCollection();
 
-                // ¨ú±o¥Ø«e¦C¥X½Òµ{©Ò¦³ªº¦Ò¸Õ¹ï·Óªí
+                // å–å¾—ç›®å‰åˆ—å‡ºèª²ç¨‹æ‰€æœ‰çš„è€ƒè©¦å°ç…§è¡¨
                 try
                 {
                     DSResponse dsrsp = SmartSchool.Feature.Course.QueryCourse.GetExamMapping(new DSRequest(h2));
@@ -302,16 +302,16 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("¬d¸ß½Òµ{©Ò¦³ªº¦Ò¸Õ¹ï·Óªí¥¢±Ñ:" + ex.Message, ex);
+                    throw new Exception("æŸ¥è©¢èª²ç¨‹æ‰€æœ‰çš„è€ƒè©¦å°ç…§è¡¨å¤±æ•—:" + ex.Message, ex);
                 }
 
-                // ¨Ì¾ÚcboExam ©Ò¿ïªº¦Ò¸Õ¶µ¥Ø¹LÂo±¼¨S¦³°Ñ»P¦Ò¸Õªº½Òµ{, µM«áÅã¥Ü¦bµe­±¤W                    
+                // ä¾æ“šcboExam æ‰€é¸çš„è€ƒè©¦é …ç›®éæ¿¾æ‰æ²’æœ‰åƒèˆ‡è€ƒè©¦çš„èª²ç¨‹, ç„¶å¾Œé¡¯ç¤ºåœ¨ç•«é¢ä¸Š                    
                 RowInfoCollection collection = new RowInfoCollection();
                 foreach (string courseid in _courseList.Keys)
                 {
                     string courseName = _courseList[courseid];
 
-                    if (_score_type != ScoreType.Course) //¦pªG¤£¬O½Òµ{¦¨ÁZ¡A¤~»İ­n§PÂ_¬O§_¦³¨Ï¥Î¯S©wµû¶q¡C
+                    if (_score_type != ScoreType.Course) //å¦‚æœä¸æ˜¯èª²ç¨‹æˆç¸¾ï¼Œæ‰éœ€è¦åˆ¤æ–·æ˜¯å¦æœ‰ä½¿ç”¨ç‰¹å®šè©•é‡ã€‚
                     {
                         bool found = false;
                         foreach (XmlElement element in h2.GetElements("Mapping"))
@@ -329,7 +329,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
                     collection.Items.Add(info);
                 }
 
-                if (_score_type == ScoreType.Course) //¸Õ§OÄæ¦ìªº¯S®í¸ê®Æ¡A¥Nªí­nÅã¥Ü½Òµ{¦¨ÁZ¡C
+                if (_score_type == ScoreType.Course) //è©¦åˆ¥æ¬„ä½çš„ç‰¹æ®Šè³‡æ–™ï¼Œä»£è¡¨è¦é¡¯ç¤ºèª²ç¨‹æˆç¸¾ã€‚
                     GetSCAttendScore(arg, collection);
                 else
                     GetSCETakeScore(arg, collection);
@@ -339,7 +339,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
 
             private void GetSCETakeScore(ConditionArg arg, RowInfoCollection rows)
             {
-                //¨ú±o¸Ó¾Ç¥Í©ó«ü©w¾Ç¦~«×¾Ç´Á¤§¬Y¦¸¦Ò¸Õªº©Ò¦³¦¨ÁZ²M³æ
+                //å–å¾—è©²å­¸ç”Ÿæ–¼æŒ‡å®šå­¸å¹´åº¦å­¸æœŸä¹‹æŸæ¬¡è€ƒè©¦çš„æ‰€æœ‰æˆç¸¾æ¸…å–®
                 DSXmlHelper xmlTemp = new DSXmlHelper("Request");
                 xmlTemp.AddElement("Field");
                 xmlTemp.AddElement("Field", "All");
@@ -355,15 +355,15 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("¬d¸ß¾Ç¥Í¦¨ÁZ¥¢±Ñ:" + ex.Message, ex);
+                    throw new Exception("æŸ¥è©¢å­¸ç”Ÿæˆç¸¾å¤±æ•—:" + ex.Message, ex);
                 }
                 xmlTemp = rsp_temp.GetContent();
                 CurrentResponse = xmlTemp;
 
-                //  ¨ú±oµû¶q¦¨ÁZ extension ¸ê®Æ
+                //  å–å¾—è©•é‡æˆç¸¾ extension è³‡æ–™
                 sce_take_extDDict.Clear();
 
-                // ¨Ì·Ó¬d¸ß¦^¨Óªº¦¨ÁZ²M³æ¶ñ¦^©Ò¹ïÀ³ªº½Òµ{
+                // ä¾ç…§æŸ¥è©¢å›ä¾†çš„æˆç¸¾æ¸…å–®å¡«å›æ‰€å°æ‡‰çš„èª²ç¨‹
                 foreach (XmlElement element in xmlTemp.GetElements("Score"))
                 {
                     string courseName = element.SelectSingleNode("CourseName").InnerText;
@@ -412,7 +412,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
 
             private void GetSCAttendScore(ConditionArg arg, RowInfoCollection rows)
             {
-                //¨ú±o¸Ó¾Ç¥Í©ó«ü©w¾Ç¦~«×¾Ç´Á¤§¬Y¦¸¦Ò¸Õªº©Ò¦³¦¨ÁZ²M³æ
+                //å–å¾—è©²å­¸ç”Ÿæ–¼æŒ‡å®šå­¸å¹´åº¦å­¸æœŸä¹‹æŸæ¬¡è€ƒè©¦çš„æ‰€æœ‰æˆç¸¾æ¸…å–®
                 DSXmlHelper xmlTemp = new DSXmlHelper("Request");
                 xmlTemp.AddElement(".", "Field", "<ID/><RefStudentID/><RefCourseID/><Score/>", true);
                 xmlTemp.AddElement("Condition");
@@ -424,12 +424,12 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("¬d¸ß¾Ç¥Í¦¨ÁZ¥¢±Ñ:" + ex.Message, ex);
+                    throw new Exception("æŸ¥è©¢å­¸ç”Ÿæˆç¸¾å¤±æ•—:" + ex.Message, ex);
                 }
                 xmlTemp = rsp_temp.GetContent();
                 CurrentResponse = xmlTemp;
 
-                // ¨Ì·Ó¬d¸ß¦^¨Óªº¦¨ÁZ²M³æ¶ñ¦^©Ò¹ïÀ³ªº½Òµ{
+                // ä¾ç…§æŸ¥è©¢å›ä¾†çš„æˆç¸¾æ¸…å–®å¡«å›æ‰€å°æ‡‰çš„èª²ç¨‹
                 foreach (XmlElement element in xmlTemp.GetElements("Student"))
                 {
                     DSXmlHelper helper = new DSXmlHelper(element);
@@ -463,7 +463,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("¬d¸ß¾Ç¥Í©ó«ü©w¾Ç¦~«×¾Ç´Á­×²ß¤§©Ò¦³½Òµ{²M³æ¥¢±Ñ:" + ex.Message, ex);
+                    throw new Exception("æŸ¥è©¢å­¸ç”Ÿæ–¼æŒ‡å®šå­¸å¹´åº¦å­¸æœŸä¿®ç¿’ä¹‹æ‰€æœ‰èª²ç¨‹æ¸…å–®å¤±æ•—:" + ex.Message, ex);
                 }
                 return xmlTemp;
             }
@@ -484,13 +484,13 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
             int a;
             if (!int.TryParse(cboSchoolYear.Text, out a))
             {
-                _errorProvider.SetError(cboSchoolYear, "¥²¶·¬°¼Æ¦r");
+                _errorProvider.SetError(cboSchoolYear, "å¿…é ˆç‚ºæ•¸å­—");
                 valid = false;
             }
             _errorProvider.SetError(cboSemester, null);
             if (cboSemester.Text != "1" && cboSemester.Text != "2")
             {
-                _errorProvider.SetError(cboSemester, "¥²¶·¬°¼Æ¦r 1 ©Î 2 ");
+                _errorProvider.SetError(cboSemester, "å¿…é ˆç‚ºæ•¸å­— 1 æˆ– 2 ");
                 valid = false;
             }
             return valid;
@@ -538,12 +538,12 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
             RowInfo info = row.Tag as RowInfo;
 
             string id = info.CourseID;
-            //string oldValue = info.Score == "-1" ? "¯Ê" : info.Score;
+            //string oldValue = info.Score == "-1" ? "ç¼º" : info.Score;
             string oldValue = info.Score;
 
             if (info.Score == "-1" || info.Score == "-2")
             {
-                // Åª¨ú¯Ê¦Ò¹ï·Ó
+                // è®€å–ç¼ºè€ƒå°ç…§
                 if (_data_getter.sce_take_extDDict.ContainsKey(info.SecID))
                 {
                     try
@@ -566,11 +566,11 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
             decimal score;
             if (_process_score_type == ScoreType.Exam)
             {
-                // ³B²z¯Ê¦Ò³]©w
+                // è™•ç†ç¼ºè€ƒè¨­å®š
                 if (!string.IsNullOrEmpty(value) && !decimal.TryParse(value, out score) && !ScoreValueMangTextDict.ContainsKey(value))
                 {
-                    //cell.ErrorText = "¤À¼Æ¥²¶·¬°¼Æ¦r©Î¡y¯Ê¡z¡C";
-                    cell.ErrorText = "¤À¼Æ¥²¶·¬°¼Æ¦r©Î¡y" + string.Join("¡B", ScoreValueMangTextDict.Keys.ToArray()) + "¡z¡C";
+                    //cell.ErrorText = "åˆ†æ•¸å¿…é ˆç‚ºæ•¸å­—æˆ–ã€ç¼ºã€ã€‚";
+                    cell.ErrorText = "åˆ†æ•¸å¿…é ˆç‚ºæ•¸å­—æˆ–ã€" + string.Join("ã€", ScoreValueMangTextDict.Keys.ToArray()) + "ã€ã€‚";
                     return;
                 }
 
@@ -579,7 +579,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
             {
                 if (!string.IsNullOrEmpty(value) && !decimal.TryParse(value, out score))
                 {
-                    cell.ErrorText = "¤À¼Æ¥²¶·¬°¼Æ¦r¡C";
+                    cell.ErrorText = "åˆ†æ•¸å¿…é ˆç‚ºæ•¸å­—ã€‚";
                     return;
                 }
             }
@@ -589,15 +589,18 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
             {
                 cell.Style.BackColor = Color.Yellow;
                 cell.Style.ForeColor = Color.Blue;
-                cell.ToolTipText = "¤w¥Ñ¡y" + oldValue + "¡zÅÜ¦¨¡y" + value + "¡z¡C";
+                cell.ToolTipText = "å·²ç”±ã€" + oldValue + "ã€è®Šæˆã€" + value + "ã€ã€‚";
             }
         }
 
         public override void Save()
         {
+            // Commit any in-place edit so change detection (Yellow) takes effect.
+            dgvScore.EndEdit();
+
             if (!isAllValid())
             {
-                MsgBox.Show("¸ê®Æ¿é¤J¤£¥¿½T¡A½Ğ­×¥¿«á¦A¦æÀx¦s¡G" + Title);
+                MsgBox.Show("è³‡æ–™è¼¸å…¥ä¸æ­£ç¢ºï¼Œè«‹ä¿®æ­£å¾Œå†è¡Œå„²å­˜ï¼š" + Title);
                 return;
             }
 
@@ -616,9 +619,9 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
             DSXmlHelper updateHelper = new DSXmlHelper("Request");
 
             StringBuilder updateDesc = new StringBuilder("");
-            updateDesc.Append("¾Ç¥Í¡G").Append(Student.Instance.Items[RunningID].Name);
-            updateDesc.Append(", ¾Ç¦~«×¡G").Append(cboSchoolYear.Text);
-            updateDesc.Append(", ¾Ç´Á¡G").AppendLine(cboSemester.Text);
+            updateDesc.Append("å­¸ç”Ÿï¼š").Append(Student.Instance.Items[RunningID].Name);
+            updateDesc.Append(", å­¸å¹´åº¦ï¼š").Append(cboSchoolYear.Text);
+            updateDesc.Append(", å­¸æœŸï¼š").AppendLine(cboSemester.Text);
 
             foreach (DataGridViewRow row in dgvScore.Rows)
             {
@@ -627,7 +630,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
 
                 if (info.Score == newScore) continue;
 
-                updateDesc.AppendLine("½Òµ{¦¨ÁZ¡y" + info.CourseName + "¡z¥Ñ¡y" + info.Score + "¡z­×§ï¬°¡y" + newScore + "¡z¡C");
+                updateDesc.AppendLine("èª²ç¨‹æˆç¸¾ã€" + info.CourseName + "ã€ç”±ã€" + info.Score + "ã€ä¿®æ”¹ç‚ºã€" + newScore + "ã€ã€‚");
 
                 updateHelper.AddElement("Attend");
                 updateHelper.AddElement("Attend", "ID", info.AttendID);
@@ -641,7 +644,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
                 try
                 {
                     EditCourse.UpdateAttend(updateHelper);
-                    CurrentUser.Instance.AppLog.Write(EntityType.Student, EntityAction.Update, RunningID, updateDesc.ToString(), "¾Ç¥Í½Òµ{¦¨ÁZ", updateHelper.GetRawXml());
+                    CurrentUser.Instance.AppLog.Write(EntityType.Student, EntityAction.Update, RunningID, updateDesc.ToString(), "å­¸ç”Ÿèª²ç¨‹æˆç¸¾", updateHelper.GetRawXml());
                 }
                 catch (Exception ex)
                 {
@@ -657,7 +660,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
             DSXmlHelper insertHelper = new DSXmlHelper("Request");
             DSXmlHelper deleteHelper = new DSXmlHelper("Request");
 
-            //  ¦]¬° Service ¦^¼g extension ¦³°İÃD¡A§ï¨Ï¥Î sql ¤è¦¡³B²z
+            //  å› ç‚º Service å›å¯« extension æœ‰å•é¡Œï¼Œæ”¹ä½¿ç”¨ sql æ–¹å¼è™•ç†
             List<string> updateExtensionList = new List<string>();
             List<string> insertExtensionLList = new List<string>();
 
@@ -667,10 +670,10 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
             deleteHelper.AddElement("ScoreSheet");
 
             StringBuilder updateDesc = new StringBuilder("");
-            updateDesc.Append("¾Ç¥Í¡G").Append(Student.Instance.Items[RunningID].Name);
-            updateDesc.Append(", ¾Ç¦~«×¡G").Append(cboSchoolYear.Text);
-            updateDesc.Append(", ¾Ç´Á¡G").Append(cboSemester.Text);
-            updateDesc.Append(", ¦Ò¸Õ¡G").Append(cboExam.Text).Append("\n");
+            updateDesc.Append("å­¸ç”Ÿï¼š").Append(Student.Instance.Items[RunningID].Name);
+            updateDesc.Append(", å­¸å¹´åº¦ï¼š").Append(cboSchoolYear.Text);
+            updateDesc.Append(", å­¸æœŸï¼š").Append(cboSemester.Text);
+            updateDesc.Append(", è€ƒè©¦ï¼š").Append(cboExam.Text).Append("\n");
 
             StringBuilder insertDesc = new StringBuilder(updateDesc.ToString());
             StringBuilder deleteDesc = new StringBuilder(updateDesc.ToString());
@@ -683,84 +686,78 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
                 DataGridViewCell cell = row.Cells[colScore.Name];
 
                 /** 
-                 * ­×§ï
-                 * 1.¤À¼Æ³QÅÜ§ó
-                 * 2.Sce_ID ¤£¬°ªÅ­È
-                 * 3.ÅÜ§ó«á¤À¼Æ¤£¬°ªÅ­È
+                 * ä¿®æ”¹
+                 * 1.åˆ†æ•¸è¢«è®Šæ›´
+                 * 2.Sce_ID ä¸ç‚ºç©ºå€¼
+                 * 3.è®Šæ›´å¾Œåˆ†æ•¸ä¸ç‚ºç©ºå€¼
                  */
                 if (cell.Style.BackColor == Color.Yellow && cell.Value != null && !string.IsNullOrEmpty(info.SecID))
                 {
                     updateHelper.AddElement("ScoreSheetList", "ScoreSheet");
                     updateHelper.AddElement("ScoreSheetList/ScoreSheet", "ID", info.SecID);
 
-                    // ¹ï·Ó¼g¤J¦¨ÁZ
+                    // å°ç…§å¯«å…¥æˆç¸¾
                     string strValue = cell.Value == null ? "" : cell.Value.ToString();
                     string strScore = strValue;
 
                     //updateHelper.AddElement("ScoreSheetList/ScoreSheet", "Score", cell.Value == null ? "" : cell.Value.ToString());
 
+                    // Load current DB extension into xmlExtension if present
                     string xmlExtension = "";
-
                     if (_data_getter.sce_take_extDDict.ContainsKey(info.SecID))
                     {
                         xmlExtension = _data_getter.sce_take_extDDict[info.SecID];
                     }
 
+                    // Keep a copy of original for diff
+                    string originalXml = xmlExtension ?? string.Empty;
+
+                    // Build editable root (preserve existing XML if any)
+                    XElement root = null;
+                    if (!string.IsNullOrEmpty(originalXml))
+                    {
+                        try { root = XElement.Parse(originalXml); }
+                        catch { root = null; } // if parsing fails, fallback to new root
+                    }
+                    if (root == null) root = new XElement("Extension");
+
+                    // ç¼ºè€ƒæ–‡å­— â†’ map score & set UseText to that text; else numeric â†’ clear UseText
                     if (ScoreValueMangTextDict.ContainsKey(strValue))
                     {
                         strScore = ScoreValueMangTextDict[strValue];
-                        XElement elmRoot = null;
-                        if (xmlExtension == "")
-                        {
-                            // ¨S¸ê®Æ
-                            elmRoot = new XElement("Extension");
-                            elmRoot.SetElementValue("UseText", strValue);
-                        }
-                        else
-                        {
-                            try
-                            {
-                                // ¤w¦³¨ä¥L¸ê®Æ
-                                elmRoot = XElement.Parse(xmlExtension);
-                                elmRoot.SetElementValue("UseText", strValue);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.Message);
-                            }
-
-                        }
-
-                        if (elmRoot != null)
-                            xmlExtension = elmRoot.ToString();
+                        GetOrCreateUseText(root).Value = strValue;          // only change UseText value
+                    }
+                    else
+                    {
+                        GetOrCreateUseText(root).Value = string.Empty;      // numeric â†’ empty UseText
                     }
 
-
+                    // write score
                     updateHelper.AddElement("ScoreSheetList/ScoreSheet", "Score", strScore);
 
-                    if (xmlExtension != "")
+                    // serialize (no formatting to minimize diffs)
+                    string newXml = root.ToString(SaveOptions.DisableFormatting);
+
+                    // only update DB when changed
+                    if (!string.Equals(originalXml, newXml, StringComparison.Ordinal))
                     {
-                        //updateHelper.AddElement("ScoreSheetList/ScoreSheet", "Extension");
-                        //updateHelper.AddElement("ScoreSheetList/ScoreSheet", "Extension", xmlExtension);
-                        string strSQL = string.Format(@"
-                        UPDATE
-                            sce_take
-                        SET
-                            extension = '{0}'
-                        WHERE
-                            id = {1};
-                        ", xmlExtension, info.SecID);
-                        updateExtensionList.Add(strSQL);
+                        string sql = string.Format(@"
+                        UPDATE sce_take
+                           SET extension = '{0}'
+                         WHERE id = {1};",
+                        EscapeSqlLiteral(newXml),
+                        info.SecID);
+                        updateExtensionList.Add(sql);
                     }
 
-                    updateDesc.Append("½Òµ{¡y" + info.CourseName + "¡z¦¨ÁZ¥Ñ¡y" + info.Score + "¡z­×§ï¬°¡y" + cell.Value.ToString() + "¡z¡C\n");
+                    updateDesc.Append("èª²ç¨‹ã€" + info.CourseName + "ã€æˆç¸¾ç”±ã€" + info.Score + "ã€ä¿®æ”¹ç‚ºã€" + cell.Value.ToString() + "ã€ã€‚\n");
                     hasUpdate = true;
                 }
                 /** 
-                * ·s¼W
-                * 1.¤À¼Æ³QÅÜ§ó
-                * 2.Sce_ID ¬°ªÅ­È
-                * 3.ÅÜ§ó«á¤À¼Æ¤£¬°ªÅ­È
+                * æ–°å¢
+                * 1.åˆ†æ•¸è¢«è®Šæ›´
+                * 2.Sce_ID ç‚ºç©ºå€¼
+                * 3.è®Šæ›´å¾Œåˆ†æ•¸ä¸ç‚ºç©ºå€¼
                 */
                 else if (cell.Style.BackColor == Color.Yellow && cell.Value != null && string.IsNullOrEmpty(info.SecID))
                 {
@@ -771,52 +768,58 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
                     string xmlExtension = "";
                     string strValue = cell.Value == null ? "" : cell.Value.ToString();
                     string strScore = strValue;
+
                     if (ScoreValueMangTextDict.ContainsKey(strValue))
                     {
                         strScore = ScoreValueMangTextDict[strValue];
-                        XElement elmRoot = new XElement("Extension");
-                        elmRoot.SetElementValue("UseText", strValue);
-                        xmlExtension = elmRoot.ToString();
+                        var root = new XElement("Extension");
+                        root.SetElementValue("UseText", strValue);
+                        xmlExtension = root.ToString(SaveOptions.DisableFormatting);
                     }
-
+                    else
+                    {
+                        var root = new XElement("Extension");
+                        root.SetElementValue("UseText", string.Empty);
+                        xmlExtension = root.ToString(SaveOptions.DisableFormatting);
+                    }
 
                     //insertHelper.AddElement("ScoreSheetList/ScoreSheet", "Score", cell.Value == null ? "" : cell.Value.ToString());
 
                     insertHelper.AddElement("ScoreSheetList/ScoreSheet", "Score", strScore);
 
-                    // ¼g¤J extension
-                    if (xmlExtension != "")
+                    // Always apply the extension after insert
+                    if (!string.IsNullOrEmpty(xmlExtension))
                     {
                         //insertHelper.AddElement("ScoreSheetList/ScoreSheet", "Extension");
                         //insertHelper.AddElement("ScoreSheetList/ScoreSheet", "Extension", xmlExtension);
 
-                        string strSQL = string.Format(@"
-                        UPDATE
-                            sce_take
-                        SET
-                            extension = '{0}'
-                        WHERE
-                            ref_exam_id = {1}
-                            AND ref_sc_attend_id = {2};
-                        ", xmlExtension, ((KeyValuePair<string, string>)cboExam.SelectedItem).Key, info.AttendID);
-                        insertExtensionLList.Add(strSQL);
+                        string sql = string.Format(@"
+                        UPDATE sce_take
+                           SET extension = '{0}'
+                         WHERE ref_exam_id = {1}
+                           AND ref_sc_attend_id = {2};",
+                        EscapeSqlLiteral(xmlExtension),
+                        ((KeyValuePair<string, string>)cboExam.SelectedItem).Key,
+                        info.AttendID);
+
+                        insertExtensionLList.Add(sql);
                     }
 
 
-                    insertDesc.Append("½Òµ{¡y" + info.CourseName + "¡z·s¼W¦¨ÁZ¡y" + cell.Value.ToString() + "¡z¡C\n");
+                    insertDesc.Append("èª²ç¨‹ã€" + info.CourseName + "ã€æ–°å¢æˆç¸¾ã€" + cell.Value.ToString() + "ã€ã€‚\n");
                     hasInsert = true;
                 }
                 /** 
-                * §R°£
-                * 1.¤À¼Æ­ì¥»¤£¬°ªÅ­È
-                * 2.Sce_ID ¤£¬°ªÅ­È
-                * 3.ÅÜ§ó«á¤À¼Æ¬°ªÅ­È
+                * åˆªé™¤
+                * 1.åˆ†æ•¸åŸæœ¬ä¸ç‚ºç©ºå€¼
+                * 2.Sce_ID ä¸ç‚ºç©ºå€¼
+                * 3.è®Šæ›´å¾Œåˆ†æ•¸ç‚ºç©ºå€¼
                 */
                 else if (cell.Tag != null && !string.IsNullOrEmpty(info.SecID) && cell.Value == null)
                 {
                     deleteHelper.AddElement("ScoreSheet", "ID", info.SecID);
 
-                    deleteDesc.Append("±N½Òµ{¡y" + info.CourseName + "¡z­ì¦¨ÁZ¡y" + info.Score + "¡z§R°£¡C\n");
+                    deleteDesc.Append("å°‡èª²ç¨‹ã€" + info.CourseName + "ã€åŸæˆç¸¾ã€" + info.Score + "ã€åˆªé™¤ã€‚\n");
                     hasDelete = true;
                 }
             }
@@ -829,7 +832,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
 
                     if (insertExtensionLList.Count > 0)
                     {
-                        // §ó·s extension
+                        // æ›´æ–° extension
                         K12.Data.UpdateHelper uh = new K12.Data.UpdateHelper();
                         uh.Execute(insertExtensionLList);
                     }
@@ -838,7 +841,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
             }
             catch (Exception ex)
             {
-                MsgBox.Show("·s¼W¦¨ÁZ¿ù»~:" + ex.Message);
+                MsgBox.Show("æ–°å¢æˆç¸¾éŒ¯èª¤:" + ex.Message);
             }
 
             try
@@ -850,7 +853,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
 
                     if (updateExtensionList.Count > 0)
                     {
-                        // §ó·s extension
+                        // æ›´æ–° extension
                         K12.Data.UpdateHelper uh = new K12.Data.UpdateHelper();
                         uh.Execute(updateExtensionList);
                     }
@@ -858,7 +861,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
             }
             catch (Exception ex)
             {
-                MsgBox.Show("­×§ï¦¨ÁZ¿ù»~:" + ex.Message);
+                MsgBox.Show("ä¿®æ”¹æˆç¸¾éŒ¯èª¤:" + ex.Message);
             }
 
             try
@@ -871,7 +874,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
             }
             catch (Exception ex)
             {
-                MsgBox.Show("§R°£¦¨ÁZ¿ù»~:" + ex.Message);
+                MsgBox.Show("åˆªé™¤æˆç¸¾éŒ¯èª¤:" + ex.Message);
             }
         }
 
@@ -912,7 +915,7 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
             {
                 cell.Style.BackColor = Color.Red;
                 cell.Style.ForeColor = Color.White;
-                cell.ToolTipText = "¤À¼Æ¥²¶·¬°¼Æ¦r";
+                cell.ToolTipText = "åˆ†æ•¸å¿…é ˆç‚ºæ•¸å­—";
                 return;
             }
 
@@ -921,11 +924,29 @@ namespace SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
             {
                 cell.Style.BackColor = Color.Yellow;
                 cell.Style.ForeColor = Color.Blue;
-                cell.ToolTipText = "¤w¥Ñ¡y" + oldValue + "¡zÅÜ¦¨¡y" + value + "¡z";
+                cell.ToolTipText = "å·²ç”±ã€" + oldValue + "ã€è®Šæˆã€" + value + "ã€";
             }
         }
 
         #endregion
+
+        // Return existing <UseText> or create one; do NOT touch other nodes.
+        private static XElement GetOrCreateUseText(XElement root)
+        {
+            var node = root.Element("UseText") ?? root.Descendants("UseText").FirstOrDefault();
+            if (node == null)
+            {
+                node = new XElement("UseText");
+                root.Add(node);
+            }
+            return node;
+        }
+
+        private static string EscapeSqlLiteral(string s)
+        {
+            return (s ?? string.Empty).Replace("'", "''");
+        }
+
         public override object Clone()
         {
             return new CourseScorePalmerwormItem();

@@ -42,105 +42,6 @@ namespace SmartSchool
             Class.Instance.SetupPresentation();
             Teacher.Instance.SetupPresentation();
 
-            //新增刪除學生
-            SmartSchool.StudentRelated.Process.StudentIUD.StudentIDUProcess.Instance.Setup();
-            //成績
-            new StudentRelated.RibbonBars.EducationalAdministration().Setup();
-            ////類別
-            //new StudentRelated.RibbonBars.Assign().Setup();
-            //報表
-            new StudentRelated.RibbonBars.Report().Setup();
-            //匯出匯入
-            new SmartSchool.StudentRelated.RibbonBars.Import.ImportExport().Setup();
-            //其它
-            new StudentRelated.RibbonBars.Others().Setup();
-
-            //匯出
-            RibbonBarButton rbItemExport = K12.Presentation.NLDPanels.Student.RibbonBarItems["資料統計"]["匯出"];
-            rbItemExport.Size = FISCA.Presentation.RibbonBarButton.MenuButtonSize.Large;
-            rbItemExport.SupposeHasChildern = true;
-            rbItemExport.Image = Properties.Resources.Export_Image;
-
-            #region 匯出(1000708)
-            rbItemExport["學籍相關匯出"]["匯出學生基本資料"].Enable = CurrentUser.Acl["Button0130"].Executable;
-            rbItemExport["學籍相關匯出"]["匯出學生基本資料"].Click += delegate
-            {
-                SmartSchool.StudentRelated.RibbonBars.Import.ExportWizard export = new SmartSchool.StudentRelated.RibbonBars.Import.ExportWizard();
-                export.ShowDialog();
-            };
-
-            //20131216 - dylan 註解
-            //rbItemExport["學籍相關匯出"]["匯出學生照片"].Enable = CurrentUser.Acl["Button0290.5"].Executable;
-            //rbItemExport["學籍相關匯出"]["匯出學生照片"].Click += delegate
-            //{
-            //    new K12.Form.Photo.PhotosBatchExportForm().ShowDialog();
-            //};
-
-            
-            rbItemExport["學籍相關匯出"]["匯出離校資訊"].Enable = CurrentUser.Acl["SHSchool.Student.Ribbon0171"].Executable;
-            rbItemExport["學籍相關匯出"]["匯出離校資訊"].Click += delegate
-            {
-                Exporter exporter = new ExportLeaveInfo();
-                ExportStudentV2 wizard = new ExportStudentV2(exporter.Text, exporter.Image);
-                exporter.InitializeExport(wizard);
-                wizard.ShowDialog();
-            };
-
-            // 2018.09.27 [ischoolKingdom] Vicky依據 [H成績][H學務][06] 功能沒有設定權限管理 項目，將各功能按鈕註冊時Enable設定與系統權限綁定，權限Code使用GUID。
-            rbItemExport["其它相關匯出"]["匯出自訂欄位"].Enable = CurrentUser.Acl["B2B63AFC-2019-4596-823A-BA044C8203F1"].Executable;
-            rbItemExport["其它相關匯出"]["匯出自訂欄位"].Click += delegate
-            {
-                Exporter exporter = new ExportExtandField();
-                ExportStudentV2 wizard = new ExportStudentV2(exporter.Text, exporter.Image);
-                exporter.InitializeExport(wizard);
-                wizard.ShowDialog();
-            };
-            #endregion
-
-            RibbonBarButton rbItemImport = K12.Presentation.NLDPanels.Student.RibbonBarItems["資料統計"]["匯入"];
-            rbItemImport.Size = FISCA.Presentation.RibbonBarButton.MenuButtonSize.Large;
-            rbItemImport.SupposeHasChildern = true;
-            rbItemImport.Image = Properties.Resources.Import_Image;
-
-            #region 匯入(1000708)
-
-            rbItemImport["學籍相關匯入"]["匯入學生基本資料"].Enable = CurrentUser.Acl["Button0210"].Executable;
-            rbItemImport["學籍相關匯入"]["匯入學生基本資料"].Click += delegate
-            {
-                StudentImportWizard wizard = new StudentImportWizard();
-                wizard.ShowDialog();
-            };
-
-            // 2018.09.27 [ischoolKingdom] Vicky依據 [H成績][H學務][06] 功能沒有設定權限管理 項目，將各功能按鈕註冊時Enable設定與系統權限綁定，權限Code使用GUID。
-            rbItemImport["其它相關匯入"]["匯入自訂欄位"].Enable = CurrentUser.Acl["F1D8F0DD-AC8B-442A-88DB-75A4E4208156"].Executable;
-            rbItemImport["其它相關匯入"]["匯入自訂欄位"].Click += delegate
-            {
-                SmartSchool.API.PlugIn.Import.Importer importer = new ImportExtandField();
-                ImportStudentV2 wizard = new ImportStudentV2(importer.Text, importer.Image);
-                importer.InitializeImport(wizard);
-                wizard.ShowDialog();
-            };
-            #endregion
-
-            //本權限控制來自 - MOD_Tagging (Dylan - 20130315)
-            if (CurrentUser.Acl["JHSchool.Student.Ribbon04150.Change20130315"].Executable)
-            {
-                ChangeStatusBatch.Init();//右鍵變更學生狀態
-            }
-
-            //班級相關 Ribbon
-            SmartSchool.ClassRelated.RibbonBars.Manage.Instance.Setup();
-            new ClassRelated.RibbonBars.Upgrade().Setup();
-            new ClassRelated.RibbonBars.TeacherBiasRibbon().Setup();
-            //            new ClassRelated.RibbonBars.Assign().Setup();
-            new ClassRelated.RibbonBars.Report().Setup();
-            new ClassRelated.RibbonBars.ImportExport().Setup();
-
-            //教師相關 Ribbon
-            SmartSchool.TeacherRelated.RibbonBars.Manage.Instance.Setup();
-            new TeacherRelated.RibbonBars.Report().Setup();
-            new TeacherRelated.RibbonBars.ImportExport().Setup();
-
             //設定Customization資料介面使用的的InformationProvider
             Customization.Data.AccessHelper.SetStudentProvider(new API.Provider.StudentProvider());
             Customization.Data.AccessHelper.SetClassProvider(new API.Provider.ClassProvider());
@@ -149,35 +50,141 @@ namespace SmartSchool
             Customization.PlugIn.ExtendedContent.ExtendTeacherContent.SetManager(Class.Instance);
             Customization.PlugIn.ExtendedContent.ExtendTeacherContent.SetManager(Teacher.Instance);
 
-            #region 匯出匯入學期對照表
-            rbItemExport["成績相關匯出"]["匯出學期對照表"].Enable = UserAcl.Current["SHSchool.Student.Ribbon0169"].Executable;
-            rbItemExport["成績相關匯出"]["匯出學期對照表"].Click += delegate
+            EventHandler idleHandler = null;
+            idleHandler = delegate
             {
-                SmartSchool.API.PlugIn.Export.Exporter exporter = new SmartSchool.StudentRelated.RibbonBars.SemesterHistory.ExportSemesterHistory();
-                SmartSchool.StudentRelated.RibbonBars.SemesterHistory.ExportStudentV2 wizard = new SmartSchool.StudentRelated.RibbonBars.SemesterHistory.ExportStudentV2(exporter.Text, exporter.Image);
-                exporter.InitializeExport(wizard);
-                wizard.ShowDialog();
+                System.Windows.Forms.Application.Idle -= idleHandler;
+
+                //新增刪除學生
+                SmartSchool.StudentRelated.Process.StudentIUD.StudentIDUProcess.Instance.Setup();
+                //成績
+                new StudentRelated.RibbonBars.EducationalAdministration().Setup();
+                ////類別
+                //new StudentRelated.RibbonBars.Assign().Setup();
+                //報表
+                new StudentRelated.RibbonBars.Report().Setup();
+                //匯出匯入
+                new SmartSchool.StudentRelated.RibbonBars.Import.ImportExport().Setup();
+                //其它
+                new StudentRelated.RibbonBars.Others().Setup();
+
+                //匯出
+                RibbonBarButton rbItemExport = K12.Presentation.NLDPanels.Student.RibbonBarItems["資料統計"]["匯出"];
+                rbItemExport.Size = FISCA.Presentation.RibbonBarButton.MenuButtonSize.Large;
+                rbItemExport.SupposeHasChildern = true;
+                rbItemExport.Image = Properties.Resources.Export_Image;
+
+                #region 匯出(1000708)
+                rbItemExport["學籍相關匯出"]["匯出學生基本資料"].Enable = CurrentUser.Acl["Button0130"].Executable;
+                rbItemExport["學籍相關匯出"]["匯出學生基本資料"].Click += delegate
+                {
+                    SmartSchool.StudentRelated.RibbonBars.Import.ExportWizard export = new SmartSchool.StudentRelated.RibbonBars.Import.ExportWizard();
+                    export.ShowDialog();
+                };
+
+                //20131216 - dylan 註解
+                //rbItemExport["學籍相關匯出"]["匯出學生照片"].Enable = CurrentUser.Acl["Button0290.5"].Executable;
+                //rbItemExport["學籍相關匯出"]["匯出學生照片"].Click += delegate
+                //{
+                //    new K12.Form.Photo.PhotosBatchExportForm().ShowDialog();
+                //};
+
+
+                rbItemExport["學籍相關匯出"]["匯出離校資訊"].Enable = CurrentUser.Acl["SHSchool.Student.Ribbon0171"].Executable;
+                rbItemExport["學籍相關匯出"]["匯出離校資訊"].Click += delegate
+                {
+                    Exporter exporter = new ExportLeaveInfo();
+                    ExportStudentV2 wizard = new ExportStudentV2(exporter.Text, exporter.Image);
+                    exporter.InitializeExport(wizard);
+                    wizard.ShowDialog();
+                };
+
+                // 2018.09.27 [ischoolKingdom] Vicky依據 [H成績][H學務][06] 功能沒有設定權限管理 項目，將各功能按鈕註冊時Enable設定與系統權限綁定，權限Code使用GUID。
+                rbItemExport["其它相關匯出"]["匯出自訂欄位"].Enable = CurrentUser.Acl["B2B63AFC-2019-4596-823A-BA044C8203F1"].Executable;
+                rbItemExport["其它相關匯出"]["匯出自訂欄位"].Click += delegate
+                {
+                    Exporter exporter = new ExportExtandField();
+                    ExportStudentV2 wizard = new ExportStudentV2(exporter.Text, exporter.Image);
+                    exporter.InitializeExport(wizard);
+                    wizard.ShowDialog();
+                };
+                #endregion
+
+                RibbonBarButton rbItemImport = K12.Presentation.NLDPanels.Student.RibbonBarItems["資料統計"]["匯入"];
+                rbItemImport.Size = FISCA.Presentation.RibbonBarButton.MenuButtonSize.Large;
+                rbItemImport.SupposeHasChildern = true;
+                rbItemImport.Image = Properties.Resources.Import_Image;
+
+                #region 匯入(1000708)
+
+                rbItemImport["學籍相關匯入"]["匯入學生基本資料"].Enable = CurrentUser.Acl["Button0210"].Executable;
+                rbItemImport["學籍相關匯入"]["匯入學生基本資料"].Click += delegate
+                {
+                    StudentImportWizard wizard = new StudentImportWizard();
+                    wizard.ShowDialog();
+                };
+
+                // 2018.09.27 [ischoolKingdom] Vicky依據 [H成績][H學務][06] 功能沒有設定權限管理 項目，將各功能按鈕註冊時Enable設定與系統權限綁定，權限Code使用GUID。
+                rbItemImport["其它相關匯入"]["匯入自訂欄位"].Enable = CurrentUser.Acl["F1D8F0DD-AC8B-442A-88DB-75A4E4208156"].Executable;
+                rbItemImport["其它相關匯入"]["匯入自訂欄位"].Click += delegate
+                {
+                    SmartSchool.API.PlugIn.Import.Importer importer = new ImportExtandField();
+                    ImportStudentV2 wizard = new ImportStudentV2(importer.Text, importer.Image);
+                    importer.InitializeImport(wizard);
+                    wizard.ShowDialog();
+                };
+                #endregion
+
+                //本權限控制來自 - MOD_Tagging (Dylan - 20130315)
+                if (CurrentUser.Acl["JHSchool.Student.Ribbon04150.Change20130315"].Executable)
+                {
+                    ChangeStatusBatch.Init();//右鍵變更學生狀態
+                }
+
+                //班級相關 Ribbon
+                SmartSchool.ClassRelated.RibbonBars.Manage.Instance.Setup();
+                new ClassRelated.RibbonBars.Upgrade().Setup();
+                new ClassRelated.RibbonBars.TeacherBiasRibbon().Setup();
+                //            new ClassRelated.RibbonBars.Assign().Setup();
+                new ClassRelated.RibbonBars.Report().Setup();
+                new ClassRelated.RibbonBars.ImportExport().Setup();
+
+                //教師相關 Ribbon
+                SmartSchool.TeacherRelated.RibbonBars.Manage.Instance.Setup();
+                new TeacherRelated.RibbonBars.Report().Setup();
+                new TeacherRelated.RibbonBars.ImportExport().Setup();
+
+                #region 匯出匯入學期對照表
+                rbItemExport["成績相關匯出"]["匯出學期對照表"].Enable = UserAcl.Current["SHSchool.Student.Ribbon0169"].Executable;
+                rbItemExport["成績相關匯出"]["匯出學期對照表"].Click += delegate
+                {
+                    SmartSchool.API.PlugIn.Export.Exporter exporter = new SmartSchool.StudentRelated.RibbonBars.SemesterHistory.ExportSemesterHistory();
+                    SmartSchool.StudentRelated.RibbonBars.SemesterHistory.ExportStudentV2 wizard = new SmartSchool.StudentRelated.RibbonBars.SemesterHistory.ExportStudentV2(exporter.Text, exporter.Image);
+                    exporter.InitializeExport(wizard);
+                    wizard.ShowDialog();
+                };
+
+
+                rbItemImport["成績相關匯入"]["匯入學期對照表"].Enable = UserAcl.Current["SHSchool.Student.Ribbon0170"].Executable;
+                rbItemImport["成績相關匯入"]["匯入學期對照表"].Click += delegate
+                {
+                    SmartSchool.API.PlugIn.Import.Importer importer = new SmartSchool.StudentRelated.RibbonBars.SemesterHistory.ImportSemesterHistory();
+                    SmartSchool.StudentRelated.RibbonBars.SemesterHistory.ImportStudentV2 wizard = new SmartSchool.StudentRelated.RibbonBars.SemesterHistory.ImportStudentV2(importer.Text, importer.Image);
+                    importer.InitializeImport(wizard);
+                    wizard.ShowDialog();
+                };
+
+                Catalog ribbon = RoleAclSource.Instance["學生"]["功能按鈕"];
+                ribbon.Add(new RibbonFeature("SHSchool.Student.Ribbon0169", "匯出學期對照表"));
+                ribbon.Add(new RibbonFeature("SHSchool.Student.Ribbon0170", "匯入學期對照表"));
+                ribbon.Add(new RibbonFeature("SHSchool.Student.Ribbon0171", "匯出離校資訊"));
+                // 2018.09.27 [ischoolKingdom] Vicky依據 [H成績][H學務][06] 功能沒有設定權限管理 項目，將各功能按鈕註冊時Enable設定與系統權限綁定，權限Code使用GUID。
+                ribbon.Add(new RibbonFeature("B2B63AFC-2019-4596-823A-BA044C8203F1", "匯出自訂欄位"));
+                ribbon.Add(new RibbonFeature("F1D8F0DD-AC8B-442A-88DB-75A4E4208156", "匯入自訂欄位"));
+
+                #endregion
             };
-
-
-            rbItemImport["成績相關匯入"]["匯入學期對照表"].Enable = UserAcl.Current["SHSchool.Student.Ribbon0170"].Executable;
-            rbItemImport["成績相關匯入"]["匯入學期對照表"].Click += delegate
-            {
-                SmartSchool.API.PlugIn.Import.Importer importer = new SmartSchool.StudentRelated.RibbonBars.SemesterHistory.ImportSemesterHistory();
-                SmartSchool.StudentRelated.RibbonBars.SemesterHistory.ImportStudentV2 wizard = new SmartSchool.StudentRelated.RibbonBars.SemesterHistory.ImportStudentV2(importer.Text, importer.Image);
-                importer.InitializeImport(wizard);
-                wizard.ShowDialog();
-            };
-
-            Catalog ribbon = RoleAclSource.Instance["學生"]["功能按鈕"];
-            ribbon.Add(new RibbonFeature("SHSchool.Student.Ribbon0169", "匯出學期對照表"));
-            ribbon.Add(new RibbonFeature("SHSchool.Student.Ribbon0170", "匯入學期對照表"));
-            ribbon.Add(new RibbonFeature("SHSchool.Student.Ribbon0171", "匯出離校資訊"));
-            // 2018.09.27 [ischoolKingdom] Vicky依據 [H成績][H學務][06] 功能沒有設定權限管理 項目，將各功能按鈕註冊時Enable設定與系統權限綁定，權限Code使用GUID。
-            ribbon.Add(new RibbonFeature("B2B63AFC-2019-4596-823A-BA044C8203F1", "匯出自訂欄位"));
-            ribbon.Add(new RibbonFeature("F1D8F0DD-AC8B-442A-88DB-75A4E4208156", "匯入自訂欄位"));
-            
-            #endregion
+            System.Windows.Forms.Application.Idle += idleHandler;
         }
 
         public static void Init_Core_Others()

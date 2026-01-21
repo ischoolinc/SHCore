@@ -159,14 +159,15 @@ namespace SmartSchool
         {
             get
             {
-                //if ( !_Loaded )
-                //    ReflashAll();
-                _Loading.WaitOne();
                 if (_Items == null)
                 {
-                    _Items = new CacheItemCollection(this, _List);
+                    _Loading.WaitOne();
+                    if (_Items == null)
+                    {
+                        _Items = new CacheItemCollection(this, _List);
+                    }
+                    _Loading.Set();
                 }
-                _Loading.Set();
                 return _Items;
             }
         }
@@ -175,37 +176,27 @@ namespace SmartSchool
         /// </summary>
         public void SyncAllBackground()
         {
-            //_Loaded = false;
-            ////重新取得所有資料
-            //if (!_DataLoader.IsBusy)
-            //{
-            //    _Loading.WaitOne();
-            //    _Loading.Reset();
-            //    _RemovedKeys.Clear();//清空已刪除清單
-            //    _DataLoader.RunWorkerAsync();
-            //}
-            //else
-            //{
-            //    _SyncAllBackgroundAgain = true;
-            //}
             _SyncAllBackgroundAgain = true;
             if (!_SyncAllBackgroundRunning)
             {
                 _SyncAllBackgroundRunning = true;
-                _Loading.WaitOne();
                 new Thread(new ThreadStart(delegate
                 {
-                    _RemovedKeys.Clear();//清空已刪除清單
-                    _Loaded = false;
+                    _RemovedKeys.Clear();
                     try
                     {
                         while (_SyncAllBackgroundAgain)
                         {
                             _SyncAllBackgroundAgain = false;
-                            _List.Clear();
+                            
+                            // Fetch data without lock
                             Dictionary<string, T> list = GetAllData();
-                            _SortedOrder.Clear();
+                            
+                            // Prepare new collections locally
+                            Dictionary<string, T> newList = new Dictionary<string, T>();
+                            SortedList<string, int> newSorted = new SortedList<string, int>();
                             int index = 0;
+
                             if (_CanSort)
                             {
                                 Dictionary<T, string> items = new Dictionary<T, string>();
@@ -218,28 +209,39 @@ namespace SmartSchool
                                 sorter.Sort();
                                 foreach (var item in sorter)
                                 {
-                                    _List.Add(items[item], item);
-                                    _SortedOrder.Add(items[item], index++);
+                                    newList.Add(items[item], item);
+                                    newSorted.Add(items[item], index++);
                                 }
                             }
                             else
                             {
                                 foreach (var key in list.Keys)
                                 {
-                                    _List.Add(key, list[key]);
-                                    _SortedOrder.Add(key, index++);
+                                    newList.Add(key, list[key]);
+                                    newSorted.Add(key, index++);
                                 }
                             }
+
+                            // Swap with lock
+                            _Loading.WaitOne();
+                            try 
+                            {
+                                _List = newList;
+                                _SortedOrder = newSorted;
+                                _Items = null; // Invalidates the wrapper, next access will recreate
+                                _Loaded = true;
+                            }
+                            finally
+                            {
+                                _Loading.Set();
+                            }
                         }
-                        _Loaded = true;
                         _SyncAllBackgroundRunning = false;
                         OnItemLoaded(new EventArgs());
-                        _Loading.Set();
                     }
                     catch (Exception ex)
                     {
                         _SyncAllBackgroundRunning = false;
-                        _Loading.Set();
                         ExceptionHandler.BugReporter.ReportException(ex, false);
                     }
                 })) { IsBackground = true }.Start();

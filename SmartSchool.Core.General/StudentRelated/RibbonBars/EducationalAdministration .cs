@@ -26,51 +26,51 @@ namespace SmartSchool.StudentRelated.RibbonBars
 
         internal void Setup()
         {
-            //K12.Presentation.NLDPanels.Student.RibbonBarItems["±Ð°È§@·~"].Index = 2;
-            //K12.Presentation.NLDPanels.Student.RibbonBarItems["±Ð°È§@·~"].AutoOverflowEnabled = false;
+            //K12.Presentation.NLDPanels.Student.RibbonBarItems["æ•™å‹™ä½œæ¥­"].Index = 2;
+            //K12.Presentation.NLDPanels.Student.RibbonBarItems["æ•™å‹™ä½œæ¥­"].AutoOverflowEnabled = false;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EducationalAdministration));
 
-            RibbonBarButton btnPlacing = K12.Presentation.NLDPanels.Student.RibbonBarItems["±Ð°È"]["±Æ¦W§@·~"];
+            RibbonBarButton btnPlacing = K12.Presentation.NLDPanels.Student.RibbonBarItems["æ•™å‹™"]["æŽ’åä½œæ¥­"];
             //btnPlacing.Image = ( (System.Drawing.Image)( resources.GetObject("btnPlacing.Image") ) );
             btnPlacing.Size = RibbonBarButton.MenuButtonSize.Large;
             btnPlacing.Image = Properties.Resources.refresh_window_64;
-            btnPlacing["±Æ¦W"].Click += new System.EventHandler(this.buttonItem2_Click);
+            btnPlacing["æŽ’å"].Click += new System.EventHandler(this.buttonItem2_Click);
 
-            RibbonBarButton btnInOut = K12.Presentation.NLDPanels.Student.RibbonBarItems["±Ð°È"]["·s¥Í§@·~"];
+            RibbonBarButton btnInOut = K12.Presentation.NLDPanels.Student.RibbonBarItems["æ•™å‹™"]["æ–°ç”Ÿä½œæ¥­"];
             btnInOut.Size = RibbonBarButton.MenuButtonSize.Large;
             btnInOut.Image = Properties.Resources.college_write_64;
             btnInOut.SupposeHasChildern = true;
-            //btnInOut["²£¥Í±Ð¨|µ{«×¸ê®ÆÀÉ"].Click += new System.EventHandler(this.btnEduLevel_Click);
+            //btnInOut["ç”¢ç”Ÿæ•™è‚²ç¨‹åº¦è³‡æ–™æª”"].Click += new System.EventHandler(this.btnEduLevel_Click);
 
-            RibbonBarButton btnDiploma = K12.Presentation.NLDPanels.Student.RibbonBarItems["±Ð°È"]["²¦·~§@·~"];
+            RibbonBarButton btnDiploma = K12.Presentation.NLDPanels.Student.RibbonBarItems["æ•™å‹™"]["ç•¢æ¥­ä½œæ¥­"];
             //btnDiploma.Image = ( (System.Drawing.Image)( resources.GetObject("btnDiploma.Image") ) );
             btnDiploma.Size = RibbonBarButton.MenuButtonSize.Large;
             btnDiploma.Image = Properties.Resources.graduated_write_64;
-            btnDiploma["ÃÒ®Ñ¦r¸¹"].Click += new System.EventHandler(this.buttonItem1_Click);
+            btnDiploma["è­‰æ›¸å­—è™Ÿ"].Click += new System.EventHandler(this.buttonItem1_Click);
 
-            //MenuButton btnEduLevel = K12.Presentation.NLDPanels.Student.RibbonBarItems["±Ð°È§@·~"]["²¦·~§@·~"];
-            btnDiploma["²£¥Í±Ð¨|µ{«×¸ê®ÆÀÉ"].Click += new System.EventHandler(this.btnEduLevel_Click);
+            //MenuButton btnEduLevel = K12.Presentation.NLDPanels.Student.RibbonBarItems["æ•™å‹™ä½œæ¥­"]["ç•¢æ¥­ä½œæ¥­"];
+            btnDiploma["ç”¢ç”Ÿæ•™è‚²ç¨‹åº¦è³‡æ–™æª”"].Click += new System.EventHandler(this.btnEduLevel_Click);
 
-            //Åv­­§PÂ_ - ±Æ¦W	Button0050
+            //æ¬Šé™åˆ¤æ–· - æŽ’å	Button0050
             placeCtrl = new FeatureAccessControl("Button0050");
 
-            //Åv­­§PÂ_ - ÃÒ®Ñ¦r¸¹	Button0090
+            //æ¬Šé™åˆ¤æ–· - è­‰æ›¸å­—è™Ÿ	Button0090
             diplomaCtrl = new FeatureAccessControl("Button0090");
 
-            //Åv­­§PÂ_ - ±Ð¨|µ{«×ÀÉ	Button0092
+            //æ¬Šé™åˆ¤æ–· - æ•™è‚²ç¨‹åº¦æª”	Button0092
             lvlEduCtrl = new FeatureAccessControl("Button0092");
 
-            //btnInOut["²£¥Í±Ð¨|µ{«×¸ê®ÆÀÉ"].Enable = lvlEduCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
-            btnDiploma["ÃÒ®Ñ¦r¸¹"].Enable = diplomaCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
-            btnPlacing["±Æ¦W"].Enable = placeCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
-            btnDiploma["²£¥Í±Ð¨|µ{«×¸ê®ÆÀÉ"].Enable = lvlEduCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
+            //btnInOut["ç”¢ç”Ÿæ•™è‚²ç¨‹åº¦è³‡æ–™æª”"].Enable = lvlEduCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
+            btnDiploma["è­‰æ›¸å­—è™Ÿ"].Enable = diplomaCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
+            btnPlacing["æŽ’å"].Enable = placeCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
+            btnDiploma["ç”¢ç”Ÿæ•™è‚²ç¨‹åº¦è³‡æ–™æª”"].Enable = lvlEduCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
 
             K12.Presentation.NLDPanels.Student.SelectedSourceChanged += delegate
             {
                 //btnInOut.Enable = lvlEduCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
-                btnDiploma["ÃÒ®Ñ¦r¸¹"].Enable = diplomaCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
-                btnPlacing["±Æ¦W"].Enable = placeCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
-                btnDiploma["²£¥Í±Ð¨|µ{«×¸ê®ÆÀÉ"].Enable = lvlEduCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
+                btnDiploma["è­‰æ›¸å­—è™Ÿ"].Enable = diplomaCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
+                btnPlacing["æŽ’å"].Enable = placeCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
+                btnDiploma["ç”¢ç”Ÿæ•™è‚²ç¨‹åº¦è³‡æ–™æª”"].Enable = lvlEduCtrl.Executable() && SmartSchool.StudentRelated.Student.Instance.SelectionStudents.Count > 0;
             };
         }
 
@@ -95,7 +95,7 @@ namespace SmartSchool.StudentRelated.RibbonBars
 
         public override string ProcessTabName
         {
-            get { return "¾Ç¥Í"; }
+            get { return "å­¸ç”Ÿ"; }
         }
 
         private void buttonItem1_Click(object sender, EventArgs e)

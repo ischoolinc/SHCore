@@ -3,18 +3,16 @@
   "WorkspaceRootPath": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|SmartSchool.Core||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69A603E2-3DCE-4BD0-9DD7-5C5F6D5E6602}|SmartSchool.Core.csproj|d:\\mycode\\1campus\\desktop\\modules\\shcore\\smartschool.core\\properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69A603E2-3DCE-4BD0-9DD7-5C5F6D5E6602}|SmartSchool.Core.csproj|solutionrelative:properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{69A603E2-3DCE-4BD0-9DD7-5C5F6D5E6602}|SmartSchool.Core.csproj|d:\\mycode\\1campus\\desktop\\modules\\shcore\\smartschool.core\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69A603E2-3DCE-4BD0-9DD7-5C5F6D5E6602}|SmartSchool.Core.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{69A603E2-3DCE-4BD0-9DD7-5C5F6D5E6602}|SmartSchool.Core.csproj|D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core\\properties\\resources.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
       "RelativeMoniker": "D:0:0:{69A603E2-3DCE-4BD0-9DD7-5C5F6D5E6602}|SmartSchool.Core.csproj|solutionrelative:properties\\resources.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{69A603E2-3DCE-4BD0-9DD7-5C5F6D5E6602}|SmartSchool.Core.csproj|d:\\mycode\\1campus\\desktop\\modules\\shcore\\smartschool.core\\||{B270807C-D8C6-49EB-8EBE-8E8D566637A1}|a54ad834-9219-4aa6-b589-607af21c3e26"
+      "AbsoluteMoniker": "D:0:0:{69A603E2-3DCE-4BD0-9DD7-5C5F6D5E6602}|SmartSchool.Core.csproj|D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core\\properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69A603E2-3DCE-4BD0-9DD7-5C5F6D5E6602}|SmartSchool.Core.csproj|solutionrelative:properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -24,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -36,19 +34,31 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Resources.resx",
-              "DocumentMoniker": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core\\Properties\\Resources.resx",
-              "RelativeDocumentMoniker": "Properties\\Resources.resx",
-              "ToolTip": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core\\Properties\\Resources.resx",
-              "RelativeToolTip": "Properties\\Resources.resx",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2026-01-21T07:23:08.824Z",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAA0wDgAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-27T02:22:49.687Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "Resources.resx",
+              "DocumentMoniker": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core\\Properties\\Resources.resx",
+              "RelativeDocumentMoniker": "Properties\\Resources.resx",
+              "ToolTip": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core\\Properties\\Resources.resx",
+              "RelativeToolTip": "Properties\\Resources.resx",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002870|",
+              "WhenOpened": "2026-01-21T07:23:08.824Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "AssemblyInfo.cs",
               "DocumentMoniker": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core\\Properties\\AssemblyInfo.cs",
               "RelativeDocumentMoniker": "Properties\\AssemblyInfo.cs",
@@ -56,20 +66,7 @@
               "RelativeToolTip": "Properties\\AssemblyInfo.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-21T07:23:08.829Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "SmartSchool.Core",
-              "DocumentMoniker": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core\\SmartSchool.Core.csproj",
-              "RelativeDocumentMoniker": "SmartSchool.Core.csproj",
-              "ToolTip": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core\\SmartSchool.Core.csproj",
-              "RelativeToolTip": "SmartSchool.Core.csproj",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2026-01-19T05:56:19.646Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-21T07:23:08.829Z"
             }
           ]
         }

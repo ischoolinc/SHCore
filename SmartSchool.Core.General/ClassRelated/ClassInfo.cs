@@ -24,24 +24,59 @@ namespace SmartSchool.ClassRelated
         public ClassInfo(XmlElement element)
         {
             _classID = element.GetAttribute("ID");
-            DSXmlHelper helper = new DSXmlHelper(element);
-            _className = helper.GetText("ClassName");
-            _teacherName = helper.GetText("TeacherName");
-            _nickname = helper.GetText("TeacherNickname");
-            _refTeacherID = helper.GetText("RefTeacherID");
-            _gradeYear = helper.GetText("GradeYear");
-            _department = helper.GetText("Department");
-            _NamingRule = helper.GetText("NamingRule");
-            _ClassNumber = helper.GetText("ClassNumber");
+            
+            _className = "";
+            _teacherName = "";
+            _nickname = "";
+            _refTeacherID = "";
+            _gradeYear = "";
+            _department = "";
+            _NamingRule = "";
+            _ClassNumber = "";
+            _DisplayOrder = int.MaxValue;
 
-            //_refGraduationPlanID = helper.GetText("RefGraduationPlanID");
-            //_graduationPlanName = helper.GetText("GraduationPlanName");
-            //_refScoreCalcRuleID = helper.GetText("RefScoreCalcRuleID");
-            int x = 0;
-            if (int.TryParse(helper.GetText("DisplayOrder"), out x))
-                _DisplayOrder = x;
-            else
-                _DisplayOrder = int.MaxValue;
+            //_refGraduationPlanID = element.SelectSingleNode("RefGraduationPlanID")?.InnerText ?? "";
+            //_graduationPlanName = element.SelectSingleNode("GraduationPlanName")?.InnerText ?? "";
+            //_refScoreCalcRuleID = element.SelectSingleNode("RefScoreCalcRuleID")?.InnerText ?? "";
+            
+            foreach (XmlNode node in element.ChildNodes)
+            {
+               if (node.NodeType != XmlNodeType.Element) continue;
+
+               switch (node.Name)
+               {
+                   case "ClassName":
+                       _className = node.InnerText;
+                       break;
+                   case "TeacherName":
+                       _teacherName = node.InnerText;
+                       break;
+                   case "TeacherNickname":
+                       _nickname = node.InnerText;
+                       break;
+                   case "RefTeacherID":
+                       _refTeacherID = node.InnerText;
+                       break;
+                   case "GradeYear":
+                       _gradeYear = node.InnerText;
+                       break;
+                   case "Department":
+                       _department = node.InnerText;
+                       break;
+                   case "NamingRule":
+                       _NamingRule = node.InnerText;
+                       break;
+                   case "ClassNumber":
+                       _ClassNumber = node.InnerText;
+                       break;
+                   case "DisplayOrder":
+                       int x = 0;
+                       if (int.TryParse(node.InnerText, out x))
+                           _DisplayOrder = x;
+                       break;
+               }
+            }
+
             if (_gradeYear == "")
                 _gradeYear = "未分年級";
         }

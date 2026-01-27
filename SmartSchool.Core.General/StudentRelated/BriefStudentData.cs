@@ -82,47 +82,102 @@ namespace SmartSchool.StudentRelated
 
         internal BriefStudentData(XmlElement element)
         {
-            DSXmlHelper helper = new DSXmlHelper(element);
-            _ID = helper.GetText("@ID");
-            _Status = helper.GetText("Status");
-            _SeatNo = helper.GetText("SeatNo");
-            _Name = helper.GetText("Name");
-            _StudentNumber = helper.GetText("StudentNumber");
-            _Gender = helper.GetText("Gender");
-            _IDNumber = helper.GetText("IDNumber");
-            _PermanentPhone = helper.GetText("PermanentPhone");
-            _ContactPhone = helper.GetText("ContactPhone");
-            _RefClassID = helper.GetText("RefClassID");
-            _Birthday = helper.GetText("Birthdate");
-            _OverrideDepartment = helper.GetText("OverrideDeptName");
-            _LeaveSchoolYear = helper.GetText("LeaveInfo/LeaveInfo/@SchoolYear");
-            _LeaveReason = helper.GetText("LeaveInfo/LeaveInfo/@Reason");
-            _LeaveDepartment = helper.GetText("LeaveInfo/LeaveInfo/@Department");
-            _LeaveClassName = helper.GetText("LeaveInfo/LeaveInfo/@ClassName");
-            List<TagInfo> tags = new List<TagInfo>();
-            foreach ( XmlElement tagElement in helper.GetElements("Tags/Tag") )
+            _ID = element.GetAttribute("ID");
+            
+            // Initialize fields to default
+            _Status = "";
+            _SeatNo = "";
+            _Name = "";
+            _StudentNumber = "";
+            _Gender = "";
+            _IDNumber = "";
+            _PermanentPhone = "";
+            _ContactPhone = "";
+            _RefClassID = "";
+            _Birthday = "";
+            _OverrideDepartment = "";
+            _LeaveSchoolYear = "";
+            _LeaveReason = "";
+            _LeaveDepartment = "";
+            _LeaveClassName = "";
+            _Tags = new Dictionary<int, TagInfo>();
+
+            foreach (XmlNode node in element.ChildNodes)
             {
-                string id = tagElement.GetAttribute("ID");
-                string color = tagElement.GetAttribute("Color");
-                string name = tagElement.GetAttribute("Name");
-                string prefix = tagElement.GetAttribute("Prefix");
-                int key = 0;
-                if ( int.TryParse(id, out key) )
+                if (node.NodeType != XmlNodeType.Element) continue;
+
+                switch (node.Name)
                 {
-                    TagInfo newTag = new TagInfo(key, prefix, name, color);
-                    tags.Add(newTag);
+                    case "Status":
+                        _Status = node.InnerText;
+                        break;
+                    case "SeatNo":
+                        _SeatNo = node.InnerText;
+                        break;
+                    case "Name":
+                        _Name = node.InnerText;
+                        break;
+                    case "StudentNumber":
+                        _StudentNumber = node.InnerText;
+                        break;
+                    case "Gender":
+                        _Gender = node.InnerText;
+                        break;
+                    case "IDNumber":
+                        _IDNumber = node.InnerText;
+                        break;
+                    case "PermanentPhone":
+                        _PermanentPhone = node.InnerText;
+                        break;
+                    case "ContactPhone":
+                        _ContactPhone = node.InnerText;
+                        break;
+                    case "RefClassID":
+                        _RefClassID = node.InnerText;
+                        break;
+                    case "Birthdate":
+                        _Birthday = node.InnerText;
+                        break;
+                    case "OverrideDeptName":
+                        _OverrideDepartment = node.InnerText;
+                        break;
+                    case "LeaveInfo":
+                         // LeaveInfo/LeaveInfo structure
+                         foreach(XmlNode inner in node.ChildNodes)
+                         {
+                             if (inner.Name == "LeaveInfo" && inner is XmlElement)
+                             {
+                                 XmlElement li = (XmlElement)inner;
+                                 _LeaveSchoolYear = li.GetAttribute("SchoolYear");
+                                 _LeaveReason = li.GetAttribute("Reason");
+                                 _LeaveDepartment = li.GetAttribute("Department");
+                                 _LeaveClassName = li.GetAttribute("ClassName");
+                             }
+                         }
+                        break;
+                    case "Tags":
+                        foreach ( XmlNode tagNode in node.ChildNodes )
+                        {
+                            if (tagNode.Name == "Tag" && tagNode is XmlElement)
+                            {
+                                XmlElement tagElement = (XmlElement)tagNode;
+                                string id = tagElement.GetAttribute("ID");
+                                int key = 0;
+                                if ( int.TryParse(id, out key) )
+                                {
+                                    if (!_Tags.ContainsKey(key))
+                                    {
+                                        string color = tagElement.GetAttribute("Color");
+                                        string name = tagElement.GetAttribute("Name");
+                                        string prefix = tagElement.GetAttribute("Prefix");
+                                        _Tags.Add(key, new TagInfo(key, prefix, name, color));
+                                    }
+                                }
+                            }
+                        }
+                        break;
                 }
             }
-            tags.Sort(CompareDinosByLength);
-            _Tags = new Dictionary<int, TagInfo>();
-            foreach ( TagInfo tag in tags )
-            {
-                _Tags.Add(tag.Identity, tag);
-            }
-        }
-        private static int CompareDinosByLength(TagInfo x, TagInfo y)
-        {
-            return x.FullName.CompareTo(y.FullName);
         }
 
 

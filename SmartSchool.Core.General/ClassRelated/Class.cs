@@ -166,30 +166,7 @@ namespace SmartSchool.ClassRelated
             K12.Presentation.NLDPanels.Class.AddView(new NavView.GradeYearClassView());
 
 
-            List<Customization.PlugIn.ExtendedContent.IContentItem> _items = new List<Customization.PlugIn.ExtendedContent.IContentItem>();
 
-            List<Type> _type_list = new List<Type>(new Type[]{
-                typeof(ClassBaseInfoItem),
-                typeof(ClassStudentItem),
-                //typeof(ElectronicPaperPalmerworm) //移除電子報表功能
-            });
-
-            foreach (Type type in _type_list)
-            {
-                if (!Attribute.IsDefined(type, typeof(FeatureCodeAttribute)) || CurrentUser.Acl[type].Viewable)
-                {
-                    try
-                    {
-                        IContentItem item = type.GetConstructor(Type.EmptyTypes).Invoke(null) as IContentItem;
-                        _items.Add(item);
-                    }
-                    catch (Exception ex) { BugReporter.ReportException(ex, false); }
-                }
-            }
-            foreach (Customization.PlugIn.ExtendedContent.IContentItem var in _items)
-            {
-                K12.Presentation.NLDPanels.Class.AddDetailBulider(new ContentItemBulider(var));
-            }
 
             #region 增加班級搜尋條件鈕
 
@@ -227,6 +204,34 @@ namespace SmartSchool.ClassRelated
             _Initilized = true;
             SetSource();
 
+        }
+
+        internal void SetupDetailItems()
+        {
+            List<Customization.PlugIn.ExtendedContent.IContentItem> _items = new List<Customization.PlugIn.ExtendedContent.IContentItem>();
+
+            List<Type> _type_list = new List<Type>(new Type[]{
+                typeof(ClassBaseInfoItem),
+                typeof(ClassStudentItem),
+                //typeof(ElectronicPaperPalmerworm) //移除電子報表功能
+            });
+
+            foreach (Type type in _type_list)
+            {
+                if (!Attribute.IsDefined(type, typeof(FeatureCodeAttribute)) || CurrentUser.Acl[type].Viewable)
+                {
+                    try
+                    {
+                        IContentItem item = type.GetConstructor(Type.EmptyTypes).Invoke(null) as IContentItem;
+                        _items.Add(item);
+                    }
+                    catch (Exception ex) { BugReporter.ReportException(ex, false); }
+                }
+            }
+            foreach (Customization.PlugIn.ExtendedContent.IContentItem var in _items)
+            {
+                K12.Presentation.NLDPanels.Class.AddDetailBulider(new ContentItemBulider(var));
+            }
         }
 
         void class_CompareValue(object sender, CompareValueEventArgs e)

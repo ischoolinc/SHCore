@@ -10,8 +10,20 @@ namespace SmartSchool
 {
     public static class Core_Program
     {
+        public static void LogPerf(string message)
+        {
+            try
+            {
+                System.IO.File.AppendAllText(System.IO.Path.Combine(System.Windows.Forms.Application.StartupPath, "loading_perf_hs.txt"), DateTime.Now.ToString("HH:mm:ss.fff") + " [Core] " + message + Environment.NewLine);
+            }
+            catch { }
+        }
+
         public static void Init_System()
         {
+            LogPerf("Init_System Start");
+
+
             Customization.Data.SystemInformation.SetProvider(new API.Provider.SystemProvider());
 
             #region 2012/11/26日 - DYLAN將國中(學校基本資料)搬至高中使用
@@ -149,6 +161,7 @@ namespace SmartSchool
 
             //電子報表的提供者。
             DispatcherProvider.Register("ischool", new DispatcherImp(), true);
+            LogPerf("Init_System End");
         }
     }
 }

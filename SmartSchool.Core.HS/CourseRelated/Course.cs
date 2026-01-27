@@ -269,7 +269,12 @@ namespace SmartSchool.CourseRelated
             MotherForm.AddPanel(K12.Presentation.NLDPanels.Course);
             _Initilized = true;
             this.UseFilter = true;
-            SetSource();
+            if (this.Loaded)
+            {
+                SetSource();
+                K12.Presentation.NLDPanels.Course.ShowLoading = false;
+                K12.Presentation.NLDPanels.Course.RefillListPane();
+            }
         }
         // 課程名稱、班級、授課教師
         private MenuButton SearchCourseName, SearchClassName, SearchTeacherName;
@@ -360,12 +365,18 @@ namespace SmartSchool.CourseRelated
 
         protected override Dictionary<string, CourseInformation> GetAllData()
         {
+            SmartSchool.Core_HS_Program.LogPerf("Course.GetAllData Start");
             Dictionary<string, CourseInformation> items = new Dictionary<string, CourseInformation>();
-            foreach (var item in Feature.Course.QueryCourse.GetCourseById().GetContent().GetElements("Course"))
+            SmartSchool.Core_HS_Program.LogPerf("QueryCourse Start (" + CurrentUser.Instance.SchoolYear + "/" + CurrentUser.Instance.Semester + ")");
+            DSXmlHelper helper = Feature.Course.QueryCourse.GetCourseBySemester(CurrentUser.Instance.SchoolYear, CurrentUser.Instance.Semester);
+            SmartSchool.Core_HS_Program.LogPerf("QueryCourse End. Parsing " + helper.GetElements("Course").Count() + " courses.");
+
+            foreach (XmlElement item in helper.GetElements("Course"))
             {
                 CourseInformation c = new CourseInformation(item);
                 items.Add(c.Identity.ToString(), c);
             }
+            SmartSchool.Core_HS_Program.LogPerf("Course.GetAllData End");
             return items;
         }
 

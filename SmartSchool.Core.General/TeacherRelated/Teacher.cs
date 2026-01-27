@@ -202,33 +202,7 @@ namespace SmartSchool.TeacherRelated
             K12.Presentation.NLDPanels.Teacher.AddView(new SmartSchool.Adaatper.NavigationPlannerAdatper(new TeacherDividerProvider(new CategoryDivider())));
             K12.Data.Teacher.AfterDelete += delegate { this.SyncAllBackground(); };
 
-            List<Customization.PlugIn.ExtendedContent.IContentItem> _items = new List<Customization.PlugIn.ExtendedContent.IContentItem>();
 
-            List<Type> _type_list = new List<Type>(new Type[]{
-                        typeof(BaseInfoItem),
-                        typeof(TeachStudentItem),
-                        //typeof(ElectronicPaperPalmerworm), //移除電子報表功能
-                        typeof(TeachCourseItem),
-            });
-
-            foreach (Type type in _type_list)
-            {
-                if (CurrentUser.Acl[type].Viewable)
-                {
-                    try
-                    {
-                        System.Windows.Forms.UserControl uc = type.GetConstructor(Type.EmptyTypes).Invoke(null) as System.Windows.Forms.UserControl;
-
-                        IContentItem item = type.GetConstructor(Type.EmptyTypes).Invoke(null) as IContentItem;
-                        _items.Add(item);
-                    }
-                    catch (Exception ex) { BugReporter.ReportException(ex, false); }
-                }
-            }
-            foreach (Customization.PlugIn.ExtendedContent.IContentItem var in _items)
-            {
-                K12.Presentation.NLDPanels.Teacher.AddDetailBulider(new SmartSchool.Adaatper.ContentItemBulider(var));
-            }
 
 
             #region 增加導師搜尋條件鈕
@@ -277,6 +251,38 @@ namespace SmartSchool.TeacherRelated
             MotherForm.AddPanel(K12.Presentation.NLDPanels.Teacher);
             _Initilized = true;
             SetSource();
+        }
+
+        internal void SetupDetailItems()
+        {
+            List<Customization.PlugIn.ExtendedContent.IContentItem> _items = new List<Customization.PlugIn.ExtendedContent.IContentItem>();
+
+            List<Type> _type_list = new List<Type>(new Type[]{
+                        typeof(BaseInfoItem),
+                        typeof(TeachStudentItem),
+                        //typeof(ElectronicPaperPalmerworm), //移除電子報表功能
+                        typeof(TeachCourseItem),
+            });
+
+            foreach (Type type in _type_list)
+            {
+                if (CurrentUser.Acl[type].Viewable)
+                {
+                    try
+                    {
+                        //Removed redundant instantiation
+                        //System.Windows.Forms.UserControl uc = type.GetConstructor(Type.EmptyTypes).Invoke(null) as System.Windows.Forms.UserControl;
+
+                        IContentItem item = type.GetConstructor(Type.EmptyTypes).Invoke(null) as IContentItem;
+                        _items.Add(item);
+                    }
+                    catch (Exception ex) { BugReporter.ReportException(ex, false); }
+                }
+            }
+            foreach (Customization.PlugIn.ExtendedContent.IContentItem var in _items)
+            {
+                K12.Presentation.NLDPanels.Teacher.AddDetailBulider(new SmartSchool.Adaatper.ContentItemBulider(var));
+            }
         }
 
         public event EventHandler SelectionChanged;

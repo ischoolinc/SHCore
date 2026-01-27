@@ -424,44 +424,7 @@ namespace SmartSchool.StudentRelated
             //{
             //    K12.Presentation.NLDPanels.Student.AddDetailBulider(new ContentItemBulider(var));
             //} 
-            List<Customization.PlugIn.ExtendedContent.IContentItem> _items = new List<Customization.PlugIn.ExtendedContent.IContentItem>();
 
-            List<Type> _type_list = new List<Type>(new Type[]{
-                typeof(BaseInfoPalmerwormItem),
-                typeof(ClassInfoPalmerwormItem),   
-                typeof(ParentInfoPalmerwormItem),
-                typeof(PhonePalmerwormItem),
-                typeof(AddressPalmerwormItem),
-
-                //缺曠獎懲舊功能註解(dylan 10/25)
-                //typeof(AbsencePalmerwormItem),
-                //typeof(MeritPalmerwormItem),
-                //typeof(DemeritPalmerwormItem),
-
-                typeof(TeacherBiasItem),
-                typeof(SemesterHistoryPalmerworm),
-                typeof(DiplomaInfoPalmerworm),
-                typeof(ExtensionValuesPalmerwormItem),
-                //typeof(ElectronicPaperPalmerworm), //移除電子報表功能
-                typeof(WordCommentPalmerworm),
-            });
-
-            foreach (Type type in _type_list)
-            {
-                if (!Attribute.IsDefined(type, typeof(FeatureCodeAttribute)) || CurrentUser.Acl[type].Viewable)
-                {
-                    try
-                    {
-                        IContentItem item = type.GetConstructor(Type.EmptyTypes).Invoke(null) as IContentItem;
-                        _items.Add(item);
-                    }
-                    catch (Exception ex) { BugReporter.ReportException(ex, false); }
-                }
-            }
-            foreach (Customization.PlugIn.ExtendedContent.IContentItem var in _items)
-            {
-                K12.Presentation.NLDPanels.Student.AddDetailBulider(new ContentItemBulider(var));
-            }
             #endregion
 
             #region Search Conditions
@@ -606,6 +569,48 @@ namespace SmartSchool.StudentRelated
             MotherForm.AddPanel(K12.Presentation.NLDPanels.Student);
             _Initilized = true;
             SetSource();
+        }
+
+        internal void SetupDetailItems()
+        {
+            List<Customization.PlugIn.ExtendedContent.IContentItem> _items = new List<Customization.PlugIn.ExtendedContent.IContentItem>();
+
+            List<Type> _type_list = new List<Type>(new Type[]{
+                typeof(BaseInfoPalmerwormItem),
+                typeof(ClassInfoPalmerwormItem),
+                typeof(ParentInfoPalmerwormItem),
+                typeof(PhonePalmerwormItem),
+                typeof(AddressPalmerwormItem),
+
+                //缺曠獎懲舊功能註解(dylan 10/25)
+                //typeof(AbsencePalmerwormItem),
+                //typeof(MeritPalmerwormItem),
+                //typeof(DemeritPalmerwormItem),
+
+                typeof(TeacherBiasItem),
+                typeof(SemesterHistoryPalmerworm),
+                typeof(DiplomaInfoPalmerworm),
+                typeof(ExtensionValuesPalmerwormItem),
+                //typeof(ElectronicPaperPalmerworm), //移除電子報表功能
+                typeof(WordCommentPalmerworm),
+            });
+
+            foreach (Type type in _type_list)
+            {
+                if (!Attribute.IsDefined(type, typeof(FeatureCodeAttribute)) || CurrentUser.Acl[type].Viewable)
+                {
+                    try
+                    {
+                        IContentItem item = type.GetConstructor(Type.EmptyTypes).Invoke(null) as IContentItem;
+                        _items.Add(item);
+                    }
+                    catch (Exception ex) { BugReporter.ReportException(ex, false); }
+                }
+            }
+            foreach (Customization.PlugIn.ExtendedContent.IContentItem var in _items)
+            {
+                K12.Presentation.NLDPanels.Student.AddDetailBulider(new ContentItemBulider(var));
+            }
         }
 
         void checkBack(object sender, EventArgs e)

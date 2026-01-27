@@ -27,6 +27,15 @@ namespace SmartSchool
 
         private const int _PackageLimit = 500;
 
+        public static void LogPerf(string message)
+        {
+            try
+            {
+                System.IO.File.AppendAllText("loading_perf_hs.txt", DateTime.Now.ToString("HH:mm:ss.fff") + " " + message + Environment.NewLine);
+            }
+            catch { }
+        }
+
 
         private static List<T>[] SplitPackage<T>(List<T> list)
         {
@@ -64,33 +73,38 @@ namespace SmartSchool
         }
         public static void Init_Course_Load()
         {
+            LogPerf("Init_Course_Load Start");
             CourseRelated.Course.Instance.SyncAllBackground();
+            LogPerf("Init_Course_Load End");
         }
         public static void Init_Course()
         {
+            LogPerf("Init_Course Start");
             //CourseRelated.CourseEntity.CreateInstance();
-            CourseRelated.Course.Instance.SetupPresentation();
+            //CourseRelated.Course.Instance.SetupPresentation();
+            //LogPerf("Init_Course SetupPresentation Done");
 
             //新增刪除課程
-            SmartSchool.CourseRelated.RibbonBars.Manage.Instance.Setup();
+            //SmartSchool.CourseRelated.RibbonBars.Manage.Instance.Setup();
             //教務 - 成績
-            new SmartSchool.CourseRelated.RibbonBars.ScoreInput().Setup();
+            //new SmartSchool.CourseRelated.RibbonBars.ScoreInput().Setup();
             //教務 - 學生/教師/樣版
-            new SmartSchool.CourseRelated.RibbonBars.Assign().Setup();
+            //new SmartSchool.CourseRelated.RibbonBars.Assign().Setup();
             //報表
-            new SmartSchool.CourseRelated.RibbonBars.Report().Setup();
+            //new SmartSchool.CourseRelated.RibbonBars.Report().Setup();
             //匯出匯入
-            new SmartSchool.CourseRelated.RibbonBars.ImportExport().Setup();
+            //new SmartSchool.CourseRelated.RibbonBars.ImportExport().Setup();
             //其他 - 歷程
-            new SmartSchool.CourseRelated.RibbonBars.History().Setup();
+            //new SmartSchool.CourseRelated.RibbonBars.History().Setup();
             //加入加選課按鈕至學生/指定
-            new CourseRelated.RibbonBars.OtherTab.AssignStudentAttendCourse().Setup();
-            new SmartSchool.CourseRelated.RibbonBars.OtherTab.AssignTeacherTeachCourse().Setup();
+            //new CourseRelated.RibbonBars.OtherTab.AssignStudentAttendCourse().Setup();
+            //new SmartSchool.CourseRelated.RibbonBars.OtherTab.AssignTeacherTeachCourse().Setup();
 
             //處裡修課資料取得事件
             Customization.Data.StudentHelper.FillingAttendCourse += new EventHandler<SmartSchool.Customization.Data.FillSemesterInfoEventArgs<SmartSchool.Customization.Data.StudentRecord>>(StudentHelper_FillingAttendCourse);
             Customization.Data.StudentHelper.FillingExamScore += new EventHandler<FillSemesterInfoEventArgs<StudentRecord>>(StudentHelper_FillingExamScore);
             Customization.Data.TeacherHelper.GettingLectureTeacher += new EventHandler<GettingLectureTeacherEventArgs>(TeacherHelper_GettingLectureTeacher);
+            LogPerf("Init_Course Events Done");
 
             //SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
             //SmartSchool.Customization.PlugIn.ExtendedContent.ExtendStudentContent.AddItem(new CourseRelated.DetailPaneItem.OtherEntity.CourseScorePalmerwormItem());
@@ -121,6 +135,7 @@ namespace SmartSchool
                 K12.Presentation.NLDPanels.Student.AddDetailBulider(new ContentItemBulider(var));
             }
             #endregion
+            LogPerf("Init_Course ExtendedContent Done");
 
             SmartSchool.Customization.Data.AccessHelper.SetCourseProvider(new SmartSchool.API.Provider.CourseProvider());
             SmartSchool.Customization.PlugIn.ExtendedContent.ExtendCourseContent.SetManager(SmartSchool.CourseRelated.Course.Instance);
@@ -151,10 +166,38 @@ namespace SmartSchool
             //SmartSchool.API.PlugIn.PlugInManager.Student.Exporters.Add(new ImportExport.Student.ExportExamScore());
             //SmartSchool.API.PlugIn.PlugInManager.Student.Importers.Add(new ImportExport.Student.ImportExamScore()); 
             #endregion
+
+            EventHandler idleHandler = null;
+            idleHandler = delegate
+            {
+                System.Windows.Forms.Application.Idle -= idleHandler;
+                CourseRelated.Course.Instance.SetupPresentation();
+                LogPerf("Init_Course SetupPresentation (Idle) Done");
+
+                //新增刪除課程
+                SmartSchool.CourseRelated.RibbonBars.Manage.Instance.Setup();
+                //教務 - 成績
+                new SmartSchool.CourseRelated.RibbonBars.ScoreInput().Setup();
+                //教務 - 學生/教師/樣版
+                new SmartSchool.CourseRelated.RibbonBars.Assign().Setup();
+                //報表
+                new SmartSchool.CourseRelated.RibbonBars.Report().Setup();
+                //匯出匯入
+                new SmartSchool.CourseRelated.RibbonBars.ImportExport().Setup();
+                //其他 - 歷程
+                new SmartSchool.CourseRelated.RibbonBars.History().Setup();
+                //加入加選課按鈕至學生/指定
+                new CourseRelated.RibbonBars.OtherTab.AssignStudentAttendCourse().Setup();
+                new SmartSchool.CourseRelated.RibbonBars.OtherTab.AssignTeacherTeachCourse().Setup();
+            };
+            System.Windows.Forms.Application.Idle += idleHandler;
+            LogPerf("Init_Course End");
         }
 
         public static void Init_Course_Others()
         {
+            LogPerf("Init_Course_Others Start");
+
             //SimplyConfigure scoreMappingTable = new SimplyConfigure();
             //scoreMappingTable.Caption = "評量名稱管理";
             //scoreMappingTable.Category = "成績作業";
@@ -184,6 +227,7 @@ namespace SmartSchool
                 
 
             new Others.RibbonBars.UnfinishScore().Setup();
+            LogPerf("Init_Course_Others End");
         }
 
         static void templateManager_OnShown(object sender, EventArgs e)
@@ -235,6 +279,20 @@ namespace SmartSchool
             //確保快取課程
             CourseRelated.Course.Instance.EnsureCourse(schoolYear, semester);
 
+            #region 取得修課資料
+            List<string> courseid = new List<string>();
+            bool hasCourse = false;
+            foreach (SmartSchool.CourseRelated.CourseInformation cinfo in CourseRelated.Course.Instance.Items)
+            {
+                if (cinfo.SchoolYear == schoolYear && cinfo.Semester == semester)
+                {
+                    if (!courseid.Contains("" + cinfo.Identity))
+                        courseid.Add("" + cinfo.Identity);
+                    hasCourse = true;
+                }
+            }
+            #endregion
+
             //分批次處理
             foreach (List<SmartSchool.Customization.Data.StudentRecord> studentList in SplitPackage<Customization.Data.StudentRecord>(GetList<SmartSchool.Customization.Data.StudentRecord>(students)))
             {
@@ -245,19 +303,8 @@ namespace SmartSchool
                     if (!studentMapping.ContainsKey(var.StudentID))
                         studentMapping.Add(var.StudentID, var);
                 }
-                #region 取得修課資料
-                List<string> courseid = new List<string>();
+                
                 List<string> studentid = new List<string>();
-                bool hasCourse = false;
-                foreach (SmartSchool.CourseRelated.CourseInformation cinfo in CourseRelated.Course.Instance.Items)
-                {
-                    if (cinfo.SchoolYear == schoolYear && cinfo.Semester == semester)
-                    {
-                        if (!courseid.Contains("" + cinfo.Identity))
-                            courseid.Add("" + cinfo.Identity);
-                        hasCourse = true;
-                    }
-                }
                 foreach (StudentRecord sinfo in studentList)
                 {
                     if (!studentid.Contains(sinfo.StudentID))
@@ -322,7 +369,7 @@ namespace SmartSchool
                         studentMapping[student.StudentID].ExamScoreList.Add(escore);
                     }
                 }
-                #endregion
+
             }
         }
 
@@ -338,12 +385,25 @@ namespace SmartSchool
             {
                 var.AttendCourseList.Clear();
             }
+            //確保快取課程
+            CourseRelated.Course.Instance.EnsureCourse(schoolYear, semester);
+
+            List<string> courseIDs = new List<string>();
+            bool hasCourse = false;
+            foreach (SmartSchool.CourseRelated.CourseInformation cinfo in CourseRelated.Course.Instance.Items)
+            {
+                if (cinfo.SchoolYear == schoolYear && cinfo.Semester == semester)
+                {
+                    courseIDs.Add("" + cinfo.Identity);
+                    hasCourse = true;
+                }
+            }
+
             //分批次處理
             foreach (List<SmartSchool.Customization.Data.StudentRecord> studentList in SplitPackage<Customization.Data.StudentRecord>(GetList<SmartSchool.Customization.Data.StudentRecord>(students)))
             {
                 #region 下載及填入學生修課資料
-                //確保快取課程
-                CourseRelated.Course.Instance.EnsureCourse(schoolYear, semester);
+                
                 Dictionary<string, SmartSchool.Customization.Data.StudentRecord> studentMapping = new Dictionary<string, SmartSchool.Customization.Data.StudentRecord>();
                 foreach (SmartSchool.Customization.Data.StudentRecord var in studentList)
                 {
@@ -356,14 +416,10 @@ namespace SmartSchool
                 helper.AddElement("Field");
                 helper.AddElement("Field", "All");
                 helper.AddElement("Condition");
-                bool hasCourse = false;
-                foreach (SmartSchool.CourseRelated.CourseInformation cinfo in CourseRelated.Course.Instance.Items)
+                
+                foreach (string courseID in courseIDs)
                 {
-                    if (cinfo.SchoolYear == schoolYear && cinfo.Semester == semester)
-                    {
-                        helper.AddElement("Condition", "CourseID", "" + cinfo.Identity);
-                        hasCourse = true;
-                    }
+                    helper.AddElement("Condition", "CourseID", courseID);
                 }
                 //如果該學期本來就沒有開任何課程就不用抓了
                 if (!hasCourse)

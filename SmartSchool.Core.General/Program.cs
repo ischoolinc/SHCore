@@ -24,23 +24,39 @@ namespace SmartSchool
 {
     public static class Core_General_Program
     {
+        public static void LogPerf(string message)
+        {
+            try
+            {
+                System.IO.File.AppendAllText(System.IO.Path.Combine(System.Windows.Forms.Application.StartupPath, "loading_perf_hs.txt"), DateTime.Now.ToString("HH:mm:ss.fff") + " [General] " + message + Environment.NewLine);
+            }
+            catch { }
+        }
+
         public static void Init_Student_Class_Teacher_Load()
         {
+
             //設定同步更新事件
             Student.Instance.SetupSynchronization();
             Class.Instance.SetupSynchronization();
             Teacher.Instance.SetupSynchronization();
+            //2025-01-27 Refactor: Move SyncAllBackground to Application.Idle at Init_Student_Class_Teacher
+            //Class.Instance.SyncAllBackground();
+            //Student.Instance.SyncAllBackground();
+            //Teacher.Instance.SyncAllBackground();
 
-            Class.Instance.SyncAllBackground();
-            Student.Instance.SyncAllBackground();
-            Teacher.Instance.SyncAllBackground();
+
         }
         public static void Init_Student_Class_Teacher()
         {
+            LogPerf("Init_Student_Class_Teacher Start");
             //CreateInstance 要先做
             Student.Instance.SetupPresentation();
+            LogPerf("Student.Presentation Done");
             Class.Instance.SetupPresentation();
+            LogPerf("Class.Presentation Done");
             Teacher.Instance.SetupPresentation();
+            LogPerf("Teacher.Presentation Done");
 
             //設定Customization資料介面使用的的InformationProvider
             Customization.Data.AccessHelper.SetStudentProvider(new API.Provider.StudentProvider());
@@ -54,19 +70,36 @@ namespace SmartSchool
             idleHandler = delegate
             {
                 System.Windows.Forms.Application.Idle -= idleHandler;
+                LogPerf("IdleHandler Start");
+
+                //2025-01-27 Refactor: Move SyncAllBackground to here
+                Class.Instance.SyncAllBackground();
+                Student.Instance.SyncAllBackground();
+                Teacher.Instance.SyncAllBackground();
+
+                Student.Instance.SetupDetailItems();
+                Class.Instance.SetupDetailItems();
+                Teacher.Instance.SetupDetailItems();
+
+                LogPerf("SyncAllBackground Started");
 
                 //新增刪除學生
                 SmartSchool.StudentRelated.Process.StudentIUD.StudentIDUProcess.Instance.Setup();
+                LogPerf("StudentIUD Setup Done");
                 //成績
                 new StudentRelated.RibbonBars.EducationalAdministration().Setup();
+                LogPerf("EducationalAdministration Setup Done");
                 ////類別
                 //new StudentRelated.RibbonBars.Assign().Setup();
                 //報表
                 new StudentRelated.RibbonBars.Report().Setup();
+                LogPerf("Report Setup Done");
                 //匯出匯入
                 new SmartSchool.StudentRelated.RibbonBars.Import.ImportExport().Setup();
+                LogPerf("ImportExport Setup Done");
                 //其它
                 new StudentRelated.RibbonBars.Others().Setup();
+                LogPerf("Others Setup Done");
 
                 //匯出
                 RibbonBarButton rbItemExport = K12.Presentation.NLDPanels.Student.RibbonBarItems["資料統計"]["匯出"];
@@ -183,12 +216,17 @@ namespace SmartSchool
                 ribbon.Add(new RibbonFeature("F1D8F0DD-AC8B-442A-88DB-75A4E4208156", "匯入自訂欄位"));
 
                 #endregion
+                LogPerf("IdleHandler End");
             };
             System.Windows.Forms.Application.Idle += idleHandler;
+            LogPerf("Init_Student_Class_Teacher End");
         }
 
         public static void Init_Core_Others()
         {
+            LogPerf("Init_Core_Others Start");
+
+
             var departmentSetting = MotherForm.RibbonBarItems["教務作業", "基本設定"]["管理"];
             departmentSetting.Image = Properties.Resources.network_lock_64;
             departmentSetting.Size = RibbonBarButton.MenuButtonSize.Large;
@@ -242,6 +280,7 @@ namespace SmartSchool
             Catalog detail1 = RoleAclSource.Instance["教務作業"]["功能按鈕"];
             detail1.Add(new RibbonFeature(Permissions.上課地點管理, "上課地點管理"));
             detail1.Add(new RibbonFeature(Permissions.部別管理, "部別管理"));
+            LogPerf("Init_Core_Others End");
         }
 
         static void DeptChineseToEnglish_Click(object sender, EventArgs e)

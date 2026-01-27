@@ -3,14 +3,15 @@
   "WorkspaceRootPath": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.General\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{62CD752E-3592-40C6-A5F5-B50272A5CFE9}|SmartSchool.Core.General.csproj|d:\\mycode\\1campus\\desktop\\modules\\shcore\\smartschool.core.general\\studentrelated\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62CD752E-3592-40C6-A5F5-B50272A5CFE9}|SmartSchool.Core.General.csproj|solutionrelative:studentrelated\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{62CD752E-3592-40C6-A5F5-B50272A5CFE9}|SmartSchool.Core.General.csproj|d:\\mycode\\1campus\\desktop\\modules\\shcore\\smartschool.core.general\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{62CD752E-3592-40C6-A5F5-B50272A5CFE9}|SmartSchool.Core.General.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|SmartSchool.Core.General||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{62CD752E-3592-40C6-A5F5-B50272A5CFE9}|SmartSchool.Core.General.csproj|d:\\mycode\\1campus\\desktop\\modules\\shcore\\smartschool.core.general\\||{B270807C-D8C6-49EB-8EBE-8E8D566637A1}|a54ad834-9219-4aa6-b589-607af21c3e26"
     }
   ],
   "DocumentGroupContainers": [
@@ -33,27 +34,39 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Student.cs",
+              "DocumentMoniker": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.General\\StudentRelated\\Student.cs",
+              "RelativeDocumentMoniker": "StudentRelated\\Student.cs",
+              "ToolTip": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.General\\StudentRelated\\Student.cs",
+              "RelativeToolTip": "StudentRelated\\Student.cs",
+              "ViewState": "AgIAADsCAAAAAAAAAAAowEgCAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-27T04:13:44.109Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.General\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.General\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAABQBAAAAAAAAAAAkwB8AAAA0AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-21T09:32:35.968Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "SmartSchool.Core.General",
               "DocumentMoniker": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.General\\SmartSchool.Core.General.csproj",
               "RelativeDocumentMoniker": "SmartSchool.Core.General.csproj",
               "ToolTip": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.General\\SmartSchool.Core.General.csproj",
               "RelativeToolTip": "SmartSchool.Core.General.csproj",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2026-01-21T07:29:05.233Z",
-              "EditorCaption": ""
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-01-21T07:29:05.233Z"
             }
           ]
         }

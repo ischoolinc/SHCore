@@ -217,6 +217,7 @@ namespace SmartSchool.StudentRelated
 
         public void SetupPresentation()
         {
+            K12.Presentation.NLDPanels.Student.ShowLoading = true;
             UseFilter = true;
             this.ItemUpdated += delegate(object sender, ItemUpdatedEventArgs e)
             {
@@ -227,7 +228,7 @@ namespace SmartSchool.StudentRelated
             {
                 K12.Presentation.NLDPanels.Student.ShowLoading = false;
                 SetSource();
-                //K12.Presentation.NLDPanels.Student.RefillListPane();
+                K12.Presentation.NLDPanels.Student.RefillListPane();
             };
 
             K12.Presentation.NLDPanels.Student.CompareSource += delegate(object sender, CompareEventArgs e)
@@ -252,6 +253,7 @@ namespace SmartSchool.StudentRelated
             ListPaneField statusField = new ListPaneField(colStatus);
             statusField.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
+                if (!Student.Instance.Loaded) return;
                 Image pic = null;
                 string statusD = "";
                 #region 判斷在學狀態並對應成圖片
@@ -307,6 +309,7 @@ namespace SmartSchool.StudentRelated
             ListPaneField classNameField = new ListPaneField("班級");
             classNameField.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
+                if (!Student.Instance.Loaded) return;
                 if (Student.Instance.Items[e.Key] != null)
                 {
                     e.Value = Student.Instance.Items[e.Key].ClassName;
@@ -317,6 +320,7 @@ namespace SmartSchool.StudentRelated
             ListPaneField seatNoField = new ListPaneField("座號");
             seatNoField.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
+                if (!Student.Instance.Loaded) return;
                 e.Value = Student.Instance.Items[e.Key].SeatNo;
             };
 
@@ -338,6 +342,7 @@ namespace SmartSchool.StudentRelated
             ListPaneField nameField = new ListPaneField("姓名");
             nameField.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
+                if (!Student.Instance.Loaded) return;
                 e.Value = Items[e.Key].Name;
             };
             K12.Presentation.NLDPanels.Student.AddListPaneField(nameField);
@@ -345,6 +350,7 @@ namespace SmartSchool.StudentRelated
             ListPaneField studnumberField = new ListPaneField("學號");
             studnumberField.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
+                if (!Student.Instance.Loaded) return;
                 e.Value = Student.Instance.Items[e.Key].StudentNumber;
             };
             K12.Presentation.NLDPanels.Student.AddListPaneField(studnumberField);
@@ -352,6 +358,7 @@ namespace SmartSchool.StudentRelated
             ListPaneField genderField = new ListPaneField("性別");
             genderField.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
+                if (!Student.Instance.Loaded) return;
                 e.Value = Student.Instance.Items[e.Key].Gender;
             };
             K12.Presentation.NLDPanels.Student.AddListPaneField(genderField);
@@ -359,6 +366,7 @@ namespace SmartSchool.StudentRelated
             ListPaneField birthday = new ListPaneField("身分證號");
             birthday.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
+                if (!Student.Instance.Loaded) return;
                 e.Value = Student.Instance.Items[e.Key].IDNumber;
             };
             if (FISCA.Permission.UserAcl.Current["Student.Field.身分證號"].Executable)
@@ -370,6 +378,7 @@ namespace SmartSchool.StudentRelated
             ListPaneField tel1 = new ListPaneField("戶籍電話");
             tel1.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
+                if (!Student.Instance.Loaded) return;
                 e.Value = Student.Instance.Items[e.Key].PermanentPhone;
             };
             if (FISCA.Permission.UserAcl.Current["Student.Field.戶籍電話"].Executable)
@@ -381,6 +390,7 @@ namespace SmartSchool.StudentRelated
             ListPaneField tel2 = new ListPaneField("聯絡電話");
             tel2.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
+                if (!Student.Instance.Loaded) return;
                 e.Value = Student.Instance.Items[e.Key].ContactPhone;
             };
             if (FISCA.Permission.UserAcl.Current["Student.Field.聯絡電話"].Executable)

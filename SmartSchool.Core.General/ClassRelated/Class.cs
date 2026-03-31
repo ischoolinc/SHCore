@@ -61,6 +61,7 @@ namespace SmartSchool.ClassRelated
 
         public void SetupPresentation()
         {
+            K12.Presentation.NLDPanels.Class.ShowLoading = true;
             UseFilter = false;
             this.ItemUpdated += delegate(object sender, ItemUpdatedEventArgs e)
             {
@@ -82,6 +83,7 @@ namespace SmartSchool.ClassRelated
             ListPaneField nameField = new ListPaneField("名稱");
             nameField.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
+                if (!Class.Instance.Loaded) return;
                 if (Items[e.Key] != null)
                     e.Value = Items[e.Key].ClassName;
             };
@@ -90,6 +92,7 @@ namespace SmartSchool.ClassRelated
             studentCountField.CompareValue += new EventHandler<CompareValueEventArgs>(class_CompareValue);
             studentCountField.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
+                if (!Class.Instance.Loaded) return;
                 if (Student.Instance.Loaded)
                     e.Value = Student.Instance.GetClassStudent(e.Key).Count;
                 else
@@ -108,6 +111,7 @@ namespace SmartSchool.ClassRelated
             ListPaneField classTeacherField = new ListPaneField("班導師");
             classTeacherField.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
+                if (!Class.Instance.Loaded) return;
                 if (Teacher.Instance.Loaded)
                 {
                     e.Value = Items[e.Key].TeacherUniqName;
@@ -124,6 +128,7 @@ namespace SmartSchool.ClassRelated
             ListPaneField gradeYearField = new ListPaneField("年級");
             gradeYearField.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
+                if (!Class.Instance.Loaded) return;
                 if (Items[e.Key] != null)
                     e.Value = Items[e.Key].GradeYear;
             };
@@ -132,6 +137,7 @@ namespace SmartSchool.ClassRelated
             ListPaneField deptFiled = new ListPaneField("科別");
             deptFiled.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
+                if (!Class.Instance.Loaded) return;
                 if (Items[e.Key] != null)
                     e.Value = Items[e.Key].Department;
             };
@@ -141,6 +147,7 @@ namespace SmartSchool.ClassRelated
             classIndexField.CompareValue += new EventHandler<CompareValueEventArgs>(class_CompareValue);
             classIndexField.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
+                if (!Class.Instance.Loaded) return;
                 if (Items[e.Key] != null)
                 {
                     if (Items[e.Key].DisplayOrder != 2147483647)
@@ -158,6 +165,7 @@ namespace SmartSchool.ClassRelated
             ListPaneField classNamingRuleField = new ListPaneField("班級命名規則");
             classNamingRuleField.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
+                if (!Class.Instance.Loaded) return;
                 if (Items[e.Key] != null)
                     e.Value = Items[e.Key].NamingRule;
             };

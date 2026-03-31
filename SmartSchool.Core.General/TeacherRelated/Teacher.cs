@@ -61,7 +61,7 @@ namespace SmartSchool.TeacherRelated
 
         public void SetupPresentation()
         {
-
+            K12.Presentation.NLDPanels.Teacher.ShowLoading = true;
             UseFilter = false;
             this.ItemUpdated += delegate(object sender, ItemUpdatedEventArgs e)
             {
@@ -95,6 +95,7 @@ namespace SmartSchool.TeacherRelated
             ListPaneField statusField = new ListPaneField(colStatus);
             statusField.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
+                if (!Teacher.Instance.Loaded) return;
                 Image pic = null;
                 string statusD = "";
                 #region 判斷在學狀態並對應成圖片
@@ -127,6 +128,7 @@ namespace SmartSchool.TeacherRelated
             ListPaneField nameField = new ListPaneField("姓名");
             nameField.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
+                if (!Teacher.Instance.Loaded) return;
                 if (Items.ContainsKey(e.Key))
                 {
                     e.Value = Items[e.Key].UniqName;
@@ -137,6 +139,7 @@ namespace SmartSchool.TeacherRelated
             ListPaneField genderField = new ListPaneField("性別");
             genderField.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
+                if (!Teacher.Instance.Loaded) return;
                 if (Items.ContainsKey(e.Key))
                 {
                     e.Value = Items[e.Key].Gender;
@@ -147,6 +150,7 @@ namespace SmartSchool.TeacherRelated
             ListPaneField idNumberField = new ListPaneField("身分證號");
             idNumberField.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
+                if (!Teacher.Instance.Loaded) return;
                 if (Items.ContainsKey(e.Key))
                 {
                     e.Value = Items[e.Key].IDNumber;
@@ -161,6 +165,7 @@ namespace SmartSchool.TeacherRelated
             ListPaneField superviseClassField = new ListPaneField("帶班班級");
             superviseClassField.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
+                if (!Teacher.Instance.Loaded) return;
                 if (Items.ContainsKey(e.Key))
                 {
                     if (Class.Instance.Loaded)
@@ -183,6 +188,7 @@ namespace SmartSchool.TeacherRelated
             ListPaneField telField = new ListPaneField("聯絡電話");
             telField.GetVariable += delegate(object sender, GetVariableEventArgs e)
             {
+                if (!Teacher.Instance.Loaded) return;
                 if (Items.ContainsKey(e.Key))
                 {
                     e.Value = Items[e.Key].ContactPhone;

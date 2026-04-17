@@ -5,6 +5,7 @@
 *.suo
 *.user
 *.sln.docstates
+.vs/*
 
 # Build results
 
@@ -158,3 +159,19 @@ $RECYCLE.BIN/
 /SmartSchool.Common/obj
 /SmartSchool.Core.General/obj
 /SmartSchool.Core.General/obj
+.vs/ProjectSettings.json
+SHSchoolLoader/SmartSchool.Core.General.dll
+SmartSchool.Core.HS/.vs/SmartSchool.Core.HS.slnx/FileContentIndex/9d2a2b70-cfee-482f-8a88-ff8bcb4f43df.vsidx
+SmartSchool.Core.HS/.vs/SmartSchool.Core.HS.slnx/FileContentIndex/20191cd6-11a5-4ca3-95dd-8050cf08fd23.vsidx
+SmartSchool.Core.HS/.vs/SmartSchool.Core.HS.slnx/FileContentIndex/66053d5e-16ac-4496-9796-c01500c5f857.vsidx
+SmartSchool.Core.HS/.vs/SmartSchool.Core.HS.slnx/FileContentIndex/518590b2-acc8-4f28-b239-a56cb258a707.vsidx
+SmartSchool.Core.HS/.vs/SmartSchool.Core.HS.slnx/FileContentIndex/af1b6fdc-b9f7-4cf2-8723-f30c2c9ce075.vsidx
+SHSchoolLoader/SmartSchool.Core.General.dll
+SmartSchool.Core/.vs/SmartSchool.Core/CopilotIndices/18.0.988.22099/CodeChunks.db
+SmartSchool.Core/.vs/SmartSchool.Core/FileContentIndex/364518ba-0068-42ff-93c8-808980ce72a2.vsidx
+.gitignore
+SmartSchool.Core/.vs/SmartSchool.Core/FileContentIndex/c0dbe337-8507-4add-93c0-7ab7468f494e.vsidx
+SmartSchool.Core.General/.vs/SmartSchool.Core.General/FileContentIndex/c6a79248-2d58-47f9-9715-738a25236b65.vsidx
+SmartSchool.Core.General/.vs/SmartSchool.Core.General.slnx/FileContentIndex/b287041b-bd73-4824-8c92-35492c6a4ae3.vsidx
+SmartSchool.Core.General/.vs/SmartSchool.Core.General.slnx/FileContentIndex/e62aadde-9bf7-46b3-b3e7-cef655396cd4.vsidx
+.gitignore

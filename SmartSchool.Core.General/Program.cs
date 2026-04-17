@@ -52,6 +52,62 @@ namespace SmartSchool
             LogPerf("Init_Student_Class_Teacher Start");
             //CreateInstance 要先做
             Student.Instance.SetupPresentation();
+
+            Student.Instance.ItemLoaded += delegate
+            {
+                if (Student.Instance.Loaded)
+                {
+                    // Attempt to find and select the "學生" RibbonTabItem by traversing the MotherForm controls
+                    try
+                    {
+                        System.Windows.Forms.Form mainForm = MotherForm.Form;
+                        if (mainForm != null)
+                        {
+                            foreach (System.Windows.Forms.Control ctrl in mainForm.Controls)
+                            {
+                                // We look for DevComponents.DotNetBar.RibbonControl
+                                // Using reflection to avoid strict dependency issues if possible, 
+                                // but since DotNetBar is used elsewhere, simple type checks might work.
+                                // We check by name/type to be safe.
+                                if (ctrl.GetType().FullName.Contains("RibbonControl"))
+                                {
+                                    // Iterate through the Items collection of the RibbonControl
+                                    var itemsProp = ctrl.GetType().GetProperty("Items");
+                                    if (itemsProp != null)
+                                    {
+                                        var items = itemsProp.GetValue(ctrl, null) as System.Collections.IEnumerable;
+                                        if (items != null)
+                                        {
+                                            foreach (var item in items)
+                                            {
+                                                var textProp = item.GetType().GetProperty("Text");
+                                                if (textProp != null)
+                                                {
+                                                    string text = textProp.GetValue(item, null) as string;
+                                                    if (text == "學生")
+                                                    {
+                                                        var selectMethod = item.GetType().GetMethod("Select");
+                                                        if (selectMethod != null)
+                                                        {
+                                                            selectMethod.Invoke(item, null);
+                                                        }
+                                                        break; // Found and selected
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    break; // Found RibbonControl
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                         LogPerf("Error activating Student panel: " + ex.Message);
+                    }
+                }
+            };
             LogPerf("Student.Presentation Done");
             Class.Instance.SetupPresentation();
             LogPerf("Class.Presentation Done");

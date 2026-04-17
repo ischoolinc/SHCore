@@ -208,6 +208,7 @@ namespace SmartSchool.ClassRelated
 
         internal void SetupDetailItems()
         {
+            Core_General_Program.LogPerf("Class.SetupDetailItems Start");
             List<Customization.PlugIn.ExtendedContent.IContentItem> _items = new List<Customization.PlugIn.ExtendedContent.IContentItem>();
 
             List<Type> _type_list = new List<Type>(new Type[]{

@@ -185,3 +185,14 @@ SmartSchool.Core/.gemini/commands/opsx/propose.toml
 SmartSchool.Core/.gemini/commands/opsx/explore.toml
 SmartSchool.Core/.gemini/commands/opsx/archive.toml
 SmartSchool.Core/.gemini/commands/opsx/apply.toml
+SmartSchool.Core.General/.augment/commands/opsx-apply.md
+SmartSchool.Core.General/.augment/commands/opsx-archive.md
+SmartSchool.Core.General/.augment/commands/opsx-propose.md
+SmartSchool.Core.General/.augment/commands/opsx-explore.md
+SmartSchool.Core.General/.augment/skills/openspec-apply-change/SKILL.md
+SmartSchool.Core.General/.augment/skills/openspec-archive-change/SKILL.md
+SmartSchool.Core.General/.augment/skills/openspec-explore/SKILL.md
+SmartSchool.Core.General/.augment/skills/openspec-propose/SKILL.md
+SHSchoolLoader/SmartSchool.Core.General.dll
+SmartSchool.Core/.vs/SmartSchool.Core/v18/DocumentLayout.backup.json
+SmartSchool.Core/.vs/SmartSchool.Core/v18/DocumentLayout.json

@@ -134,8 +134,11 @@ namespace SmartSchool
                 Teacher.Instance.SyncAllBackground();
 
                 Student.Instance.SetupDetailItems();
+                LogPerf("Student.SetupDetailItems Done");
                 Class.Instance.SetupDetailItems();
+                LogPerf("Class.SetupDetailItems Done");
                 Teacher.Instance.SetupDetailItems();
+                LogPerf("Teacher.SetupDetailItems Done");
 
                 LogPerf("SyncAllBackground Started");
 

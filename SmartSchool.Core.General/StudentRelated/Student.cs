@@ -573,6 +573,7 @@ namespace SmartSchool.StudentRelated
 
         internal void SetupDetailItems()
         {
+            Core_General_Program.LogPerf("Student.SetupDetailItems Start");
             List<Customization.PlugIn.ExtendedContent.IContentItem> _items = new List<Customization.PlugIn.ExtendedContent.IContentItem>();
 
             List<Type> _type_list = new List<Type>(new Type[]{
@@ -1076,3 +1077,4 @@ namespace SmartSchool.StudentRelated
         #endregion
     }
 }
+

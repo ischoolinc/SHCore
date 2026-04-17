@@ -61,7 +61,7 @@ namespace SmartSchool.TeacherRelated
 
         public void SetupPresentation()
         {
-
+            Core_General_Program.LogPerf("Teacher.SetupPresentation Start");
             UseFilter = false;
             this.ItemUpdated += delegate(object sender, ItemUpdatedEventArgs e)
             {
@@ -628,3 +628,4 @@ namespace SmartSchool.TeacherRelated
         }
     }
 }
+

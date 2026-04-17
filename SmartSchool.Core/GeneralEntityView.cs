@@ -146,6 +146,7 @@ namespace SmartSchool
             };
             PreferenceUpdater.Instance.Items.Add(this);
             _ContexMenuManager = new ButtonAdapterPlugInManager(itemContainer1);
+            _ContexMenuManager.IsLoaded = false;
             _ContexMenuManager.TemplateButton = buttonItem4;
             _FiltratedList.ItemsChanged += delegate { _Reflash = true; };
             Planners.ItemAdded += delegate(object sender, ItemEventArgs<NavigationPlanner> e){e.Item.SelectedSource.ItemsChanged += new EventHandler(PlannerSourceChanged); };
@@ -563,6 +564,7 @@ namespace SmartSchool
 
         public virtual void Actived()
         {
+            _ContexMenuManager.Load();
             this.btnTempory.Text = "待處理" + this.Title + "(" + TemporaSource.Count + ")";
             #region 讀取設定檔
             XmlElement PreferenceData = Preference;

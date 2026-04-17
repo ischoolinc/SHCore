@@ -12,6 +12,8 @@ namespace SmartSchool
         private BaseItem _Target;
 
         private List<ButtonItem> _Items = new List<ButtonItem>();
+        private List<ButtonItem> _deferredItems = new List<ButtonItem>();
+        private bool _isLoaded = true; // Default true for backward compatibility
 
         private LayoutMode _LayoutMode = LayoutMode.None;
 
@@ -22,10 +24,40 @@ namespace SmartSchool
 
         public LayoutMode LayoutMode { get { return _LayoutMode; } set { _LayoutMode = value; } }
 
+        public bool IsLoaded 
+        { 
+            get { return _isLoaded; } 
+            set { _isLoaded = value; }
+        }
+
+        public void Load()
+        {
+            if (_isLoaded) return;
+            _isLoaded = true;
+
+            foreach (var item in _deferredItems)
+            {
+                InternalAdd(item);
+            }
+            _deferredItems.Clear();
+        }
+
         public event EventHandler ItemsChanged;
         #region IManager<ButtonItem> 成員
 
         public void Add(ButtonItem instance)
+        {
+            if (!_isLoaded)
+            {
+                _deferredItems.Add(instance);
+            }
+            else
+            {
+                InternalAdd(instance);
+            }
+        }
+
+        private void InternalAdd(ButtonItem instance)
         {
             instance.GlobalItem = false;
             _Items.Add(instance);

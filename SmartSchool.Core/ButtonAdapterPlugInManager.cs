@@ -14,6 +14,26 @@ namespace SmartSchool
         private BaseItem _Target;
 
         private Dictionary<ButtonItem, ButtonAdapter> _Adapters = new Dictionary<ButtonItem, ButtonAdapter>();
+        private List<ButtonAdapter> _deferredAdapters = new List<ButtonAdapter>();
+        private bool _isLoaded = true; // Default true for backward compatibility
+
+        public bool IsLoaded 
+        { 
+            get { return _isLoaded; } 
+            set { _isLoaded = value; }
+        }
+
+        public void Load()
+        {
+            if (_isLoaded) return;
+            _isLoaded = true;
+
+            foreach (var button in _deferredAdapters)
+            {
+                InternalAdd(button);
+            }
+            _deferredAdapters.Clear();
+        }
 
         private void newButton_Click(object sender, EventArgs e)
         {
@@ -88,6 +108,18 @@ namespace SmartSchool
         #region IManager<ButtonAdapter> 成員
 
         public void Add(SmartSchool.Customization.PlugIn.ButtonAdapter button)
+        {
+            if (!_isLoaded)
+            {
+                _deferredAdapters.Add(button);
+            }
+            else
+            {
+                InternalAdd(button);
+            }
+        }
+
+        private void InternalAdd(SmartSchool.Customization.PlugIn.ButtonAdapter button)
         {
             DevComponents.DotNetBar.ButtonItem newButton;
             if ( _TemplateButton == null )

@@ -166,6 +166,7 @@ namespace SmartSchool
 
         private void MotherForm_Load(object sender, EventArgs e)
         {
+            PerformanceTracker.Start("MotherForm_Load");
             //避免顯示錯誤情形
             navigationPane1.RecalcLayout();
             navigationPane1.NavigationBarHeight = 240;
@@ -265,6 +266,8 @@ namespace SmartSchool
 
             //登入時，跳出最新消息
             new NewsNotice();
+            PerformanceTracker.Stop("MotherForm_Load");
+            PerformanceTracker.OutputSummary();
         }
 
         //重新登入（重新啟動系統）
@@ -812,6 +815,7 @@ namespace SmartSchool
         //寫入Preference資料
         public void UpdatePreference()
         {
+            PerformanceTracker.Start("UpdatePreference");
             #region 取得PreferenceElement
             XmlElement PreferenceElement = CurrentUser.Instance.Preference["MotherForm"];
             if (PreferenceElement == null)
@@ -848,6 +852,7 @@ namespace SmartSchool
                 }
             }
             CurrentUser.Instance.Preference["MotherForm"] = PreferenceElement;
+            PerformanceTracker.Stop("UpdatePreference");
         }
 
         #endregion

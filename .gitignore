@@ -6,6 +6,8 @@
 *.user
 *.sln.docstates
 .vs/*
+**/.vs/*
+**/.gemini/*
 
 # Build results
 
@@ -175,3 +177,11 @@ SmartSchool.Core.General/.vs/SmartSchool.Core.General/FileContentIndex/c6a79248-
 SmartSchool.Core.General/.vs/SmartSchool.Core.General.slnx/FileContentIndex/b287041b-bd73-4824-8c92-35492c6a4ae3.vsidx
 SmartSchool.Core.General/.vs/SmartSchool.Core.General.slnx/FileContentIndex/e62aadde-9bf7-46b3-b3e7-cef655396cd4.vsidx
 .gitignore
+SmartSchool.Core/.gemini/skills/openspec-propose/SKILL.md
+SmartSchool.Core/.gemini/skills/openspec-explore/SKILL.md
+SmartSchool.Core/.gemini/skills/openspec-archive-change/SKILL.md
+SmartSchool.Core/.gemini/skills/openspec-apply-change/SKILL.md
+SmartSchool.Core/.gemini/commands/opsx/propose.toml
+SmartSchool.Core/.gemini/commands/opsx/explore.toml
+SmartSchool.Core/.gemini/commands/opsx/archive.toml
+SmartSchool.Core/.gemini/commands/opsx/apply.toml

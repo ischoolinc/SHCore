@@ -217,9 +217,10 @@ namespace SmartSchool
             this.Close();
         }
 
-        private void SchoolInfoMangement_Load(object sender, EventArgs e)
+        private async void SchoolInfoMangement_Load(object sender, EventArgs e)
         {
-            SchoolInfoEnt = getSchoolInfoData();
+            this.Cursor = System.Windows.Forms.Cursors.WaitCursor;
+            SchoolInfoEnt = await System.Threading.Tasks.Task.Run(() => getSchoolInfoData());
 
             txtChancellorChsName.Text = SchoolInfoEnt.ChancellorChsName;
             txtChancellorEngName.Text = SchoolInfoEnt.ChancellorEngName;
@@ -257,6 +258,8 @@ namespace SmartSchool
 
             if(!string.IsNullOrEmpty(SchoolInfoEnt.Semester))
                 intSemester.Text = SchoolInfoEnt.Semester;
+
+            this.Cursor = System.Windows.Forms.Cursors.Default;
         }
     }
     public class SchoolInfoEntity

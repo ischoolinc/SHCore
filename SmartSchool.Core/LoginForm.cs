@@ -66,7 +66,7 @@ namespace SmartSchool
 
         private void SetCaption(string msg)
         {
-            Text = string.Format("¨Ï¥ÎªÌµn¤J ({0})", msg);
+            Text = string.Format("ï¿½Ï¥ÎªÌµnï¿½J ({0})", msg);
         }
 
         private void LoginForm_Load(object sender, EventArgs e)
@@ -93,7 +93,7 @@ namespace SmartSchool
             }
             else
             {
-                SetCaption("¥¼¦w¸Ë±ÂÅvÀÉ");
+                SetCaption("ï¿½ï¿½ï¿½wï¿½Ë±ï¿½ï¿½vï¿½ï¿½");
                 txtPassword.Enabled = false;
                 cboAccount.Enabled = false;
                 btnLogin.Enabled = false;
@@ -142,22 +142,38 @@ namespace SmartSchool
             }
         }
 
-        private void Login()
+        private async void Login()
         {
-            _user_name = cboAccount.Text; //¥~­±»Ý­nªº¸ê°T¡C
 
             if (cboAccount.Text.Length > 0 && txtPassword.Text.Length > 0)
             {
                 this.Cursor = System.Windows.Forms.Cursors.WaitCursor;
-                if ( CurrentUser.Instance.SetConnection(_license) )
-                    //CurrentUser.Instance.CheckUserPassword(cboAccount.Text, txtPassword.Text);
-                    DSAServices.Login(cboAccount.Text, txtPassword.Text);
+                string originalText = btnLogin.Text;
+                btnLogin.Text = "ç™»å…¥ä¸­...";
+                cboAccount.Enabled = false;
+                txtPassword.Enabled = false;
+                btnLogin.Enabled = false;
+
+                string account = cboAccount.Text;
+                string pwd = txtPassword.Text;
+
+                await System.Threading.Tasks.Task.Run(() =>
+                {
+                    if ( CurrentUser.Instance.SetConnection(_license) )
+                        //CurrentUser.Instance.CheckUserPassword(cboAccount.Text, txtPassword.Text);
+                        DSAServices.Login(account, pwd);
+                });
 
                 this.Cursor = System.Windows.Forms.Cursors.Default;
+                cboAccount.Enabled = true;
+                txtPassword.Enabled = true;
+                btnLogin.Enabled = true;
+                btnLogin.Text = originalText;
+
                 if (CurrentUser.Instance.IsLogined)
                 {
                     if (checkBoxX1.Checked)
-                        _dsnsForm.AddHistoryLoginName(cboAccount.Text);
+                        _dsnsForm.AddHistoryLoginName(account);
                     if (LoginSucceed != null)
                     {
                         this.Hide();
@@ -171,7 +187,7 @@ namespace SmartSchool
             }
             else
             {
-                Framework.MsgBox.Show("½Ð¿é¤J±b¸¹±K½X");
+                Framework.MsgBox.Show("Ð¿JbKX");
             }
         }
 
@@ -218,7 +234,7 @@ namespace SmartSchool
             {
                 _license = license;
                 license.DecryptLicense();
-                SetCaption(string.Format("¤w±ÂÅvµn¤J {0}", license.AccessPoint));
+                SetCaption(string.Format("ï¿½wï¿½ï¿½ï¿½vï¿½nï¿½J {0}", license.AccessPoint));
 
                 txtPassword.Enabled = true;
                 cboAccount.Enabled = true;

@@ -64,7 +64,15 @@ namespace SmartSchool.StudentRelated.Palmerworm
             {
                 string code = element.GetAttribute("Code");
                 string comment = element.GetAttribute("Comment");
-                info.CommonList.Add(code, comment);
+                if (!info.CommonList.ContainsKey(code))
+                {
+                    info.CommonList.Add(code, comment);
+                }
+                else
+                {
+                    //代碼重複時略過 
+                    MsgBox.Show("代碼表資料重複 :  \n代碼「{0}」\n內容「{1}」");
+                }
             }
             return info;
         }
@@ -163,16 +171,24 @@ namespace SmartSchool.StudentRelated.Palmerworm
 
                 foreach (XmlNode node in element.SelectNodes("OtherDiffList/OtherDiff"))
                 {
-                    string name = node.SelectSingleNode("@Name").InnerText;
-                    foreach (DataGridViewColumn column in dataGridViewX1.Columns)
+                    if (node.SelectSingleNode("@Name") != null)
                     {
-                        if (column.HeaderText != name) continue;
-                        c = row.Cells[column.Name];
-                        c.Value = node.InnerText;
-                        c.Tag = node.InnerText;
-                        key = VALUE_KEY.Replace("SchoolYear", schoolYear).Replace("Semester", semester).Replace("ColumnText", column.HeaderText);
-                        _valueManager.AddValue(key, c.Value.ToString());
-                        c.ReadOnly = false;
+                        string name = node.SelectSingleNode("@Name").InnerText;
+                        foreach (DataGridViewColumn column in dataGridViewX1.Columns)
+                        {
+                            if (column.HeaderText != name) continue;
+                            c = row.Cells[column.Name];
+                            c.Value = node.InnerText;
+                            c.Tag = node.InnerText;
+                            key = VALUE_KEY.Replace("SchoolYear", schoolYear).Replace("Semester", semester).Replace("ColumnText", column.HeaderText);
+                            _valueManager.AddValue(key, c.Value.ToString());
+                            c.ReadOnly = false;
+                        }
+                    }
+                    else
+                    {
+                        //沒有Name欄位時略過
+                        FISCA.Presentation.MotherForm.SetStatusBarMessage("屬性 OtherDiff 缺少 Name 名稱");
                     }
                 }
             }
@@ -521,10 +537,10 @@ namespace SmartSchool.StudentRelated.Palmerworm
 
     public interface IValidator
     {
-        object Argument { set;}
-        DataGridViewCell ValidCell { set;}
+        object Argument { set; }
+        DataGridViewCell ValidCell { set; }
         bool IsValid();
-        string Message { get;}
+        string Message { get; }
     }
 
     public abstract class AbstractValidator : IValidator
@@ -673,8 +689,8 @@ namespace SmartSchool.StudentRelated.Palmerworm
         {
             Dictionary<string, string> list = (Dictionary<string, string>)Argument;
             if (ValidCell.Value == null) return true;
-            if ( ValidCell.Value.ToString() == string.Empty ) return true;
-            if ( list == null) return true;
+            if (ValidCell.Value.ToString() == string.Empty) return true;
+            if (list == null) return true;
 
             StringBuilder sb = new StringBuilder();
             string[] vs = ValidCell.Value.ToString().Split(',');
@@ -704,10 +720,10 @@ namespace SmartSchool.StudentRelated.Palmerworm
 
     public interface IColumnValidator
     {
-        DataGridViewColumn ValidColumn { set;}
-        object Argument { set;}
+        DataGridViewColumn ValidColumn { set; }
+        object Argument { set; }
         bool IsValid();
-        string Message { get;}
+        string Message { get; }
     }
 
     public abstract class AbstractColumnValidator : IColumnValidator

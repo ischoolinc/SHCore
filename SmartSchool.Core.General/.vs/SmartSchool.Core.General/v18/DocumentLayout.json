@@ -3,11 +3,15 @@
   "WorkspaceRootPath": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.General\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{62CD752E-3592-40C6-A5F5-B50272A5CFE9}|SmartSchool.Core.General.csproj|d:\\mycode\\1campus\\desktop\\modules\\shcore\\smartschool.core.general\\classrelated\\class.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62CD752E-3592-40C6-A5F5-B50272A5CFE9}|SmartSchool.Core.General.csproj|solutionrelative:classrelated\\class.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{62CD752E-3592-40C6-A5F5-B50272A5CFE9}|SmartSchool.Core.General.csproj|d:\\mycode\\1campus\\desktop\\modules\\shcore\\smartschool.core.general\\studentrelated\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{62CD752E-3592-40C6-A5F5-B50272A5CFE9}|SmartSchool.Core.General.csproj|solutionrelative:studentrelated\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{62CD752E-3592-40C6-A5F5-B50272A5CFE9}|SmartSchool.Core.General.csproj|d:\\mycode\\1campus\\desktop\\modules\\shcore\\smartschool.core.general\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{62CD752E-3592-40C6-A5F5-B50272A5CFE9}|SmartSchool.Core.General.csproj|D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.General\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{62CD752E-3592-40C6-A5F5-B50272A5CFE9}|SmartSchool.Core.General.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -34,19 +38,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Class.cs",
+              "DocumentMoniker": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.General\\ClassRelated\\Class.cs",
+              "RelativeDocumentMoniker": "ClassRelated\\Class.cs",
+              "ToolTip": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.General\\ClassRelated\\Class.cs",
+              "RelativeToolTip": "ClassRelated\\Class.cs",
+              "ViewState": "AgIAAKACAAAAAAAAAAAywL4CAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-17T02:10:19.091Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Student.cs",
               "DocumentMoniker": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.General\\StudentRelated\\Student.cs",
               "RelativeDocumentMoniker": "StudentRelated\\Student.cs",
               "ToolTip": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.General\\StudentRelated\\Student.cs",
               "RelativeToolTip": "StudentRelated\\Student.cs",
-              "ViewState": "AgIAADsCAAAAAAAAAAAowEgCAAAoAAAAAAAAAA==",
+              "ViewState": "AgIAADUCAAAAAAAAAAA4wEgCAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-27T04:13:44.109Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.General\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -54,12 +71,11 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-21T09:32:35.968Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-21T09:32:35.968Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "SmartSchool.Core.General",
               "DocumentMoniker": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.General\\SmartSchool.Core.General.csproj",
               "RelativeDocumentMoniker": "SmartSchool.Core.General.csproj",

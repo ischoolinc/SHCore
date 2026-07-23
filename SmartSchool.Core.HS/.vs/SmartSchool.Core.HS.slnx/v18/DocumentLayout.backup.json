@@ -3,16 +3,11 @@
   "WorkspaceRootPath": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.HS\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.HS\\SmartSchool.Core.HS.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SmartSchool.Core.HS.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+      "AbsoluteMoniker": "D:0:0:{1E4E0D69-E037-4ED0-ACB9-CF85945FC4A1}|SmartSchool.Core.HS.csproj|d:\\mycode\\1campus\\desktop\\modules\\shcore\\smartschool.core.hs\\properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1E4E0D69-E037-4ED0-ACB9-CF85945FC4A1}|SmartSchool.Core.HS.csproj|solutionrelative:properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.HS\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.HS\\QueryData.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:QueryData.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|SmartSchool.Core.HS||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -35,41 +30,26 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "SmartSchool.Core.HS.csproj",
-              "DocumentMoniker": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.HS\\SmartSchool.Core.HS.csproj",
-              "RelativeDocumentMoniker": "SmartSchool.Core.HS.csproj",
-              "ToolTip": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.HS\\SmartSchool.Core.HS.csproj",
-              "RelativeToolTip": "SmartSchool.Core.HS.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-01-27T01:07:09.661Z",
+              "Title": "AssemblyInfo.cs",
+              "DocumentMoniker": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.HS\\Properties\\AssemblyInfo.cs",
+              "RelativeDocumentMoniker": "Properties\\AssemblyInfo.cs",
+              "ToolTip": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.HS\\Properties\\AssemblyInfo.cs",
+              "RelativeToolTip": "Properties\\AssemblyInfo.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAACEAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-23T01:59:52.058Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.HS\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.HS\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAJUBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-27T01:01:59.922Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "QueryData.cs",
-              "DocumentMoniker": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.HS\\QueryData.cs",
-              "RelativeDocumentMoniker": "QueryData.cs",
-              "ToolTip": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.HS\\QueryData.cs",
-              "RelativeToolTip": "QueryData.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-27T01:01:52.197Z",
-              "EditorCaption": ""
+              "Title": "SmartSchool.Core.HS",
+              "DocumentMoniker": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.HS\\SmartSchool.Core.HS.csproj",
+              "RelativeDocumentMoniker": "SmartSchool.Core.HS.csproj",
+              "ToolTip": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core.HS\\SmartSchool.Core.HS.csproj",
+              "RelativeToolTip": "SmartSchool.Core.HS.csproj",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIqSURBVDhPjZLdThNBGIafmWW32/9SCgWEghrREI9NiLegiScSfy9Bo\u002BdeBDdgDJFEEhXwHvhTG9BA0B4Y2tQWjDXZikJ3p93xQChlTYjv4bzP93yTzIgwCCtuT5qm8RD0AP\u002BXqlL\u002BVP3nwUuRiNu3LVNOgzCD1OnRnmr6d414zHoKIhespZT09w8QCoVoNA6CNSAMQ4ozRiRsPQFSnVV3Os34\u002BGUGBgexLIt4PI7nuXie14kBtEQmHS0BOYBIJMLZc\u002Bfp7e1FCIn2fRzHQWuN1pp63WF3dwfXdQ/n9XZbIKXk2vUb3Jy8RTqdPuxBKdVep5TH3NwrZl/MoLUG9LYRCVuPgaQQgp5MD6VSkVxuhImJq4yMjpLLjTA0NEwsFuX3rz0W5l9TqXw9cjonBMPDOZrNJh8/rLO2lieTyRCNRqlWytQdhzcL8xQKn6nVvrcFsn2/QKrVCjPPpyluf8F1XcrlMqurK0GMfwRSSpLJFH19WWzbRmuN7/ssLS3i\u002B34QPymw7TDZbD\u002BJRAIpj6tSqcj\u002B/j5jFy\u002BRSCY7R44Fvu\u002BTf/\u002BOarVyYpNSinw\u002BT6vVYmenytbW5uEL/I0RCVuPjj6S6zYolYr8qNVIpbqJxWJorVlfX2NleZHNjQ1ct9EeBhyRSUfegrjSeQpgGF1cGBtDCkmh8IlWqxVEAL0sknH7nmnKZyC6gvXp0Uop/74IhZC2Zd8xTfkARBYQQTQQDfqbp/wptdeY/QPpJ9zBN7\u002BtJwAAAABJRU5ErkJggg==",
+              "WhenOpened": "2026-07-23T01:59:42.069Z"
             }
           ]
         }

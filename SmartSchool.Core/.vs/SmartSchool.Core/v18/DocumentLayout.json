@@ -3,22 +3,19 @@
   "WorkspaceRootPath": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{69A603E2-3DCE-4BD0-9DD7-5C5F6D5E6602}|SmartSchool.Core.csproj|D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core\\properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{69A603E2-3DCE-4BD0-9DD7-5C5F6D5E6602}|SmartSchool.Core.csproj|d:\\mycode\\1campus\\desktop\\modules\\shcore\\smartschool.core\\properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{69A603E2-3DCE-4BD0-9DD7-5C5F6D5E6602}|SmartSchool.Core.csproj|solutionrelative:properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|SmartSchool.Core||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{69A603E2-3DCE-4BD0-9DD7-5C5F6D5E6602}|SmartSchool.Core.csproj|d:\\mycode\\1campus\\desktop\\modules\\shcore\\smartschool.core\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{69A603E2-3DCE-4BD0-9DD7-5C5F6D5E6602}|SmartSchool.Core.csproj|D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{69A603E2-3DCE-4BD0-9DD7-5C5F6D5E6602}|SmartSchool.Core.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{69A603E2-3DCE-4BD0-9DD7-5C5F6D5E6602}|SmartSchool.Core.csproj|D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core\\properties\\resources.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
       "RelativeMoniker": "D:0:0:{69A603E2-3DCE-4BD0-9DD7-5C5F6D5E6602}|SmartSchool.Core.csproj|solutionrelative:properties\\resources.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69A603E2-3DCE-4BD0-9DD7-5C5F6D5E6602}|SmartSchool.Core.csproj|d:\\mycode\\1campus\\desktop\\modules\\shcore\\smartschool.core\\||{B270807C-D8C6-49EB-8EBE-8E8D566637A1}|a54ad834-9219-4aa6-b589-607af21c3e26"
     }
   ],
   "DocumentGroupContainers": [
@@ -47,8 +44,7 @@
               "ToolTip": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core\\SmartSchool.Core.csproj",
               "RelativeToolTip": "SmartSchool.Core.csproj",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2026-07-23T01:41:59.003Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-23T01:41:59.003Z"
             },
             {
               "$type": "Document",
@@ -60,8 +56,7 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAEAAAAAAAAAAAAA2wGcAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-27T02:22:49.687Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-27T02:22:49.687Z"
             },
             {
               "$type": "Document",
@@ -72,8 +67,7 @@
               "ToolTip": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core\\Properties\\Resources.resx",
               "RelativeToolTip": "Properties\\Resources.resx",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2026-01-21T07:23:08.824Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-21T07:23:08.824Z"
             },
             {
               "$type": "Document",
@@ -83,7 +77,7 @@
               "RelativeDocumentMoniker": "Properties\\AssemblyInfo.cs",
               "ToolTip": "D:\\myCode\\1Campus\\Desktop\\Modules\\SHCore\\SmartSchool.Core\\Properties\\AssemblyInfo.cs",
               "RelativeToolTip": "Properties\\AssemblyInfo.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAACMAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABEAAAAAAAAAAAAAACEAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-21T07:23:08.829Z",
               "EditorCaption": ""

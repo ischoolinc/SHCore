@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -365,18 +365,14 @@ namespace SmartSchool.CourseRelated
 
         protected override Dictionary<string, CourseInformation> GetAllData()
         {
-            SmartSchool.Core_HS_Program.LogPerf("Course.GetAllData Start");
             Dictionary<string, CourseInformation> items = new Dictionary<string, CourseInformation>();
-            SmartSchool.Core_HS_Program.LogPerf("QueryCourse Start (" + CurrentUser.Instance.SchoolYear + "/" + CurrentUser.Instance.Semester + ")");
             DSXmlHelper helper = Feature.Course.QueryCourse.GetCourseBySemester(CurrentUser.Instance.SchoolYear, CurrentUser.Instance.Semester);
-            SmartSchool.Core_HS_Program.LogPerf("QueryCourse End. Parsing " + helper.GetElements("Course").Count() + " courses.");
 
             foreach (XmlElement item in helper.GetElements("Course"))
             {
                 CourseInformation c = new CourseInformation(item);
                 items.Add(c.Identity.ToString(), c);
             }
-            SmartSchool.Core_HS_Program.LogPerf("Course.GetAllData End");
             return items;
         }
 

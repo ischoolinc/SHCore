@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
@@ -61,7 +61,6 @@ namespace SmartSchool.TeacherRelated
 
         public void SetupPresentation()
         {
-            Core_General_Program.LogPerf("Teacher.SetupPresentation Start");
             UseFilter = false;
             this.ItemUpdated += delegate(object sender, ItemUpdatedEventArgs e)
             {

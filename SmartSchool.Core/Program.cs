@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Xml;
 using System.Collections.Concurrent;
 using System.Diagnostics;
@@ -11,67 +11,12 @@ using SmartSchool.ePaper;
 
 namespace SmartSchool
 {
-    public static class PerformanceTracker
-    {
-        private static ConcurrentDictionary<string, Stopwatch> _trackers = new ConcurrentDictionary<string, Stopwatch>();
-        private static ConcurrentBag<PerfRecord> _records = new ConcurrentBag<PerfRecord>();
-
-        public class PerfRecord
-        {
-            public string Name { get; set; }
-            public long ElapsedMilliseconds { get; set; }
-        }
-
-        public static void Start(string name)
-        {
-            var sw = new Stopwatch();
-            _trackers[name] = sw;
-            Core_Program.LogPerf($"[START] {name}");
-            sw.Start();
-        }
-
-        public static void Stop(string name)
-        {
-            if (_trackers.TryGetValue(name, out var sw))
-            {
-                sw.Stop();
-                Core_Program.LogPerf($"[END] {name} - {sw.ElapsedMilliseconds}ms");
-                _records.Add(new PerfRecord { Name = name, ElapsedMilliseconds = sw.ElapsedMilliseconds });
-            }
-        }
-
-        public static void OutputSummary()
-        {
-            Core_Program.LogPerf("--- Performance Summary ---");
-            var topSlowest = _records.OrderByDescending(r => r.ElapsedMilliseconds).Take(3);
-            foreach (var record in topSlowest)
-            {
-                Core_Program.LogPerf($"SLOWEST: {record.Name} - {record.ElapsedMilliseconds}ms");
-            }
-            Core_Program.LogPerf("---------------------------");
-        }
-    }
-
     public static class Core_Program
     {
-        public static void LogPerf(string message)
-        {
-            try
-            {
-                System.IO.File.AppendAllText(System.IO.Path.Combine(System.Windows.Forms.Application.StartupPath, "loading_perf_hs.txt"), DateTime.Now.ToString("HH:mm:ss.fff") + " [Core] " + message + Environment.NewLine);
-            }
-            catch { }
-        }
-
         public static void Init_System()
         {
-            PerformanceTracker.Start("Init_System");
 
-            PerformanceTracker.Start("Init_System_SetProvider");
             Customization.Data.SystemInformation.SetProvider(new API.Provider.SystemProvider());
-            PerformanceTracker.Stop("Init_System_SetProvider");
-
-            PerformanceTracker.Start("Init_System_StartMenu");
 
             #region 2012/11/26日 - DYLAN將國中(學校基本資料)搬至高中使用
             MotherForm.StartMenu["編輯學校資訊"].Image = Properties.Resources.school_fav_64;
@@ -173,9 +118,6 @@ namespace SmartSchool
                 System.Windows.Forms.Application.Restart();
             };
 
-            PerformanceTracker.Stop("Init_System_StartMenu");
-
-            PerformanceTracker.Start("Init_System_FeatureDef");
             var _feature_def = new DSXmlHelper(DSXmlHelper.LoadXml(Properties.Resources.FeatureDefinition));
             foreach ( XmlElement cat in _feature_def.GetElements("FeatureCatalog") )
             {
@@ -208,14 +150,9 @@ namespace SmartSchool
                     ribbon.Add(new RibbonFeature(item.GetAttribute("FeatureCode"), item.GetAttribute("Title")));
                 }
             }
-            PerformanceTracker.Stop("Init_System_FeatureDef");
 
             //電子報表的提供者。
-            PerformanceTracker.Start("Init_System_DispatcherProvider");
             DispatcherProvider.Register("ischool", new DispatcherImp(), true);
-            PerformanceTracker.Stop("Init_System_DispatcherProvider");
-
-            PerformanceTracker.Stop("Init_System");
         }
     }
 }

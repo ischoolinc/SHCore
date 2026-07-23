@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using SmartSchool.Common;
@@ -26,16 +26,6 @@ namespace SmartSchool
     {
 
         private const int _PackageLimit = 500;
-
-        public static void LogPerf(string message)
-        {
-            try
-            {
-                System.IO.File.AppendAllText("loading_perf_hs.txt", DateTime.Now.ToString("HH:mm:ss.fff") + " " + message + Environment.NewLine);
-            }
-            catch { }
-        }
-
 
         private static List<T>[] SplitPackage<T>(List<T> list)
         {
@@ -73,16 +63,12 @@ namespace SmartSchool
         }
         public static void Init_Course_Load()
         {
-            LogPerf("Init_Course_Load Start");
             CourseRelated.Course.Instance.SyncAllBackground();
-            LogPerf("Init_Course_Load End");
         }
         public static void Init_Course()
         {
-            LogPerf("Init_Course Start");
             //CourseRelated.CourseEntity.CreateInstance();
             //CourseRelated.Course.Instance.SetupPresentation();
-            //LogPerf("Init_Course SetupPresentation Done");
 
             //新增刪除課程
             //SmartSchool.CourseRelated.RibbonBars.Manage.Instance.Setup();
@@ -104,7 +90,6 @@ namespace SmartSchool
             Customization.Data.StudentHelper.FillingAttendCourse += new EventHandler<SmartSchool.Customization.Data.FillSemesterInfoEventArgs<SmartSchool.Customization.Data.StudentRecord>>(StudentHelper_FillingAttendCourse);
             Customization.Data.StudentHelper.FillingExamScore += new EventHandler<FillSemesterInfoEventArgs<StudentRecord>>(StudentHelper_FillingExamScore);
             Customization.Data.TeacherHelper.GettingLectureTeacher += new EventHandler<GettingLectureTeacherEventArgs>(TeacherHelper_GettingLectureTeacher);
-            LogPerf("Init_Course Events Done");
 
             //SmartSchool.CourseRelated.DetailPaneItem.OtherEntity
             //SmartSchool.Customization.PlugIn.ExtendedContent.ExtendStudentContent.AddItem(new CourseRelated.DetailPaneItem.OtherEntity.CourseScorePalmerwormItem());
@@ -135,7 +120,6 @@ namespace SmartSchool
                 K12.Presentation.NLDPanels.Student.AddDetailBulider(new ContentItemBulider(var));
             }
             #endregion
-            LogPerf("Init_Course ExtendedContent Done");
 
             SmartSchool.Customization.Data.AccessHelper.SetCourseProvider(new SmartSchool.API.Provider.CourseProvider());
             SmartSchool.Customization.PlugIn.ExtendedContent.ExtendCourseContent.SetManager(SmartSchool.CourseRelated.Course.Instance);
@@ -172,7 +156,6 @@ namespace SmartSchool
             {
                 System.Windows.Forms.Application.Idle -= idleHandler;
                 CourseRelated.Course.Instance.SetupPresentation();
-                LogPerf("Init_Course SetupPresentation (Idle) Done");
 
                 //新增刪除課程
                 SmartSchool.CourseRelated.RibbonBars.Manage.Instance.Setup();
@@ -191,12 +174,10 @@ namespace SmartSchool
                 new SmartSchool.CourseRelated.RibbonBars.OtherTab.AssignTeacherTeachCourse().Setup();
             };
             System.Windows.Forms.Application.Idle += idleHandler;
-            LogPerf("Init_Course End");
         }
 
         public static void Init_Course_Others()
         {
-            LogPerf("Init_Course_Others Start");
 
             //SimplyConfigure scoreMappingTable = new SimplyConfigure();
             //scoreMappingTable.Caption = "評量名稱管理";
@@ -227,7 +208,6 @@ namespace SmartSchool
                 
 
             new Others.RibbonBars.UnfinishScore().Setup();
-            LogPerf("Init_Course_Others End");
         }
 
         static void templateManager_OnShown(object sender, EventArgs e)

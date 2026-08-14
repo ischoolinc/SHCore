@@ -231,10 +231,13 @@ namespace SmartSchool.ClassRelated.RibbonBars
             buttonItem1.Enable = buttonItem1Ctrl.Executable();
 
 
-            var buttonItem7 = buttonItem15["班級考試成績單"];
+            // 新增"即將下架報表"層級
+            var buttonItem15_1 = buttonItem15["即將下架報表"];
+            
+            var buttonItem7 = buttonItem15_1["班級考試成績單"];
             buttonItem7.Click += new System.EventHandler(this.buttonItem7_Click);
             buttonItem7.Enable = buttonItem7Ctrl.Executable();
-            var buttonItem3 = buttonItem15["班級考試成績單(Word)"];
+            var buttonItem3 = buttonItem15_1["班級考試成績單(Word)"];
             buttonItem3.Click += new System.EventHandler(this.buttonItem3_Click);
             buttonItem3.Enable = buttonItem3Ctrl.Executable();
 

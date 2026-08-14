@@ -3,14 +3,14 @@ namespace SmartSchool.CourseRelated.RibbonBars
     partial class Manage
     {
         /// <summary>
-        /// ³]­p¤u¨ã©Ò»İªºÅÜ¼Æ¡C
+        /// è¨­è¨ˆå·¥å…·æ‰€éœ€çš„è®Šæ•¸ã€‚
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        /// ²M°£¥ô¦ó¨Ï¥Î¤¤ªº¸ê·½¡C
+        /// æ¸…é™¤ä»»ä½•ä½¿ç”¨ä¸­çš„è³‡æºã€‚
         /// </summary>
-        /// <param name="disposing">¦pªGÀ³¸Ó¤½¶} Managed ¸ê·½«h¬° true¡A§_«h¬° false¡C</param>
+        /// <param name="disposing">å¦‚æœæ‡‰è©²å…¬é–‹ Managed è³‡æºå‰‡ç‚º trueï¼Œå¦å‰‡ç‚º falseã€‚</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,10 +20,10 @@ namespace SmartSchool.CourseRelated.RibbonBars
             base.Dispose(disposing);
         }
 
-        #region Windows Form ³]­p¤u¨ã²£¥Íªºµ{¦¡½X
+        #region Windows Form è¨­è¨ˆå·¥å…·ç”¢ç”Ÿçš„ç¨‹å¼ç¢¼
 
         /// <summary>
-        /// ¦¹¬°³]­p¤u¨ã¤ä´©©Ò»İªº¤èªk - ½Ğ¤Å¨Ï¥Îµ{¦¡½X½s¿è¾¹­×§ï³o­Ó¤èªkªº¤º®e¡C
+        /// æ­¤ç‚ºè¨­è¨ˆå·¥å…·æ”¯æ´æ‰€éœ€çš„æ–¹æ³• - è«‹å‹¿ä½¿ç”¨ç¨‹å¼ç¢¼ç·¨è¼¯å™¨ä¿®æ”¹é€™å€‹æ–¹æ³•çš„å…§å®¹ã€‚
         ///
         /// </summary>
         private void InitializeComponent()
@@ -40,7 +40,7 @@ namespace SmartSchool.CourseRelated.RibbonBars
             this.MainRibbonBar.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.btnAddCourse,
             this.itemContainer1});
-            this.MainRibbonBar.Text = "½s¿è";
+            this.MainRibbonBar.Text = "ç·¨è¼¯";
             // 
             // itemContainer1
             // 
@@ -59,7 +59,7 @@ namespace SmartSchool.CourseRelated.RibbonBars
             this.btnSaveCourse.ImagePaddingVertical = 10;
             this.btnSaveCourse.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far;
             this.btnSaveCourse.Name = "btnSaveCourse";
-            this.btnSaveCourse.Text = "²£¥Í½Òµ{";
+            this.btnSaveCourse.Text = "ç”¢ç”Ÿèª²ç¨‹";
             this.btnSaveCourse.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnDeleteCourse
@@ -70,7 +70,7 @@ namespace SmartSchool.CourseRelated.RibbonBars
             this.btnDeleteCourse.ImagePaddingVertical = 10;
             this.btnDeleteCourse.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far;
             this.btnDeleteCourse.Name = "btnDeleteCourse";
-            this.btnDeleteCourse.Text = "§R°£½Òµ{";
+            this.btnDeleteCourse.Text = "åˆªé™¤èª²ç¨‹";
             this.btnDeleteCourse.Click += new System.EventHandler(this.btnDeleteCourse_Click);
             // 
             // btnAddCourse
@@ -78,7 +78,7 @@ namespace SmartSchool.CourseRelated.RibbonBars
             this.btnAddCourse.Image = ( (System.Drawing.Image)( resources.GetObject("btnAddCourse.Image") ) );
             this.btnAddCourse.ImagePaddingHorizontal = 8;
             this.btnAddCourse.Name = "btnAddCourse";
-            this.btnAddCourse.Text = "·s¼W½Òµ{";
+            this.btnAddCourse.Text = "æ–°å¢èª²ç¨‹";
             this.btnAddCourse.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // Manage

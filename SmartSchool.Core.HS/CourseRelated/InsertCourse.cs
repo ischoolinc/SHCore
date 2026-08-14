@@ -63,9 +63,18 @@ namespace SmartSchool.CourseRelated
             int a;
             if (!int.TryParse(comboBoxEx1.Text, out a))
             {
-                MsgBox.Show("學年度請輸入數字。");
+                MsgBox.Show("「學年度」請輸入數字。");
                 return;
             }
+
+            // 檢查學期
+            int b;
+            if (!int.TryParse(comboBoxEx2.Text, out b))
+            {
+                MsgBox.Show("「學期」請輸入數字。");
+                return;
+            }
+
 
             if (!Course.Instance.ValidateCourse(txtCourseName.Text, comboBoxEx1.Text, comboBoxEx2.Text))
             {

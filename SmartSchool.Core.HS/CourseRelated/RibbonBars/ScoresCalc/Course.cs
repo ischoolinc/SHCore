@@ -22,7 +22,8 @@ namespace SmartSchool.CourseRelated.RibbonBars.ScoresCalc
             _identity = objData.GetText("@ID");
             _course_name = objData.GetText("CourseName");
             _exam_tempalte_id = objData.GetText("RefExamTemplateID");
-            _exam_required = (objData.GetText("NotIncludedInCalc") == "是" ? false : true);
+            //_exam_required = (objData.GetText("NotIncludedInCalc") == "是" ? false : true);
+            _exam_required = true;  // 討論後都要算出成績
             _scattends = new SCAttendCollection();
         }
 

@@ -77,5 +77,80 @@ namespace SmartSchool
             return value;
         }
 
+        /// <summary>
+        /// 取得課程調代課對應筆數
+        /// </summary>
+        /// <param name="CousreID"></param>
+        /// <returns></returns>
+        public static int GetCourseDCBindCountByID(string CousreID)
+        {
+            int value = -1;
+            try
+            {
+                if (!int.TryParse(CousreID, out int courseId))
+                    return -1; // 非整數輸入時回傳 -1（等同「無對應」）
+
+                QueryHelper qh = new QueryHelper();
+                string strSQL = string.Format(@"
+                    SELECT count(id) AS count 
+                    FROM dc_bind_key 
+                    WHERE ref_course_id = {0};
+                ", courseId);
+
+                DataTable dt = qh.Select(strSQL);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    int.TryParse(dr["count"].ToString(), out value);
+                    return value;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("取得課程調代課對應筆數錯誤，" + ex.Message);
+            }
+            return value;
+        }
+
+
+        /// <summary>
+        /// 刪除指定課程的調代課對應資料，並回傳刪除筆數
+        /// </summary>
+        /// <param name="CousreID">課程 ID</param>
+        /// <returns>
+        /// >= 0：實際刪除筆數  
+        /// -1：刪除失敗或發生例外  
+        /// </returns>
+        public static int DeleteCourseDCBindByCourseID(string CousreID)
+        {
+            int value = -1;
+
+            try
+            {
+                // 驗證課程 ID
+                if (!int.TryParse(CousreID, out int courseId))
+                    return -1;
+
+                QueryHelper qh = new QueryHelper();
+
+                // PostgreSQL 可直接用 DELETE ... RETURNING 取得刪除筆數
+                string strSQL = string.Format(@"
+            DELETE FROM dc_bind_key
+            WHERE ref_course_id = {0}
+            RETURNING id;
+        ", courseId);
+
+                DataTable dt = qh.Select(strSQL);
+
+                // 回傳實際刪除筆數
+                value = dt.Rows.Count;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("刪除課程調代課對應資料錯誤，" + ex.Message);
+            }
+
+            return value;
+        }
+
     }
 }

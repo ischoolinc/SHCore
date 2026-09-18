@@ -223,9 +223,7 @@ namespace SmartSchool
             defConfig.Image = Properties.Resources.network_lock_64;
             defConfig.Size = RibbonBarButton.MenuButtonSize.Large;
 
-            //Add by Dylan 
-            MotherForm.RibbonBarItems["教務作業", "基本設定"]["管理"]["上課地點管理"].Enable = Permissions.上課地點管理權限;
-            MotherForm.RibbonBarItems["教務作業", "基本設定"]["管理"]["上課地點管理"].Click += new EventHandler(classRoomSetting_OnShown);
+            // 上課地點管理 已移至 ClassRoomConfig 模組
 
             // Add by Jackie Wang 2023.07.25 新增部別管理
             MotherForm.RibbonBarItems["教務作業", "基本設定"]["管理"]["部別管理"].Enable = Permissions.部別管理權限;
@@ -233,7 +231,6 @@ namespace SmartSchool
 
             //Add by Dylan 2023.7.28 權限管理集中
             Catalog detail1 = RoleAclSource.Instance["教務作業"]["功能按鈕"];
-            detail1.Add(new RibbonFeature(Permissions.上課地點管理, "上課地點管理"));
             detail1.Add(new RibbonFeature(Permissions.部別管理, "部別管理"));
         }
 
@@ -276,12 +273,6 @@ namespace SmartSchool
         static void departmentSetting_OnShown(object sender, EventArgs e)
         {
             DeptSetup form = new DeptSetup();
-            form.ShowDialog();
-        }
-
-        static void classRoomSetting_OnShown(object sender, EventArgs e)
-        {
-            ClassRoomConfig form = new ClassRoomConfig();
             form.ShowDialog();
         }
 

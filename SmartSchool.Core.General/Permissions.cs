@@ -16,14 +16,5 @@ namespace SmartSchool
                 return FISCA.Permission.UserAcl.Current[部別管理].Executable;
             }
         }
-
-        public static string 上課地點管理 { get { return "SmartSchool.Core.General.ClassRoomConfig"; } }
-        public static bool 上課地點管理權限
-        {
-            get
-            {
-                return FISCA.Permission.UserAcl.Current[上課地點管理].Executable;
-            }
-        }
     }
 }

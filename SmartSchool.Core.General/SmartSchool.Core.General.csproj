@@ -652,12 +652,6 @@
     <Compile Include="Others\RibbonBars\AwardScore.Designer.cs">
       <DependentUpon>AwardScore.cs</DependentUpon>
     </Compile>
-    <Compile Include="Others\RibbonBars\Forms\ClassRoomConfig.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Others\RibbonBars\Forms\ClassRoomConfig.Designer.cs">
-      <DependentUpon>ClassRoomConfig.cs</DependentUpon>
-    </Compile>
     <Compile Include="Others\RibbonBars\Forms\CompleteForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1509,9 +1503,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Others\Configuration\Setup\DeptGroupSetup.resx">
       <DependentUpon>DeptGroupSetup.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Others\RibbonBars\Forms\ClassRoomConfig.resx">
-      <DependentUpon>ClassRoomConfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Others\RibbonBars\Forms\CompleteForm.resx">
       <DependentUpon>CompleteForm.cs</DependentUpon>

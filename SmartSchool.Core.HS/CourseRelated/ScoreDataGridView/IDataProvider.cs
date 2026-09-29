@@ -209,6 +209,7 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
             string qryCourseStudent = "SELECT " +
                 "sc_attend.id AS sc_attend_id" +
                 ",student.id AS student_id" +
+                ",class.display_order" +
                 ",class.class_name" +
                 ",student.seat_no" +
                 ",student.student_number" +
@@ -220,7 +221,7 @@ namespace SmartSchool.CourseRelated.ScoreDataGridView
                 "LEFT JOIN class " +
                 "ON student.ref_class_id = class.id " +
                 "WHERE ref_course_id = " + courseid + " " +
-                "ORDER BY class_name,seat_no,student_number";
+                "ORDER BY class.display_order ASC NULLS LAST, class.class_name ASC, student.seat_no ASC, student.student_number ASC";
 
             DataTable dtCourseStudent = qhCourseStudent.Select(qryCourseStudent);
 

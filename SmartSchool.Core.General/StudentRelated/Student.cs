@@ -114,6 +114,43 @@ namespace SmartSchool.StudentRelated
         private MenuButton btn刪除 = null;
         private bool _FilterButtonChanging = false;
 
+        // 狀態變更後暫時保留在清單中、右側學生資料頁面正在顯示的學生，避免頁面在類別模組更新狀態標籤前就被隱藏；
+        // 改選其他學生、點選年級樹其他結點、切換篩選或重新整理時才依篩選移除
+        private List<string> _KeepKeys = new List<string>();
+        private bool _FillingFilter = false;
+        // 上次套用到清單的篩選勾選，用來判斷關閉篩選選單時勾選是否有改變
+        private string _AppliedFilterState = "";
+
+        /// <summary>
+        /// 將右側學生資料頁面正在顯示、且仍被選取的學生暫時保留在清單中。
+        /// </summary>
+        /// <param name="keys">狀態變更的學生編號。</param>
+        internal void KeepDisplayedInList(IEnumerable<string> keys)
+        {
+            string displayedKey = "";
+            foreach (DetailContent content in K12.Presentation.NLDPanels.Student.DetailContents)
+            {
+                if (!string.IsNullOrEmpty(content.PrimaryKey))
+                {
+                    displayedKey = content.PrimaryKey;
+                    break;
+                }
+            }
+            if (displayedKey == "") return;
+
+            List<string> selected = new List<string>(K12.Presentation.NLDPanels.Student.SelectedSource);
+            foreach (string key in keys)
+                if (key == displayedKey && selected.Contains(key) && !_KeepKeys.Contains(key))
+                    _KeepKeys.Add(key);
+        }
+
+        private string GetFilterState()
+        {
+            return string.Join(",", new string[] {
+                "" + btn一般生.Checked, "" + btn休學生.Checked, "" + btn延修生.Checked,
+                "" + btn畢業及離校生.Checked, "" + btn刪除.Checked });
+        }
+
         private Student()
         {
             this.ItemLoaded += delegate
@@ -519,7 +556,13 @@ namespace SmartSchool.StudentRelated
             #endregion
 
             #region Filter
-            K12.Presentation.NLDPanels.Student.FilterMenu.PopupClose += delegate { SetSource(); };
+            K12.Presentation.NLDPanels.Student.FilterMenu.PopupClose += delegate
+            {
+                // 篩選勾選有改變時才完全依篩選顯示，不再保留狀態變更的學生；只打開再關閉選單時維持保留
+                if (GetFilterState() != _AppliedFilterState)
+                    _KeepKeys.Clear();
+                SetSource();
+            };
             btn所有學生 = K12.Presentation.NLDPanels.Student.FilterMenu["所有學生"];
             btn在校學生 = K12.Presentation.NLDPanels.Student.FilterMenu["在校學生"];
             btn學籍在校學生 = K12.Presentation.NLDPanels.Student.FilterMenu["學籍在校學生"];
@@ -591,8 +634,32 @@ namespace SmartSchool.StudentRelated
             btn在校學生.Checked = true;
             #endregion
 
+            // 改選其他學生或點選年級樹其他結點時，不再選取的學生不需保留，依篩選移除
+            K12.Presentation.NLDPanels.Student.SelectedSourceChanged += delegate
+            {
+                if (_FillingFilter || _KeepKeys.Count == 0) return;
+                List<string> selected = new List<string>(K12.Presentation.NLDPanels.Student.SelectedSource);
+                if (_KeepKeys.RemoveAll(delegate(string key) { return !selected.Contains(key); }) > 0)
+                    FillFilter();
+            };
+
             K12.Presentation.NLDPanels.Student.NavPaneContexMenu.GetChild("重新整理").Click += delegate { this.SyncAllBackground(); };
             K12.Data.Student.AfterDelete += delegate { this.SyncAllBackground(); };
+            // 其他模組(如類別模組的學生狀態標籤)透過 K12.Data 變更學生時，同步這些學生的快取，讓清單與年級樹更新
+            K12.Data.Student.AfterUpdate += delegate(object sender, K12.Data.DataChangedEventArgs e)
+            {
+                List<string> primaryKeys = new List<string>(e.PrimaryKeys);
+                Action sync = delegate
+                {
+                    KeepDisplayedInList(primaryKeys);
+                    SyncDataBackground(primaryKeys);
+                };
+                // K12.Data 的事件可能在背景執行緒引發，需回到 UI 執行緒再同步，避免跨執行緒更新清單
+                if (MotherForm.Form.InvokeRequired)
+                    MotherForm.Form.BeginInvoke(sync);
+                else
+                    sync();
+            };
 
             SmartSchool.Customization.PlugIn.ExtendedColumn.ExtendStudentColumn.SetManager(this);
             SmartSchool.Customization.PlugIn.ContextMenu.StudentMenuButton.SetManager(this);
@@ -782,6 +849,7 @@ namespace SmartSchool.StudentRelated
         {
             //畫面沒有設定完成就什麼都不做
             if (!_Initilized || !Loaded) return;
+            _AppliedFilterState = GetFilterState();
             List<string> list = new List<string>();
             foreach (var item in Items)
             {
@@ -794,6 +862,12 @@ namespace SmartSchool.StudentRelated
                 {
                     list.Add(item.ID);
                 }
+            }
+            // 狀態變更後暫時保留的學生，即使不符合篩選也留在清單中
+            foreach (string key in _KeepKeys)
+            {
+                if (Items.ContainsKey(key) && !list.Contains(key))
+                    list.Add(key);
             }
             string s = "";
             if (btn一般生.Checked) s += (s == "" ? "" : "、") + "一般生";
@@ -814,11 +888,22 @@ namespace SmartSchool.StudentRelated
             //{
             //    primaryKeys.Add(item.ID);
             //}
-            K12.Presentation.NLDPanels.Student.SetFilteredSource(list);
+            _FillingFilter = true;
+            try
+            {
+                K12.Presentation.NLDPanels.Student.SetFilteredSource(list);
+            }
+            finally
+            {
+                _FillingFilter = false;
+            }
         }
 
         internal void ReloadData()
         {
+            // 重新整理時完全依篩選顯示，不再保留狀態變更的學生
+            // (年級樹、缺曠、獎懲檢視右鍵「重新整理」與匯入學生後都會呼叫此方法)
+            _KeepKeys.Clear();
             this.SyncAllBackground();
             SHSchool.Data.SHStudent.RemoveAll();
             SHSchool.Data.SHStudent.SelectAll();

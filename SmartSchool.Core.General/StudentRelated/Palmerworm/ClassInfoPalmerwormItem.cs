@@ -399,6 +399,9 @@ namespace SmartSchool.StudentRelated.Palmerworm
 
             try
             {
+                // 切換學生時會先清除班級選取並引發此事件，沒有選取班級時不需要讀取科別
+                if (cboClass.SelectedItem == null) return;
+
                 KeyValuePair<string, string> kv = ((KeyValuePair<string, string>)cboClass.SelectedItem);
                 DSResponse rsp = QueryClass.GetClass(kv.Key);
 

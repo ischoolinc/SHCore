@@ -20,6 +20,27 @@ namespace SmartSchool.StudentRelated.Palmerworm
             this.Font = new System.Drawing.Font(SmartSchool.Common.FontStyles.GeneralFontFamily, 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             //this.DropDownStyle = ComboBoxStyle.DropDownList;
         }
+
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+            FitItemHeightToFont();
+        }
+
+        protected override void OnFontChanged(EventArgs e)
+        {
+            base.OnFontChanged(e);
+            FitItemHeightToFont();
+        }
+
+        /// <summary>
+        /// 自行繪製選項時，列高比字型高度小，DotNetBar 不會畫出選項文字，所以將列高調整為字型高度
+        /// </summary>
+        private void FitItemHeightToFont()
+        {
+            if (DrawMode == DrawMode.OwnerDrawFixed && ItemHeight < Font.Height)
+                ItemHeight = Font.Height;
+        }
         
         /// <summary>
         /// 覆寫選取索引變更事件

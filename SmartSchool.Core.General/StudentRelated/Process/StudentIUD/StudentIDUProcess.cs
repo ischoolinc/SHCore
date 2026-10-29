@@ -161,7 +161,13 @@ namespace SmartSchool.StudentRelated.Process.StudentIUD
                         string.Format("學生姓名：{0}，學號：{1}", stu_name, stu_student_number));
 
                     //Student.Instance.InvokBriefDataChanged(Student.Instance.SelectionStudents[0].ID);
+                    // 右側正在顯示的學生暫時保留在清單中，學生資料頁面不會被隱藏，狀態標籤才能完成更新
+                    // 廣播的 BeforeInvoke 會同步呼叫 SyncData 並刷新清單，所以要在廣播前先保留
+                    Student.Instance.KeepDisplayedInList(new string[] { stu_id });
                     SmartSchool.Broadcaster.Events.Items["學生/資料變更"].Invoke(stu_id);
+                    // 刪除直接呼叫 DSA，不會引發 K12.Data 的 AfterUpdate，需通知類別模組重新整理學生資料上方的狀態標籤
+                    if (FISCA.Features.FeatureMap.ContainsKey("學生.Tag.Reload"))
+                        FISCA.Features.Invoke("學生.Tag.Reload");
                 }
                 catch ( Exception ex )
                 {
